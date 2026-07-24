@@ -76,12 +76,12 @@ A few related things worth knowing when you do this:
   object present in the same `VM.GetAllRecords` map. There's no need for
   a separate `VM.GetSnapshots` call plus a `VM.GetRecord` per snapshot if
   you already fetched the VM map.
-- **This is a real example, not a hypothetical.** The [`xen`](https://github.com/schankst/xen)
-  CLI that exercises this library did exactly the naive version first,
-  fetching VBD/VDI/SR/VIF/Network/VMGuestMetrics records one object at a
-  time per VM - and it was visibly slow to watch run. Switching its `vms`
-  command to fetch each of those six classes once via `GetAllRecords` and
-  joining in memory (see `vms.go` there) took it down to well under two
+- **This is a real example, not a hypothetical.** A CLI that exercises
+  this library did exactly the naive version first, fetching
+  VBD/VDI/SR/VIF/Network/VMGuestMetrics records one object at a time per
+  VM - and it was visibly slow to watch run. Switching its `vms` command
+  to fetch each of those six classes once via `GetAllRecords` and joining
+  in memory took it down to well under two
   seconds against a pool of over 20 VMs with their disks and NICs.
 
 ## The trade-off

@@ -121,6 +121,4 @@ Observed on a live XCP-ng host, both values are the same kind of
 OCaml-float-as-string this fork already works around for
 `Event.timestamp` above - e.g. `"1782639432."`, trailing dot included -
 not a plain integer. Parse with `strconv.ParseFloat` + `time.Unix`, not
-`strconv.Atoi`/`ParseInt`, the same way. See `parseOtherConfigTime` in
-the [`xen`](https://github.com/schankst/xen) CLI's `hosts.go` for a
-consumer doing exactly that to show boot time/uptime.
+`strconv.Atoi`/`ParseInt`, the same way.
