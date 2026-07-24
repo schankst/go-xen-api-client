@@ -146,6 +146,9 @@ against, that's tracked separately:
 
 - [GOOD_TO_KNOW.md](GOOD_TO_KNOW.md) — real XenAPI behavior/gotchas this
   fork's development turned up, with sources.
+- [PERFORMANCE.md](PERFORMANCE.md) — fetching at scale: why per-object RPC
+  calls don't scale to real environments, and the batch-fetch pattern to
+  use instead.
 - [MAINTAINING.md](MAINTAINING.md) — how the generated bindings and
   `error.go` are produced, and how to refresh them by hand.
 - [LICENSING.md](LICENSING.md) — the licensing situation of everything
