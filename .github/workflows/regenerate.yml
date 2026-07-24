@@ -53,11 +53,12 @@ jobs:
         if: steps.fetch.outputs.changed == 'true'
         run: go run update_schema_release.go
 
-      - name: Build and vet
+      - name: Build, vet, and test
         if: steps.fetch.outputs.changed == 'true'
         run: |
           go build ./...
           go vet ./...
+          go test -short ./...
 
       - name: Commit, tag, and push
         if: steps.fetch.outputs.changed == 'true'

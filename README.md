@@ -113,20 +113,39 @@ func main() {
 
 ## Project status
 
-The most important missing pieces before this library is production-ready are:
+This is upstream's original TODO list for the project to be
+production-ready. Status in this fork:
 
-- A strategy how to handle the differences in the XenAPI versions.
-- Tests, at least for the various data type conversions.
-- Embed XenAPI documentation as GoDoc in the generated code.
-- Better error messages.
-- Usage examples.
+- ~~A strategy how to handle the differences in the XenAPI versions.~~
+  **Done** — see `SchemaXAPIRelease`, the enum-tolerance patch, and the
+  automated weekly regeneration workflow above.
+- Tests, at least for the various data type conversions. **Partially
+  done** — `xmlrpc`'s request/response round trip (including the
+  enum-tolerance behavior specifically) and a handful of representative
+  `convert_gen.go` converters are covered. Not exhaustive across all 74
+  generated files, but covers what has actually broken so far.
+- ~~Embed XenAPI documentation as GoDoc in the generated code.~~ **Already
+  true** — inherited from the original generator (class/method/field
+  descriptions come straight from the XenAPI schema); topped up the
+  hand-written scaffolding around it (`doc.go`, `NewClient`, `Client`,
+  `Error`, ...) so `go doc` is useful throughout, not just in the
+  generated 95% of the package.
+- Better error messages. **Partially addressed** — `Error.Error()` no
+  longer prints blank fields for error codes that don't carry an object
+  type/UUID.
+- ~~Usage examples.~~ One exists below; good enough for this fork's scope.
 
-Contributions welcome!
-
-Please note that I want to keep this library lean. I envision it to merely
-provide a one-to-one mapping of XenAPI functions to Go functions. Because of
-this, I will likely not accept pull requests that implement higher level
-functionality.
+This fork is **actively maintained**, not a one-time patch: dependency
+security alerts, `go vet` findings, and documentation gaps get triaged and
+fixed as they come up, not just left in a TODO list. Concretely, this
+entire fork - the schema regeneration, the enum-tolerance patch, vendoring
+the last external dependency, fixing the two real bugs that vendoring
+surfaced, the documentation pass, this test suite, and the CI automation -
+was built end to end by [Claude Code](https://claude.com/claude-code)
+(Anthropic's coding agent) working with the maintainer in a single ongoing
+conversation - starting from a client that panicked against a modern
+XCP-ng host because upstream's schema predated it by years, ending at a
+documented, tested, self-updating private fork.
 
 ## Implementation notes
 

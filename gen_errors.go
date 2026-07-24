@@ -161,7 +161,7 @@ func main() {
 	fmt.Fprint(w, `package xenapi
 
 import (
-	"fmt"
+	"strings"
 )
 
 const (
@@ -180,9 +180,18 @@ type Error struct {
 	uuid    string
 }
 
-// Error implements the error interface.
+// Error implements the error interface. objtype/uuid are only present for
+// error codes that carry them (see Type/UUID) and are omitted when empty,
+// rather than rendered as blank fields.
 func (e *Error) Error() string {
-	return fmt.Sprintf("API Error: %s %s %s", e.code, e.objtype, e.uuid)
+	parts := []string{"API Error:", e.code}
+	if e.objtype != "" {
+		parts = append(parts, e.objtype)
+	}
+	if e.uuid != "" {
+		parts = append(parts, e.uuid)
+	}
+	return strings.Join(parts, " ")
 }
 
 // Code returns the XenAPI error code, e.g. ERR_HANDLE_INVALID.
