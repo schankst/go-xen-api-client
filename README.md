@@ -1,17 +1,46 @@
 # Go XenAPI client library (fork)
 
-This is a private fork of [terra-farm/go-xen-api-client](https://github.com/terra-farm/go-xen-api-client)
-pinned at [v0.0.2](https://github.com/terra-farm/go-xen-api-client/releases/tag/v0.0.2), with one patch on top:
-
-- **Tolerate unknown enum values from newer XAPI versions.** The generated
-  enum parsers hard-error when the server returns a value that didn't exist
-  in the `xenapi.json` schema this client was generated from (e.g. the VM
-  operation `"sysprep"`, introduced by XCP-ng after this snapshot). All 48
-  generated `*ToGo` enum converters in `convert_gen.go` now pass unknown
-  values through as-is instead of failing the whole record parse.
+This is a private fork of [terra-farm/go-xen-api-client](https://github.com/terra-farm/go-xen-api-client),
+originally forked from [v0.0.2](https://github.com/terra-farm/go-xen-api-client/releases/tag/v0.0.2)
+(a schema snapshot only current through XenServer 7.3 "inverness", ~2017).
 
 Module path is `github.com/schankst/go-xen-api-client` so it can be pulled
 in directly via `go get`/`require` without a `replace` directive.
+
+## What's different from upstream
+
+1. **Bindings regenerated from the current XenAPI schema** (as of the last
+   regeneration, covering releases up to `26.16.1-next`), instead of the
+   original v0.0.2 snapshot. This is what makes the library work at all
+   against a modern XCP-ng host — v0.0.2 predates entire classes and fields
+   that current hosts report.
+
+   Regenerating from a schema this much newer than the generator (`xenapi.go`)
+   itself required teaching the generator four new schema constructs it
+   didn't understand yet:
+
+   - `lifecycle` changed from a bare array to an object (`{state, transitions}`).
+   - New opaque result type `"an event batch"` (event batching, used by
+     `Event.from`) — mapped to `xmlrpc.Struct` since it isn't a proper record
+     and this fork doesn't need it typed.
+   - New polymorphic field type `` `<class> record` `` (`Event.snapshot` — the
+     concrete type depends on the event's class at runtime) — likewise mapped
+     to `xmlrpc.Struct`.
+   - New `` `X option` `` type pattern (optional values) — added as a generic
+     nil-tolerant wrapper around the inner type's own converter.
+
+   Along the way, some enums (e.g. `CertificatePurpose`, `UpdateGuidances`)
+   turned out to be declared under more than one class in the newer schema;
+   the generator now tracks already-emitted enum names so it doesn't emit
+   the same Go type twice.
+
+2. **Tolerate unknown enum values from newer XAPI versions**, as a hedge
+   against anything even newer than the schema above. The generated enum
+   parsers otherwise hard-error when the server returns a value that isn't
+   in the schema the client was generated from (this is what originally broke
+   on the VM operation `"sysprep"` against v0.0.2). All generated `*ToGo`
+   enum converters in `convert_gen.go` (72 of them, one per enum type) pass
+   unknown values through as-is instead of failing the whole record parse.
 
 ---
 
@@ -36,7 +65,7 @@ package main
 
 import (
     "fmt"
-    "github.com/terra-farm/go-xen-api-client"
+    "github.com/schankst/go-xen-api-client"
 )
 
 const XEN_API_URL string = "https://IP.OF.XEN.SERVER"
@@ -119,6 +148,21 @@ Each of the release names can be mapped back to a version listed here:
 
 ## Regenerating API after xenapi.json update
 If XenAPI was updated, it is required to regenerate all of files with a new API description. In order to do that one needs to follow these steps:
-- Get newest `xenapi.json` from the link above.
+- Get newest `xenapi.json` from the link above (e.g.
+  `https://raw.githubusercontent.com/xapi-project/xapi-project.github.io/master/_data/xenapi.json`).
 - Delete old generated APIs using `rm *_gen.go`
-- Generate new API with `go generate`
+- The generator (`xenapi.go`) is itself tagged `// +build ignore`, so `go.mod`
+  doesn't carry its own dependency (`github.com/serenize/snaker`); fetch it
+  once with `go get github.com/serenize/snaker` before generating, and run
+  `go mod tidy` afterwards to drop it again (matches upstream's own `go.mod`).
+- Generate new API with `go generate` (or `go run xenapi.go` directly)
+- **Reapply the enum-tolerance patch** described above — it lives only in
+  `convert_gen.go` and gets wiped out by regeneration along with every other
+  generated file. It's a mechanical find/replace over every
+  `default: err = fmt.Errorf("... but this is not any of the known values" ...)`
+  case in that file, turning it into `value = <EnumType>(strValue)`.
+- If the schema introduced a new construct `xenapi.go` doesn't know how to
+  map yet, generation panics with a message like `Unsupported XenAPI type: ...`
+  naming the offending type string — add a case for it in `goTypeForXenType`,
+  `funcPartialForXenType`, and `buildConverterFunc` (see the four cases added
+  for this fork's last regeneration, above, as examples).
