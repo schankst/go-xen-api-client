@@ -95,8 +95,13 @@ need one or two fields off of a huge class, weigh that against:
 - Only fetching the classes you actually need to join against - don't
   reach for `GetAllRecords` on every class in the schema "just in case".
 - For long-running processes that need to stay current rather than doing
-  one-shot reads, `Event.from` (see `GOOD_TO_KNOW.md`) lets you subscribe
-  to incremental changes instead of re-polling `GetAllRecords` on a timer.
+  one-shot reads, `Event.From`/`Event.Register` exist as a lower round-trip
+  alternative to re-polling `GetAllRecords` on a timer - but this fork only
+  implements the RPC surface, not a typed consumer: the returned batch and
+  each event's `snapshot` are opaque `xmlrpc.Struct` values (see
+  `GOOD_TO_KNOW.md`), since `snapshot`'s concrete shape depends on the
+  event's class at runtime. Using it means parsing and dispatching those
+  structs yourself; there's no ready-made typed helper for it here.
 
 As always: measure against your actual environment size before assuming
 either approach is the right call for it.
