@@ -2,7 +2,7 @@ package xenapi
 
 import (
 	"flag"
-	log "github.com/sirupsen/logrus"
+	"log"
 	"os"
 	"testing"
 )
