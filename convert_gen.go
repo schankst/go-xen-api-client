@@ -9887,7 +9887,10 @@ func convertEnumAfterApplyGuidanceToGo(context string, input interface{}) (value
     case "restartXAPI":
       value = AfterApplyGuidanceRestartXAPI
     default:
-      value = AfterApplyGuidance(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = AfterApplyGuidance(strValue)
 	}
 	return
 }
@@ -9903,7 +9906,10 @@ func convertEnumAllocationAlgorithmToGo(context string, input interface{}) (valu
     case "depth_first":
       value = AllocationAlgorithmDepthFirst
     default:
-      value = AllocationAlgorithm(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = AllocationAlgorithm(strValue)
 	}
 	return
 }
@@ -9925,7 +9931,10 @@ func convertEnumBondModeToGo(context string, input interface{}) (value BondMode,
     case "lacp":
       value = BondModeLacp
     default:
-      value = BondMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = BondMode(strValue)
 	}
 	return
 }
@@ -9976,7 +9985,10 @@ func convertEnumCertificatePurposeToGo(context string, input interface{}) (value
     case "ldaps":
       value = CertificatePurposeLdaps
     default:
-      value = CertificatePurpose(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = CertificatePurpose(strValue)
 	}
 	return
 }
@@ -10000,7 +10012,10 @@ func convertEnumCertificateTypeToGo(context string, input interface{}) (value Ce
     case "pinned":
       value = CertificateTypePinned
     default:
-      value = CertificateType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = CertificateType(strValue)
 	}
 	return
 }
@@ -10030,7 +10045,10 @@ func convertEnumClsToGo(context string, input interface{}) (value Cls, err error
     case "Certificate":
       value = ClsCertificate
     default:
-      value = Cls(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = Cls(strValue)
 	}
 	return
 }
@@ -10070,7 +10088,10 @@ func convertEnumClusterHostOperationToGo(context string, input interface{}) (val
     case "destroy":
       value = ClusterHostOperationDestroy
     default:
-      value = ClusterHostOperation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = ClusterHostOperation(strValue)
 	}
 	return
 }
@@ -10110,7 +10131,10 @@ func convertEnumClusterOperationToGo(context string, input interface{}) (value C
     case "destroy":
       value = ClusterOperationDestroy
     default:
-      value = ClusterOperation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = ClusterOperation(strValue)
 	}
 	return
 }
@@ -10128,7 +10152,10 @@ func convertEnumConsoleProtocolToGo(context string, input interface{}) (value Co
     case "rdp":
       value = ConsoleProtocolRdp
     default:
-      value = ConsoleProtocol(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = ConsoleProtocol(strValue)
 	}
 	return
 }
@@ -10154,7 +10181,10 @@ func convertEnumDomainTypeToGo(context string, input interface{}) (value DomainT
     case "unspecified":
       value = DomainTypeUnspecified
     default:
-      value = DomainType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = DomainType(strValue)
 	}
 	return
 }
@@ -10176,7 +10206,10 @@ func convertEnumEventOperationToGo(context string, input interface{}) (value Eve
     case "mod":
       value = EventOperationMod
     default:
-      value = EventOperation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = EventOperation(strValue)
 	}
 	return
 }
@@ -10226,7 +10259,10 @@ func convertEnumHostAllowedOperationsToGo(context string, input interface{}) (va
     case "enable":
       value = HostAllowedOperationsEnable
     default:
-      value = HostAllowedOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = HostAllowedOperations(strValue)
 	}
 	return
 }
@@ -10246,7 +10282,10 @@ func convertEnumHostDisplayToGo(context string, input interface{}) (value HostDi
     case "enable_on_reboot":
       value = HostDisplayEnableOnReboot
     default:
-      value = HostDisplay(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = HostDisplay(strValue)
 	}
 	return
 }
@@ -10270,7 +10309,10 @@ func convertEnumHostNtpModeToGo(context string, input interface{}) (value HostNt
     case "Disabled":
       value = HostNtpModeDisabled
     default:
-      value = HostNtpMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = HostNtpMode(strValue)
 	}
 	return
 }
@@ -10292,7 +10334,10 @@ func convertEnumHostNumaAffinityPolicyToGo(context string, input interface{}) (v
     case "default_policy":
       value = HostNumaAffinityPolicyDefaultPolicy
     default:
-      value = HostNumaAffinityPolicy(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = HostNumaAffinityPolicy(strValue)
 	}
 	return
 }
@@ -10314,7 +10359,10 @@ func convertEnumHostSchedGranToGo(context string, input interface{}) (value Host
     case "socket":
       value = HostSchedGranSocket
     default:
-      value = HostSchedGran(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = HostSchedGran(strValue)
 	}
 	return
 }
@@ -10354,7 +10402,10 @@ func convertEnumImageFormatTypeToGo(context string, input interface{}) (value Im
     case "qcow2":
       value = ImageFormatTypeQcow2
     default:
-      value = ImageFormatType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = ImageFormatType(strValue)
 	}
 	return
 }
@@ -10372,7 +10423,10 @@ func convertEnumIPConfigurationModeToGo(context string, input interface{}) (valu
     case "Static":
       value = IPConfigurationModeStatic
     default:
-      value = IPConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = IPConfigurationMode(strValue)
 	}
 	return
 }
@@ -10396,7 +10450,10 @@ func convertEnumIpv6ConfigurationModeToGo(context string, input interface{}) (va
     case "Autoconf":
       value = Ipv6ConfigurationModeAutoconf
     default:
-      value = Ipv6ConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = Ipv6ConfigurationMode(strValue)
 	}
 	return
 }
@@ -10418,7 +10475,10 @@ func convertEnumLatestSyncedUpdatesAppliedStateToGo(context string, input interf
     case "unknown":
       value = LatestSyncedUpdatesAppliedStateUnknown
     default:
-      value = LatestSyncedUpdatesAppliedState(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = LatestSyncedUpdatesAppliedState(strValue)
 	}
 	return
 }
@@ -10436,7 +10496,10 @@ func convertEnumLivepatchStatusToGo(context string, input interface{}) (value Li
     case "ok":
       value = LivepatchStatusOk
     default:
-      value = LivepatchStatus(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = LivepatchStatus(strValue)
 	}
 	return
 }
@@ -10452,7 +10515,10 @@ func convertEnumNetworkDefaultLockingModeToGo(context string, input interface{})
     case "disabled":
       value = NetworkDefaultLockingModeDisabled
     default:
-      value = NetworkDefaultLockingMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = NetworkDefaultLockingMode(strValue)
 	}
 	return
 }
@@ -10501,7 +10567,10 @@ func convertEnumNetworkOperationsToGo(context string, input interface{}) (value 
     case "attaching":
       value = NetworkOperationsAttaching
     default:
-      value = NetworkOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = NetworkOperations(strValue)
 	}
 	return
 }
@@ -10552,7 +10621,10 @@ func convertEnumNetworkPurposeToGo(context string, input interface{}) (value Net
     case "insecure_nbd":
       value = NetworkPurposeInsecureNbd
     default:
-      value = NetworkPurpose(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = NetworkPurpose(strValue)
 	}
 	return
 }
@@ -10572,7 +10644,10 @@ func convertEnumOnBootToGo(context string, input interface{}) (value OnBoot, err
     case "persist":
       value = OnBootPersist
     default:
-      value = OnBoot(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = OnBoot(strValue)
 	}
 	return
 }
@@ -10600,7 +10675,10 @@ func convertEnumOnCrashBehaviourToGo(context string, input interface{}) (value O
     case "rename_restart":
       value = OnCrashBehaviourRenameRestart
     default:
-      value = OnCrashBehaviour(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = OnCrashBehaviour(strValue)
 	}
 	return
 }
@@ -10620,7 +10698,10 @@ func convertEnumOnNormalExitToGo(context string, input interface{}) (value OnNor
     case "restart":
       value = OnNormalExitRestart
     default:
-      value = OnNormalExit(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = OnNormalExit(strValue)
 	}
 	return
 }
@@ -10644,7 +10725,10 @@ func convertEnumOnSoftrebootBehaviorToGo(context string, input interface{}) (val
     case "preserve":
       value = OnSoftrebootBehaviorPreserve
     default:
-      value = OnSoftrebootBehavior(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = OnSoftrebootBehavior(strValue)
 	}
 	return
 }
@@ -10666,7 +10750,10 @@ func convertEnumOriginToGo(context string, input interface{}) (value Origin, err
     case "remote_pool":
       value = OriginRemotePool
     default:
-      value = Origin(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = Origin(strValue)
 	}
 	return
 }
@@ -10686,7 +10773,10 @@ func convertEnumPciDom0AccessToGo(context string, input interface{}) (value PciD
     case "enable_on_reboot":
       value = PciDom0AccessEnableOnReboot
     default:
-      value = PciDom0Access(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PciDom0Access(strValue)
 	}
 	return
 }
@@ -10700,7 +10790,10 @@ func convertEnumPersistenceBackendToGo(context string, input interface{}) (value
     case "xapi":
       value = PersistenceBackendXapi
     default:
-      value = PersistenceBackend(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PersistenceBackend(strValue)
 	}
 	return
 }
@@ -10718,7 +10811,10 @@ func convertEnumPifIgmpStatusToGo(context string, input interface{}) (value PifI
     case "unknown":
       value = PifIgmpStatusUnknown
     default:
-      value = PifIgmpStatus(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PifIgmpStatus(strValue)
 	}
 	return
 }
@@ -10734,7 +10830,10 @@ func convertEnumPlacementPolicyToGo(context string, input interface{}) (value Pl
     case "normal":
       value = PlacementPolicyNormal
     default:
-      value = PlacementPolicy(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PlacementPolicy(strValue)
 	}
 	return
 }
@@ -10800,7 +10899,10 @@ func convertEnumPoolAllowedOperationsToGo(context string, input interface{}) (va
     case "exchange_crls_on_join":
       value = PoolAllowedOperationsExchangeCrlsOnJoin
     default:
-      value = PoolAllowedOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PoolAllowedOperations(strValue)
 	}
 	return
 }
@@ -10818,7 +10920,10 @@ func convertEnumPoolGuestSecurebootReadinessToGo(context string, input interface
     case "not_ready":
       value = PoolGuestSecurebootReadinessNotReady
     default:
-      value = PoolGuestSecurebootReadiness(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PoolGuestSecurebootReadiness(strValue)
 	}
 	return
 }
@@ -10834,7 +10939,10 @@ func convertEnumPrimaryAddressTypeToGo(context string, input interface{}) (value
     case "IPv6":
       value = PrimaryAddressTypeIPv6
     default:
-      value = PrimaryAddressType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PrimaryAddressType(strValue)
 	}
 	return
 }
@@ -10860,7 +10968,10 @@ func convertEnumPvsProxyStatusToGo(context string, input interface{}) (value Pvs
     case "incompatible_protocol_version":
       value = PvsProxyStatusIncompatibleProtocolVersion
     default:
-      value = PvsProxyStatus(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = PvsProxyStatus(strValue)
 	}
 	return
 }
@@ -10876,7 +10987,10 @@ func convertEnumSdnControllerProtocolToGo(context string, input interface{}) (va
     case "pssl":
       value = SdnControllerProtocolPssl
     default:
-      value = SdnControllerProtocol(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = SdnControllerProtocol(strValue)
 	}
 	return
 }
@@ -10900,7 +11014,10 @@ func convertEnumSrHealthToGo(context string, input interface{}) (value SrHealth,
     case "unavailable":
       value = SrHealthUnavailable
     default:
-      value = SrHealth(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = SrHealth(strValue)
 	}
 	return
 }
@@ -10920,7 +11037,10 @@ func convertEnumSriovConfigurationModeToGo(context string, input interface{}) (v
     case "unknown":
       value = SriovConfigurationModeUnknown
     default:
-      value = SriovConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = SriovConfigurationMode(strValue)
 	}
 	return
 }
@@ -11006,7 +11126,10 @@ func convertEnumStorageOperationsToGo(context string, input interface{}) (value 
     case "pbd_destroy":
       value = StorageOperationsPbdDestroy
     default:
-      value = StorageOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = StorageOperations(strValue)
 	}
 	return
 }
@@ -11040,7 +11163,10 @@ func convertEnumTaskAllowedOperationsToGo(context string, input interface{}) (va
     case "destroy":
       value = TaskAllowedOperationsDestroy
     default:
-      value = TaskAllowedOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = TaskAllowedOperations(strValue)
 	}
 	return
 }
@@ -11062,7 +11188,10 @@ func convertEnumTaskStatusTypeToGo(context string, input interface{}) (value Tas
     case "cancelled":
       value = TaskStatusTypeCancelled
     default:
-      value = TaskStatusType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = TaskStatusType(strValue)
 	}
 	return
 }
@@ -11084,7 +11213,10 @@ func convertEnumTelemetryFrequencyToGo(context string, input interface{}) (value
     case "monthly":
       value = TelemetryFrequencyMonthly
     default:
-      value = TelemetryFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = TelemetryFrequency(strValue)
 	}
 	return
 }
@@ -11102,7 +11234,10 @@ func convertEnumTristateTypeToGo(context string, input interface{}) (value Trist
     case "unspecified":
       value = TristateTypeUnspecified
     default:
-      value = TristateType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = TristateType(strValue)
 	}
 	return
 }
@@ -11118,7 +11253,10 @@ func convertEnumTunnelProtocolToGo(context string, input interface{}) (value Tun
     case "vxlan":
       value = TunnelProtocolVxlan
     default:
-      value = TunnelProtocol(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = TunnelProtocol(strValue)
 	}
 	return
 }
@@ -11160,7 +11298,10 @@ func convertEnumUpdateAfterApplyGuidanceToGo(context string, input interface{}) 
     case "restartXAPI":
       value = UpdateAfterApplyGuidanceRestartXAPI
     default:
-      value = UpdateAfterApplyGuidance(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = UpdateAfterApplyGuidance(strValue)
 	}
 	return
 }
@@ -11217,7 +11358,10 @@ func convertEnumUpdateGuidancesToGo(context string, input interface{}) (value Up
     case "restart_vm":
       value = UpdateGuidancesRestartVM
     default:
-      value = UpdateGuidances(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = UpdateGuidances(strValue)
 	}
 	return
 }
@@ -11237,7 +11381,10 @@ func convertEnumUpdateSyncFrequencyToGo(context string, input interface{}) (valu
     case "weekly":
       value = UpdateSyncFrequencyWeekly
     default:
-      value = UpdateSyncFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = UpdateSyncFrequency(strValue)
 	}
 	return
 }
@@ -11257,7 +11404,10 @@ func convertEnumVbdModeToGo(context string, input interface{}) (value VbdMode, e
     case "RW":
       value = VbdModeRW
     default:
-      value = VbdMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VbdMode(strValue)
 	}
 	return
 }
@@ -11320,7 +11470,10 @@ func convertEnumVbdOperationsToGo(context string, input interface{}) (value VbdO
     case "unpause":
       value = VbdOperationsUnpause
     default:
-      value = VbdOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VbdOperations(strValue)
 	}
 	return
 }
@@ -11342,7 +11495,10 @@ func convertEnumVbdTypeToGo(context string, input interface{}) (value VbdType, e
     case "Floppy":
       value = VbdTypeFloppy
     default:
-      value = VbdType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VbdType(strValue)
 	}
 	return
 }
@@ -11427,7 +11583,10 @@ func convertEnumVdiOperationsToGo(context string, input interface{}) (value VdiO
     case "revert_from":
       value = VdiOperationsRevertFrom
     default:
-      value = VdiOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VdiOperations(strValue)
 	}
 	return
 }
@@ -11465,7 +11624,10 @@ func convertEnumVdiTypeToGo(context string, input interface{}) (value VdiType, e
     case "cbt_metadata":
       value = VdiTypeCbtMetadata
     default:
-      value = VdiType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VdiType(strValue)
 	}
 	return
 }
@@ -11491,7 +11653,10 @@ func convertEnumVgpuTypeImplementationToGo(context string, input interface{}) (v
     case "mxgpu":
       value = VgpuTypeImplementationMxgpu
     default:
-      value = VgpuTypeImplementation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VgpuTypeImplementation(strValue)
 	}
 	return
 }
@@ -11509,7 +11674,10 @@ func convertEnumVifIpv4ConfigurationModeToGo(context string, input interface{}) 
     case "DHCP":
       value = VifIpv4ConfigurationModeDHCP
     default:
-      value = VifIpv4ConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VifIpv4ConfigurationMode(strValue)
 	}
 	return
 }
@@ -11531,7 +11699,10 @@ func convertEnumVifIpv6ConfigurationModeToGo(context string, input interface{}) 
     case "Autoconf":
       value = VifIpv6ConfigurationModeAutoconf
     default:
-      value = VifIpv6ConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VifIpv6ConfigurationMode(strValue)
 	}
 	return
 }
@@ -11555,7 +11726,10 @@ func convertEnumVifLockingModeToGo(context string, input interface{}) (value Vif
     case "disabled":
       value = VifLockingModeDisabled
     default:
-      value = VifLockingMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VifLockingMode(strValue)
 	}
 	return
 }
@@ -11608,7 +11782,10 @@ func convertEnumVifOperationsToGo(context string, input interface{}) (value VifO
     case "unplug":
       value = VifOperationsUnplug
     default:
-      value = VifOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VifOperations(strValue)
 	}
 	return
 }
@@ -11663,7 +11840,10 @@ func convertEnumVMApplianceOperationToGo(context string, input interface{}) (val
     case "shutdown":
       value = VMApplianceOperationShutdown
     default:
-      value = VMApplianceOperation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VMApplianceOperation(strValue)
 	}
 	return
 }
@@ -11810,7 +11990,10 @@ func convertEnumVMOperationsToGo(context string, input interface{}) (value VMOpe
     case "sysprep":
       value = VMOperationsSysprep
     default:
-      value = VMOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VMOperations(strValue)
 	}
 	return
 }
@@ -11834,7 +12017,10 @@ func convertEnumVMPowerStateToGo(context string, input interface{}) (value VMPow
     case "Suspended":
       value = VMPowerStateSuspended
     default:
-      value = VMPowerState(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VMPowerState(strValue)
 	}
 	return
 }
@@ -11856,7 +12042,10 @@ func convertEnumVMSecurebootCertificatesStateToGo(context string, input interfac
     case "update_on_boot":
       value = VMSecurebootCertificatesStateUpdateOnBoot
     default:
-      value = VMSecurebootCertificatesState(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VMSecurebootCertificatesState(strValue)
 	}
 	return
 }
@@ -11886,7 +12075,10 @@ func convertEnumVMSecurebootReadinessToGo(context string, input interface{}) (va
     case "certs_incomplete":
       value = VMSecurebootReadinessCertsIncomplete
     default:
-      value = VMSecurebootReadiness(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VMSecurebootReadiness(strValue)
 	}
 	return
 }
@@ -11910,7 +12102,10 @@ func convertEnumVmppArchiveFrequencyToGo(context string, input interface{}) (val
     case "weekly":
       value = VmppArchiveFrequencyWeekly
     default:
-      value = VmppArchiveFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VmppArchiveFrequency(strValue)
 	}
 	return
 }
@@ -11932,7 +12127,10 @@ func convertEnumVmppArchiveTargetTypeToGo(context string, input interface{}) (va
     case "nfs":
       value = VmppArchiveTargetTypeNfs
     default:
-      value = VmppArchiveTargetType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VmppArchiveTargetType(strValue)
 	}
 	return
 }
@@ -11954,7 +12152,10 @@ func convertEnumVmppBackupFrequencyToGo(context string, input interface{}) (valu
     case "weekly":
       value = VmppBackupFrequencyWeekly
     default:
-      value = VmppBackupFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VmppBackupFrequency(strValue)
 	}
 	return
 }
@@ -11974,7 +12175,10 @@ func convertEnumVmppBackupTypeToGo(context string, input interface{}) (value Vmp
     case "checkpoint":
       value = VmppBackupTypeCheckpoint
     default:
-      value = VmppBackupType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VmppBackupType(strValue)
 	}
 	return
 }
@@ -11996,7 +12200,10 @@ func convertEnumVmssFrequencyToGo(context string, input interface{}) (value Vmss
     case "weekly":
       value = VmssFrequencyWeekly
     default:
-      value = VmssFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VmssFrequency(strValue)
 	}
 	return
 }
@@ -12018,7 +12225,10 @@ func convertEnumVmssTypeToGo(context string, input interface{}) (value VmssType,
     case "snapshot_with_quiesce":
       value = VmssTypeSnapshotWithQuiesce
     default:
-      value = VmssType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VmssType(strValue)
 	}
 	return
 }
@@ -12054,7 +12264,10 @@ func convertEnumVtpmOperationsToGo(context string, input interface{}) (value Vtp
     case "destroy":
       value = VtpmOperationsDestroy
     default:
-      value = VtpmOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VtpmOperations(strValue)
 	}
 	return
 }
@@ -12090,7 +12303,10 @@ func convertEnumVusbOperationsToGo(context string, input interface{}) (value Vus
     case "unplug":
       value = VusbOperationsUnplug
     default:
-      value = VusbOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = VusbOperations(strValue)
 	}
 	return
 }

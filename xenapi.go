@@ -754,10 +754,17 @@ func {{ .FuncName }}(context string, goMap {{.GoType }}) (xenMap xmlrpc.Struct, 
 // every known value (from the same xapiEnumValue list enumTypeTemplate
 // used to emit the constants - see buildEnumConverterFunc, which looks
 // the class back up by enum name to get its Values) and, in the default
-// case, passes an unrecognized value through as-is rather than erroring -
-// this is the enum-tolerance patch (see patch_enums.go/README) that lets
-// this fork survive schema drift instead of hard-failing on any value
-// newer than what it was generated against.
+// case, passes an unrecognized value through as-is (as the same named Go
+// type, just not one of its declared constants) instead of erroring.
+// This is what lets this fork survive schema drift instead of
+// hard-failing on any enum value newer than what it was generated
+// against - which is exactly what upstream's original generator did
+// (hard error), and exactly what broke against a modern XCP-ng host in
+// the first place (the VM operation "sysprep", added after upstream's
+// last schema snapshot). Baked directly into the template rather than
+// patched into convert_gen.go after the fact (as it was through v0.2.0 -
+// see patch_enums.go's git history) so every regeneration gets it for
+// free with no separate step.
 const convertEnumTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (value {{ .GoType }}, err error) {
 	strValue, err := {{ "string"|convertToGo }}(context, input)
@@ -768,7 +775,10 @@ func {{ .FuncName }}(context string, input interface{}) (value {{ .GoType }}, er
     case {{ printf "%q" .Name }}:
       value = {{ $.GoType }}{{ .Name|exported }}{{ end }}
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, {{ printf "%q" .GoType }}, context)
+      // Unknown value from a newer XAPI version than this was generated
+      // against; pass it through as-is rather than failing the whole
+      // record parse.
+      value = {{ $.GoType }}(strValue)
 	}
 	return
 }

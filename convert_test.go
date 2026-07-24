@@ -35,11 +35,12 @@ func TestConvertEnumVMOperationsToGoKnownValue(t *testing.T) {
 	}
 }
 
-// This is the fork's central patch: a value the schema didn't know about
-// (this happened for real with "sysprep", added by XCP-ng after the
-// upstream v0.0.2 snapshot) must be passed through as-is instead of
-// failing the whole record parse. See convert_gen.go's generated default
-// case and patch_enums.go, which re-applies this after every regeneration.
+// This is the fork's central behavior: a value the schema didn't know
+// about (this happened for real with "sysprep", added by XCP-ng after
+// the upstream v0.0.2 snapshot) must be passed through as-is instead of
+// failing the whole record parse. Baked into the generator template
+// itself (convertEnumTypeToGoFuncTemplate in xenapi.go) since v0.2.1, so
+// every regeneration gets it automatically with no separate patch step.
 func TestConvertEnumVMOperationsToGoUnknownValuePassesThrough(t *testing.T) {
 	value, err := convertEnumVMOperationsToGo("test", "some_future_operation_xcp_ng_added")
 	if err != nil {

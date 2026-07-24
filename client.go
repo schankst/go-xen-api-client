@@ -14,8 +14,9 @@ import (
 // xenapi.json schema the *_gen.go files in this fork were generated from
 // (see https://xapi-project.github.io/xen-api/releases.html for what a
 // release name/version maps to). Bindings are verified/typed up through
-// this release; anything newer falls back to the enum-tolerance patch in
-// convert_gen.go.
+// this release; anything newer falls back to the enum tolerance built
+// into convert_gen.go's converters (see convertEnumTypeToGoFuncTemplate
+// in xenapi.go).
 const SchemaXAPIRelease = "26.16.1-next"
 
 // APIResult is the raw, untyped result of an APICall - Value holds whatever
