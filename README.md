@@ -7,6 +7,22 @@ originally forked from [v0.0.2](https://github.com/terra-farm/go-xen-api-client/
 Module path is `github.com/schankst/go-xen-api-client` so it can be pulled
 in directly via `go get`/`require` without a `replace` directive.
 
+## Versioning
+
+Git tags on this repo (`v0.1.0`, ...) are this module's own SemVer, tracked
+independently of XenAPI's own versioning — deliberately, since tagging this
+module to match an XAPI version number directly (e.g. `v26.16.1`) would make
+Go's module tooling treat it as a `v26` major version and require a `/v26`
+module path suffix, which has nothing to do with XAPI at all.
+
+To keep it traceable which live XAPI version a given tag was verified
+against, that's tracked separately:
+
+- `xenapi.SchemaXAPIRelease` (in `client.go`) — the newest XAPI release
+  name/version present in the `xenapi.json` schema the bindings were
+  generated from, queryable at runtime.
+- Each tag's annotation message states the same.
+
 ## What's different from upstream
 
 1. **Bindings regenerated from the current XenAPI schema** (as of the last

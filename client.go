@@ -10,6 +10,14 @@ import (
 	"github.com/amfranz/go-xmlrpc-client"
 )
 
+// SchemaXAPIRelease is the newest XAPI release name/version present in the
+// xenapi.json schema the *_gen.go files in this fork were generated from
+// (see https://xapi-project.github.io/xen-api/releases.html for what a
+// release name/version maps to). Bindings are verified/typed up through
+// this release; anything newer falls back to the enum-tolerance patch in
+// convert_gen.go.
+const SchemaXAPIRelease = "26.16.1-next"
+
 type APIResult struct {
 	Value interface{}
 }
