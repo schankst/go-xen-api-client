@@ -8015,7 +8015,7 @@ func convertEnumAfterApplyGuidanceToGo(context string, input interface{}) (value
     case "restartXAPI":
       value = AfterApplyGuidanceRestartXAPI
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "AfterApplyGuidance", context)
+      value = AfterApplyGuidance(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8031,7 +8031,7 @@ func convertEnumAllocationAlgorithmToGo(context string, input interface{}) (valu
     case "depth_first":
       value = AllocationAlgorithmDepthFirst
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "AllocationAlgorithm", context)
+      value = AllocationAlgorithm(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8053,7 +8053,7 @@ func convertEnumBondModeToGo(context string, input interface{}) (value BondMode,
     case "lacp":
       value = BondModeLacp
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "BondMode", context)
+      value = BondMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8085,7 +8085,7 @@ func convertEnumClsToGo(context string, input interface{}) (value Cls, err error
     case "VDI":
       value = ClsVDI
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "Cls", context)
+      value = Cls(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8107,7 +8107,7 @@ func convertEnumConsoleProtocolToGo(context string, input interface{}) (value Co
     case "rdp":
       value = ConsoleProtocolRdp
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "ConsoleProtocol", context)
+      value = ConsoleProtocol(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8129,7 +8129,7 @@ func convertEnumEventOperationToGo(context string, input interface{}) (value Eve
     case "mod":
       value = EventOperationMod
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "EventOperation", context)
+      value = EventOperation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8175,7 +8175,7 @@ func convertEnumHostAllowedOperationsToGo(context string, input interface{}) (va
     case "vm_migrate":
       value = HostAllowedOperationsVMMigrate
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "HostAllowedOperations", context)
+      value = HostAllowedOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8195,7 +8195,7 @@ func convertEnumHostDisplayToGo(context string, input interface{}) (value HostDi
     case "enable_on_reboot":
       value = HostDisplayEnableOnReboot
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "HostDisplay", context)
+      value = HostDisplay(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8217,7 +8217,7 @@ func convertEnumIPConfigurationModeToGo(context string, input interface{}) (valu
     case "Static":
       value = IPConfigurationModeStatic
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "IPConfigurationMode", context)
+      value = IPConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8241,7 +8241,7 @@ func convertEnumIpv6ConfigurationModeToGo(context string, input interface{}) (va
     case "Autoconf":
       value = Ipv6ConfigurationModeAutoconf
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "Ipv6ConfigurationMode", context)
+      value = Ipv6ConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8263,7 +8263,7 @@ func convertEnumLivepatchStatusToGo(context string, input interface{}) (value Li
     case "ok":
       value = LivepatchStatusOk
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "LivepatchStatus", context)
+      value = LivepatchStatus(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8279,7 +8279,7 @@ func convertEnumNetworkDefaultLockingModeToGo(context string, input interface{})
     case "disabled":
       value = NetworkDefaultLockingModeDisabled
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "NetworkDefaultLockingMode", context)
+      value = NetworkDefaultLockingMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8328,7 +8328,7 @@ func convertEnumNetworkOperationsToGo(context string, input interface{}) (value 
     case "attaching":
       value = NetworkOperationsAttaching
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "NetworkOperations", context)
+      value = NetworkOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8379,7 +8379,7 @@ func convertEnumNetworkPurposeToGo(context string, input interface{}) (value Net
     case "insecure_nbd":
       value = NetworkPurposeInsecureNbd
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "NetworkPurpose", context)
+      value = NetworkPurpose(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8399,7 +8399,7 @@ func convertEnumOnBootToGo(context string, input interface{}) (value OnBoot, err
     case "persist":
       value = OnBootPersist
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "OnBoot", context)
+      value = OnBoot(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8427,7 +8427,7 @@ func convertEnumOnCrashBehaviourToGo(context string, input interface{}) (value O
     case "rename_restart":
       value = OnCrashBehaviourRenameRestart
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "OnCrashBehaviour", context)
+      value = OnCrashBehaviour(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8447,7 +8447,7 @@ func convertEnumOnNormalExitToGo(context string, input interface{}) (value OnNor
     case "restart":
       value = OnNormalExitRestart
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "OnNormalExit", context)
+      value = OnNormalExit(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8471,7 +8471,7 @@ func convertEnumPgpuDom0AccessToGo(context string, input interface{}) (value Pgp
     case "enable_on_reboot":
       value = PgpuDom0AccessEnableOnReboot
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "PgpuDom0Access", context)
+      value = PgpuDom0Access(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8489,7 +8489,7 @@ func convertEnumPifIgmpStatusToGo(context string, input interface{}) (value PifI
     case "unknown":
       value = PifIgmpStatusUnknown
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "PifIgmpStatus", context)
+      value = PifIgmpStatus(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8523,7 +8523,7 @@ func convertEnumPoolAllowedOperationsToGo(context string, input interface{}) (va
     case "ha_disable":
       value = PoolAllowedOperationsHaDisable
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "PoolAllowedOperations", context)
+      value = PoolAllowedOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8539,7 +8539,7 @@ func convertEnumPrimaryAddressTypeToGo(context string, input interface{}) (value
     case "IPv6":
       value = PrimaryAddressTypeIPv6
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "PrimaryAddressType", context)
+      value = PrimaryAddressType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8565,7 +8565,7 @@ func convertEnumPvsProxyStatusToGo(context string, input interface{}) (value Pvs
     case "incompatible_protocol_version":
       value = PvsProxyStatusIncompatibleProtocolVersion
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "PvsProxyStatus", context)
+      value = PvsProxyStatus(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8581,7 +8581,7 @@ func convertEnumSdnControllerProtocolToGo(context string, input interface{}) (va
     case "pssl":
       value = SdnControllerProtocolPssl
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "SdnControllerProtocol", context)
+      value = SdnControllerProtocol(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8655,7 +8655,7 @@ func convertEnumStorageOperationsToGo(context string, input interface{}) (value 
     case "pbd_destroy":
       value = StorageOperationsPbdDestroy
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "StorageOperations", context)
+      value = StorageOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8689,7 +8689,7 @@ func convertEnumTaskAllowedOperationsToGo(context string, input interface{}) (va
     case "destroy":
       value = TaskAllowedOperationsDestroy
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "TaskAllowedOperations", context)
+      value = TaskAllowedOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8711,7 +8711,7 @@ func convertEnumTaskStatusTypeToGo(context string, input interface{}) (value Tas
     case "cancelled":
       value = TaskStatusTypeCancelled
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "TaskStatusType", context)
+      value = TaskStatusType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8733,7 +8733,7 @@ func convertEnumTristateTypeToGo(context string, input interface{}) (value Trist
     case "unspecified":
       value = TristateTypeUnspecified
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "TristateType", context)
+      value = TristateType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8771,7 +8771,7 @@ func convertEnumUpdateAfterApplyGuidanceToGo(context string, input interface{}) 
     case "restartXAPI":
       value = UpdateAfterApplyGuidanceRestartXAPI
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "UpdateAfterApplyGuidance", context)
+      value = UpdateAfterApplyGuidance(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8787,7 +8787,7 @@ func convertEnumVbdModeToGo(context string, input interface{}) (value VbdMode, e
     case "RW":
       value = VbdModeRW
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VbdMode", context)
+      value = VbdMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8850,7 +8850,7 @@ func convertEnumVbdOperationsToGo(context string, input interface{}) (value VbdO
     case "unpause":
       value = VbdOperationsUnpause
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VbdOperations", context)
+      value = VbdOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8872,7 +8872,7 @@ func convertEnumVbdTypeToGo(context string, input interface{}) (value VbdType, e
     case "Floppy":
       value = VbdTypeFloppy
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VbdType", context)
+      value = VbdType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8953,7 +8953,7 @@ func convertEnumVdiOperationsToGo(context string, input interface{}) (value VdiO
     case "blocked":
       value = VdiOperationsBlocked
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VdiOperations", context)
+      value = VdiOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -8991,7 +8991,7 @@ func convertEnumVdiTypeToGo(context string, input interface{}) (value VdiType, e
     case "cbt_metadata":
       value = VdiTypeCbtMetadata
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VdiType", context)
+      value = VdiType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9015,7 +9015,7 @@ func convertEnumVgpuTypeImplementationToGo(context string, input interface{}) (v
     case "mxgpu":
       value = VgpuTypeImplementationMxgpu
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VgpuTypeImplementation", context)
+      value = VgpuTypeImplementation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9031,7 +9031,7 @@ func convertEnumVifIpv4ConfigurationModeToGo(context string, input interface{}) 
     case "Static":
       value = VifIpv4ConfigurationModeStatic
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VifIpv4ConfigurationMode", context)
+      value = VifIpv4ConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9051,7 +9051,7 @@ func convertEnumVifIpv6ConfigurationModeToGo(context string, input interface{}) 
     case "Static":
       value = VifIpv6ConfigurationModeStatic
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VifIpv6ConfigurationMode", context)
+      value = VifIpv6ConfigurationMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9075,7 +9075,7 @@ func convertEnumVifLockingModeToGo(context string, input interface{}) (value Vif
     case "disabled":
       value = VifLockingModeDisabled
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VifLockingMode", context)
+      value = VifLockingMode(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9128,7 +9128,7 @@ func convertEnumVifOperationsToGo(context string, input interface{}) (value VifO
     case "unplug":
       value = VifOperationsUnplug
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VifOperations", context)
+      value = VifOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9183,7 +9183,7 @@ func convertEnumVMApplianceOperationToGo(context string, input interface{}) (val
     case "shutdown":
       value = VMApplianceOperationShutdown
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VMApplianceOperation", context)
+      value = VMApplianceOperation(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9324,7 +9324,7 @@ func convertEnumVMOperationsToGo(context string, input interface{}) (value VMOpe
     case "destroy":
       value = VMOperationsDestroy
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VMOperations", context)
+      value = VMOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9348,7 +9348,7 @@ func convertEnumVMPowerStateToGo(context string, input interface{}) (value VMPow
     case "Suspended":
       value = VMPowerStateSuspended
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VMPowerState", context)
+      value = VMPowerState(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9372,7 +9372,7 @@ func convertEnumVmppArchiveFrequencyToGo(context string, input interface{}) (val
     case "weekly":
       value = VmppArchiveFrequencyWeekly
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VmppArchiveFrequency", context)
+      value = VmppArchiveFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9394,7 +9394,7 @@ func convertEnumVmppArchiveTargetTypeToGo(context string, input interface{}) (va
     case "nfs":
       value = VmppArchiveTargetTypeNfs
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VmppArchiveTargetType", context)
+      value = VmppArchiveTargetType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9416,7 +9416,7 @@ func convertEnumVmppBackupFrequencyToGo(context string, input interface{}) (valu
     case "weekly":
       value = VmppBackupFrequencyWeekly
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VmppBackupFrequency", context)
+      value = VmppBackupFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9436,7 +9436,7 @@ func convertEnumVmppBackupTypeToGo(context string, input interface{}) (value Vmp
     case "checkpoint":
       value = VmppBackupTypeCheckpoint
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VmppBackupType", context)
+      value = VmppBackupType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9458,7 +9458,7 @@ func convertEnumVmssFrequencyToGo(context string, input interface{}) (value Vmss
     case "weekly":
       value = VmssFrequencyWeekly
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VmssFrequency", context)
+      value = VmssFrequency(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9480,7 +9480,7 @@ func convertEnumVmssTypeToGo(context string, input interface{}) (value VmssType,
     case "snapshot_with_quiesce":
       value = VmssTypeSnapshotWithQuiesce
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VmssType", context)
+      value = VmssType(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
@@ -9520,7 +9520,7 @@ func convertEnumVusbOperationsToGo(context string, input interface{}) (value Vus
     case "unplug":
       value = VusbOperationsUnplug
     default:
-      err = fmt.Errorf("Unable to parse XenAPI response: got value %q for enum %s at %s, but this is not any of the known values", strValue, "VusbOperations", context)
+      value = VusbOperations(strValue) // unknown enum value from a newer XAPI version; passed through as-is
 	}
 	return
 }
