@@ -69,8 +69,6 @@ func getValue(parser *xml.Decoder) (result interface{}, err error) {
 			return nil, err
 		}
 	}
-
-	return
 }
 
 func getBooleanValue(parser *xml.Decoder) (result interface{}, err error) {
@@ -121,29 +119,40 @@ func getStringValue(parser *xml.Decoder) (string, error) {
 func getStructValue(parser *xml.Decoder) (result interface{}, err error) {
 	var token xml.Token
 	token, err = parser.Token()
+	if err != nil {
+		return nil, err
+	}
 
 	result = Struct{}
 
 	for {
 		switch t := token.(type) {
 		case xml.StartElement:
-			member := getStructMember(parser)
+			var member Struct
+			member, err = getStructMember(parser)
+			if err != nil {
+				return nil, err
+			}
 			result.(Struct)[member["name"].(string)] = member["value"]
 		case xml.EndElement:
 			if t.Name.Local == "struct" {
-				return result, err
+				return result, nil
 			}
 		}
 
 		token, err = parser.Token()
+		if err != nil {
+			return nil, err
+		}
 	}
-
-	return
 }
 
-func getStructMember(parser *xml.Decoder) (member Struct) {
+func getStructMember(parser *xml.Decoder) (member Struct, err error) {
 	var token xml.Token
-	token, _ = parser.Token()
+	token, err = parser.Token()
+	if err != nil {
+		return nil, err
+	}
 
 	member = Struct{}
 
@@ -151,27 +160,37 @@ func getStructMember(parser *xml.Decoder) (member Struct) {
 		switch t := token.(type) {
 		case xml.StartElement:
 			if t.Name.Local == "name" {
-				member["name"], _ = getElementValue(parser)
+				member["name"], err = getElementValue(parser)
+				if err != nil {
+					return nil, err
+				}
 			}
 
 			if t.Name.Local == "value" {
-				member["value"], _ = getValue(parser)
+				member["value"], err = getValue(parser)
+				if err != nil {
+					return nil, err
+				}
 			}
 		case xml.EndElement:
 			if t.Name.Local == "member" {
-				return member
+				return member, nil
 			}
 		}
 
-		token, _ = parser.Token()
+		token, err = parser.Token()
+		if err != nil {
+			return nil, err
+		}
 	}
-
-	return
 }
 
 func getElementValue(parser *xml.Decoder) (value string, err error) {
 	var token xml.Token
 	token, err = parser.Token()
+	if err != nil {
+		return "", err
+	}
 
 	processing := true
 
@@ -186,14 +205,20 @@ func getElementValue(parser *xml.Decoder) (value string, err error) {
 			processing = false
 		}
 		token, err = parser.Token()
+		if err != nil {
+			return "", err
+		}
 	}
 
-	return
+	return value, nil
 }
 
 func getArrayValue(parser *xml.Decoder) (result interface{}, err error) {
 	var token xml.Token
 	token, err = parser.Token()
+	if err != nil {
+		return nil, err
+	}
 
 	result = []interface{}{}
 
@@ -203,17 +228,21 @@ func getArrayValue(parser *xml.Decoder) (result interface{}, err error) {
 			if t.Name.Local == "value" {
 				var value interface{}
 				value, err = getValue(parser)
+				if err != nil {
+					return nil, err
+				}
 
 				result = append(result.([]interface{}), value)
 			}
 		case xml.EndElement:
 			if t.Name.Local == "array" {
-				return result, err
+				return result, nil
 			}
 		}
 
 		token, err = parser.Token()
+		if err != nil {
+			return nil, err
+		}
 	}
-
-	return
 }

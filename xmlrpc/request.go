@@ -80,7 +80,7 @@ func buildValueElement(value interface{}) (buffer string) {
 		if rv.Kind() == reflect.Slice || rv.Kind() == reflect.Array {
 			buffer += buildArrayElement(v)
 		} else {
-			fmt.Errorf("Unsupported value type")
+			panic(fmt.Sprintf("xmlrpc: unsupported value type %T", value))
 		}
 	}
 
