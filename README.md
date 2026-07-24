@@ -65,23 +65,34 @@ out of the box.
 ## Usage example
 
 The following example demonstrates how to instruct XenServer to start a VM with
-a given name label:
+a given name label. `XEN_API_HOST` is just the host - a bare IP/hostname, not a
+URL - and `XEN_API_INSECURE` controls TLS certificate verification, off by
+default here since XCP-ng/XenServer hosts commonly run with a self-signed
+certificate:
 
 ```go
 package main
 
 import (
+    "crypto/tls"
     "fmt"
+    "net/http"
+
     "github.com/schankst/go-xen-api-client"
 )
 
-const XEN_API_URL string = "https://IP.OF.XEN.SERVER"
+const XEN_API_HOST string = "10.0.0.10"
+const XEN_API_INSECURE bool = true // false to verify the server's TLS certificate
 const XEN_API_USERNAME string = "USERNAME"
 const XEN_API_PASSWORD string = "PASSWORD"
 const VM_NAME_LABEL = "VM NAME LABEL"
 
 func main() {
-    xapi, err := xenapi.NewClient(XEN_API_URL, nil)
+    transport := &http.Transport{
+        TLSClientConfig: &tls.Config{InsecureSkipVerify: XEN_API_INSECURE},
+    }
+
+    xapi, err := xenapi.NewClient(fmt.Sprintf("https://%s/", XEN_API_HOST), transport)
     if err != nil {
         panic(err)
     }
