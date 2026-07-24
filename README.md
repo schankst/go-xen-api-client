@@ -136,10 +136,20 @@ documentation at http://xapi-project.github.io/:
 
 - https://github.com/xapi-project/xapi-project.github.io/tree/master/_data
 
-The list of error code constants in `error.go` is borrowed from xapi-projects
-OCaml client:
+The list of error code constants in `error.go` is derived from the OCaml
+source of truth (note: unlike the `*_gen.go` files, it is **not** covered by
+`xenapi.json` / `go generate` at all, so it needs a separate refresh
+whenever it goes stale):
 
-- https://github.com/xapi-project/xen-api/blob/master/ocaml/idl/api_errors.ml
+- https://github.com/xapi-project/xen-api/blob/master/ocaml/xapi-consts/api_errors.ml
+  (moved from `ocaml/idl/api_errors.ml` at some point upstream)
+
+Format is `let name = add_error "VALUE"`, with a handful of entries built by
+string concatenation of two previously-defined names/literals (e.g.
+`add_error $ auth_enable_failed ^ auth_suffix_invalid_ou`) instead of a
+plain literal — resolve those the same way if refreshing this file again.
+Go constant names are mechanically derived as `ERR_` + the uppercased OCaml
+identifier, not hand-picked, so name and value can't drift out of sync.
 
 The JSON file contains the lifecycle of published classes, fields and messages.
 Each of the release names can be mapped back to a version listed here:
