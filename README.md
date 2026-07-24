@@ -25,38 +25,22 @@ against, that's tracked separately:
 
 ## What's different from upstream
 
-1. **Bindings regenerated from the current XenAPI schema** (as of the last
-   regeneration, covering releases up to `26.16.1-next`), instead of the
-   original v0.0.2 snapshot. This is what makes the library work at all
-   against a modern XCP-ng host — v0.0.2 predates entire classes and fields
-   that current hosts report.
+- Bindings regenerated against the current XenAPI schema (see
+  `xenapi.SchemaXAPIRelease` for exactly which release), instead of the
+  original v0.0.2 snapshot, which only covered XenServer 7.3-era XenAPI.
+- Enum parsing tolerates unknown values instead of hard-erroring, as a hedge
+  against anything newer than that schema.
+- `error.go` is kept in sync with the current upstream error definitions
+  instead of a one-time, now-stale copy (see "Implementation notes" below).
+- Automated weekly regeneration (see below), instead of a manual, one-off
+  process.
+- Module path changed to `github.com/schankst/go-xen-api-client` so it can
+  be pulled in directly.
 
-   Regenerating from a schema this much newer than the generator (`xenapi.go`)
-   itself required teaching the generator four new schema constructs it
-   didn't understand yet:
-
-   - `lifecycle` changed from a bare array to an object (`{state, transitions}`).
-   - New opaque result type `"an event batch"` (event batching, used by
-     `Event.from`) — mapped to `xmlrpc.Struct` since it isn't a proper record
-     and this fork doesn't need it typed.
-   - New polymorphic field type `` `<class> record` `` (`Event.snapshot` — the
-     concrete type depends on the event's class at runtime) — likewise mapped
-     to `xmlrpc.Struct`.
-   - New `` `X option` `` type pattern (optional values) — added as a generic
-     nil-tolerant wrapper around the inner type's own converter.
-
-   Along the way, some enums (e.g. `CertificatePurpose`, `UpdateGuidances`)
-   turned out to be declared under more than one class in the newer schema;
-   the generator now tracks already-emitted enum names so it doesn't emit
-   the same Go type twice.
-
-2. **Tolerate unknown enum values from newer XAPI versions**, as a hedge
-   against anything even newer than the schema above. The generated enum
-   parsers otherwise hard-error when the server returns a value that isn't
-   in the schema the client was generated from (this is what originally broke
-   on the VM operation `"sysprep"` against v0.0.2). All generated `*ToGo`
-   enum converters in `convert_gen.go` (72 of them, one per enum type) pass
-   unknown values through as-is instead of failing the whole record parse.
+For what actually changed release to release, see
+[Releases](https://github.com/schankst/go-xen-api-client/releases) rather
+than this file — this README describes the current state, not the history
+of how it got there.
 
 ---
 
