@@ -106,7 +106,7 @@ func main() {
 
     vm := vms[0]
 
-    xapi.VM.Start(session, vm, false, false)
+    err = xapi.VM.Start(session, vm, false, false)
     if err != nil {
         panic(err)
     }
