@@ -1,6 +1,8 @@
 # Go XenAPI client library (fork)
 
-This is a private fork of [terra-farm/go-xen-api-client](https://github.com/terra-farm/go-xen-api-client),
+[![Regenerate bindings](https://github.com/schankst/go-xen-api-client/actions/workflows/regenerate.yml/badge.svg)](https://github.com/schankst/go-xen-api-client/actions/workflows/regenerate.yml)
+
+This is a fork of [terra-farm/go-xen-api-client](https://github.com/terra-farm/go-xen-api-client),
 originally forked from [v0.0.2](https://github.com/terra-farm/go-xen-api-client/releases/tag/v0.0.2)
 (a schema snapshot only current through XenServer 7.3 "inverness", ~2017).
 
@@ -158,6 +160,16 @@ documentation at http://xapi-project.github.io/:
 
 - https://github.com/xapi-project/xapi-project.github.io/tree/master/_data
 
+**Licensing note**: `xapi-project.github.io` carries no LICENSE file. Unlike
+the `xmlrpc` package (see above), this isn't vendored/copied source code -
+it's the XenAPI's own published interface description (class names, field
+names, types, and documentation strings), whose explicit purpose is to let
+third parties generate client libraries against it, the same role an
+OpenAPI/Swagger spec or `.proto` file plays for other APIs. That doesn't
+make the absence of a license a non-issue, just a materially different and
+lower-risk one than redistributing someone's general-purpose source code
+with no license at all.
+
 The list of error code constants in `error.go` is derived from the OCaml
 source of truth (note: unlike the `*_gen.go` files, it is **not** covered by
 `xenapi.json` / `go generate` at all, so it needs a separate refresh
@@ -165,6 +177,12 @@ whenever it goes stale):
 
 - https://github.com/xapi-project/xen-api/blob/master/ocaml/xapi-consts/api_errors.ml
   (moved from `ocaml/idl/api_errors.ml` at some point upstream)
+
+`xen-api` is LGPL-2.1. What's extracted here is a mechanical list of bare
+`NAME -> "STRING"` pairs (arguably not creative expression at all, more
+like extracting a list of HTTP status codes) - not the surrounding OCaml
+code, comments, or structure - so this is a much lower-risk case than the
+`xmlrpc` situation above, but noted here for the same reason.
 
 Format is `let name = add_error "VALUE"`, with a handful of entries built by
 string concatenation of two previously-defined names/literals (e.g.
