@@ -1,4 +1,19 @@
-![Continuous Integration](https://github.com/terra-farm/go-xen-api-client/workflows/Continuous%20Integration/badge.svg)
+# Go XenAPI client library (fork)
+
+This is a private fork of [terra-farm/go-xen-api-client](https://github.com/terra-farm/go-xen-api-client)
+pinned at [v0.0.2](https://github.com/terra-farm/go-xen-api-client/releases/tag/v0.0.2), with one patch on top:
+
+- **Tolerate unknown enum values from newer XAPI versions.** The generated
+  enum parsers hard-error when the server returns a value that didn't exist
+  in the `xenapi.json` schema this client was generated from (e.g. the VM
+  operation `"sysprep"`, introduced by XCP-ng after this snapshot). All 48
+  generated `*ToGo` enum converters in `convert_gen.go` now pass unknown
+  values through as-is instead of failing the whole record parse.
+
+Module path is `github.com/schankst/go-xen-api-client` so it can be pulled
+in directly via `go get`/`require` without a `replace` directive.
+
+---
 
 # Go XenAPI client library
 
