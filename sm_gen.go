@@ -8,7 +8,7 @@ package xenapi
 
 import (
 	"fmt"
-	"github.com/amfranz/go-xmlrpc-client"
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
 	"strconv"
 	"time"

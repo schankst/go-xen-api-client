@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/amfranz/go-xmlrpc-client"
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 // SchemaXAPIRelease is the newest XAPI release name/version present in the
