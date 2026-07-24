@@ -118,6 +118,124 @@ func (_class TaskClass) GetAll(sessionID SessionRef) (_retval []TaskRef, _err er
 	return
 }
 
+// SetOtherConfig Set the other_config field of the given task.
+func (_class TaskClass) SetOtherConfig(sessionID SessionRef, self TaskRef, value map[string]string) (_err error) {
+	_method := "task.set_other_config"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertStringToStringMapToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given task. If the key is not in that Map, then do nothing.
+func (_class TaskClass) RemoveFromOtherConfig(sessionID SessionRef, self TaskRef, key string) (_err error) {
+	_method := "task.remove_from_other_config"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_keyArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "key"), key)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	return
+}
+
+// AddToOtherConfig Add the given key-value pair to the other_config field of the given task.
+func (_class TaskClass) AddToOtherConfig(sessionID SessionRef, self TaskRef, key string, value string) (_err error) {
+	_method := "task.add_to_other_config"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_keyArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "key"), key)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	return
+}
+
+// SetErrorInfo Set the task error info
+func (_class TaskClass) SetErrorInfo(sessionID SessionRef, self TaskRef, value []string) (_err error) {
+	_method := "task.set_error_info"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertStringSetToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// SetResult Set the task result
+func (_class TaskClass) SetResult(sessionID SessionRef, self TaskRef, value string) (_err error) {
+	_method := "task.set_result"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// SetProgress Set the task progress
+func (_class TaskClass) SetProgress(sessionID SessionRef, self TaskRef, value float64) (_err error) {
+	_method := "task.set_progress"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertFloatToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
 // SetStatus Set the task status
 func (_class TaskClass) SetStatus(sessionID SessionRef, self TaskRef, value TaskStatusType) (_err error) {
 	_method := "task.set_status"
@@ -190,67 +308,6 @@ func (_class TaskClass) Create(sessionID SessionRef, label string, description s
 		return
 	}
 	_retval, _err = convertTaskRefToGo(_method + " -> ", _result.Value)
-	return
-}
-
-// RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given task.  If the key is not in that Map, then do nothing.
-func (_class TaskClass) RemoveFromOtherConfig(sessionID SessionRef, self TaskRef, key string) (_err error) {
-	_method := "task.remove_from_other_config"
-	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
-	if _err != nil {
-		return
-	}
-	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
-	if _err != nil {
-		return
-	}
-	_keyArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "key"), key)
-	if _err != nil {
-		return
-	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
-	return
-}
-
-// AddToOtherConfig Add the given key-value pair to the other_config field of the given task.
-func (_class TaskClass) AddToOtherConfig(sessionID SessionRef, self TaskRef, key string, value string) (_err error) {
-	_method := "task.add_to_other_config"
-	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
-	if _err != nil {
-		return
-	}
-	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
-	if _err != nil {
-		return
-	}
-	_keyArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "key"), key)
-	if _err != nil {
-		return
-	}
-	_valueArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
-	if _err != nil {
-		return
-	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
-	return
-}
-
-// SetOtherConfig Set the other_config field of the given task.
-func (_class TaskClass) SetOtherConfig(sessionID SessionRef, self TaskRef, value map[string]string) (_err error) {
-	_method := "task.set_other_config"
-	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
-	if _err != nil {
-		return
-	}
-	_selfArg, _err := convertTaskRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
-	if _err != nil {
-		return
-	}
-	_valueArg, _err := convertStringToStringMapToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
-	if _err != nil {
-		return
-	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 

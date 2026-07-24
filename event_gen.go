@@ -32,6 +32,8 @@ const (
 )
 
 type EventRecord struct {
+	// The record of the database object that was added, changed or deleted
+	Snapshot xmlrpc.Struct
 	// An ID, monotonically increasing, and local to the current session
 	ID int
 	// The time at which the event occurred
@@ -53,7 +55,7 @@ type EventClass struct {
 	client *Client
 }
 
-// Inject Injects an artificial event on the given object and return the corresponding ID
+// Inject Injects an artificial event on the given object and returns the corresponding ID in the form of a token, which can be used as a point of reference for database events. For example, to check whether an object has reached the right state before attempting an operation, one can inject an artificial event on the object and wait until the token returned by consecutive event.from calls is lexicographically greater than the one returned by event.inject.
 func (_class EventClass) Inject(sessionID SessionRef, class string, ref string) (_retval string, _err error) {
 	_method := "event.inject"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -91,12 +93,12 @@ func (_class EventClass) GetCurrentID(sessionID SessionRef) (_retval int, _err e
 	return
 }
 
-// From Blocking call which returns a new token and a (possibly empty) batch of events. The returned token can be used in subsequent calls to this function.
+// From Blocking call which returns a new token and a (possibly empty) batch of events. The returned token can be used in subsequent calls to this function. It eliminates redundant events (for example, same field updated multiple times).
 //
 // Errors:
-//  SESSION_NOT_REGISTERED - This session is not registered to receive events.  You must call event.register before event.next.  The session handle you are using is echoed.
-//  EVENTS_LOST - Some events have been lost from the queue and cannot be retrieved.
-func (_class EventClass) From(sessionID SessionRef, classes []string, token string, timeout float64) (_retval []EventRecord, _err error) {
+//  EVENT_FROM_TOKEN_PARSE_FAILURE - The event.from token could not be parsed. Valid values include: '', and a value returned from a previous event.from call.
+//  EVENT_SUBSCRIPTION_PARSE_FAILURE - The server failed to parse your event subscription. Valid values include: *, class-name, class-name/object-reference.
+func (_class EventClass) From(sessionID SessionRef, classes []string, token string, timeout float64) (_retval xmlrpc.Struct, _err error) {
 	_method := "event.from"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -118,15 +120,16 @@ func (_class EventClass) From(sessionID SessionRef, classes []string, token stri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEventRecordSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEventBatchToGo(_method + " -> ", _result.Value)
 	return
 }
 
-// Next Blocking call which returns a (possibly empty) batch of events. This method is only recommended for legacy use. New development should use event.from which supercedes this method. 
+// Next Blocking call which returns a (possibly empty) batch of events. This method is only recommended for legacy use.It stores events in a buffer of limited size, raising EVENTS_LOST if too many events got generated. New development should use event.from which supersedes this method.
 //
 // Errors:
-//  SESSION_NOT_REGISTERED - This session is not registered to receive events.  You must call event.register before event.next.  The session handle you are using is echoed.
+//  SESSION_NOT_REGISTERED - This session is not registered to receive events. You must call event.register before event.next. The session handle you are using is echoed.
 //  EVENTS_LOST - Some events have been lost from the queue and cannot be retrieved.
+//  EVENT_SUBSCRIPTION_PARSE_FAILURE - The server failed to parse your event subscription. Valid values include: *, class-name, class-name/object-reference.
 func (_class EventClass) Next(sessionID SessionRef) (_retval []EventRecord, _err error) {
 	_method := "event.next"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -141,7 +144,7 @@ func (_class EventClass) Next(sessionID SessionRef) (_retval []EventRecord, _err
 	return
 }
 
-// Unregister Unregisters this session with the event system
+// Unregister Removes this session's registration with the event system for a set of given classes. This method is only recommended for legacy use in conjunction with event.next.
 func (_class EventClass) Unregister(sessionID SessionRef, classes []string) (_err error) {
 	_method := "event.unregister"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -156,7 +159,7 @@ func (_class EventClass) Unregister(sessionID SessionRef, classes []string) (_er
 	return
 }
 
-// Register Registers this session with the event system.  Specifying * as the desired class will register for all classes.
+// Register Registers this session with the event system for a set of given classes. This method is only recommended for legacy use in conjunction with event.next.
 func (_class EventClass) Register(sessionID SessionRef, classes []string) (_err error) {
 	_method := "event.register"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

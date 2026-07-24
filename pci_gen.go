@@ -20,13 +20,32 @@ var _ = reflect.TypeOf
 var _ = strconv.Atoi
 var _ = time.UTC
 
+type PciDom0Access string
+
+const (
+	// dom0 can access this device as normal
+	PciDom0AccessEnabled PciDom0Access = "enabled"
+	// On host reboot dom0 will be blocked from accessing this device
+	PciDom0AccessDisableOnReboot PciDom0Access = "disable_on_reboot"
+	// dom0 cannot access this device
+	PciDom0AccessDisabled PciDom0Access = "disabled"
+	// On host reboot dom0 will be allowed to access this device
+	PciDom0AccessEnableOnReboot PciDom0Access = "enable_on_reboot"
+)
+
 type PCIRecord struct {
 	// Unique identifier/object reference
 	UUID string
+	// PCI class ID
+	ClassID string
 	// PCI class name
 	ClassName string
+	// Vendor ID
+	VendorID string
 	// Vendor name
 	VendorName string
+	// Device ID
+	DeviceID string
 	// Device name
 	DeviceName string
 	// Physical machine that owns the PCI device
@@ -37,10 +56,16 @@ type PCIRecord struct {
 	Dependencies []PCIRef
 	// Additional configuration
 	OtherConfig map[string]string
+	// Subsystem vendor ID
+	SubsystemVendorID string
 	// Subsystem vendor name
 	SubsystemVendorName string
+	// Subsystem device ID
+	SubsystemDeviceID string
 	// Subsystem device name
 	SubsystemDeviceName string
+	// Driver name
+	DriverName string
 }
 
 type PCIRef string
@@ -77,6 +102,63 @@ func (_class PCIClass) GetAll(sessionID SessionRef) (_retval []PCIRef, _err erro
 		return
 	}
 	_retval, _err = convertPCIRefSetToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// GetDom0AccessStatus Return a PCI device dom0 access status.
+func (_class PCIClass) GetDom0AccessStatus(sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
+	_method := "PCI.get_dom0_access_status"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// EnableDom0Access Unhide a PCI device from the dom0 kernel. (Takes affect after next boot.)
+func (_class PCIClass) EnableDom0Access(sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
+	_method := "PCI.enable_dom0_access"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// DisableDom0Access Hide a PCI device from the dom0 kernel. (Takes affect after next boot.)
+func (_class PCIClass) DisableDom0Access(sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
+	_method := "PCI.disable_dom0_access"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
 	return
 }
 
@@ -141,6 +223,25 @@ func (_class PCIClass) SetOtherConfig(sessionID SessionRef, self PCIRef, value m
 	return
 }
 
+// GetDriverName Get the driver_name field of the given PCI.
+func (_class PCIClass) GetDriverName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+	_method := "PCI.get_driver_name"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	return
+}
+
 // GetSubsystemDeviceName Get the subsystem_device_name field of the given PCI.
 func (_class PCIClass) GetSubsystemDeviceName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_subsystem_device_name"
@@ -160,9 +261,47 @@ func (_class PCIClass) GetSubsystemDeviceName(sessionID SessionRef, self PCIRef)
 	return
 }
 
+// GetSubsystemDeviceID Get the subsystem_device_id field of the given PCI.
+func (_class PCIClass) GetSubsystemDeviceID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+	_method := "PCI.get_subsystem_device_id"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	return
+}
+
 // GetSubsystemVendorName Get the subsystem_vendor_name field of the given PCI.
 func (_class PCIClass) GetSubsystemVendorName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_subsystem_vendor_name"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// GetSubsystemVendorID Get the subsystem_vendor_id field of the given PCI.
+func (_class PCIClass) GetSubsystemVendorID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+	_method := "PCI.get_subsystem_vendor_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
@@ -274,6 +413,25 @@ func (_class PCIClass) GetDeviceName(sessionID SessionRef, self PCIRef) (_retval
 	return
 }
 
+// GetDeviceID Get the device_id field of the given PCI.
+func (_class PCIClass) GetDeviceID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+	_method := "PCI.get_device_id"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	return
+}
+
 // GetVendorName Get the vendor_name field of the given PCI.
 func (_class PCIClass) GetVendorName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_vendor_name"
@@ -293,9 +451,47 @@ func (_class PCIClass) GetVendorName(sessionID SessionRef, self PCIRef) (_retval
 	return
 }
 
+// GetVendorID Get the vendor_id field of the given PCI.
+func (_class PCIClass) GetVendorID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+	_method := "PCI.get_vendor_id"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	return
+}
+
 // GetClassName Get the class_name field of the given PCI.
 func (_class PCIClass) GetClassName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_class_name"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPCIRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// GetClassID Get the class_id field of the given PCI.
+func (_class PCIClass) GetClassID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+	_method := "PCI.get_class_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return

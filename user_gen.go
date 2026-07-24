@@ -23,7 +23,7 @@ var _ = time.UTC
 type UserRecord struct {
 	// Unique identifier/object reference
 	UUID string
-	// short name (e.g. userid)
+	// short name (for example, userid)
 	ShortName string
 	// full name
 	Fullname string

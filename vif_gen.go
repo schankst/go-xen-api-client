@@ -51,6 +51,8 @@ const (
 	VifIpv4ConfigurationModeNone VifIpv4ConfigurationMode = "None"
 	// Static IPv4 address configuration
 	VifIpv4ConfigurationModeStatic VifIpv4ConfigurationMode = "Static"
+	// Acquire an IP address by DHCP
+	VifIpv4ConfigurationModeDHCP VifIpv4ConfigurationMode = "DHCP"
 )
 
 type VifIpv6ConfigurationMode string
@@ -60,6 +62,8 @@ const (
 	VifIpv6ConfigurationModeNone VifIpv6ConfigurationMode = "None"
 	// Static IPv6 address configuration
 	VifIpv6ConfigurationModeStatic VifIpv6ConfigurationMode = "Static"
+	// Acquire an IPv6 address automatically
+	VifIpv6ConfigurationModeAutoconf VifIpv6ConfigurationMode = "Autoconf"
 )
 
 type VIFRecord struct {
@@ -69,7 +73,7 @@ type VIFRecord struct {
 	AllowedOperations []VifOperations
 	// links each of the running tasks using this object (by reference) to a current_operation enum which describes the nature of the task.
 	CurrentOperations map[string]VifOperations
-	// order in which VIF backends are created by xapi
+	// order in which VIF backends are created by xapi. Guaranteed to be an unsigned decimal integer.
 	Device string
 	// virtual network to which this vif is connected
 	Network NetworkRef
@@ -117,6 +121,8 @@ type VIFRecord struct {
 	Ipv6Addresses []string
 	// IPv6 gateway (the empty string means that no gateway is set)
 	Ipv6Gateway string
+	// the 802.1Q VLANs that this port trunks (if available) ; if it is empty, then the port trunks all VLANs.
+	Trunks []int
 }
 
 type VIFRef string
@@ -153,6 +159,63 @@ func (_class VIFClass) GetAll(sessionID SessionRef) (_retval []VIFRef, _err erro
 		return
 	}
 	_retval, _err = convertVIFRefSetToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// SetTrunks Set the 802.1Q VLANs to which traffic on this VIF can be restricted
+func (_class VIFClass) SetTrunks(sessionID SessionRef, self VIFRef, value []int) (_err error) {
+	_method := "VIF.set_trunks"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVIFRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertIntSetToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// RemoveTrunks Removes a 802.1Q VLAN from this VIF
+func (_class VIFClass) RemoveTrunks(sessionID SessionRef, self VIFRef, value int) (_err error) {
+	_method := "VIF.remove_trunks"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVIFRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertIntToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// AddTrunks Associates a 802.1Q VLAN with this VIF
+func (_class VIFClass) AddTrunks(sessionID SessionRef, self VIFRef, value int) (_err error) {
+	_method := "VIF.add_trunks"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVIFRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertIntToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -545,6 +608,25 @@ func (_class VIFClass) SetOtherConfig(sessionID SessionRef, self VIFRef, value m
 		return
 	}
 	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetTrunks Get the trunks field of the given VIF.
+func (_class VIFClass) GetTrunks(sessionID SessionRef, self VIFRef) (_retval []int, _err error) {
+	_method := "VIF.get_trunks"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVIFRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertIntSetToGo(_method + " -> ", _result.Value)
 	return
 }
 
@@ -1076,7 +1158,7 @@ func (_class VIFClass) Destroy(sessionID SessionRef, self VIFRef) (_err error) {
 	return
 }
 
-// Create Create a new VIF instance, and return its handle. The constructor args are: device*, network*, VM*, MAC*, MTU*, other_config*, qos_algorithm_type*, qos_algorithm_params*, locking_mode, ipv4_allowed, ipv6_allowed (* = non-optional).
+// Create Create a new VIF instance, and return its handle. The constructor args are: device*, network*, VM*, MAC*, MTU*, other_config*, currently_attached, qos_algorithm_type*, qos_algorithm_params*, locking_mode, ipv4_allowed, ipv6_allowed, trunks (* = non-optional).
 func (_class VIFClass) Create(sessionID SessionRef, args VIFRecord) (_retval VIFRef, _err error) {
 	_method := "VIF.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

@@ -20,6 +20,17 @@ var _ = reflect.TypeOf
 var _ = strconv.Atoi
 var _ = time.UTC
 
+type ImageFormatType string
+
+const (
+	// Plain disk image
+	ImageFormatTypeRaw ImageFormatType = "raw"
+	// Virtual Hard Disk
+	ImageFormatTypeVhd ImageFormatType = "vhd"
+	// Qemu Copy-On-Write version 2
+	ImageFormatTypeQcow2 ImageFormatType = "qcow2"
+)
+
 type SMRecord struct {
 	// Unique identifier/object reference
 	UUID string
@@ -49,6 +60,8 @@ type SMRecord struct {
 	DriverFilename string
 	// The storage plugin requires that one of these cluster stacks is configured and running.
 	RequiredClusterStack []string
+	// Image formats supported by the SR: raw, vhd, qcow2
+	SupportedImageFormats []ImageFormatType
 }
 
 type SMRef string
@@ -146,6 +159,25 @@ func (_class SMClass) SetOtherConfig(sessionID SessionRef, self SMRef, value map
 		return
 	}
 	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetSupportedImageFormats Get the supported_image_formats field of the given SM.
+func (_class SMClass) GetSupportedImageFormats(sessionID SessionRef, self SMRef) (_retval []ImageFormatType, _err error) {
+	_method := "SM.get_supported_image_formats"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertSMRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEnumImageFormatTypeSetToGo(_method + " -> ", _result.Value)
 	return
 }
 

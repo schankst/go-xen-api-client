@@ -46,7 +46,7 @@ func (_class AuthClass) GetGroupMembership(sessionID SessionRef, subjectIdentifi
 	return
 }
 
-// GetSubjectInformationFromIdentifier This call queries the external directory service to obtain the user information (e.g. username, organization etc) from the specified subject_identifier
+// GetSubjectInformationFromIdentifier This call queries the external directory service to obtain the user information (for example, username, organization etc.) from the specified subject_identifier
 func (_class AuthClass) GetSubjectInformationFromIdentifier(sessionID SessionRef, subjectIdentifier string) (_retval map[string]string, _err error) {
 	_method := "auth.get_subject_information_from_identifier"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

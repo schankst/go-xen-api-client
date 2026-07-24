@@ -59,6 +59,22 @@ const (
 	StorageOperationsVdiListChangedBlocks StorageOperations = "vdi_list_changed_blocks"
 	// Setting the on_boot field of the VDI
 	StorageOperationsVdiSetOnBoot StorageOperations = "vdi_set_on_boot"
+	// Blocking other operations for a VDI
+	StorageOperationsVdiBlocked StorageOperations = "vdi_blocked"
+	// Copying the VDI
+	StorageOperationsVdiCopy StorageOperations = "vdi_copy"
+	// Forcefully unlocking the VDI
+	StorageOperationsVdiForceUnlock StorageOperations = "vdi_force_unlock"
+	// Forgetting about the VDI
+	StorageOperationsVdiForget StorageOperations = "vdi_forget"
+	// Generating the configuration of the VDI
+	StorageOperationsVdiGenerateConfig StorageOperations = "vdi_generate_config"
+	// Resizing the VDI online
+	StorageOperationsVdiResizeOnline StorageOperations = "vdi_resize_online"
+	// Refreshing the fields on the VDI
+	StorageOperationsVdiUpdate StorageOperations = "vdi_update"
+	// Reverting a VDI to the snapshot
+	StorageOperationsVdiRevert StorageOperations = "vdi_revert"
 	// Creating a PBD for this SR
 	StorageOperationsPbdCreate StorageOperations = "pbd_create"
 	// Destroying one of this SR's PBDs
@@ -88,7 +104,7 @@ type SRRecord struct {
 	PhysicalSize int
 	// type of the storage repository
 	Type string
-	// the type of the SR's content, if required (e.g. ISOs)
+	// the type of the SR's content, if required (for example, ISOs)
 	ContentType string
 	// true if this SR is (capable of being) shared between multiple hosts
 	Shared bool
@@ -287,44 +303,6 @@ func (_class SRClass) AssertCanHostHaStatefile(sessionID SessionRef, sr SRRef) (
 	return
 }
 
-// SetPhysicalUtilisation Sets the SR's physical_utilisation field
-func (_class SRClass) SetPhysicalUtilisation(sessionID SessionRef, self SRRef, value int) (_err error) {
-	_method := "SR.set_physical_utilisation"
-	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
-	if _err != nil {
-		return
-	}
-	_selfArg, _err := convertSRRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
-	if _err != nil {
-		return
-	}
-	_valueArg, _err := convertIntToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
-	if _err != nil {
-		return
-	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
-	return
-}
-
-// SetVirtualAllocation Sets the SR's virtual_allocation field
-func (_class SRClass) SetVirtualAllocation(sessionID SessionRef, self SRRef, value int) (_err error) {
-	_method := "SR.set_virtual_allocation"
-	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
-	if _err != nil {
-		return
-	}
-	_selfArg, _err := convertSRRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
-	if _err != nil {
-		return
-	}
-	_valueArg, _err := convertIntToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
-	if _err != nil {
-		return
-	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
-	return
-}
-
 // SetPhysicalSize Sets the SR's physical_size field
 func (_class SRClass) SetPhysicalSize(sessionID SessionRef, self SRRef, value int) (_err error) {
 	_method := "SR.set_physical_size"
@@ -429,6 +407,37 @@ func (_class SRClass) SetShared(sessionID SessionRef, sr SRRef, value bool) (_er
 		return
 	}
 	_, _err =  _class.client.APICall(_method, _sessionIDArg, _srArg, _valueArg)
+	return
+}
+
+// ProbeExt Perform a backend-specific scan, using the given device_config.  If the device_config is complete, then this will return a list of the SRs present of this type on the device, if any.  If the device_config is partial, then a backend-specific scan will be performed, returning results that will guide the user in improving the device_config.
+func (_class SRClass) ProbeExt(sessionID SessionRef, host HostRef, deviceConfig map[string]string, atype string, smConfig map[string]string) (_retval []ProbeResultRecord, _err error) {
+	_method := "SR.probe_ext"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_hostArg, _err := convertHostRefToXen(fmt.Sprintf("%s(%s)", _method, "host"), host)
+	if _err != nil {
+		return
+	}
+	_deviceConfigArg, _err := convertStringToStringMapToXen(fmt.Sprintf("%s(%s)", _method, "device_config"), deviceConfig)
+	if _err != nil {
+		return
+	}
+	_atypeArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "type"), atype)
+	if _err != nil {
+		return
+	}
+	_smConfigArg, _err := convertStringToStringMapToXen(fmt.Sprintf("%s(%s)", _method, "sm_config"), smConfig)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _deviceConfigArg, _atypeArg, _smConfigArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertProbeResultRecordSetToGo(_method + " -> ", _result.Value)
 	return
 }
 

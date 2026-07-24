@@ -37,7 +37,7 @@ type PIFMetricsRecord struct {
 	DeviceID string
 	// Report device name
 	DeviceName string
-	// Speed of the link (if available)
+	// Speed of the link in Mbit/s (if available)
 	Speed int
 	// Full duplex capability of the link (if available)
 	Duplex bool

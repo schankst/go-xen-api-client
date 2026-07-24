@@ -52,6 +52,8 @@ type Client struct {
 	VLAN VLANClass
 	SM SMClass
 	SR SRClass
+	SrStat SrStatClass
+	ProbeResult ProbeResultClass
 	LVHD LVHDClass
 	VDI VDIClass
 	VBD VBDClass
@@ -66,6 +68,7 @@ type Client struct {
 	Message MessageClass
 	Secret SecretClass
 	Tunnel TunnelClass
+	NetworkSriov NetworkSriovClass
 	PCI PCIClass
 	PGPU PGPUClass
 	GPUGroup GPUGroupClass
@@ -81,6 +84,16 @@ type Client struct {
 	PUSB PUSBClass
 	USBGroup USBGroupClass
 	VUSB VUSBClass
+	Cluster ClusterClass
+	ClusterHost ClusterHostClass
+	Certificate CertificateClass
+	Repository RepositoryClass
+	Observer ObserverClass
+	VMGroup VMGroupClass
+	HostDriver HostDriverClass
+	DriverVariant DriverVariantClass
+	Caller CallerClass
+	RateLimit RateLimitClass
 }
 
 func prepClient(rpc *xmlrpc.Client) *Client {
@@ -116,6 +129,8 @@ func prepClient(rpc *xmlrpc.Client) *Client {
 	client.VLAN = VLANClass{&client}
 	client.SM = SMClass{&client}
 	client.SR = SRClass{&client}
+	client.SrStat = SrStatClass{&client}
+	client.ProbeResult = ProbeResultClass{&client}
 	client.LVHD = LVHDClass{&client}
 	client.VDI = VDIClass{&client}
 	client.VBD = VBDClass{&client}
@@ -130,6 +145,7 @@ func prepClient(rpc *xmlrpc.Client) *Client {
 	client.Message = MessageClass{&client}
 	client.Secret = SecretClass{&client}
 	client.Tunnel = TunnelClass{&client}
+	client.NetworkSriov = NetworkSriovClass{&client}
 	client.PCI = PCIClass{&client}
 	client.PGPU = PGPUClass{&client}
 	client.GPUGroup = GPUGroupClass{&client}
@@ -145,5 +161,15 @@ func prepClient(rpc *xmlrpc.Client) *Client {
 	client.PUSB = PUSBClass{&client}
 	client.USBGroup = USBGroupClass{&client}
 	client.VUSB = VUSBClass{&client}
+	client.Cluster = ClusterClass{&client}
+	client.ClusterHost = ClusterHostClass{&client}
+	client.Certificate = CertificateClass{&client}
+	client.Repository = RepositoryClass{&client}
+	client.Observer = ObserverClass{&client}
+	client.VMGroup = VMGroupClass{&client}
+	client.HostDriver = HostDriverClass{&client}
+	client.DriverVariant = DriverVariantClass{&client}
+	client.Caller = CallerClass{&client}
+	client.RateLimit = RateLimitClass{&client}
 	return &client
 }

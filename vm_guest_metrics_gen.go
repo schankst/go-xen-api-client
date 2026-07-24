@@ -36,6 +36,8 @@ type VMGuestMetricsRecord struct {
 	UUID string
 	// version of the OS
 	OSVersion map[string]string
+	// The NETBIOS name of the machine
+	NetbiosName map[string]string
 	// version of the PV drivers
 	PVDriversVersion map[string]string
 	// Logically equivalent to PV_drivers_detected
@@ -60,6 +62,8 @@ type VMGuestMetricsRecord struct {
 	CanUseHotplugVif TristateType
 	// At least one of the guest's devices has successfully connected to the backend.
 	PVDriversDetected bool
+	// The guest's services data.
+	Services map[string]string
 }
 
 type VMGuestMetricsRef string
@@ -157,6 +161,25 @@ func (_class VMGuestMetricsClass) SetOtherConfig(sessionID SessionRef, self VMGu
 		return
 	}
 	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetServices Get the services field of the given VM_guest_metrics.
+func (_class VMGuestMetricsClass) GetServices(sessionID SessionRef, self VMGuestMetricsRef) (_retval map[string]string, _err error) {
+	_method := "VM_guest_metrics.get_services"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVMGuestMetricsRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
 	return
 }
 
@@ -372,6 +395,25 @@ func (_class VMGuestMetricsClass) GetPVDriversUpToDate(sessionID SessionRef, sel
 // GetPVDriversVersion Get the PV_drivers_version field of the given VM_guest_metrics.
 func (_class VMGuestMetricsClass) GetPVDriversVersion(sessionID SessionRef, self VMGuestMetricsRef) (_retval map[string]string, _err error) {
 	_method := "VM_guest_metrics.get_PV_drivers_version"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVMGuestMetricsRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// GetNetbiosName Get the netbios_name field of the given VM_guest_metrics.
+func (_class VMGuestMetricsClass) GetNetbiosName(sessionID SessionRef, self VMGuestMetricsRef) (_retval map[string]string, _err error) {
+	_method := "VM_guest_metrics.get_netbios_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return

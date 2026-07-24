@@ -51,6 +51,14 @@ type VMMetricsRecord struct {
 	NestedVirt bool
 	// VM is immobile and can't migrate between hosts
 	Nomigrate bool
+	// The current domain type of the VM (for running,suspended, or paused VMs). The last-known domain type for halted VMs.
+	CurrentDomainType DomainType
+	// If the VM is optimised for NUMA
+	NumaOptimised bool
+	// number of NUMA nodes of the host the VM is using
+	NumaNodes int
+	// mapping a NUMA node (int) to an amount of memory (bytes) in that node.
+	NumaNodeMemory map[int]int
 }
 
 type VMMetricsRef string
@@ -148,6 +156,82 @@ func (_class VMMetricsClass) SetOtherConfig(sessionID SessionRef, self VMMetrics
 		return
 	}
 	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetNumaNodeMemory Get the numa_node_memory field of the given VM_metrics.
+func (_class VMMetricsClass) GetNumaNodeMemory(sessionID SessionRef, self VMMetricsRef) (_retval map[int]int, _err error) {
+	_method := "VM_metrics.get_numa_node_memory"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVMMetricsRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertIntToIntMapToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// GetNumaNodes Get the numa_nodes field of the given VM_metrics.
+func (_class VMMetricsClass) GetNumaNodes(sessionID SessionRef, self VMMetricsRef) (_retval int, _err error) {
+	_method := "VM_metrics.get_numa_nodes"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVMMetricsRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// GetNumaOptimised Get the numa_optimised field of the given VM_metrics.
+func (_class VMMetricsClass) GetNumaOptimised(sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
+	_method := "VM_metrics.get_numa_optimised"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVMMetricsRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	return
+}
+
+// GetCurrentDomainType Get the current_domain_type field of the given VM_metrics.
+func (_class VMMetricsClass) GetCurrentDomainType(sessionID SessionRef, self VMMetricsRef) (_retval DomainType, _err error) {
+	_method := "VM_metrics.get_current_domain_type"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertVMMetricsRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEnumDomainTypeToGo(_method + " -> ", _result.Value)
 	return
 }
 

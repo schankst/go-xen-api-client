@@ -72,15 +72,15 @@ type VBDRecord struct {
 	VM VMRef
 	// the virtual disk
 	VDI VDIRef
-	// device seen by the guest e.g. hda1
+	// device seen by the guest, for example, hda1
 	Device string
-	// user-friendly device name e.g. 0,1,2,etc.
+	// user-friendly device name, for example, 0, 1, 2, etc.
 	Userdevice string
 	// true if this VBD is bootable
 	Bootable bool
 	// the mode the VBD should be mounted with
 	Mode VbdMode
-	// how the VBD will appear to the guest (e.g. disk or CD)
+	// how the VBD will appear to the guest (for example, disk or CD)
 	Type VbdType
 	// true if this VBD will support hot-unplug
 	Unpluggable bool
@@ -920,7 +920,7 @@ func (_class VBDClass) Destroy(sessionID SessionRef, self VBDRef) (_err error) {
 	return
 }
 
-// Create Create a new VBD instance, and return its handle. The constructor args are: VM*, VDI*, userdevice*, bootable*, mode*, type*, unpluggable, empty*, other_config*, qos_algorithm_type*, qos_algorithm_params* (* = non-optional).
+// Create Create a new VBD instance, and return its handle. The constructor args are: VM*, VDI*, device, userdevice*, bootable*, mode*, type*, unpluggable, empty*, other_config*, currently_attached, qos_algorithm_type*, qos_algorithm_params* (* = non-optional).
 func (_class VBDClass) Create(sessionID SessionRef, args VBDRecord) (_retval VBDRef, _err error) {
 	_method := "VBD.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

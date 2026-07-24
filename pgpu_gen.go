@@ -20,19 +20,6 @@ var _ = reflect.TypeOf
 var _ = strconv.Atoi
 var _ = time.UTC
 
-type PgpuDom0Access string
-
-const (
-	// dom0 can access this device as normal
-	PgpuDom0AccessEnabled PgpuDom0Access = "enabled"
-	// On host reboot dom0 will be blocked from accessing this device
-	PgpuDom0AccessDisableOnReboot PgpuDom0Access = "disable_on_reboot"
-	// dom0 cannot access this device
-	PgpuDom0AccessDisabled PgpuDom0Access = "disabled"
-	// On host reboot dom0 will be allowed to access this device
-	PgpuDom0AccessEnableOnReboot PgpuDom0Access = "enable_on_reboot"
-)
-
 type PGPURecord struct {
 	// Unique identifier/object reference
 	UUID string
@@ -53,7 +40,7 @@ type PGPURecord struct {
 	// A map relating each VGPU type supported on this GPU to the maximum number of VGPUs of that type which can run simultaneously on this GPU
 	SupportedVGPUMaxCapacities map[VGPUTypeRef]int
 	// The accessibility of this device from dom0
-	Dom0Access PgpuDom0Access
+	Dom0Access PciDom0Access
 	// Is this device the system display device
 	IsSystemDisplayDevice bool
 	// PGPU metadata to determine whether a VGPU can migrate between two PGPUs
@@ -98,7 +85,7 @@ func (_class PGPUClass) GetAll(sessionID SessionRef) (_retval []PGPURef, _err er
 }
 
 // DisableDom0Access 
-func (_class PGPUClass) DisableDom0Access(sessionID SessionRef, self PGPURef) (_retval PgpuDom0Access, _err error) {
+func (_class PGPUClass) DisableDom0Access(sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
 	_method := "PGPU.disable_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -112,12 +99,12 @@ func (_class PGPUClass) DisableDom0Access(sessionID SessionRef, self PGPURef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPgpuDom0AccessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
 	return
 }
 
 // EnableDom0Access 
-func (_class PGPUClass) EnableDom0Access(sessionID SessionRef, self PGPURef) (_retval PgpuDom0Access, _err error) {
+func (_class PGPUClass) EnableDom0Access(sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
 	_method := "PGPU.enable_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -131,7 +118,7 @@ func (_class PGPUClass) EnableDom0Access(sessionID SessionRef, self PGPURef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPgpuDom0AccessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
 	return
 }
 
@@ -334,7 +321,7 @@ func (_class PGPUClass) GetIsSystemDisplayDevice(sessionID SessionRef, self PGPU
 }
 
 // GetDom0Access Get the dom0_access field of the given PGPU.
-func (_class PGPUClass) GetDom0Access(sessionID SessionRef, self PGPURef) (_retval PgpuDom0Access, _err error) {
+func (_class PGPUClass) GetDom0Access(sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
 	_method := "PGPU.get_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -348,7 +335,7 @@ func (_class PGPUClass) GetDom0Access(sessionID SessionRef, self PGPURef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPgpuDom0AccessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
 	return
 }
 
