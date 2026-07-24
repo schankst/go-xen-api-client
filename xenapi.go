@@ -1,6 +1,34 @@
 //go:build ignore
 // +build ignore
 
+// xenapi.go is the code generator behind every *_gen.go file in this
+// package (run via `go generate` or `go run xenapi.go`). It reads
+// xenapi.json - a machine-readable description of the XenAPI, covering
+// every class, field, enum, and message (RPC method), plus each one's
+// doc string - and turns it into idiomatic Go: one Go type per XenAPI
+// class/record/enum, one Go method per XenAPI message, and a matching
+// pair of Go<->XenAPI value converters for every distinct type shape the
+// schema uses.
+//
+// Pipeline (see run, at the bottom): load xenapi.json into the xapi*
+// structs below -> prepare the text/template set used to emit Go source
+// -> for each class, write its <class>_gen.go (enums, record struct, the
+// class's method wrapper type, and one function per message) -> write
+// convert_gen.go (every Go<->XenAPI value converter function referenced
+// along the way, deduplicated by type) -> write client_gen.go (the
+// top-level Client struct tying every class together).
+//
+// The tricky part in practice is goTypeForXenType/funcPartialForXenType/
+// buildConverterFunc: XenAPI's type strings ("VM ref", "int -> string
+// map", "enum vm_operations", ...) are a small compositional grammar, not
+// a fixed enum, and occasionally the schema introduces a shape this
+// generator has never seen (as happened with "an event batch", "<class>
+// record", and the "X option" pattern - see the case arms below). When
+// that happens, generation panics with "Unsupported XenAPI type: ..." or
+// similar, naming the offending type string; teaching the generator that
+// new shape means adding a case to all three of goTypeForXenType,
+// funcPartialForXenType, and buildConverterFunc (and usually a matching
+// template constant).
 package main
 
 import (
@@ -17,6 +45,12 @@ import (
 	"github.com/serenize/snaker"
 )
 
+// These match XenAPI's compound type grammar, e.g. "VM ref", "VM record",
+// "enum vm_operations", "(string -> string) map", "VM operations set",
+// "int option". A type string can nest arbitrarily (e.g. "VM ref set"),
+// which is why goTypeForXenType/funcPartialForXenType/buildConverterFunc
+// recurse on the captured inner type rather than handling each shape as
+// a one-off.
 var (
 	reXenRefType    = regexp.MustCompile("^(.+?) ref$")
 	reXenSetType    = regexp.MustCompile("^(.+?) set$")
@@ -26,6 +60,10 @@ var (
 	reXenOptionType = regexp.MustCompile("^(.+?) option$")
 )
 
+// goTypeForXenType maps an XenAPI type string (as it appears in
+// xenapi.json - "string", "VM ref", "(string -> string) map", ...) to the
+// Go type used to represent it (string, VMRef, map[string]string, ...).
+// Compound shapes recurse on their captured inner type(s).
 func goTypeForXenType(xenType string) (goType string, err error) {
 	var match []string
 	if xenType == "bool" {
@@ -84,6 +122,15 @@ func goTypeForXenType(xenType string) (goType string, err error) {
 	return
 }
 
+// funcPartialForXenType maps an XenAPI type string to the identifier
+// fragment used to name its converter functions (see
+// convertXenTypeFuncName) - e.g. "VM ref" -> "VMRef", so its converters
+// are named convertVMRefToGo/convertVMRefToXen. Mirrors
+// goTypeForXenType's cases; kept as a separate function (rather than
+// deriving the name from the Go type string) so the two can diverge
+// where the Go type alone would be ambiguous or Go-syntax-unfriendly as
+// an identifier (e.g. "[]string" isn't a valid function name fragment,
+// so sets get the "Set" suffix instead).
 func funcPartialForXenType(xenType string) (partial string, err error) {
 	var match []string
 	if xenType == "bool" {
@@ -138,6 +185,13 @@ func funcPartialForXenType(xenType string) (partial string, err error) {
 	return
 }
 
+// convertXenTypeFuncName returns the name of the Go function that
+// converts xenType in the given direction ("ToGo" or "ToXen") - e.g.
+// convertXenTypeFuncName("VM ref", "ToGo") -> "convertVMRefToGo". Each
+// such function has the shared signature
+// func(context string, input interface{}) (T, error) (ToGo) or
+// func(context string, value T) (interface{}, error)-ish (ToXen); see
+// buildConverterFunc for how the body is actually generated.
 func convertXenTypeFuncName(xenType string, direction string) (funcName string, err error) {
 	funcPartial, err := funcPartialForXenType(xenType)
 	if err != nil {
@@ -150,19 +204,35 @@ func convertXenTypeFuncName(xenType string, direction string) (funcName string, 
 
 var reBeginningOfLine = regexp.MustCompile("(?m)^")
 
+// formatGoDoc turns an XenAPI description string into a Go doc comment by
+// prefixing every line with "// ". Used by the "godoc" template function
+// (see prepTemplates) to carry field/class/message descriptions from
+// xenapi.json straight into the generated Go source as real doc comments.
 func formatGoDoc(input string) string {
 	return reBeginningOfLine.ReplaceAllString(input, "// ")
 }
 
+// formatSingleLine collapses a (possibly multi-line) description into one
+// line, for use where a doc comment must stay on the function's own
+// comment line (see messageFuncTemplate).
 func formatSingleLine(input string) string {
 	return strings.Replace(input, "\n", " ", -1)
 }
 
+// exportedGoIdentifier converts an XenAPI snake_case (or hyphenated)
+// identifier into an exported Go identifier, e.g. "name_label" ->
+// "NameLabel". Used for anything that becomes a public Go symbol: type
+// names, struct field names, method names.
 func exportedGoIdentifier(input string) string {
 	input = strings.Replace(input, "-", "_", -1)
 	return snaker.SnakeToCamel(input)
 }
 
+// internalGoIdentifier converts an XenAPI snake_case identifier into an
+// unexported, camelCase Go identifier, e.g. "session_id" -> "sessionID"
+// courtesy of snaker's initialism handling. Used for local variable and
+// method-parameter names. A couple of XenAPI names collide with Go
+// keywords ("type", "interface") and get renamed outright.
 func internalGoIdentifier(input string) (ident string) {
 	input = strings.Replace(input, "-", "_", -1)
 
@@ -185,6 +255,10 @@ func internalGoIdentifier(input string) (ident string) {
 	return
 }
 
+// executeTemplateToString renders the named template against data and
+// returns the result as a string, rather than writing it directly to a
+// file - used wherever the generator needs to compose a snippet (e.g. one
+// converter function's body) before deciding where it ultimately goes.
 func executeTemplateToString(templates *template.Template, name string, data interface{}) (text string, err error) {
 	var buf bytes.Buffer
 
@@ -197,27 +271,48 @@ func executeTemplateToString(templates *template.Template, name string, data int
 	return
 }
 
+// The xapi* types below are the input model: they mirror xenapi.json's own
+// structure field-for-field (see loadXenAPI, which json.Unmarshals the
+// whole schema straight into a []*xapiClass), not anything Go-shaped yet.
+// xapiClass is the root: one per XenAPI class (VM, Host, SR, ...), each
+// holding its own enums, fields (-> one Go record type), and messages
+// (-> one Go method per message). Everything under "Templates for
+// generated Go source" further down consumes these as template data.
+
+// xapiLifecycle is one entry in a field/message/class's publication
+// history - e.g. {Release: "rio", Transition: "published"}. Parsed but
+// not currently used for anything beyond documentation.
 type xapiLifecycle struct {
 	Description string `json:"description"`
 	Release     string `json:"release"`
 	Transition  string `json:"transition"`
 }
 
+// xapiLifecycleInfo wraps a field/message/class's full lifecycle history.
+// Changed from a bare array to this {state, transitions} shape at some
+// point upstream; see goTypeForXenType's git history/README for context.
 type xapiLifecycleInfo struct {
 	State       string           `json:"state"`
 	Transitions []*xapiLifecycle `json:"transitions"`
 }
 
+// xapiEnumValue is one named value of an XenAPI enum, e.g. {Name: "Halted"}
+// for the vm_power_state enum.
 type xapiEnumValue struct {
 	Doc  string `json:"doc"`
 	Name string `json:"name"`
 }
 
+// xapiEnum is one enum type declared under a class, e.g. vm_power_state
+// under VM. Becomes a Go string type plus one constant per value (see
+// enumTypeTemplate).
 type xapiEnum struct {
 	Values []*xapiEnumValue `json:"values"`
 	Name   string           `json:"name"`
 }
 
+// xapiField is one record field, e.g. VM.name_label. Becomes one field
+// in the class's generated Go record struct (see recordTypeTemplate).
 type xapiField struct {
 	Default     string             `json:"default,omitempty"`
 	Lifecycle   *xapiLifecycleInfo `json:"lifecycle"`
@@ -228,39 +323,58 @@ type xapiField struct {
 	Name        string             `json:"name"`
 }
 
+// GoType returns the Go type this field's XenAPI type maps to (e.g.
+// "string", "VMRef", "map[string]string").
 func (field *xapiField) GoType() (string, error) {
 	return goTypeForXenType(field.Type)
 }
 
+// xapiParam is one parameter of an XenAPI message, e.g. VM.start's "force"
+// parameter.
 type xapiParam struct {
 	Doc  string `json:"doc"`
 	Name string `json:"name"`
 	Type string `json:"type"`
 }
 
+// GoType returns the Go type this parameter's XenAPI type maps to.
 func (param *xapiParam) GoType() (string, error) {
 	return goTypeForXenType(param.Type)
 }
 
+// xapiResult is a message's [type, doc] pair from xenapi.json (a 2-element
+// array, hence the []string rather than a struct); only the type (index
+// 0) is used here.
 type xapiResult []string
 
+// Type returns the XenAPI type string of the result, e.g. "VM ref" or
+// "void" for a message with no return value.
 func (result *xapiResult) Type() string {
 	return (*result)[0]
 }
 
+// GoType returns the Go type this result's XenAPI type maps to.
 func (result *xapiResult) GoType() (string, error) {
 	return goTypeForXenType(result.Type())
 }
 
+// IsVoid reports whether the message returns nothing, in which case the
+// generated Go method omits the _retval return value entirely (see
+// messageFuncTemplate).
 func (result *xapiResult) IsVoid() bool {
 	return result.Type() == "void"
 }
 
+// xapiError is one of the named errors a message can raise (documented in
+// XenAPI, but not represented as a distinct Go type - see error.go/
+// gen_errors.go instead, which cover the ERR_* constants generically).
 type xapiError struct {
 	Doc  string `json:"doc"`
 	Name string `json:"name"`
 }
 
+// xapiMessage is one RPC method on a class, e.g. VM.start. Becomes one Go
+// method on the class's Class struct (see messageFuncTemplate).
 type xapiMessage struct {
 	Implicit    bool               `json:"implicit"`
 	Lifecycle   *xapiLifecycleInfo `json:"lifecycle"`
@@ -273,6 +387,10 @@ type xapiMessage struct {
 	Name        string             `json:"name"`
 }
 
+// xapiClass is one top-level XenAPI class, e.g. VM, Host, SR - the root
+// unit of code generation: each becomes its own <name>_gen.go file
+// containing that class's enums, record type, Class wrapper type, and one
+// method per message (see generateClassAPI).
 type xapiClass struct {
 	Tag         string             `json:"tag"`
 	Lifecycle   *xapiLifecycleInfo `json:"lifecycle"`
@@ -283,6 +401,29 @@ type xapiClass struct {
 	Description string             `json:"description"`
 }
 
+// Templates for generated Go source, below. Each is parsed into
+// generator.templates (see prepTemplates) under the name given in
+// templateLedger and rendered via executeTemplateToString or directly to
+// a file handle. The pipe filters used throughout (godoc, singleLine,
+// exported, internal, convertToGo, convertToXen) are registered in
+// prepTemplates too.
+//
+// The convert*Template constants come in ToGo/ToXen pairs, one pair per
+// distinct *shape* of XenAPI type (simple scalar, ref, set, option,
+// record, map, enum) rather than one pair per concrete type - e.g. there
+// is one convertSetTypeToGoFuncTemplate that generates a correctly typed
+// converter for "VM ref set", "string set", or any other "X set", by
+// parameterizing on the item type's own converter (see
+// buildSetConverterFunc). ToGo converters all share the signature
+// func(context string, input interface{}) (T, error); ToXen converters
+// take a T and return something assignable into an xmlrpc.Struct/[]any
+// slot (see client.go's APICall and the xmlrpc package).
+
+// fileHeaderTemplate is prepended to every generated file: the
+// do-not-edit notice, package clause, and shared imports. The var _ =
+// lines exist because not every generated file ends up using every
+// import (e.g. a class with no time.Time fields won't reference "time"),
+// and Go doesn't allow unused imports.
 const fileHeaderTemplate string = `//
 // This file is generated. To change the content of this file, please do not
 // apply the change to this file because it will get overwritten. Instead,
@@ -306,6 +447,8 @@ var _ = strconv.Atoi
 var _ = time.UTC
 `
 
+// enumTypeTemplate renders one XenAPI enum as a Go string type plus one
+// constant per value (see xapiEnum).
 const enumTypeTemplate string = `
 type {{ .Name|exported }} string
 
@@ -315,6 +458,9 @@ const ({{ range .Values }}
 )
 `
 
+// recordTypeTemplate renders a class's fields as a Go struct, e.g.
+// VMRecord (see xapiField). Only emitted for classes that have fields
+// (see generateClassAPI).
 const recordTypeTemplate string = `
 type {{ .Name|exported }}Record struct {{ "{" }}{{ range .Fields }}
 	{{ .Description|godoc }}
@@ -322,6 +468,10 @@ type {{ .Name|exported }}Record struct {{ "{" }}{{ range .Fields }}
 }
 `
 
+// classTypeTemplate renders a class's method-wrapper type, e.g. VMClass -
+// the receiver every one of that class's generated methods hangs off of
+// (see messageFuncTemplate). Holds a back-reference to the owning Client
+// so its methods can call client.APICall.
 const classTypeTemplate string = `
 {{ .Description|godoc }}
 type {{ .Name|exported }}Class struct {
@@ -329,10 +479,19 @@ type {{ .Name|exported }}Class struct {
 }
 `
 
+// refTypeTemplate renders a class's reference type, e.g. VMRef - the
+// opaque handle XenAPI uses to identify one instance of that class,
+// underneath just a string (see goTypeForXenType's " ref" case).
 const refTypeTemplate string = `
 type {{ .Name|exported }}Ref string
 `
 
+// messageFuncTemplate renders one XenAPI message as a Go method on its
+// class's Class type, e.g. VMClass.Start. Every parameter is converted
+// Go->XenAPI, the call is dispatched via Client.APICall, and (unless the
+// message is void) the result is converted XenAPI->Go before returning -
+// see convertToXen/convertToGo, the template functions that resolve to
+// the right converter for each parameter/result's type (getOrCreateConverterFunc).
 const messageFuncTemplate string = `
 {{ .Message.Name|exported|godoc }} {{ .Message.Description|singleLine }}{{ if .Message.Errors }}
 //
@@ -353,6 +512,11 @@ func (_class {{ .Class.Name|exported }}Class) {{ .Message.Name|exported }}({{ ra
 }
 `
 
+// clientStructTemplate renders the single top-level Client struct (one
+// field per XenAPI class) and its constructor helper prepClient, called
+// from the hand-written NewClient in client.go. This is the only
+// template whose comment (right below) ends up as real, user-facing
+// GoDoc rather than being generated per-class.
 const clientStructTemplate string = `
 // Client is a XenAPI client. Create one with NewClient, then log in via
 // Client.Session.LoginWithPassword before calling any other method - every
@@ -372,6 +536,11 @@ func prepClient(rpc *xmlrpc.Client) *Client {
 }
 `
 
+// convertSimpleTypeToGoFuncTemplate/convertSimpleTypeToXenFuncTemplate
+// handle types that need no real conversion beyond a Go type assertion:
+// string, bool, float64, time.Time, and the two opaque xmlrpc.Struct
+// stand-ins ("an event batch", "<class> record" - see
+// buildSimpleConverterFunc's callers in buildConverterFunc).
 const convertSimpleTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (value {{ .GoType }}, err error) {
 	if input == nil {
@@ -391,6 +560,10 @@ func {{ .FuncName }}(context string, value {{ .GoType }}) ({{ .GoType }}, error)
 }
 `
 
+// convertIntToGoFuncTemplate/convertIntToXenFuncTemplate handle XenAPI's
+// "int": XML-RPC has no native integer-as-string convention here, so
+// XenAPI sends/expects ints as decimal strings, hence strconv rather than
+// a plain type assertion.
 const convertIntToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (value int, err error) {
 	strValue, ok := input.(string)
@@ -409,6 +582,9 @@ func {{ .FuncName }}(context string, value int) (string, error) {
 }
 `
 
+// convertRefTypeToGoFuncTemplate/convertRefTypeToXenFuncTemplate handle
+// "X ref" types (VMRef, HostRef, ...) - a plain string cast, since a ref
+// is just an opaque handle string as far as the wire format is concerned.
 const convertRefTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (ref {{ .GoType }}, err error) {
 	value, ok := input.(string)
@@ -427,6 +603,11 @@ func {{ .FuncName }}(context string, ref {{ .GoType }}) (string, error) {
 }
 `
 
+// convertSetTypeToGoFuncTemplate/convertSetTypeToXenFuncTemplate handle
+// "X set" types ([]T in Go) by converting each element with the item
+// type's own converter (ItemConverter, resolved by buildSetConverterFunc
+// via getOrCreateConverterFunc) - this is what makes sets of any type,
+// including sets of sets, work without a template per concrete type.
 const convertSetTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (slice {{ .GoType }}, err error) {
 	set, ok := input.([]interface{})
@@ -462,6 +643,12 @@ func {{ .FuncName }}(context string, slice {{ .GoType }}) (set []interface{}, er
 }
 `
 
+// convertOptionTypeToGoFuncTemplate/convertOptionTypeToXenFuncTemplate
+// handle "X option" types (a value that may be absent): the ToGo side
+// short-circuits on a nil input rather than delegating to the inner
+// converter, since the inner converter isn't guaranteed to accept nil
+// itself; both sides otherwise just delegate to InnerConverter (see
+// buildOptionConverterFunc).
 const convertOptionTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (value {{ .GoType }}, err error) {
 	if input == nil {
@@ -478,6 +665,13 @@ func {{ .FuncName }}(context string, value {{ .GoType }}) (interface{}, error) {
 }
 `
 
+// convertRecordTypeToGoFuncTemplate/convertRecordTypeToXenFuncTemplate
+// handle "X record" types (VMRecord, ...): one field at a time, using
+// each field's own converter, generated from the same xapiField list
+// used by recordTypeTemplate to build the struct in the first place (see
+// buildRecordConverterFunc, which looks the class back up by name to get
+// its Fields). A field absent from the XML-RPC struct (rather than
+// present-but-nil) is simply left at its Go zero value on the ToGo side.
 const convertRecordTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (record {{ .GoType }}, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
@@ -506,6 +700,12 @@ func {{ .FuncName }}(context string, record {{ .GoType }}) (rpcStruct xmlrpc.Str
 }
 `
 
+// convertMapTypeToGoFuncTemplate/convertMapTypeToXenFuncTemplate handle
+// "(K -> V) map" types (map[K]V in Go), converting both keys and values
+// via their own converters (KeyConverter/ValueConverter, see
+// buildMapConverterFunc) - the XML-RPC wire representation is always an
+// xmlrpc.Struct (string-keyed), so non-string K still round-trips through
+// a string key, just converted back to K on the way in.
 const convertMapTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (goMap {{ .GoType }}, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
@@ -549,6 +749,15 @@ func {{ .FuncName }}(context string, goMap {{.GoType }}) (xenMap xmlrpc.Struct, 
 }
 `
 
+// convertEnumTypeToGoFuncTemplate/convertEnumTypeToXenFuncTemplate handle
+// "enum X" types: ToXen is just a string cast, but ToGo switches over
+// every known value (from the same xapiEnumValue list enumTypeTemplate
+// used to emit the constants - see buildEnumConverterFunc, which looks
+// the class back up by enum name to get its Values) and, in the default
+// case, passes an unrecognized value through as-is rather than erroring -
+// this is the enum-tolerance patch (see patch_enums.go/README) that lets
+// this fork survive schema drift instead of hard-failing on any value
+// newer than what it was generated against.
 const convertEnumTypeToGoFuncTemplate string = `
 func {{ .FuncName }}(context string, input interface{}) (value {{ .GoType }}, err error) {
 	strValue, err := {{ "string"|convertToGo }}(context, input)
@@ -571,11 +780,20 @@ func {{ .FuncName }}(context string, value {{ .GoType }}) (string, error) {
 }
 `
 
+// converterFunc is one generated Go<->XenAPI conversion function: its
+// name (for other generated code to call) and its full source definition
+// (to be written into convert_gen.go).
 type converterFunc struct {
 	name       string
 	definition string
 }
 
+// apiGenerator holds all the state threaded through one generation run:
+// the parsed schema, the compiled template set, and two caches - one
+// memoizing converter functions by (type, direction) so e.g. "VM ref" is
+// only ever converted once no matter how many messages use it, one
+// tracking which enum names have already been emitted so a shared enum
+// (declared under more than one class) doesn't get a duplicate Go type.
 type apiGenerator struct {
 	classes      []*xapiClass
 	templates    *template.Template
@@ -590,6 +808,7 @@ func newAPIGenerator() apiGenerator {
 	}
 }
 
+// loadXenAPI reads and parses filename (xenapi.json) into generator.classes.
 func (generator *apiGenerator) loadXenAPI(filename string) (err error) {
 	xenAPI, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -599,6 +818,10 @@ func (generator *apiGenerator) loadXenAPI(filename string) (err error) {
 	return json.Unmarshal(xenAPI, &generator.classes)
 }
 
+// prepTemplates parses every template constant above into
+// generator.templates and registers the pipe filters/functions
+// ("godoc", "convertToGo", ...) they use. Must run once, after loadXenAPI
+// and before any generate* method.
 func (generator *apiGenerator) prepTemplates() (err error) {
 	generator.templates = template.New("")
 
@@ -659,6 +882,8 @@ func (generator *apiGenerator) prepTemplates() (err error) {
 	return
 }
 
+// buildSimpleConverterFunc renders convertSimpleTypeTo{Go,Xen}FuncTemplate
+// for a type that converts via a plain Go type assertion/cast.
 func (generator *apiGenerator) buildSimpleConverterFunc(xenType string, direction string, funcName string, goType string) (string, error) {
 	args := map[string]interface{}{
 		"FuncName": funcName,
@@ -668,6 +893,8 @@ func (generator *apiGenerator) buildSimpleConverterFunc(xenType string, directio
 	return executeTemplateToString(generator.templates, "convertSimpleType"+direction+"Func", args)
 }
 
+// buildIntConverterFunc renders convertIntTo{Go,Xen}FuncTemplate for
+// XenAPI's "int" (a decimal string on the wire).
 func (generator *apiGenerator) buildIntConverterFunc(xenType string, direction string, funcName string) (string, error) {
 	args := map[string]interface{}{
 		"FuncName": funcName,
@@ -676,6 +903,11 @@ func (generator *apiGenerator) buildIntConverterFunc(xenType string, direction s
 	return executeTemplateToString(generator.templates, "convertInt"+direction+"Func", args)
 }
 
+// buildRefConverterFunc renders convertRefTypeTo{Go,Xen}FuncTemplate for
+// an "X ref" type. baseType (the class name the ref points to) isn't
+// actually needed by the template - goTypeForXenType derives the Go ref
+// type name straight from xenType - but is accepted for symmetry with
+// the other build*ConverterFunc signatures.
 func (generator *apiGenerator) buildRefConverterFunc(xenType string, direction string, funcName string, baseType string) (string, error) {
 	goType, err := goTypeForXenType(xenType)
 	if err != nil {
@@ -690,6 +922,9 @@ func (generator *apiGenerator) buildRefConverterFunc(xenType string, direction s
 	return executeTemplateToString(generator.templates, "convertRefType"+direction+"Func", args)
 }
 
+// buildSetConverterFunc renders convertSetTypeTo{Go,Xen}FuncTemplate for
+// an "X set" type, first resolving (or building) itemType's own converter
+// via getOrCreateConverterFunc so nested sets/records/etc. work.
 func (generator *apiGenerator) buildSetConverterFunc(xenType string, direction string, funcName string, itemType string) (string, error) {
 	goType, err := goTypeForXenType(xenType)
 	if err != nil {
@@ -710,6 +945,9 @@ func (generator *apiGenerator) buildSetConverterFunc(xenType string, direction s
 	return executeTemplateToString(generator.templates, "convertSetType"+direction+"Func", args)
 }
 
+// buildOptionConverterFunc renders convertOptionTypeTo{Go,Xen}FuncTemplate
+// for an "X option" type, delegating the non-nil case to innerType's own
+// converter.
 func (generator *apiGenerator) buildOptionConverterFunc(xenType string, direction string, funcName string, innerType string) (string, error) {
 	goType, err := goTypeForXenType(xenType)
 	if err != nil {
@@ -730,6 +968,11 @@ func (generator *apiGenerator) buildOptionConverterFunc(xenType string, directio
 	return executeTemplateToString(generator.templates, "convertOptionType"+direction+"Func", args)
 }
 
+// buildRecordConverterFunc renders convertRecordTypeTo{Go,Xen}FuncTemplate
+// for an "X record" type. Looks itemType (the class name) back up in
+// generator.classes to get its field list - the same list
+// recordTypeTemplate used to define the struct in the first place, so the
+// two always stay in sync.
 func (generator *apiGenerator) buildRecordConverterFunc(xenType string, direction string, funcName string, itemType string) (string, error) {
 	goType, err := goTypeForXenType(xenType)
 	if err != nil {
@@ -756,6 +999,9 @@ func (generator *apiGenerator) buildRecordConverterFunc(xenType string, directio
 	return executeTemplateToString(generator.templates, "convertRecordType"+direction+"Func", args)
 }
 
+// buildMapConverterFunc renders convertMapTypeTo{Go,Xen}FuncTemplate for a
+// "(K -> V) map" type, resolving both keyType's and valueType's own
+// converters.
 func (generator *apiGenerator) buildMapConverterFunc(xenType string, direction string, funcName string, keyType string, valueType string) (string, error) {
 	goType, err := goTypeForXenType(xenType)
 	if err != nil {
@@ -782,6 +1028,10 @@ func (generator *apiGenerator) buildMapConverterFunc(xenType string, direction s
 	return executeTemplateToString(generator.templates, "convertMapType"+direction+"Func", args)
 }
 
+// buildEnumConverterFunc renders convertEnumTypeTo{Go,Xen}FuncTemplate for
+// an "enum X" type. Searches every class's Enums for one named enumType -
+// enums aren't indexed by name anywhere, so this is a linear scan, run at
+// most once per enum since getOrCreateConverterFunc caches the result.
 func (generator *apiGenerator) buildEnumConverterFunc(xenType string, direction string, funcName string, enumType string) (string, error) {
 	goType, err := goTypeForXenType(xenType)
 	if err != nil {
@@ -811,6 +1061,14 @@ classLoop:
 	return executeTemplateToString(generator.templates, "convertEnumType"+direction+"Func", args)
 }
 
+// buildConverterFunc is the type-shape dispatcher: given any XenAPI type
+// string, it decides which build*ConverterFunc handles that shape and
+// delegates to it. This is the function that panics with "Unsupported
+// XenAPI type"/"Unable to build type conversion function" when the
+// schema introduces a shape none of the case arms recognize - see the
+// file-level comment for what to do when that happens. Order matters
+// somewhat: more specific matches (exact string equality) are checked
+// before the regexp-based compound-type matches.
 func (generator *apiGenerator) buildConverterFunc(xenType string, direction string) (converter converterFunc, err error) {
 	funcName, err := convertXenTypeFuncName(xenType, direction)
 	if err != nil {
@@ -855,6 +1113,13 @@ func (generator *apiGenerator) buildConverterFunc(xenType string, direction stri
 	return
 }
 
+// getOrCreateConverterFunc returns the (xenType, direction) converter,
+// building it via buildConverterFunc on first request and caching the
+// result in generator.converters thereafter - the single choke point
+// every build*ConverterFunc goes through when it needs a nested type's
+// converter (e.g. a set's item converter), which is what makes recursive
+// types (sets of sets, records containing records, ...) terminate: each
+// distinct (type, direction) pair is only ever built once.
 func (generator *apiGenerator) getOrCreateConverterFunc(xenType string, direction string) (converter converterFunc, err error) {
 	converterKey := xenType + direction
 	converter, found := generator.converters[converterKey]
@@ -868,6 +1133,10 @@ func (generator *apiGenerator) getOrCreateConverterFunc(xenType string, directio
 	return
 }
 
+// generateClassAPI writes class's <name>_gen.go: the file header, its
+// enums (skipping any already emitted under another class - see
+// emittedEnums), its record type (if it has fields), its Class type, and
+// one method per message.
 func (generator *apiGenerator) generateClassAPI(class *xapiClass) (err error) {
 	apiFilename := fmt.Sprintf("%s_gen.go", strings.ToLower(class.Name))
 
@@ -931,6 +1200,11 @@ func (generator *apiGenerator) generateClassAPI(class *xapiClass) (err error) {
 	return
 }
 
+// generateConverters writes convert_gen.go: every converter function
+// built over the course of generating all the classes (via
+// getOrCreateConverterFunc), sorted by cache key for a deterministic
+// diff between regenerations. Must run after every generateClassAPI call
+// - it only knows about converters that were actually requested.
 func (generator *apiGenerator) generateConverters() (err error) {
 	fileHandle, err := os.Create("convert_gen.go")
 	if err != nil {
@@ -960,6 +1234,8 @@ func (generator *apiGenerator) generateConverters() (err error) {
 	return
 }
 
+// generateClient writes client_gen.go: the top-level Client struct and
+// its prepClient constructor helper, one field per class.
 func (generator *apiGenerator) generateClient() (err error) {
 	fileHandle, err := os.Create("client_gen.go")
 	if err != nil {
@@ -980,6 +1256,11 @@ func (generator *apiGenerator) generateClient() (err error) {
 	return
 }
 
+// run is the whole generation pipeline, in order: load xenapi.json,
+// prepare templates, generate every class's file (which along the way
+// populates generator.converters with whatever converters those classes
+// turned out to need), then generate convert_gen.go and client_gen.go
+// from what was accumulated.
 func (generator *apiGenerator) run() (err error) {
 	err = generator.loadXenAPI("xenapi.json")
 	if err != nil {
@@ -1007,6 +1288,10 @@ func (generator *apiGenerator) run() (err error) {
 	return
 }
 
+// main runs the generator against xenapi.json in the current directory,
+// writing *_gen.go/convert_gen.go/client_gen.go there too - run this via
+// `go generate` (see the //go:generate directive in client.go) or
+// `go run xenapi.go` from the repo root.
 func main() {
 	generator := newAPIGenerator()
 	err := generator.run()
