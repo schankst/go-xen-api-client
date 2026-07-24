@@ -144,6 +144,8 @@ against, that's tracked separately:
 
 ## More
 
+- [GOOD_TO_KNOW.md](GOOD_TO_KNOW.md) — real XenAPI behavior/gotchas this
+  fork's development turned up, with sources.
 - [MAINTAINING.md](MAINTAINING.md) — how the generated bindings and
   `error.go` are produced, and how to refresh them by hand.
 - [LICENSING.md](LICENSING.md) — the licensing situation of everything
