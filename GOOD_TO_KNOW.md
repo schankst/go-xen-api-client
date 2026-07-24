@@ -105,3 +105,22 @@ client against this field: don't assume every `datetime`-typed field is
 wire-compatible with the others just because the schema says so alike.
 The field is marked `Deprecated_s` in `xenapi.json`, which likely explains
 why it isn't held to the same wire-format discipline as everything else.
+
+## A host's boot time isn't a schema field - it's an `other_config` convention
+
+There's no `Host.boot_time`/`uptime` field in the schema at all. XCP-ng
+(and XenServer generally) instead stashes it as a plain string value in
+`Host.other_config["boot_time"]` - an informal convention, not part of
+the typed datamodel, so it's just whatever string happens to be in that
+generic `map[string]string`. `other_config["agent_start_time"]` is the
+same idea for when the `xapi` toolstack itself last (re)started, which
+can be more recent than the actual host boot if only the toolstack was
+restarted.
+
+Observed on a live XCP-ng host, both values are the same kind of
+OCaml-float-as-string this fork already works around for
+`Event.timestamp` above - e.g. `"1782639432."`, trailing dot included -
+not a plain integer. Parse with `strconv.ParseFloat` + `time.Unix`, not
+`strconv.Atoi`/`ParseInt`, the same way. See `parseOtherConfigTime` in
+the [`xen`](https://github.com/schankst/xen) CLI's `hosts.go` for a
+consumer doing exactly that to show boot time/uptime.
