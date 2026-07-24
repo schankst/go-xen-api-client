@@ -172,7 +172,38 @@ Each of the release names can be mapped back to a version listed here:
 
 - https://xapi-project.github.io/xen-api/releases.html
 
-## Regenerating API after xenapi.json update
+## Automated regeneration
+
+`.github/workflows/regenerate.yml` runs weekly (and on manual dispatch) and
+does the full regeneration below by itself:
+
+1. Fetches the current `xenapi.json`; exits immediately if it's unchanged.
+2. Regenerates all `*_gen.go` files (`go run xenapi.go`).
+3. Re-applies the enum-tolerance patch (`go run patch_enums.go`).
+4. Regenerates `error.go` from the upstream OCaml error definitions
+   (`go run gen_errors.go`) — this source isn't part of `xenapi.json` at all
+   and would otherwise silently keep drifting (see "Implementation notes"
+   below).
+5. Updates the `SchemaXAPIRelease` constant (`go run update_schema_release.go`).
+6. Runs `go build`/`go vet`; if either fails, or if step 2 panics on an
+   unrecognized schema construct, **the workflow fails loudly and opens a
+   GitHub issue** rather than pushing anything broken.
+7. On success: commits everything, bumps the minor version (e.g. `v0.1.0` ->
+   `v0.2.0`), tags, and pushes.
+
+The one thing this **can't** automate: if `xenapi.json` introduces a schema
+construct `xenapi.go` has never seen (the way `"an event batch"` or
+`"X option"` showed up in this fork's last manual regeneration), generation
+panics and step 6 catches it — but teaching the generator that new construct
+still needs a human. That's an inherent limit, not a workflow bug: whether a
+brand-new type pattern is safe to map to `xmlrpc.Struct`, needs a real Go
+type, or something else entirely, is a judgment call the generator can't
+make for itself.
+
+Each of the three `go run <file>.go` tools above is also meant to be run
+locally the same way, independent of CI, if you're regenerating by hand.
+
+## Regenerating API after xenapi.json update (manual / what the tools above do)
 If XenAPI was updated, it is required to regenerate all of files with a new API description. In order to do that one needs to follow these steps:
 - Get newest `xenapi.json` from the link above (e.g.
   `https://raw.githubusercontent.com/xapi-project/xapi-project.github.io/master/_data/xenapi.json`).
@@ -184,7 +215,8 @@ If XenAPI was updated, it is required to regenerate all of files with a new API 
 - Generate new API with `go generate` (or `go run xenapi.go` directly)
 - **Reapply the enum-tolerance patch** described above — it lives only in
   `convert_gen.go` and gets wiped out by regeneration along with every other
-  generated file. It's a mechanical find/replace over every
+  generated file. `go run patch_enums.go` does this mechanically; by hand,
+  it's a find/replace over every
   `default: err = fmt.Errorf("... but this is not any of the known values" ...)`
   case in that file, turning it into `value = <EnumType>(strValue)`.
 - If the schema introduced a new construct `xenapi.go` doesn't know how to
