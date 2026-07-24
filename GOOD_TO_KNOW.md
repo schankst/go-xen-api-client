@@ -86,3 +86,22 @@ record, and the per-event `snapshot` field's concrete type depends on
 that event's class at runtime. This fork represents both as opaque
 `xmlrpc.Struct` rather than a typed Go struct - see `xmlrpc/doc.go` and
 `MAINTAINING.md` for why, if you need to consume events yourself.
+
+## `Event`'s deprecated `timestamp` field doesn't arrive as a real `datetime`
+
+Every other `datetime`-typed field in the schema turns up on the wire as a
+properly tagged `<dateTime.iso8601>` value, which the `xmlrpc` package
+parses straight into a Go `time.Time`. `Event`'s `timestamp` field - the
+one on `EventRecord` from `event.next`, not `event.from`'s opaque batch -
+is the one exception observed so far: a live XCP-ng host sent it as a
+plain `<string>` containing an OCaml-style float, e.g. `"1784931839."`
+(the trailing dot is `string_of_float`'s own rendering of a whole-number
+float, not a typo).
+
+`convertTimeToGo` tolerates this - falling back to `strconv.ParseFloat`
+and `time.Unix` when the value isn't already a `time.Time` - instead of
+failing the whole event. Worth knowing if you write your own XML-RPC
+client against this field: don't assume every `datetime`-typed field is
+wire-compatible with the others just because the schema says so alike.
+The field is marked `Deprecated_s` in `xenapi.json`, which likely explains
+why it isn't held to the same wire-format discipline as everything else.

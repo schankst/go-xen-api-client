@@ -582,6 +582,41 @@ func {{ .FuncName }}(context string, value int) (string, error) {
 }
 `
 
+// convertTimeToGoFuncTemplate handles XenAPI's "datetime": normally the
+// xmlrpc decoder already produces a time.Time from a properly wire-tagged
+// <dateTime.iso8601> element, but at least one deprecated field - Event's
+// "timestamp" (the schema itself marks it Deprecated_s) - has been
+// observed sent as an OCaml-style float-as-string Unix timestamp instead
+// (e.g. "1784931839.", note the trailing dot from OCaml's string_of_float
+// on a whole number), which the xmlrpc decoder faithfully passes through
+// as a Go string rather than erroring on the wire format itself. This
+// tolerates that as a fallback instead of hard-failing, mirroring the enum
+// tolerance elsewhere in this generator for schema/wire divergence (see
+// convertEnumTypeToGoFuncTemplate). ParseFloat (not ParseInt) is
+// deliberate: it accepts both that trailing-dot float form and a plain
+// integer string.
+const convertTimeToGoFuncTemplate string = `
+func {{ .FuncName }}(context string, input interface{}) (value time.Time, err error) {
+	if input == nil {
+		return
+	}
+	if t, ok := input.(time.Time); ok {
+		value = t
+		return
+	}
+	if s, ok := input.(string); ok {
+		if seconds, perr := strconv.ParseFloat(s, 64); perr == nil {
+			wholeSeconds := int64(seconds)
+			nanoseconds := int64((seconds - float64(wholeSeconds)) * 1e9)
+			value = time.Unix(wholeSeconds, nanoseconds)
+			return
+		}
+	}
+	err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "time.Time", context, reflect.TypeOf(input), input)
+	return
+}
+`
+
 // convertRefTypeToGoFuncTemplate/convertRefTypeToXenFuncTemplate handle
 // "X ref" types (VMRef, HostRef, ...) - a plain string cast, since a ref
 // is just an opaque handle string as far as the wire format is concerned.
@@ -868,6 +903,7 @@ func (generator *apiGenerator) prepTemplates() (err error) {
 		"convertSimpleTypeToXenFunc": convertSimpleTypeToXenFuncTemplate,
 		"convertIntToGoFunc":         convertIntToGoFuncTemplate,
 		"convertIntToXenFunc":        convertIntToXenFuncTemplate,
+		"convertTimeToGoFunc":        convertTimeToGoFuncTemplate,
 		"convertRefTypeToGoFunc":     convertRefTypeToGoFuncTemplate,
 		"convertRefTypeToXenFunc":    convertRefTypeToXenFuncTemplate,
 		"convertSetTypeToGoFunc":     convertSetTypeToGoFuncTemplate,
@@ -911,6 +947,23 @@ func (generator *apiGenerator) buildIntConverterFunc(xenType string, direction s
 	}
 
 	return executeTemplateToString(generator.templates, "convertInt"+direction+"Func", args)
+}
+
+// buildTimeConverterFunc renders the ToGo/ToXen converter for XenAPI's
+// "datetime". ToXen behaves like any other simple type (the caller already
+// holds a valid time.Time), but ToGo uses the dedicated
+// convertTimeToGoFuncTemplate instead, which additionally tolerates a
+// plain decimal-string Unix timestamp - see that template's doc comment.
+func (generator *apiGenerator) buildTimeConverterFunc(xenType string, direction string, funcName string) (string, error) {
+	if direction == "ToXen" {
+		return generator.buildSimpleConverterFunc(xenType, direction, funcName, "time.Time")
+	}
+
+	args := map[string]interface{}{
+		"FuncName": funcName,
+	}
+
+	return executeTemplateToString(generator.templates, "convertTimeToGoFunc", args)
 }
 
 // buildRefConverterFunc renders convertRefTypeTo{Go,Xen}FuncTemplate for
@@ -1099,7 +1152,7 @@ func (generator *apiGenerator) buildConverterFunc(xenType string, direction stri
 	} else if xenType == "<class> record" {
 		funcDefinition, err = generator.buildSimpleConverterFunc(xenType, direction, funcName, "xmlrpc.Struct")
 	} else if xenType == "datetime" {
-		funcDefinition, err = generator.buildSimpleConverterFunc(xenType, direction, funcName, "time.Time")
+		funcDefinition, err = generator.buildTimeConverterFunc(xenType, direction, funcName)
 	} else if match := reXenRefType.FindStringSubmatch(xenType); match != nil {
 		funcDefinition, err = generator.buildRefConverterFunc(xenType, direction, funcName, match[1])
 	} else if match := reXenOptionType.FindStringSubmatch(xenType); match != nil {

@@ -9843,10 +9843,19 @@ func convertTimeToGo(context string, input interface{}) (value time.Time, err er
 	if input == nil {
 		return
 	}
-	value, ok := input.(time.Time)
-	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "time.Time", context, reflect.TypeOf(input), input)
+	if t, ok := input.(time.Time); ok {
+		value = t
+		return
 	}
+	if s, ok := input.(string); ok {
+		if seconds, perr := strconv.ParseFloat(s, 64); perr == nil {
+			wholeSeconds := int64(seconds)
+			nanoseconds := int64((seconds - float64(wholeSeconds)) * 1e9)
+			value = time.Unix(wholeSeconds, nanoseconds)
+			return
+		}
+	}
+	err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "time.Time", context, reflect.TypeOf(input), input)
 	return
 }
 
