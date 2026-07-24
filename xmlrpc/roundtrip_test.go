@@ -1,15 +1,27 @@
 package xmlrpc
 
 import (
+	"fmt"
 	"reflect"
+	"strings"
 	"testing"
 )
 
-// These exercise buildValueElement (request.go) and getValue (result.go)
-// together: build the XML-RPC wire representation of a value, then parse
-// it back, and check the round trip preserves the value. Both sides of
-// this were touched by the hang-risk/swallowed-error fix in v0.1.3, so
-// this is the most direct check that fix didn't change the happy path.
+// wrapAsResponse embeds a <value> fragment (as produced by writeValue) into
+// a full <methodResponse><params><param>...</param></params></methodResponse>
+// envelope, so decodeResponse can be exercised the same way it would be
+// against a real server.
+func wrapAsResponse(value string) string {
+	return fmt.Sprintf(
+		`<?xml version="1.0"?><methodResponse><params><param>%s</param></params></methodResponse>`,
+		value,
+	)
+}
+
+// These exercise writeValue (encode.go) and decodeResponse/decodeValue
+// (decode.go) together: build the XML-RPC wire representation of a value,
+// wrap it as a response, then decode it back, and check the round trip
+// preserves the value.
 func TestValueRoundTrip(t *testing.T) {
 	cases := []struct {
 		name  string
@@ -22,24 +34,28 @@ func TestValueRoundTrip(t *testing.T) {
 		{"negative int", -7},
 		{"bool true", true},
 		{"bool false", false},
-		{"struct", Struct{"name": "vm1", "count": int64(3)}}, // ints always come back as int64, see the "int" case above
+		{"struct", Struct{"name": "vm1", "count": int64(3)}}, // ints always come back as int64
 		{"array", []interface{}{"a", "b", "c"}},
 		{"nested struct in array", []interface{}{Struct{"k": "v"}}},
+		{"empty struct", Struct{}},
+		{"empty array", []interface{}{}},
 	}
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			wire := buildValueElement(tc.value)
+			var sb strings.Builder
+			if err := writeValue(&sb, tc.value); err != nil {
+				t.Fatalf("writeValue: %v", err)
+			}
+			b := []byte(wrapAsResponse(sb.String()))
 
-			result, err := parseValue([]byte(wire))
+			result, err := decodeResponse(b)
 			if err != nil {
-				t.Fatalf("parseValue(%q) failed: %v", wire, err)
+				t.Fatalf("decodeResponse(%q) failed: %v", b, err)
 			}
 
 			switch want := tc.value.(type) {
 			case int:
-				// Integers always round-trip through XML-RPC's <int> as
-				// int64 on the way back.
 				got, ok := result.(int64)
 				if !ok || got != int64(want) {
 					t.Fatalf("got %#v (%T), want %d", result, result, want)
@@ -53,31 +69,60 @@ func TestValueRoundTrip(t *testing.T) {
 	}
 }
 
-func TestBuildValueElementUnsupportedTypePanics(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Fatal("expected a panic for an unsupported value type, got none")
-		}
-	}()
-
+func TestWriteValueUnsupportedTypeErrors(t *testing.T) {
 	type unsupported struct{}
-	buildValueElement(unsupported{})
+	var sb strings.Builder
+	if err := writeValue(&sb, unsupported{}); err == nil {
+		t.Fatal("expected an error for an unsupported value type, got none")
+	}
 }
 
-// Malformed/truncated XML must return an error, not hang - this is exactly
-// the class of bug fixed in v0.1.3 (parser.Token() errors were previously
-// discarded in several loops, which could spin forever on truncated input).
-func TestParseValueMalformedDoesNotHang(t *testing.T) {
+func TestWriteValueNilErrors(t *testing.T) {
+	var sb strings.Builder
+	if err := writeValue(&sb, nil); err == nil {
+		t.Fatal("expected an error for a nil value, got none")
+	}
+}
+
+// Malformed/truncated responses must return an error, not hang - this is
+// exactly the class of bug fixed in the previous (vendored)
+// implementation's v0.1.3 release.
+func TestDecodeResponseMalformedDoesNotHang(t *testing.T) {
 	cases := []string{
-		`<value><struct><member><name>a</name><value><string>b</string>`, // truncated, no closing tags
-		`<value><array><data><value><string>a</string>`,                  // truncated array
-		`<value><struct>`, // truncated right after struct open
+		`<methodResponse><params><param><value><struct><member><name>a</name><value><string>b</string>`,
+		`<methodResponse><params><param><value><array><data><value><string>a</string>`,
+		`<methodResponse><params><param><value><struct>`,
+		`<methodResponse>`,
+		``,
+		`not xml at all`,
 	}
 
 	for _, xml := range cases {
-		_, err := parseValue([]byte(xml))
+		_, err := decodeResponse([]byte(xml))
 		if err == nil {
-			t.Fatalf("parseValue(%q): expected an error for truncated XML, got nil", xml)
+			t.Fatalf("decodeResponse(%q): expected an error for malformed input, got nil", xml)
 		}
+	}
+}
+
+func TestDecodeResponseFault(t *testing.T) {
+	body := `<?xml version="1.0"?><methodResponse><fault><value><struct>` +
+		`<member><name>faultCode</name><value><int>7</int></value></member>` +
+		`<member><name>faultString</name><value><string>boom</string></value></member>` +
+		`</struct></value></fault></methodResponse>`
+
+	_, err := decodeResponse([]byte(body))
+	if err == nil {
+		t.Fatal("expected an error for a <fault> response, got nil")
+	}
+	xerr, ok := err.(*Error)
+	if !ok {
+		t.Fatalf("got error of type %T, want *Error", err)
+	}
+	if xerr.Code() != "7" {
+		t.Errorf("Code() = %q, want %q", xerr.Code(), "7")
+	}
+	if xerr.Message() != "boom" {
+		t.Errorf("Message() = %q, want %q", xerr.Message(), "boom")
 	}
 }

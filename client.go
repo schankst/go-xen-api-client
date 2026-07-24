@@ -33,13 +33,9 @@ type APIResult struct {
 // functionality this fork doesn't expose a typed wrapper for. Returns an
 // *Error if XenAPI reports a protocol-level failure.
 func (client *Client) APICall(method string, params ...interface{}) (result APIResult, err error) {
-	rpcParams := xmlrpc.Params{
-		Params: params,
-	}
-
 	rpcResult := xmlrpc.Struct{}
 
-	err = client.rpc.Call(method, rpcParams, &rpcResult)
+	err = client.rpc.Call(method, params, &rpcResult)
 	if err != nil {
 		return
 	}

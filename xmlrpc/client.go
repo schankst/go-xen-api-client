@@ -2,133 +2,97 @@ package xmlrpc
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
-	"net/rpc"
 	"reflect"
+	"strings"
+	"sync"
 )
 
+// Client is a minimal XML-RPC client over HTTP. Each Call is one
+// synchronous HTTP round trip - there's no request multiplexing to
+// justify anything more elaborate, since XML-RPC (unlike the transport
+// net/rpc.Client was designed around) has no notion of a persistent
+// bidirectional connection.
+//
+// Client is safe for concurrent use by multiple goroutines.
 type Client struct {
-	*rpc.Client
-}
-
-// clientCodec is rpc.ClientCodec interface implementation.
-type clientCodec struct {
-	// url presents url of xmlrpc service
-	url string
-
-	// httpClient works with HTTP protocol
+	url        string
 	httpClient *http.Client
 
-	// cookies stores cookies received on last request
+	mu      sync.Mutex
 	cookies []*http.Cookie
-
-	// responses presents map of active requests. It is required to return request id, that
-	// rpc.Client can mark them as done.
-	responses map[uint64]*http.Response
-
-	// responseBody holds response body of last request.
-	responseBody []byte
-
-	// ready presents channel, that is used to link request and it`s response.
-	ready chan uint64
 }
 
-func (codec *clientCodec) WriteRequest(request *rpc.Request, params interface{}) (err error) {
-	httpRequest, err := newRequest(codec.url, request.ServiceMethod, params)
-
-	if codec.cookies != nil {
-		for _, cookie := range codec.cookies {
-			httpRequest.AddCookie(cookie)
-		}
-	}
-
-	if err != nil {
-		return err
-	}
-
-	var httpResponse *http.Response
-	httpResponse, err = codec.httpClient.Do(httpRequest)
-
-	if err != nil {
-		return err
-	}
-
-	if codec.cookies == nil {
-		codec.cookies = httpResponse.Cookies()
-	}
-
-	codec.responses[request.Seq] = httpResponse
-	codec.ready <- request.Seq
-
-	return nil
-}
-
-func (codec *clientCodec) ReadResponseHeader(response *rpc.Response) (err error) {
-	seq := <-codec.ready
-	httpResponse := codec.responses[seq]
-
-	codec.responseBody, err = ioutil.ReadAll(httpResponse.Body)
-
-	if err != nil {
-		return err
-	}
-
-	httpResponse.Body.Close()
-
-	if fault, _ := responseFailed(codec.responseBody); fault {
-		response.Error = fmt.Sprintf("%v", parseFailedResponse(codec.responseBody))
-	}
-
-	response.Seq = seq
-	delete(codec.responses, seq)
-
-	return nil
-}
-
-func (codec *clientCodec) ReadResponseBody(x interface{}) (err error) {
-	if x == nil {
-		return nil
-	}
-
-	var result interface{}
-	result, err = parseSuccessfulResponse(codec.responseBody)
-
-	if err != nil {
-		return err
-	}
-
-	v := reflect.ValueOf(x)
-
-	if v.Kind() == reflect.Ptr {
-		v = v.Elem()
-	}
-
-	v.Set(reflect.ValueOf(result))
-
-	return nil
-}
-
-func (codec *clientCodec) Close() error {
-	transport := codec.httpClient.Transport.(*http.Transport)
-	transport.CloseIdleConnections()
-	return nil
-}
-
-// NewClient returns instance of rpc.Client object, that is used to send request to xmlrpc service.
+// NewClient creates a Client for the XML-RPC endpoint at url. If
+// transport is nil, http.DefaultTransport's zero-value equivalent
+// (&http.Transport{}) is used.
 func NewClient(url string, transport *http.Transport) (*Client, error) {
 	if transport == nil {
 		transport = &http.Transport{}
 	}
-
-	httpClient := &http.Client{Transport: transport}
-
-	codec := clientCodec{
+	return &Client{
 		url:        url,
-		httpClient: httpClient,
-		ready:      make(chan uint64),
-		responses:  make(map[uint64]*http.Response),
+		httpClient: &http.Client{Transport: transport},
+	}, nil
+}
+
+// Call issues an XML-RPC call for method with params and, on success,
+// stores the decoded result into *reply (reply must be a non-nil
+// pointer; pass nil to discard the result). On a genuine XML-RPC <fault>
+// response the returned error is a *Error.
+//
+// The first response's cookies are captured and replayed on every
+// subsequent call on this Client, since XCP-ng/XenServer pools use this
+// to pin a client to a specific host after a redirect.
+func (c *Client) Call(method string, params []interface{}, reply interface{}) error {
+	body, err := buildRequest(method, params)
+	if err != nil {
+		return err
 	}
 
-	return &Client{rpc.NewClientWithCodec(&codec)}, nil
+	req, err := http.NewRequest(http.MethodPost, c.url, strings.NewReader(body))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "text/xml")
+
+	c.mu.Lock()
+	cookies := c.cookies
+	c.mu.Unlock()
+	for _, cookie := range cookies {
+		req.AddCookie(cookie)
+	}
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	c.mu.Lock()
+	if c.cookies == nil {
+		c.cookies = resp.Cookies()
+	}
+	c.mu.Unlock()
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	value, err := decodeResponse(respBody)
+	if err != nil {
+		return err
+	}
+
+	if reply == nil {
+		return nil
+	}
+	rv := reflect.ValueOf(reply)
+	if rv.Kind() != reflect.Ptr || rv.IsNil() {
+		return fmt.Errorf("xmlrpc: reply must be a non-nil pointer, got %T", reply)
+	}
+	rv.Elem().Set(reflect.ValueOf(value))
+	return nil
 }

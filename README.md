@@ -136,16 +136,19 @@ production-ready. Status in this fork:
 - ~~Usage examples.~~ One exists below; good enough for this fork's scope.
 
 This fork is **actively maintained**, not a one-time patch: dependency
-security alerts, `go vet` findings, and documentation gaps get triaged and
-fixed as they come up, not just left in a TODO list. Concretely, this
-entire fork - the schema regeneration, the enum-tolerance patch, vendoring
-the last external dependency, fixing the two real bugs that vendoring
-surfaced, the documentation pass, this test suite, and the CI automation -
-was built end to end by [Claude Code](https://claude.com/claude-code)
-(Anthropic's coding agent) working with the maintainer in a single ongoing
-conversation - starting from a client that panicked against a modern
-XCP-ng host because upstream's schema predated it by years, ending at a
-documented, tested, self-updating private fork.
+security alerts, `go vet` findings, documentation gaps, and (as of the
+`xmlrpc` rewrite) even licensing issues in what it depends on get triaged
+and fixed as they come up, not just left in a TODO list. Concretely, this
+entire fork - the schema regeneration, the enum-tolerance patch, the
+`xmlrpc` package rewrite (originally vendored, then rewritten from scratch
+once that turned out to have no license, along the way fixing its last
+remaining bugs and making it measurably faster - see `xmlrpc/doc.go`), the
+documentation pass, this test suite, and the CI automation - was built end
+to end by [Claude Code](https://claude.com/claude-code) (Anthropic's
+coding agent) working with the maintainer in a single ongoing conversation
+- starting from a client that panicked against a modern XCP-ng host
+because upstream's schema predated it by years, ending at a documented,
+tested, self-updating private fork with no external dependencies at all.
 
 ## Implementation notes
 
