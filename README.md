@@ -38,6 +38,11 @@ against, that's tracked separately:
   process.
 - Module path changed to `github.com/schankst/go-xen-api-client` so it can
   be pulled in directly.
+- `xmlrpc` is this fork's own implementation (see `xmlrpc/doc.go`) instead
+  of a dependency on `amfranz/go-xmlrpc-client` — that library had no
+  license, and the rewrite along the way fixed its remaining bugs and
+  made request encoding measurably faster (see the v0.2.0 release notes
+  for benchmarks). No external Go module dependencies remain at all.
 
 For what actually changed release to release, see
 [Releases](https://github.com/schankst/go-xen-api-client/releases) rather
@@ -122,10 +127,13 @@ production-ready. Status in this fork:
   **Done** — see `SchemaXAPIRelease`, the enum-tolerance patch, and the
   automated weekly regeneration workflow above.
 - Tests, at least for the various data type conversions. **Partially
-  done** — `xmlrpc`'s request/response round trip (including the
-  enum-tolerance behavior specifically) and a handful of representative
-  `convert_gen.go` converters are covered. Not exhaustive across all 74
-  generated files, but covers what has actually broken so far.
+  done** — `xmlrpc` has both unit-level tests (request/response round
+  trip, including the enum-tolerance behavior specifically, and malformed
+  input) and `httptest.Server`-based integration tests for `Client.Call`
+  (success, XML-RPC fault, pool-affinity cookie capture/replay,
+  concurrent calls); a handful of representative `convert_gen.go`
+  converters are covered too. Not exhaustive across all 74 generated
+  files, but covers what has actually broken so far.
 - ~~Embed XenAPI documentation as GoDoc in the generated code.~~ **Already
   true** — inherited from the original generator (class/method/field
   descriptions come straight from the XenAPI schema); topped up the
