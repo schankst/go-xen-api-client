@@ -20,6 +20,11 @@ var _ = reflect.TypeOf
 var _ = strconv.Atoi
 var _ = time.UTC
 
+// Client is a XenAPI client. Create one with NewClient, then log in via
+// Client.Session.LoginWithPassword before calling any other method - every
+// generated method takes the resulting SessionRef as its first argument.
+// Each exported field (Client.VM, Client.Host, Client.SR, ...) corresponds
+// to one XenAPI class and exposes its Get*/Set*/etc. methods.
 type Client struct {
 	rpc *xmlrpc.Client
 	Session SessionClass
