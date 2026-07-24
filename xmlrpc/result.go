@@ -90,7 +90,7 @@ func getDateValue(parser *xml.Decoder) (result interface{}, err error) {
 	value, err = getElementValue(parser)
 	result, err = time.Parse(TIME_LAYOUT, value)
 	if err != nil {
-			result, err = time.Parse(TIME_LAYOUT_iso8601Z, value)
+		result, err = time.Parse(TIME_LAYOUT_iso8601Z, value)
 	}
 	return
 }

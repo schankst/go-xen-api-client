@@ -18,10 +18,20 @@ import (
 // convert_gen.go.
 const SchemaXAPIRelease = "26.16.1-next"
 
+// APIResult is the raw, untyped result of an APICall - Value holds whatever
+// the XML-RPC response decoded to (a string, xmlrpc.Struct, []interface{},
+// etc., depending on the call). Generated methods decode this into a typed
+// result themselves; most callers should use those instead of APICall.
 type APIResult struct {
 	Value interface{}
 }
 
+// APICall issues a raw XenAPI XML-RPC call (method is the wire-level name,
+// e.g. "VM.get_all_records", not the Go method name) and returns its
+// untyped result. Every generated method (Client.VM.GetAllRecords, etc.)
+// is a thin, typed wrapper around this; call it directly only for
+// functionality this fork doesn't expose a typed wrapper for. Returns an
+// *Error if XenAPI reports a protocol-level failure.
 func (client *Client) APICall(method string, params ...interface{}) (result APIResult, err error) {
 	rpcParams := xmlrpc.Params{
 		Params: params,
@@ -62,6 +72,14 @@ func (client *Client) APICall(method string, params ...interface{}) (result APIR
 	return
 }
 
+// NewClient creates a Client for the XenAPI server at url (e.g.
+// "https://10.0.0.10/"). Call Client.Session.LoginWithPassword before
+// using it for anything else.
+//
+// If transport is nil, a default *http.Transport is used with
+// InsecureSkipVerify: true - i.e. TLS certificate verification is off by
+// default, matching XCP-ng/XenServer's common self-signed-certificate
+// setup. Pass a transport of your own to verify certificates.
 func NewClient(url string, transport *http.Transport) (*Client, error) {
 	if transport == nil {
 		transport = &http.Transport{

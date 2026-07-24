@@ -171,29 +171,33 @@ const (
 	}
 	fmt.Fprint(w, `)
 
-// Error represents errors returned on xmlrpc request.
+// Error is returned for any XenAPI call that fails at the protocol level.
+// Its Error() string is a fallback for display; check Code() (one of the
+// ERR_ constants above) to distinguish error kinds programmatically.
 type Error struct {
 	code    string
 	objtype string
 	uuid    string
 }
 
-// Error() method implements Error interface
+// Error implements the error interface.
 func (e *Error) Error() string {
 	return fmt.Sprintf("API Error: %s %s %s", e.code, e.objtype, e.uuid)
 }
 
-// Code ...
+// Code returns the XenAPI error code, e.g. ERR_HANDLE_INVALID.
 func (e *Error) Code() string {
 	return e.code
 }
 
-// Type ...
+// Type returns the affected object's class name (e.g. "VM"), if the error
+// code carries one - HANDLE_INVALID does, most others don't and this is "".
 func (e *Error) Type() string {
 	return e.objtype
 }
 
-// UUID ...
+// UUID returns the affected object's UUID, if the error code carries one -
+// as with Type, only some error codes (e.g. HANDLE_INVALID) do.
 func (e *Error) UUID() string {
 	return e.uuid
 }
