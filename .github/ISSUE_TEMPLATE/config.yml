@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/schankst/go-xen-api-client#more
+    about: See GOOD_TO_KNOW.md, PERFORMANCE.md, and other guides
+  - name: Security Issue
+    url: https://github.com/schankst/go-xen-api-client/security/advisories/new
+    about: Report vulnerabilities privately
