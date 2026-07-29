@@ -149,6 +149,9 @@ against, that's tracked separately:
 - [PERFORMANCE.md](PERFORMANCE.md) — fetching at scale: why per-object RPC
   calls don't scale to real environments, and the batch-fetch pattern to
   use instead.
+- [UPDATES_AND_PATCHES.md](UPDATES_AND_PATCHES.md) — finding pending patches:
+  unapplied `pool_update` objects, repository-based updates, and outstanding
+  post-update guidances.
 - [MAINTAINING.md](MAINTAINING.md) — how the generated bindings and
   `error.go` are produced, and how to refresh them by hand.
 - [LICENSING.md](LICENSING.md) — the licensing situation of everything
