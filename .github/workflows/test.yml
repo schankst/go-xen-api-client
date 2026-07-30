@@ -1,0 +1,43 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The minimum version go.mod declares, plus current Go, so a
+        # regression against either shows up here rather than downstream.
+        go-version: ['1.16', 'stable']
+    name: Go ${{ matrix.go-version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Build
+        run: go build ./...
+
+      - name: Vet
+        run: go vet ./...
+
+      # -short skips TestAuthentication, which needs a live XenAPI server
+      # on localhost:40080 that CI has no way to provide.
+      - name: Test
+        run: go test -short -race ./...
