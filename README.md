@@ -1,5 +1,9 @@
 # Go XenAPI client library (fork)
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/schankst/go-xen-api-client.svg)](https://pkg.go.dev/github.com/schankst/go-xen-api-client)
+[![Latest release](https://img.shields.io/github/v/release/schankst/go-xen-api-client)](https://github.com/schankst/go-xen-api-client/releases/latest)
+[![Go version](https://img.shields.io/github/go-mod/go-version/schankst/go-xen-api-client)](go.mod)
+[![License: MIT](https://img.shields.io/github/license/schankst/go-xen-api-client)](LICENSE)
 [![Regenerate bindings](https://github.com/schankst/go-xen-api-client/actions/workflows/regenerate.yml/badge.svg)](https://github.com/schankst/go-xen-api-client/actions/workflows/regenerate.yml)
 
 A Go client covering the entire [XenAPI](https://xapi-project.github.io/xen-api/)
