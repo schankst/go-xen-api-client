@@ -132,7 +132,7 @@ type VDIRecord struct {
 	StorageLock bool
 	// location information
 	Location string
-	// 
+	//
 	Managed bool
 	// true if SR scan operation reported this VDI as not present on disk
 	Missing bool
@@ -184,7 +184,7 @@ func (_class VDIClass) GetAllRecords(sessionID SessionRef) (_retval map[VDIRef]V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToVDIRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToVDIRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -199,14 +199,15 @@ func (_class VDIClass) GetAll(sessionID SessionRef) (_retval []VDIRef, _err erro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Revert Copy the contents of a snapshot to the VDI it's related to. The original contents of the VDI are lost.
 //
 // Errors:
-//  UNIMPLEMENTED_IN_SM_BACKEND - You have attempted a function which is not implemented
+//
+//	UNIMPLEMENTED_IN_SM_BACKEND - You have attempted a function which is not implemented
 func (_class VDIClass) Revert(sessionID SessionRef, snapshot VDIRef) (_err error) {
 	_method := "VDI.revert"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -217,14 +218,15 @@ func (_class VDIClass) Revert(sessionID SessionRef, snapshot VDIRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _snapshotArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _snapshotArg)
 	return
 }
 
 // GetNbdInfo Get details specifying how to access this VDI via a Network Block Device server. For each of a set of NBD server addresses on which the VDI is available, the return value set contains a vdi_nbd_server_info object that contains an exportname to request once the NBD connection is established, and connection details for the address. An empty list is returned if there is no network that has a PIF on a host with access to the relevant SR, or if no such network has been assigned an NBD-related purpose in its purpose field. To access the given VDI, any of the vdi_nbd_server_info objects can be used to make a connection to a server, and then the VDI will be available by requesting the exportname.
 //
 // Errors:
-//  VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
 func (_class VDIClass) GetNbdInfo(sessionID SessionRef, self VDIRef) (_retval []VdiNbdServerInfoRecord, _err error) {
 	_method := "VDI.get_nbd_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -239,18 +241,19 @@ func (_class VDIClass) GetNbdInfo(sessionID SessionRef, self VDIRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVdiNbdServerInfoRecordSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVdiNbdServerInfoRecordSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // ListChangedBlocks Compare two VDIs in 64k block increments and report which blocks differ. This operation is not allowed when vdi_to is attached to a VM.
 //
 // Errors:
-//  SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-//  VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
-//  SR_NOT_ATTACHED - The SR is not attached.
-//  SR_HAS_NO_PBDS - The SR has no attached PBDs
-//  VDI_IN_USE - This operation cannot be performed because this VDI is in use by some other operation
+//
+//	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
+//	VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
+//	SR_NOT_ATTACHED - The SR is not attached.
+//	SR_HAS_NO_PBDS - The SR has no attached PBDs
+//	VDI_IN_USE - This operation cannot be performed because this VDI is in use by some other operation
 func (_class VDIClass) ListChangedBlocks(sessionID SessionRef, vdiFrom VDIRef, vdiTo VDIRef) (_retval string, _err error) {
 	_method := "VDI.list_changed_blocks"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -269,22 +272,23 @@ func (_class VDIClass) ListChangedBlocks(sessionID SessionRef, vdiFrom VDIRef, v
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // DataDestroy Delete the data of the snapshot VDI, but keep its changed block tracking metadata. When successful, this call changes the type of the VDI to cbt_metadata. This operation is idempotent: calling it on a VDI of type cbt_metadata results in a no-op, and no error will be thrown.
 //
 // Errors:
-//  SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-//  VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
-//  SR_NOT_ATTACHED - The SR is not attached.
-//  SR_HAS_NO_PBDS - The SR has no attached PBDs
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
-//  VDI_NO_CBT_METADATA - The requested operation is not allowed because the specified VDI does not have changed block tracking metadata.
-//  VDI_IN_USE - This operation cannot be performed because this VDI is in use by some other operation
-//  VDI_IS_A_PHYSICAL_DEVICE - The operation cannot be performed on physical device
+//
+//	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
+//	VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
+//	SR_NOT_ATTACHED - The SR is not attached.
+//	SR_HAS_NO_PBDS - The SR has no attached PBDs
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//	VDI_NO_CBT_METADATA - The requested operation is not allowed because the specified VDI does not have changed block tracking metadata.
+//	VDI_IN_USE - This operation cannot be performed because this VDI is in use by some other operation
+//	VDI_IS_A_PHYSICAL_DEVICE - The operation cannot be performed on physical device
 func (_class VDIClass) DataDestroy(sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.data_destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -295,20 +299,21 @@ func (_class VDIClass) DataDestroy(sessionID SessionRef, self VDIRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // DisableCbt Disable changed block tracking for the VDI. This call is only allowed on VDIs that support enabling CBT. It is an idempotent operation - disabling CBT for a VDI for which CBT is not enabled results in a no-op, and no error will be thrown.
 //
 // Errors:
-//  SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-//  VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
-//  SR_NOT_ATTACHED - The SR is not attached.
-//  SR_HAS_NO_PBDS - The SR has no attached PBDs
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
-//  VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
+//
+//	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
+//	VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
+//	SR_NOT_ATTACHED - The SR is not attached.
+//	SR_HAS_NO_PBDS - The SR has no attached PBDs
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
 func (_class VDIClass) DisableCbt(sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.disable_cbt"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -319,20 +324,21 @@ func (_class VDIClass) DisableCbt(sessionID SessionRef, self VDIRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // EnableCbt Enable changed block tracking for the VDI. This call is idempotent - enabling CBT for a VDI for which CBT is already enabled results in a no-op, and no error will be thrown.
 //
 // Errors:
-//  SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-//  VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
-//  SR_NOT_ATTACHED - The SR is not attached.
-//  SR_HAS_NO_PBDS - The SR has no attached PBDs
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
-//  VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
+//
+//	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
+//	VDI_MISSING - This operation cannot be performed because the specified VDI could not be found on the storage substrate
+//	SR_NOT_ATTACHED - The SR is not attached.
+//	SR_HAS_NO_PBDS - The SR has no attached PBDs
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
 func (_class VDIClass) EnableCbt(sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.enable_cbt"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -343,7 +349,7 @@ func (_class VDIClass) EnableCbt(sessionID SessionRef, self VDIRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -370,7 +376,7 @@ func (_class VDIClass) PoolMigrate(sessionID SessionRef, vdi VDIRef, sr SRRef, o
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -389,7 +395,7 @@ func (_class VDIClass) ReadDatabasePoolUUID(sessionID SessionRef, self VDIRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -408,7 +414,7 @@ func (_class VDIClass) OpenDatabase(sessionID SessionRef, self VDIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSessionRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSessionRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -427,7 +433,7 @@ func (_class VDIClass) SetAllowCaching(sessionID SessionRef, self VDIRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -446,7 +452,7 @@ func (_class VDIClass) SetOnBoot(sessionID SessionRef, self VDIRef, value OnBoot
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -465,7 +471,7 @@ func (_class VDIClass) SetNameDescription(sessionID SessionRef, self VDIRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -484,7 +490,7 @@ func (_class VDIClass) SetNameLabel(sessionID SessionRef, self VDIRef, value str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -503,7 +509,7 @@ func (_class VDIClass) SetReadOnly(sessionID SessionRef, self VDIRef, value bool
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -522,7 +528,7 @@ func (_class VDIClass) SetSharable(sessionID SessionRef, self VDIRef, value bool
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -537,16 +543,17 @@ func (_class VDIClass) Forget(sessionID SessionRef, vdi VDIRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vdiArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg)
 	return
 }
 
 // Copy Copy either a full VDI or the block differences between two VDIs into either a fresh VDI or an existing VDI.
 //
 // Errors:
-//  VDI_READONLY - The operation required write access but this VDI is read-only
-//  VDI_TOO_SMALL - The VDI is too small. Please resize it to at least the minimum size.
-//  VDI_NOT_SPARSE - The VDI is not stored using a sparse format. It is not possible to query and manipulate only the changed blocks (or 'block differences' or 'disk deltas') between two VDIs. Please select a VDI which uses a sparse-aware technology such as VHD.
+//
+//	VDI_READONLY - The operation required write access but this VDI is read-only
+//	VDI_TOO_SMALL - The VDI is too small. Please resize it to at least the minimum size.
+//	VDI_NOT_SPARSE - The VDI is not stored using a sparse format. It is not possible to query and manipulate only the changed blocks (or 'block differences' or 'disk deltas') between two VDIs. Please select a VDI which uses a sparse-aware technology such as VHD.
 func (_class VDIClass) Copy(sessionID SessionRef, vdi VDIRef, sr SRRef, baseVdi VDIRef, intoVdi VDIRef) (_retval VDIRef, _err error) {
 	_method := "VDI.copy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -573,14 +580,15 @@ func (_class VDIClass) Copy(sessionID SessionRef, vdi VDIRef, sr SRRef, baseVdi 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Update Ask the storage backend to refresh the fields in the VDI object
 //
 // Errors:
-//  SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
+//
+//	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
 func (_class VDIClass) Update(sessionID SessionRef, vdi VDIRef) (_err error) {
 	_method := "VDI.update"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -591,14 +599,15 @@ func (_class VDIClass) Update(sessionID SessionRef, vdi VDIRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vdiArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg)
 	return
 }
 
 // Introduce Create a new VDI record in the database only
 //
 // Errors:
-//  SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
+//
+//	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
 func (_class VDIClass) Introduce(sessionID SessionRef, uuid string, nameLabel string, nameDescription string, sr SRRef, atype VdiType, sharable bool, readOnly bool, otherConfig map[string]string, location string, xenstoreData map[string]string, smConfig map[string]string, managed bool, virtualSize int, physicalUtilisation int, metadataOfPool PoolRef, isASnapshot bool, snapshotTime time.Time, snapshotOf VDIRef) (_retval VDIRef, _err error) {
 	_method := "VDI.introduce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -681,7 +690,7 @@ func (_class VDIClass) Introduce(sessionID SessionRef, uuid string, nameLabel st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -700,7 +709,7 @@ func (_class VDIClass) ResizeOnline(sessionID SessionRef, vdi VDIRef, size int) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vdiArg, _sizeArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg, _sizeArg)
 	return
 }
 
@@ -719,7 +728,7 @@ func (_class VDIClass) Resize(sessionID SessionRef, vdi VDIRef, size int) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vdiArg, _sizeArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg, _sizeArg)
 	return
 }
 
@@ -742,7 +751,7 @@ func (_class VDIClass) Clone(sessionID SessionRef, vdi VDIRef, driverParams map[
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -765,7 +774,7 @@ func (_class VDIClass) Snapshot(sessionID SessionRef, vdi VDIRef, driverParams m
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -784,7 +793,7 @@ func (_class VDIClass) RemoveTags(sessionID SessionRef, self VDIRef, value strin
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -803,7 +812,7 @@ func (_class VDIClass) AddTags(sessionID SessionRef, self VDIRef, value string) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -822,7 +831,7 @@ func (_class VDIClass) SetTags(sessionID SessionRef, self VDIRef, value []string
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -841,7 +850,7 @@ func (_class VDIClass) RemoveFromSmConfig(sessionID SessionRef, self VDIRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -864,7 +873,7 @@ func (_class VDIClass) AddToSmConfig(sessionID SessionRef, self VDIRef, key stri
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -883,7 +892,7 @@ func (_class VDIClass) SetSmConfig(sessionID SessionRef, self VDIRef, value map[
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -902,7 +911,7 @@ func (_class VDIClass) RemoveFromXenstoreData(sessionID SessionRef, self VDIRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -925,7 +934,7 @@ func (_class VDIClass) AddToXenstoreData(sessionID SessionRef, self VDIRef, key 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -944,7 +953,7 @@ func (_class VDIClass) SetXenstoreData(sessionID SessionRef, self VDIRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -963,7 +972,7 @@ func (_class VDIClass) RemoveFromOtherConfig(sessionID SessionRef, self VDIRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -986,7 +995,7 @@ func (_class VDIClass) AddToOtherConfig(sessionID SessionRef, self VDIRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -1005,7 +1014,7 @@ func (_class VDIClass) SetOtherConfig(sessionID SessionRef, self VDIRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1024,7 +1033,7 @@ func (_class VDIClass) GetCbtEnabled(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1043,7 +1052,7 @@ func (_class VDIClass) GetIsToolsIso(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1062,7 +1071,7 @@ func (_class VDIClass) GetMetadataLatest(sessionID SessionRef, self VDIRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1081,7 +1090,7 @@ func (_class VDIClass) GetMetadataOfPool(sessionID SessionRef, self VDIRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1100,7 +1109,7 @@ func (_class VDIClass) GetOnBoot(sessionID SessionRef, self VDIRef) (_retval OnB
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumOnBootToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumOnBootToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1119,7 +1128,7 @@ func (_class VDIClass) GetAllowCaching(sessionID SessionRef, self VDIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1138,7 +1147,7 @@ func (_class VDIClass) GetTags(sessionID SessionRef, self VDIRef) (_retval []str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1157,7 +1166,7 @@ func (_class VDIClass) GetSnapshotTime(sessionID SessionRef, self VDIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1176,7 +1185,7 @@ func (_class VDIClass) GetSnapshots(sessionID SessionRef, self VDIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1195,7 +1204,7 @@ func (_class VDIClass) GetSnapshotOf(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1214,7 +1223,7 @@ func (_class VDIClass) GetIsASnapshot(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1233,7 +1242,7 @@ func (_class VDIClass) GetSmConfig(sessionID SessionRef, self VDIRef) (_retval m
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1252,7 +1261,7 @@ func (_class VDIClass) GetXenstoreData(sessionID SessionRef, self VDIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1271,7 +1280,7 @@ func (_class VDIClass) GetParent(sessionID SessionRef, self VDIRef) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1290,7 +1299,7 @@ func (_class VDIClass) GetMissing(sessionID SessionRef, self VDIRef) (_retval bo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1309,7 +1318,7 @@ func (_class VDIClass) GetManaged(sessionID SessionRef, self VDIRef) (_retval bo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1328,7 +1337,7 @@ func (_class VDIClass) GetLocation(sessionID SessionRef, self VDIRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1347,7 +1356,7 @@ func (_class VDIClass) GetStorageLock(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1366,7 +1375,7 @@ func (_class VDIClass) GetOtherConfig(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1385,7 +1394,7 @@ func (_class VDIClass) GetReadOnly(sessionID SessionRef, self VDIRef) (_retval b
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1404,7 +1413,7 @@ func (_class VDIClass) GetSharable(sessionID SessionRef, self VDIRef) (_retval b
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1423,7 +1432,7 @@ func (_class VDIClass) GetType(sessionID SessionRef, self VDIRef) (_retval VdiTy
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVdiTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVdiTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1442,7 +1451,7 @@ func (_class VDIClass) GetPhysicalUtilisation(sessionID SessionRef, self VDIRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1461,7 +1470,7 @@ func (_class VDIClass) GetVirtualSize(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1480,7 +1489,7 @@ func (_class VDIClass) GetCrashDumps(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCrashdumpRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCrashdumpRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1499,7 +1508,7 @@ func (_class VDIClass) GetVBDs(sessionID SessionRef, self VDIRef) (_retval []VBD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1518,7 +1527,7 @@ func (_class VDIClass) GetSR(sessionID SessionRef, self VDIRef) (_retval SRRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1537,7 +1546,7 @@ func (_class VDIClass) GetCurrentOperations(sessionID SessionRef, self VDIRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumVdiOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumVdiOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1556,7 +1565,7 @@ func (_class VDIClass) GetAllowedOperations(sessionID SessionRef, self VDIRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVdiOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVdiOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1575,7 +1584,7 @@ func (_class VDIClass) GetNameDescription(sessionID SessionRef, self VDIRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1594,7 +1603,7 @@ func (_class VDIClass) GetNameLabel(sessionID SessionRef, self VDIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1613,7 +1622,7 @@ func (_class VDIClass) GetUUID(sessionID SessionRef, self VDIRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1632,7 +1641,7 @@ func (_class VDIClass) GetByNameLabel(sessionID SessionRef, label string) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1647,7 +1656,7 @@ func (_class VDIClass) Destroy(sessionID SessionRef, self VDIRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1666,7 +1675,7 @@ func (_class VDIClass) Create(sessionID SessionRef, args VDIRecord) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1685,7 +1694,7 @@ func (_class VDIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1704,6 +1713,6 @@ func (_class VDIClass) GetRecord(sessionID SessionRef, self VDIRef) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRecordToGo(_method+" -> ", _result.Value)
 	return
 }

@@ -51,7 +51,7 @@ func (_class HostCrashdumpClass) GetAllRecords(sessionID SessionRef) (_retval ma
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCrashdumpRefToHostCrashdumpRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCrashdumpRefToHostCrashdumpRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -66,7 +66,7 @@ func (_class HostCrashdumpClass) GetAll(sessionID SessionRef) (_retval []HostCra
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCrashdumpRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCrashdumpRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -89,7 +89,7 @@ func (_class HostCrashdumpClass) Upload(sessionID SessionRef, self HostCrashdump
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _urlArg, _optionsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _urlArg, _optionsArg)
 	return
 }
 
@@ -104,7 +104,7 @@ func (_class HostCrashdumpClass) Destroy(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -123,7 +123,7 @@ func (_class HostCrashdumpClass) RemoveFromOtherConfig(sessionID SessionRef, sel
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -146,7 +146,7 @@ func (_class HostCrashdumpClass) AddToOtherConfig(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -165,7 +165,7 @@ func (_class HostCrashdumpClass) SetOtherConfig(sessionID SessionRef, self HostC
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -184,7 +184,7 @@ func (_class HostCrashdumpClass) GetOtherConfig(sessionID SessionRef, self HostC
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -203,7 +203,7 @@ func (_class HostCrashdumpClass) GetSize(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -222,7 +222,7 @@ func (_class HostCrashdumpClass) GetTimestamp(sessionID SessionRef, self HostCra
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -241,7 +241,7 @@ func (_class HostCrashdumpClass) GetHost(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -260,7 +260,7 @@ func (_class HostCrashdumpClass) GetUUID(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -279,7 +279,7 @@ func (_class HostCrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCrashdumpRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCrashdumpRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -298,6 +298,6 @@ func (_class HostCrashdumpClass) GetRecord(sessionID SessionRef, self HostCrashd
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCrashdumpRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCrashdumpRecordToGo(_method+" -> ", _result.Value)
 	return
 }

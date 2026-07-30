@@ -71,7 +71,7 @@ func (_class VTPMClass) GetAllRecords(sessionID SessionRef) (_retval map[VTPMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVTPMRefToVTPMRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVTPMRefToVTPMRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -86,7 +86,7 @@ func (_class VTPMClass) GetAll(sessionID SessionRef) (_retval []VTPMRef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVTPMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVTPMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -101,7 +101,7 @@ func (_class VTPMClass) Destroy(sessionID SessionRef, self VTPMRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -124,7 +124,7 @@ func (_class VTPMClass) Create(sessionID SessionRef, vm VMRef, isUnique bool) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVTPMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVTPMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -143,7 +143,7 @@ func (_class VTPMClass) GetIsProtected(sessionID SessionRef, self VTPMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -162,7 +162,7 @@ func (_class VTPMClass) GetIsUnique(sessionID SessionRef, self VTPMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -181,7 +181,7 @@ func (_class VTPMClass) GetPersistenceBackend(sessionID SessionRef, self VTPMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPersistenceBackendToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPersistenceBackendToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -200,7 +200,7 @@ func (_class VTPMClass) GetBackend(sessionID SessionRef, self VTPMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -219,7 +219,7 @@ func (_class VTPMClass) GetVM(sessionID SessionRef, self VTPMRef) (_retval VMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -238,7 +238,7 @@ func (_class VTPMClass) GetCurrentOperations(sessionID SessionRef, self VTPMRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumVtpmOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumVtpmOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -257,7 +257,7 @@ func (_class VTPMClass) GetAllowedOperations(sessionID SessionRef, self VTPMRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVtpmOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVtpmOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -276,7 +276,7 @@ func (_class VTPMClass) GetUUID(sessionID SessionRef, self VTPMRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -295,7 +295,7 @@ func (_class VTPMClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VT
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVTPMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVTPMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -314,6 +314,6 @@ func (_class VTPMClass) GetRecord(sessionID SessionRef, self VTPMRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVTPMRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVTPMRecordToGo(_method+" -> ", _result.Value)
 	return
 }

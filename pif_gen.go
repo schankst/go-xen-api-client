@@ -155,7 +155,7 @@ func (_class PIFClass) GetAllRecords(sessionID SessionRef) (_retval map[PIFRef]P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToPIFRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToPIFRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -170,7 +170,7 @@ func (_class PIFClass) GetAll(sessionID SessionRef) (_retval []PIFRef, _err erro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -193,7 +193,7 @@ func (_class PIFClass) SetProperty(sessionID SessionRef, self PIFRef, name strin
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _nameArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _nameArg, _valueArg)
 	return
 }
 
@@ -208,7 +208,7 @@ func (_class PIFClass) DbForget(sessionID SessionRef, self PIFRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -315,14 +315,15 @@ func (_class PIFClass) DbIntroduce(sessionID SessionRef, device string, network 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Plug Attempt to bring up a physical interface
 //
 // Errors:
-//  TRANSPORT_PIF_NOT_CONFIGURED - The tunnel transport PIF has no IP configuration set.
+//
+//	TRANSPORT_PIF_NOT_CONFIGURED - The tunnel transport PIF has no IP configuration set.
 func (_class PIFClass) Plug(sessionID SessionRef, self PIFRef) (_err error) {
 	_method := "PIF.plug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -333,15 +334,16 @@ func (_class PIFClass) Plug(sessionID SessionRef, self PIFRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // SetDisallowUnplug Set whether unplugging the PIF is allowed
 //
 // Errors:
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
+//
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
 func (_class PIFClass) SetDisallowUnplug(sessionID SessionRef, self PIFRef, value bool) (_err error) {
 	_method := "PIF.set_disallow_unplug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -356,17 +358,18 @@ func (_class PIFClass) SetDisallowUnplug(sessionID SessionRef, self PIFRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // Unplug Attempt to bring down a physical interface
 //
 // Errors:
-//  HA_OPERATION_WOULD_BREAK_FAILOVER_PLAN - This operation cannot be performed because it would invalidate VM failover planning such that the system would be unable to guarantee to restart protected VMs after a Host failure.
-//  VIF_IN_USE - Network has active VIFs
-//  PIF_DOES_NOT_ALLOW_UNPLUG - The operation you requested cannot be performed because the specified PIF does not allow unplug.
-//  PIF_HAS_FCOE_SR_IN_USE - The operation you requested cannot be performed because the specified PIF has FCoE SR in use.
+//
+//	HA_OPERATION_WOULD_BREAK_FAILOVER_PLAN - This operation cannot be performed because it would invalidate VM failover planning such that the system would be unable to guarantee to restart protected VMs after a Host failure.
+//	VIF_IN_USE - Network has active VIFs
+//	PIF_DOES_NOT_ALLOW_UNPLUG - The operation you requested cannot be performed because the specified PIF does not allow unplug.
+//	PIF_HAS_FCOE_SR_IN_USE - The operation you requested cannot be performed because the specified PIF has FCoE SR in use.
 func (_class PIFClass) Unplug(sessionID SessionRef, self PIFRef) (_err error) {
 	_method := "PIF.unplug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -377,15 +380,16 @@ func (_class PIFClass) Unplug(sessionID SessionRef, self PIFRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Forget Destroy the PIF object matching a particular network interface
 //
 // Errors:
-//  PIF_TUNNEL_STILL_EXISTS - Operation cannot proceed while a tunnel exists on this interface.
-//  CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
+//
+//	PIF_TUNNEL_STILL_EXISTS - Operation cannot proceed while a tunnel exists on this interface.
+//	CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
 func (_class PIFClass) Forget(sessionID SessionRef, self PIFRef) (_err error) {
 	_method := "PIF.forget"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -396,7 +400,7 @@ func (_class PIFClass) Forget(sessionID SessionRef, self PIFRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -427,7 +431,7 @@ func (_class PIFClass) Introduce(sessionID SessionRef, host HostRef, mac string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -442,7 +446,7 @@ func (_class PIFClass) Scan(sessionID SessionRef, host HostRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -461,14 +465,15 @@ func (_class PIFClass) SetPrimaryAddressType(sessionID SessionRef, self PIFRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _primaryAddressTypeArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _primaryAddressTypeArg)
 	return
 }
 
 // ReconfigureIpv6 Reconfigure the IPv6 address settings for this interface
 //
 // Errors:
-//  CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
+//
+//	CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
 func (_class PIFClass) ReconfigureIpv6(sessionID SessionRef, self PIFRef, mode Ipv6ConfigurationMode, ipv6 string, gateway string, dns string) (_err error) {
 	_method := "PIF.reconfigure_ipv6"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -495,14 +500,15 @@ func (_class PIFClass) ReconfigureIpv6(sessionID SessionRef, self PIFRef, mode I
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _ipv6Arg, _gatewayArg, _dnsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _ipv6Arg, _gatewayArg, _dnsArg)
 	return
 }
 
 // ReconfigureIP Reconfigure the IP address settings for this interface
 //
 // Errors:
-//  CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
+//
+//	CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
 func (_class PIFClass) ReconfigureIP(sessionID SessionRef, self PIFRef, mode IPConfigurationMode, ip string, netmask string, gateway string, dns string) (_err error) {
 	_method := "PIF.reconfigure_ip"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -533,14 +539,15 @@ func (_class PIFClass) ReconfigureIP(sessionID SessionRef, self PIFRef, mode IPC
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _ipArg, _netmaskArg, _gatewayArg, _dnsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _ipArg, _netmaskArg, _gatewayArg, _dnsArg)
 	return
 }
 
 // Destroy Destroy the PIF object (provided it is a VLAN interface). This call is deprecated: use VLAN.destroy or Bond.destroy instead
 //
 // Errors:
-//  PIF_IS_PHYSICAL - You tried to destroy a PIF, but it represents an aspect of the physical host configuration, and so cannot be destroyed. The parameter echoes the PIF handle you gave.
+//
+//	PIF_IS_PHYSICAL - You tried to destroy a PIF, but it represents an aspect of the physical host configuration, and so cannot be destroyed. The parameter echoes the PIF handle you gave.
 func (_class PIFClass) Destroy(sessionID SessionRef, self PIFRef) (_err error) {
 	_method := "PIF.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -551,14 +558,15 @@ func (_class PIFClass) Destroy(sessionID SessionRef, self PIFRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // CreateVLAN Create a VLAN interface from an existing physical interface. This call is deprecated: use VLAN.create instead
 //
 // Errors:
-//  VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
+//
+//	VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
 func (_class PIFClass) CreateVLAN(sessionID SessionRef, device string, network NetworkRef, host HostRef, vlan int) (_retval PIFRef, _err error) {
 	_method := "PIF.create_VLAN"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -585,7 +593,7 @@ func (_class PIFClass) CreateVLAN(sessionID SessionRef, device string, network N
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -604,7 +612,7 @@ func (_class PIFClass) RemoveFromOtherConfig(sessionID SessionRef, self PIFRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -627,7 +635,7 @@ func (_class PIFClass) AddToOtherConfig(sessionID SessionRef, self PIFRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -646,7 +654,7 @@ func (_class PIFClass) SetOtherConfig(sessionID SessionRef, self PIFRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -665,7 +673,7 @@ func (_class PIFClass) GetPCI(sessionID SessionRef, self PIFRef) (_retval PCIRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -684,7 +692,7 @@ func (_class PIFClass) GetSriovLogicalPIFOf(sessionID SessionRef, self PIFRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkSriovRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkSriovRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -703,7 +711,7 @@ func (_class PIFClass) GetSriovPhysicalPIFOf(sessionID SessionRef, self PIFRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkSriovRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkSriovRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -722,7 +730,7 @@ func (_class PIFClass) GetIgmpSnoopingStatus(sessionID SessionRef, self PIFRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPifIgmpStatusToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPifIgmpStatusToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -741,7 +749,7 @@ func (_class PIFClass) GetCapabilities(sessionID SessionRef, self PIFRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -760,7 +768,7 @@ func (_class PIFClass) GetProperties(sessionID SessionRef, self PIFRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -779,7 +787,7 @@ func (_class PIFClass) GetManaged(sessionID SessionRef, self PIFRef) (_retval bo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -798,7 +806,7 @@ func (_class PIFClass) GetPrimaryAddressType(sessionID SessionRef, self PIFRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPrimaryAddressTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPrimaryAddressTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -817,7 +825,7 @@ func (_class PIFClass) GetIpv6Gateway(sessionID SessionRef, self PIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -836,7 +844,7 @@ func (_class PIFClass) GetIPv6(sessionID SessionRef, self PIFRef) (_retval []str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -855,7 +863,7 @@ func (_class PIFClass) GetIpv6ConfigurationMode(sessionID SessionRef, self PIFRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumIpv6ConfigurationModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumIpv6ConfigurationModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -874,7 +882,7 @@ func (_class PIFClass) GetTunnelTransportPIFOf(sessionID SessionRef, self PIFRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTunnelRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTunnelRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -893,7 +901,7 @@ func (_class PIFClass) GetTunnelAccessPIFOf(sessionID SessionRef, self PIFRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTunnelRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTunnelRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -912,7 +920,7 @@ func (_class PIFClass) GetDisallowUnplug(sessionID SessionRef, self PIFRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -931,7 +939,7 @@ func (_class PIFClass) GetOtherConfig(sessionID SessionRef, self PIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -950,7 +958,7 @@ func (_class PIFClass) GetManagement(sessionID SessionRef, self PIFRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -969,7 +977,7 @@ func (_class PIFClass) GetVLANSlaveOf(sessionID SessionRef, self PIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVLANRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVLANRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -988,7 +996,7 @@ func (_class PIFClass) GetVLANMasterOf(sessionID SessionRef, self PIFRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVLANRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVLANRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1007,7 +1015,7 @@ func (_class PIFClass) GetBondMasterOf(sessionID SessionRef, self PIFRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBondRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBondRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1026,7 +1034,7 @@ func (_class PIFClass) GetBondSlaveOf(sessionID SessionRef, self PIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBondRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBondRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1045,7 +1053,7 @@ func (_class PIFClass) GetDNS(sessionID SessionRef, self PIFRef) (_retval string
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1064,7 +1072,7 @@ func (_class PIFClass) GetGateway(sessionID SessionRef, self PIFRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1083,7 +1091,7 @@ func (_class PIFClass) GetNetmask(sessionID SessionRef, self PIFRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1102,7 +1110,7 @@ func (_class PIFClass) GetIP(sessionID SessionRef, self PIFRef) (_retval string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1121,7 +1129,7 @@ func (_class PIFClass) GetIPConfigurationMode(sessionID SessionRef, self PIFRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumIPConfigurationModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumIPConfigurationModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1140,7 +1148,7 @@ func (_class PIFClass) GetCurrentlyAttached(sessionID SessionRef, self PIFRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1159,7 +1167,7 @@ func (_class PIFClass) GetPhysical(sessionID SessionRef, self PIFRef) (_retval b
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1178,7 +1186,7 @@ func (_class PIFClass) GetMetrics(sessionID SessionRef, self PIFRef) (_retval PI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1197,7 +1205,7 @@ func (_class PIFClass) GetVLAN(sessionID SessionRef, self PIFRef) (_retval int, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1216,7 +1224,7 @@ func (_class PIFClass) GetMTU(sessionID SessionRef, self PIFRef) (_retval int, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1235,7 +1243,7 @@ func (_class PIFClass) GetMAC(sessionID SessionRef, self PIFRef) (_retval string
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1254,7 +1262,7 @@ func (_class PIFClass) GetHost(sessionID SessionRef, self PIFRef) (_retval HostR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1273,7 +1281,7 @@ func (_class PIFClass) GetNetwork(sessionID SessionRef, self PIFRef) (_retval Ne
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1292,7 +1300,7 @@ func (_class PIFClass) GetDevice(sessionID SessionRef, self PIFRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1311,7 +1319,7 @@ func (_class PIFClass) GetUUID(sessionID SessionRef, self PIFRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1330,7 +1338,7 @@ func (_class PIFClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PIF
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1349,6 +1357,6 @@ func (_class PIFClass) GetRecord(sessionID SessionRef, self PIFRef) (_retval PIF
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRecordToGo(_method+" -> ", _result.Value)
 	return
 }

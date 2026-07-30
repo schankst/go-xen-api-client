@@ -125,7 +125,7 @@ func (_class VMPPClass) GetAllRecords(sessionID SessionRef) (_retval map[VMPPRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMPPRefToVMPPRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMPPRefToVMPPRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -140,11 +140,11 @@ func (_class VMPPClass) GetAll(sessionID SessionRef) (_retval []VMPPRef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMPPRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMPPRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// SetArchiveLastRunTime 
+// SetArchiveLastRunTime
 func (_class VMPPClass) SetArchiveLastRunTime(sessionID SessionRef, self VMPPRef, value time.Time) (_err error) {
 	_method := "VMPP.set_archive_last_run_time"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -159,11 +159,11 @@ func (_class VMPPClass) SetArchiveLastRunTime(sessionID SessionRef, self VMPPRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetBackupLastRunTime 
+// SetBackupLastRunTime
 func (_class VMPPClass) SetBackupLastRunTime(sessionID SessionRef, self VMPPRef, value time.Time) (_err error) {
 	_method := "VMPP.set_backup_last_run_time"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -178,11 +178,11 @@ func (_class VMPPClass) SetBackupLastRunTime(sessionID SessionRef, self VMPPRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// RemoveFromAlarmConfig 
+// RemoveFromAlarmConfig
 func (_class VMPPClass) RemoveFromAlarmConfig(sessionID SessionRef, self VMPPRef, key string) (_err error) {
 	_method := "VMPP.remove_from_alarm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -197,11 +197,11 @@ func (_class VMPPClass) RemoveFromAlarmConfig(sessionID SessionRef, self VMPPRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
-// RemoveFromArchiveSchedule 
+// RemoveFromArchiveSchedule
 func (_class VMPPClass) RemoveFromArchiveSchedule(sessionID SessionRef, self VMPPRef, key string) (_err error) {
 	_method := "VMPP.remove_from_archive_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -216,11 +216,11 @@ func (_class VMPPClass) RemoveFromArchiveSchedule(sessionID SessionRef, self VMP
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
-// RemoveFromArchiveTargetConfig 
+// RemoveFromArchiveTargetConfig
 func (_class VMPPClass) RemoveFromArchiveTargetConfig(sessionID SessionRef, self VMPPRef, key string) (_err error) {
 	_method := "VMPP.remove_from_archive_target_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -235,11 +235,11 @@ func (_class VMPPClass) RemoveFromArchiveTargetConfig(sessionID SessionRef, self
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
-// RemoveFromBackupSchedule 
+// RemoveFromBackupSchedule
 func (_class VMPPClass) RemoveFromBackupSchedule(sessionID SessionRef, self VMPPRef, key string) (_err error) {
 	_method := "VMPP.remove_from_backup_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -254,11 +254,11 @@ func (_class VMPPClass) RemoveFromBackupSchedule(sessionID SessionRef, self VMPP
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
-// AddToAlarmConfig 
+// AddToAlarmConfig
 func (_class VMPPClass) AddToAlarmConfig(sessionID SessionRef, self VMPPRef, key string, value string) (_err error) {
 	_method := "VMPP.add_to_alarm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -277,11 +277,11 @@ func (_class VMPPClass) AddToAlarmConfig(sessionID SessionRef, self VMPPRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
-// AddToArchiveSchedule 
+// AddToArchiveSchedule
 func (_class VMPPClass) AddToArchiveSchedule(sessionID SessionRef, self VMPPRef, key string, value string) (_err error) {
 	_method := "VMPP.add_to_archive_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -300,11 +300,11 @@ func (_class VMPPClass) AddToArchiveSchedule(sessionID SessionRef, self VMPPRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
-// AddToArchiveTargetConfig 
+// AddToArchiveTargetConfig
 func (_class VMPPClass) AddToArchiveTargetConfig(sessionID SessionRef, self VMPPRef, key string, value string) (_err error) {
 	_method := "VMPP.add_to_archive_target_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -323,11 +323,11 @@ func (_class VMPPClass) AddToArchiveTargetConfig(sessionID SessionRef, self VMPP
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
-// AddToBackupSchedule 
+// AddToBackupSchedule
 func (_class VMPPClass) AddToBackupSchedule(sessionID SessionRef, self VMPPRef, key string, value string) (_err error) {
 	_method := "VMPP.add_to_backup_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -346,11 +346,11 @@ func (_class VMPPClass) AddToBackupSchedule(sessionID SessionRef, self VMPPRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
-// SetAlarmConfig 
+// SetAlarmConfig
 func (_class VMPPClass) SetAlarmConfig(sessionID SessionRef, self VMPPRef, value map[string]string) (_err error) {
 	_method := "VMPP.set_alarm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -365,7 +365,7 @@ func (_class VMPPClass) SetAlarmConfig(sessionID SessionRef, self VMPPRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -384,11 +384,11 @@ func (_class VMPPClass) SetIsAlarmEnabled(sessionID SessionRef, self VMPPRef, va
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetArchiveTargetConfig 
+// SetArchiveTargetConfig
 func (_class VMPPClass) SetArchiveTargetConfig(sessionID SessionRef, self VMPPRef, value map[string]string) (_err error) {
 	_method := "VMPP.set_archive_target_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -403,7 +403,7 @@ func (_class VMPPClass) SetArchiveTargetConfig(sessionID SessionRef, self VMPPRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -422,11 +422,11 @@ func (_class VMPPClass) SetArchiveTargetType(sessionID SessionRef, self VMPPRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetArchiveSchedule 
+// SetArchiveSchedule
 func (_class VMPPClass) SetArchiveSchedule(sessionID SessionRef, self VMPPRef, value map[string]string) (_err error) {
 	_method := "VMPP.set_archive_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -441,7 +441,7 @@ func (_class VMPPClass) SetArchiveSchedule(sessionID SessionRef, self VMPPRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -460,11 +460,11 @@ func (_class VMPPClass) SetArchiveFrequency(sessionID SessionRef, self VMPPRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetBackupSchedule 
+// SetBackupSchedule
 func (_class VMPPClass) SetBackupSchedule(sessionID SessionRef, self VMPPRef, value map[string]string) (_err error) {
 	_method := "VMPP.set_backup_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -479,7 +479,7 @@ func (_class VMPPClass) SetBackupSchedule(sessionID SessionRef, self VMPPRef, va
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -498,11 +498,11 @@ func (_class VMPPClass) SetBackupFrequency(sessionID SessionRef, self VMPPRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetBackupRetentionValue 
+// SetBackupRetentionValue
 func (_class VMPPClass) SetBackupRetentionValue(sessionID SessionRef, self VMPPRef, value int) (_err error) {
 	_method := "VMPP.set_backup_retention_value"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -517,7 +517,7 @@ func (_class VMPPClass) SetBackupRetentionValue(sessionID SessionRef, self VMPPR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -540,7 +540,7 @@ func (_class VMPPClass) GetAlerts(sessionID SessionRef, vmpp VMPPRef, hoursFromN
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -559,7 +559,7 @@ func (_class VMPPClass) ArchiveNow(sessionID SessionRef, snapshot VMRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -578,7 +578,7 @@ func (_class VMPPClass) ProtectNow(sessionID SessionRef, vmpp VMPPRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -597,7 +597,7 @@ func (_class VMPPClass) SetBackupType(sessionID SessionRef, self VMPPRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -616,7 +616,7 @@ func (_class VMPPClass) SetIsPolicyEnabled(sessionID SessionRef, self VMPPRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -635,7 +635,7 @@ func (_class VMPPClass) SetNameDescription(sessionID SessionRef, self VMPPRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -654,7 +654,7 @@ func (_class VMPPClass) SetNameLabel(sessionID SessionRef, self VMPPRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -673,7 +673,7 @@ func (_class VMPPClass) GetRecentAlerts(sessionID SessionRef, self VMPPRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -692,7 +692,7 @@ func (_class VMPPClass) GetAlarmConfig(sessionID SessionRef, self VMPPRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -711,7 +711,7 @@ func (_class VMPPClass) GetIsAlarmEnabled(sessionID SessionRef, self VMPPRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -730,7 +730,7 @@ func (_class VMPPClass) GetVMs(sessionID SessionRef, self VMPPRef) (_retval []VM
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -749,7 +749,7 @@ func (_class VMPPClass) GetArchiveLastRunTime(sessionID SessionRef, self VMPPRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -768,7 +768,7 @@ func (_class VMPPClass) GetIsArchiveRunning(sessionID SessionRef, self VMPPRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -787,7 +787,7 @@ func (_class VMPPClass) GetArchiveSchedule(sessionID SessionRef, self VMPPRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -806,7 +806,7 @@ func (_class VMPPClass) GetArchiveFrequency(sessionID SessionRef, self VMPPRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVmppArchiveFrequencyToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVmppArchiveFrequencyToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -825,7 +825,7 @@ func (_class VMPPClass) GetArchiveTargetConfig(sessionID SessionRef, self VMPPRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -844,7 +844,7 @@ func (_class VMPPClass) GetArchiveTargetType(sessionID SessionRef, self VMPPRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVmppArchiveTargetTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVmppArchiveTargetTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -863,7 +863,7 @@ func (_class VMPPClass) GetBackupLastRunTime(sessionID SessionRef, self VMPPRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -882,7 +882,7 @@ func (_class VMPPClass) GetIsBackupRunning(sessionID SessionRef, self VMPPRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -901,7 +901,7 @@ func (_class VMPPClass) GetBackupSchedule(sessionID SessionRef, self VMPPRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -920,7 +920,7 @@ func (_class VMPPClass) GetBackupFrequency(sessionID SessionRef, self VMPPRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVmppBackupFrequencyToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVmppBackupFrequencyToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -939,7 +939,7 @@ func (_class VMPPClass) GetBackupRetentionValue(sessionID SessionRef, self VMPPR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -958,7 +958,7 @@ func (_class VMPPClass) GetBackupType(sessionID SessionRef, self VMPPRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVmppBackupTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVmppBackupTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -977,7 +977,7 @@ func (_class VMPPClass) GetIsPolicyEnabled(sessionID SessionRef, self VMPPRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -996,7 +996,7 @@ func (_class VMPPClass) GetNameDescription(sessionID SessionRef, self VMPPRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1015,7 +1015,7 @@ func (_class VMPPClass) GetNameLabel(sessionID SessionRef, self VMPPRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1034,7 +1034,7 @@ func (_class VMPPClass) GetUUID(sessionID SessionRef, self VMPPRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1053,7 +1053,7 @@ func (_class VMPPClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMPPRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMPPRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1068,7 +1068,7 @@ func (_class VMPPClass) Destroy(sessionID SessionRef, self VMPPRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1087,7 +1087,7 @@ func (_class VMPPClass) Create(sessionID SessionRef, args VMPPRecord) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMPPRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMPPRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1106,7 +1106,7 @@ func (_class VMPPClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VM
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMPPRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMPPRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1125,6 +1125,6 @@ func (_class VMPPClass) GetRecord(sessionID SessionRef, self VMPPRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMPPRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMPPRecordToGo(_method+" -> ", _result.Value)
 	return
 }

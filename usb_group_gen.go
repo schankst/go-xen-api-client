@@ -53,7 +53,7 @@ func (_class USBGroupClass) GetAllRecords(sessionID SessionRef) (_retval map[USB
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUSBGroupRefToUSBGroupRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUSBGroupRefToUSBGroupRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -68,11 +68,11 @@ func (_class USBGroupClass) GetAll(sessionID SessionRef) (_retval []USBGroupRef,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUSBGroupRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUSBGroupRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// Destroy 
+// Destroy
 func (_class USBGroupClass) Destroy(sessionID SessionRef, self USBGroupRef) (_err error) {
 	_method := "USB_group.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -83,11 +83,11 @@ func (_class USBGroupClass) Destroy(sessionID SessionRef, self USBGroupRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
-// Create 
+// Create
 func (_class USBGroupClass) Create(sessionID SessionRef, nameLabel string, nameDescription string, otherConfig map[string]string) (_retval USBGroupRef, _err error) {
 	_method := "USB_group.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -110,7 +110,7 @@ func (_class USBGroupClass) Create(sessionID SessionRef, nameLabel string, nameD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUSBGroupRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUSBGroupRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -129,7 +129,7 @@ func (_class USBGroupClass) RemoveFromOtherConfig(sessionID SessionRef, self USB
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -152,7 +152,7 @@ func (_class USBGroupClass) AddToOtherConfig(sessionID SessionRef, self USBGroup
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -171,7 +171,7 @@ func (_class USBGroupClass) SetOtherConfig(sessionID SessionRef, self USBGroupRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -190,7 +190,7 @@ func (_class USBGroupClass) SetNameDescription(sessionID SessionRef, self USBGro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -209,7 +209,7 @@ func (_class USBGroupClass) SetNameLabel(sessionID SessionRef, self USBGroupRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -228,7 +228,7 @@ func (_class USBGroupClass) GetOtherConfig(sessionID SessionRef, self USBGroupRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -247,7 +247,7 @@ func (_class USBGroupClass) GetVUSBs(sessionID SessionRef, self USBGroupRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVUSBRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVUSBRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -266,7 +266,7 @@ func (_class USBGroupClass) GetPUSBs(sessionID SessionRef, self USBGroupRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPUSBRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPUSBRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -285,7 +285,7 @@ func (_class USBGroupClass) GetNameDescription(sessionID SessionRef, self USBGro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -304,7 +304,7 @@ func (_class USBGroupClass) GetNameLabel(sessionID SessionRef, self USBGroupRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -323,7 +323,7 @@ func (_class USBGroupClass) GetUUID(sessionID SessionRef, self USBGroupRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -342,7 +342,7 @@ func (_class USBGroupClass) GetByNameLabel(sessionID SessionRef, label string) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUSBGroupRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUSBGroupRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -361,7 +361,7 @@ func (_class USBGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUSBGroupRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUSBGroupRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -380,6 +380,6 @@ func (_class USBGroupClass) GetRecord(sessionID SessionRef, self USBGroupRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUSBGroupRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUSBGroupRecordToGo(_method+" -> ", _result.Value)
 	return
 }

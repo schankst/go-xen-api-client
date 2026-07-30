@@ -49,7 +49,7 @@ func (_class SubjectClass) GetAllRecords(sessionID SessionRef) (_retval map[Subj
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSubjectRefToSubjectRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSubjectRefToSubjectRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -64,7 +64,7 @@ func (_class SubjectClass) GetAll(sessionID SessionRef) (_retval []SubjectRef, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSubjectRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSubjectRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -83,7 +83,7 @@ func (_class SubjectClass) GetPermissionsNameLabel(sessionID SessionRef, self Su
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -102,7 +102,7 @@ func (_class SubjectClass) RemoveFromRoles(sessionID SessionRef, self SubjectRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _roleArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _roleArg)
 	return
 }
 
@@ -121,7 +121,7 @@ func (_class SubjectClass) AddToRoles(sessionID SessionRef, self SubjectRef, rol
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _roleArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _roleArg)
 	return
 }
 
@@ -140,7 +140,7 @@ func (_class SubjectClass) GetRoles(sessionID SessionRef, self SubjectRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -159,7 +159,7 @@ func (_class SubjectClass) GetOtherConfig(sessionID SessionRef, self SubjectRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -178,7 +178,7 @@ func (_class SubjectClass) GetSubjectIdentifier(sessionID SessionRef, self Subje
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -197,7 +197,7 @@ func (_class SubjectClass) GetUUID(sessionID SessionRef, self SubjectRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -212,7 +212,7 @@ func (_class SubjectClass) Destroy(sessionID SessionRef, self SubjectRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -231,7 +231,7 @@ func (_class SubjectClass) Create(sessionID SessionRef, args SubjectRecord) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSubjectRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSubjectRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -250,7 +250,7 @@ func (_class SubjectClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSubjectRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSubjectRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -269,6 +269,6 @@ func (_class SubjectClass) GetRecord(sessionID SessionRef, self SubjectRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSubjectRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSubjectRecordToGo(_method+" -> ", _result.Value)
 	return
 }

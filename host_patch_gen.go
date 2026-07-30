@@ -61,7 +61,7 @@ func (_class HostPatchClass) GetAllRecords(sessionID SessionRef) (_retval map[Ho
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostPatchRefToHostPatchRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostPatchRefToHostPatchRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -76,7 +76,7 @@ func (_class HostPatchClass) GetAll(sessionID SessionRef) (_retval []HostPatchRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostPatchRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostPatchRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -95,7 +95,7 @@ func (_class HostPatchClass) Apply(sessionID SessionRef, self HostPatchRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -110,7 +110,7 @@ func (_class HostPatchClass) Destroy(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -129,7 +129,7 @@ func (_class HostPatchClass) RemoveFromOtherConfig(sessionID SessionRef, self Ho
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -152,7 +152,7 @@ func (_class HostPatchClass) AddToOtherConfig(sessionID SessionRef, self HostPat
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -171,7 +171,7 @@ func (_class HostPatchClass) SetOtherConfig(sessionID SessionRef, self HostPatch
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -190,7 +190,7 @@ func (_class HostPatchClass) GetOtherConfig(sessionID SessionRef, self HostPatch
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -209,7 +209,7 @@ func (_class HostPatchClass) GetPoolPatch(sessionID SessionRef, self HostPatchRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolPatchRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolPatchRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -228,7 +228,7 @@ func (_class HostPatchClass) GetSize(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -247,7 +247,7 @@ func (_class HostPatchClass) GetTimestampApplied(sessionID SessionRef, self Host
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -266,7 +266,7 @@ func (_class HostPatchClass) GetApplied(sessionID SessionRef, self HostPatchRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -285,7 +285,7 @@ func (_class HostPatchClass) GetHost(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -304,7 +304,7 @@ func (_class HostPatchClass) GetVersion(sessionID SessionRef, self HostPatchRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -323,7 +323,7 @@ func (_class HostPatchClass) GetNameDescription(sessionID SessionRef, self HostP
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -342,7 +342,7 @@ func (_class HostPatchClass) GetNameLabel(sessionID SessionRef, self HostPatchRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -361,7 +361,7 @@ func (_class HostPatchClass) GetUUID(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -380,7 +380,7 @@ func (_class HostPatchClass) GetByNameLabel(sessionID SessionRef, label string) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostPatchRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostPatchRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -399,7 +399,7 @@ func (_class HostPatchClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostPatchRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostPatchRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -418,6 +418,6 @@ func (_class HostPatchClass) GetRecord(sessionID SessionRef, self HostPatchRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostPatchRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostPatchRecordToGo(_method+" -> ", _result.Value)
 	return
 }

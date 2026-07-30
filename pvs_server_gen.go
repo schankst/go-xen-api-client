@@ -51,7 +51,7 @@ func (_class PVSServerClass) GetAllRecords(sessionID SessionRef) (_retval map[PV
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSServerRefToPVSServerRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSServerRefToPVSServerRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -66,7 +66,7 @@ func (_class PVSServerClass) GetAll(sessionID SessionRef) (_retval []PVSServerRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSServerRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSServerRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -81,7 +81,7 @@ func (_class PVSServerClass) Forget(sessionID SessionRef, self PVSServerRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -112,7 +112,7 @@ func (_class PVSServerClass) Introduce(sessionID SessionRef, addresses []string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSServerRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSServerRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -131,7 +131,7 @@ func (_class PVSServerClass) GetSite(sessionID SessionRef, self PVSServerRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSSiteRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSSiteRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -150,7 +150,7 @@ func (_class PVSServerClass) GetLastPort(sessionID SessionRef, self PVSServerRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -169,7 +169,7 @@ func (_class PVSServerClass) GetFirstPort(sessionID SessionRef, self PVSServerRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -188,7 +188,7 @@ func (_class PVSServerClass) GetAddresses(sessionID SessionRef, self PVSServerRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -207,7 +207,7 @@ func (_class PVSServerClass) GetUUID(sessionID SessionRef, self PVSServerRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -226,7 +226,7 @@ func (_class PVSServerClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSServerRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSServerRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -245,6 +245,6 @@ func (_class PVSServerClass) GetRecord(sessionID SessionRef, self PVSServerRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSServerRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSServerRecordToGo(_method+" -> ", _result.Value)
 	return
 }

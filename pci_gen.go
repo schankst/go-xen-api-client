@@ -86,7 +86,7 @@ func (_class PCIClass) GetAllRecords(sessionID SessionRef) (_retval map[PCIRef]P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefToPCIRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefToPCIRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -101,7 +101,7 @@ func (_class PCIClass) GetAll(sessionID SessionRef) (_retval []PCIRef, _err erro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -120,7 +120,7 @@ func (_class PCIClass) GetDom0AccessStatus(sessionID SessionRef, self PCIRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPciDom0AccessToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -139,7 +139,7 @@ func (_class PCIClass) EnableDom0Access(sessionID SessionRef, self PCIRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPciDom0AccessToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -158,7 +158,7 @@ func (_class PCIClass) DisableDom0Access(sessionID SessionRef, self PCIRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPciDom0AccessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPciDom0AccessToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -177,7 +177,7 @@ func (_class PCIClass) RemoveFromOtherConfig(sessionID SessionRef, self PCIRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -200,7 +200,7 @@ func (_class PCIClass) AddToOtherConfig(sessionID SessionRef, self PCIRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -219,7 +219,7 @@ func (_class PCIClass) SetOtherConfig(sessionID SessionRef, self PCIRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -238,7 +238,7 @@ func (_class PCIClass) GetDriverName(sessionID SessionRef, self PCIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -257,7 +257,7 @@ func (_class PCIClass) GetSubsystemDeviceName(sessionID SessionRef, self PCIRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -276,7 +276,7 @@ func (_class PCIClass) GetSubsystemDeviceID(sessionID SessionRef, self PCIRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -295,7 +295,7 @@ func (_class PCIClass) GetSubsystemVendorName(sessionID SessionRef, self PCIRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -314,7 +314,7 @@ func (_class PCIClass) GetSubsystemVendorID(sessionID SessionRef, self PCIRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -333,7 +333,7 @@ func (_class PCIClass) GetOtherConfig(sessionID SessionRef, self PCIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -352,7 +352,7 @@ func (_class PCIClass) GetDependencies(sessionID SessionRef, self PCIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -371,7 +371,7 @@ func (_class PCIClass) GetPciID(sessionID SessionRef, self PCIRef) (_retval stri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -390,7 +390,7 @@ func (_class PCIClass) GetHost(sessionID SessionRef, self PCIRef) (_retval HostR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -409,7 +409,7 @@ func (_class PCIClass) GetDeviceName(sessionID SessionRef, self PCIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -428,7 +428,7 @@ func (_class PCIClass) GetDeviceID(sessionID SessionRef, self PCIRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -447,7 +447,7 @@ func (_class PCIClass) GetVendorName(sessionID SessionRef, self PCIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -466,7 +466,7 @@ func (_class PCIClass) GetVendorID(sessionID SessionRef, self PCIRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -485,7 +485,7 @@ func (_class PCIClass) GetClassName(sessionID SessionRef, self PCIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -504,7 +504,7 @@ func (_class PCIClass) GetClassID(sessionID SessionRef, self PCIRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -523,7 +523,7 @@ func (_class PCIClass) GetUUID(sessionID SessionRef, self PCIRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -542,7 +542,7 @@ func (_class PCIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PCI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -561,6 +561,6 @@ func (_class PCIClass) GetRecord(sessionID SessionRef, self PCIRef) (_retval PCI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRecordToGo(_method+" -> ", _result.Value)
 	return
 }

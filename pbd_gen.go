@@ -53,7 +53,7 @@ func (_class PBDClass) GetAllRecords(sessionID SessionRef) (_retval map[PBDRef]P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPBDRefToPBDRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPBDRefToPBDRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -68,7 +68,7 @@ func (_class PBDClass) GetAll(sessionID SessionRef) (_retval []PBDRef, _err erro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPBDRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPBDRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -87,7 +87,7 @@ func (_class PBDClass) SetDeviceConfig(sessionID SessionRef, self PBDRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -102,14 +102,15 @@ func (_class PBDClass) Unplug(sessionID SessionRef, self PBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Plug Activate the specified PBD, causing the referenced SR to be attached and scanned
 //
 // Errors:
-//  SR_UNKNOWN_DRIVER - The SR could not be connected because the driver was not recognised.
+//
+//	SR_UNKNOWN_DRIVER - The SR could not be connected because the driver was not recognised.
 func (_class PBDClass) Plug(sessionID SessionRef, self PBDRef) (_err error) {
 	_method := "PBD.plug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -120,7 +121,7 @@ func (_class PBDClass) Plug(sessionID SessionRef, self PBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -139,7 +140,7 @@ func (_class PBDClass) RemoveFromOtherConfig(sessionID SessionRef, self PBDRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -162,7 +163,7 @@ func (_class PBDClass) AddToOtherConfig(sessionID SessionRef, self PBDRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -181,7 +182,7 @@ func (_class PBDClass) SetOtherConfig(sessionID SessionRef, self PBDRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -200,7 +201,7 @@ func (_class PBDClass) GetOtherConfig(sessionID SessionRef, self PBDRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -219,7 +220,7 @@ func (_class PBDClass) GetCurrentlyAttached(sessionID SessionRef, self PBDRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -238,7 +239,7 @@ func (_class PBDClass) GetDeviceConfig(sessionID SessionRef, self PBDRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -257,7 +258,7 @@ func (_class PBDClass) GetSR(sessionID SessionRef, self PBDRef) (_retval SRRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -276,7 +277,7 @@ func (_class PBDClass) GetHost(sessionID SessionRef, self PBDRef) (_retval HostR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -295,7 +296,7 @@ func (_class PBDClass) GetUUID(sessionID SessionRef, self PBDRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -310,7 +311,7 @@ func (_class PBDClass) Destroy(sessionID SessionRef, self PBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -329,7 +330,7 @@ func (_class PBDClass) Create(sessionID SessionRef, args PBDRecord) (_retval PBD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPBDRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPBDRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -348,7 +349,7 @@ func (_class PBDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PBD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPBDRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPBDRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -367,6 +368,6 @@ func (_class PBDClass) GetRecord(sessionID SessionRef, self PBDRef) (_retval PBD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPBDRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPBDRecordToGo(_method+" -> ", _result.Value)
 	return
 }

@@ -55,7 +55,7 @@ func (_class DriverVariantClass) GetAllRecords(sessionID SessionRef) (_retval ma
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDriverVariantRefToDriverVariantRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDriverVariantRefToDriverVariantRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -70,7 +70,7 @@ func (_class DriverVariantClass) GetAll(sessionID SessionRef) (_retval []DriverV
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDriverVariantRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDriverVariantRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -85,7 +85,7 @@ func (_class DriverVariantClass) Select(sessionID SessionRef, self DriverVariant
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -104,7 +104,7 @@ func (_class DriverVariantClass) GetStatus(sessionID SessionRef, self DriverVari
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -123,7 +123,7 @@ func (_class DriverVariantClass) GetPriority(sessionID SessionRef, self DriverVa
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -142,7 +142,7 @@ func (_class DriverVariantClass) GetHardwarePresent(sessionID SessionRef, self D
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -161,7 +161,7 @@ func (_class DriverVariantClass) GetVersion(sessionID SessionRef, self DriverVar
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -180,7 +180,7 @@ func (_class DriverVariantClass) GetDriver(sessionID SessionRef, self DriverVari
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostDriverRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostDriverRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -199,7 +199,7 @@ func (_class DriverVariantClass) GetName(sessionID SessionRef, self DriverVarian
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -218,7 +218,7 @@ func (_class DriverVariantClass) GetUUID(sessionID SessionRef, self DriverVarian
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -237,7 +237,7 @@ func (_class DriverVariantClass) GetByUUID(sessionID SessionRef, uuid string) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDriverVariantRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDriverVariantRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -256,6 +256,6 @@ func (_class DriverVariantClass) GetRecord(sessionID SessionRef, self DriverVari
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDriverVariantRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDriverVariantRecordToGo(_method+" -> ", _result.Value)
 	return
 }

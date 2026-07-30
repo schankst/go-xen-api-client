@@ -49,7 +49,7 @@ func (_class CrashdumpClass) GetAllRecords(sessionID SessionRef) (_retval map[Cr
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCrashdumpRefToCrashdumpRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCrashdumpRefToCrashdumpRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -64,7 +64,7 @@ func (_class CrashdumpClass) GetAll(sessionID SessionRef) (_retval []CrashdumpRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCrashdumpRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCrashdumpRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -79,7 +79,7 @@ func (_class CrashdumpClass) Destroy(sessionID SessionRef, self CrashdumpRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -98,7 +98,7 @@ func (_class CrashdumpClass) RemoveFromOtherConfig(sessionID SessionRef, self Cr
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -121,7 +121,7 @@ func (_class CrashdumpClass) AddToOtherConfig(sessionID SessionRef, self Crashdu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -140,7 +140,7 @@ func (_class CrashdumpClass) SetOtherConfig(sessionID SessionRef, self Crashdump
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -159,7 +159,7 @@ func (_class CrashdumpClass) GetOtherConfig(sessionID SessionRef, self Crashdump
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -178,7 +178,7 @@ func (_class CrashdumpClass) GetVDI(sessionID SessionRef, self CrashdumpRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -197,7 +197,7 @@ func (_class CrashdumpClass) GetVM(sessionID SessionRef, self CrashdumpRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -216,7 +216,7 @@ func (_class CrashdumpClass) GetUUID(sessionID SessionRef, self CrashdumpRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -235,7 +235,7 @@ func (_class CrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCrashdumpRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCrashdumpRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -254,6 +254,6 @@ func (_class CrashdumpClass) GetRecord(sessionID SessionRef, self CrashdumpRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCrashdumpRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCrashdumpRecordToGo(_method+" -> ", _result.Value)
 	return
 }

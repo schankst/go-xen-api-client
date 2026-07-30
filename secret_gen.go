@@ -47,7 +47,7 @@ func (_class SecretClass) GetAllRecords(sessionID SessionRef) (_retval map[Secre
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSecretRefToSecretRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSecretRefToSecretRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -62,7 +62,7 @@ func (_class SecretClass) GetAll(sessionID SessionRef) (_retval []SecretRef, _er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSecretRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSecretRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -81,7 +81,7 @@ func (_class SecretClass) RemoveFromOtherConfig(sessionID SessionRef, self Secre
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -104,7 +104,7 @@ func (_class SecretClass) AddToOtherConfig(sessionID SessionRef, self SecretRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -123,7 +123,7 @@ func (_class SecretClass) SetOtherConfig(sessionID SessionRef, self SecretRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -142,7 +142,7 @@ func (_class SecretClass) SetValue(sessionID SessionRef, self SecretRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -161,7 +161,7 @@ func (_class SecretClass) GetOtherConfig(sessionID SessionRef, self SecretRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -180,7 +180,7 @@ func (_class SecretClass) GetValue(sessionID SessionRef, self SecretRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -199,7 +199,7 @@ func (_class SecretClass) GetUUID(sessionID SessionRef, self SecretRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -214,7 +214,7 @@ func (_class SecretClass) Destroy(sessionID SessionRef, self SecretRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -233,7 +233,7 @@ func (_class SecretClass) Create(sessionID SessionRef, args SecretRecord) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSecretRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSecretRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -252,7 +252,7 @@ func (_class SecretClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSecretRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSecretRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -271,6 +271,6 @@ func (_class SecretClass) GetRecord(sessionID SessionRef, self SecretRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSecretRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSecretRecordToGo(_method+" -> ", _result.Value)
 	return
 }

@@ -74,7 +74,7 @@ func (_class ClusterHostClass) GetAllRecords(sessionID SessionRef) (_retval map[
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterHostRefToClusterHostRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterHostRefToClusterHostRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -89,14 +89,15 @@ func (_class ClusterHostClass) GetAll(sessionID SessionRef) (_retval []ClusterHo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterHostRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterHostRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Disable Disable cluster membership for an enabled cluster host.
 //
 // Errors:
-//  CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
+//
+//	CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
 func (_class ClusterHostClass) Disable(sessionID SessionRef, self ClusterHostRef) (_err error) {
 	_method := "Cluster_host.disable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -107,14 +108,15 @@ func (_class ClusterHostClass) Disable(sessionID SessionRef, self ClusterHostRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // ForceDestroy Remove a host from an existing cluster forcefully.
 //
 // Errors:
-//  CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
+//
+//	CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
 func (_class ClusterHostClass) ForceDestroy(sessionID SessionRef, self ClusterHostRef) (_err error) {
 	_method := "Cluster_host.force_destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -125,15 +127,16 @@ func (_class ClusterHostClass) ForceDestroy(sessionID SessionRef, self ClusterHo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Enable Enable cluster membership for a disabled cluster host.
 //
 // Errors:
-//  PIF_ALLOWS_UNPLUG - The operation you requested cannot be performed because the specified PIF allows unplug.
-//  REQUIRED_PIF_IS_UNPLUGGED - The operation you requested cannot be performed because the specified PIF is currently unplugged.
+//
+//	PIF_ALLOWS_UNPLUG - The operation you requested cannot be performed because the specified PIF allows unplug.
+//	REQUIRED_PIF_IS_UNPLUGGED - The operation you requested cannot be performed because the specified PIF is currently unplugged.
 func (_class ClusterHostClass) Enable(sessionID SessionRef, self ClusterHostRef) (_err error) {
 	_method := "Cluster_host.enable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -144,16 +147,17 @@ func (_class ClusterHostClass) Enable(sessionID SessionRef, self ClusterHostRef)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Destroy Remove the host from an existing cluster. This operation is allowed even if a cluster host is not enabled.
 //
 // Errors:
-//  CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
-//  CLUSTERING_DISABLED - An operation was attempted while clustering was disabled on the cluster_host.
-//  CLUSTER_HOST_IS_LAST - The last cluster host cannot be destroyed. Destroy the cluster instead
+//
+//	CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
+//	CLUSTERING_DISABLED - An operation was attempted while clustering was disabled on the cluster_host.
+//	CLUSTER_HOST_IS_LAST - The last cluster host cannot be destroyed. Destroy the cluster instead
 func (_class ClusterHostClass) Destroy(sessionID SessionRef, self ClusterHostRef) (_err error) {
 	_method := "Cluster_host.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -164,15 +168,16 @@ func (_class ClusterHostClass) Destroy(sessionID SessionRef, self ClusterHostRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Add a new host to an existing cluster.
 //
 // Errors:
-//  PIF_NOT_ATTACHED_TO_HOST - Cluster_host creation failed as the PIF provided is not attached to the host.
-//  NO_CLUSTER_HOSTS_REACHABLE - No other cluster host was reachable when joining
+//
+//	PIF_NOT_ATTACHED_TO_HOST - Cluster_host creation failed as the PIF provided is not attached to the host.
+//	NO_CLUSTER_HOSTS_REACHABLE - No other cluster host was reachable when joining
 func (_class ClusterHostClass) Create(sessionID SessionRef, cluster ClusterRef, host HostRef, pif PIFRef) (_retval ClusterHostRef, _err error) {
 	_method := "Cluster_host.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -195,7 +200,7 @@ func (_class ClusterHostClass) Create(sessionID SessionRef, cluster ClusterRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -214,7 +219,7 @@ func (_class ClusterHostClass) GetOtherConfig(sessionID SessionRef, self Cluster
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -233,7 +238,7 @@ func (_class ClusterHostClass) GetCurrentOperations(sessionID SessionRef, self C
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumClusterHostOperationMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumClusterHostOperationMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -252,7 +257,7 @@ func (_class ClusterHostClass) GetAllowedOperations(sessionID SessionRef, self C
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumClusterHostOperationSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumClusterHostOperationSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -271,7 +276,7 @@ func (_class ClusterHostClass) GetLastUpdateLive(sessionID SessionRef, self Clus
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -290,7 +295,7 @@ func (_class ClusterHostClass) GetLive(sessionID SessionRef, self ClusterHostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -309,7 +314,7 @@ func (_class ClusterHostClass) GetJoined(sessionID SessionRef, self ClusterHostR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -328,7 +333,7 @@ func (_class ClusterHostClass) GetPIF(sessionID SessionRef, self ClusterHostRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -347,7 +352,7 @@ func (_class ClusterHostClass) GetEnabled(sessionID SessionRef, self ClusterHost
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -366,7 +371,7 @@ func (_class ClusterHostClass) GetHost(sessionID SessionRef, self ClusterHostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -385,7 +390,7 @@ func (_class ClusterHostClass) GetCluster(sessionID SessionRef, self ClusterHost
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -404,7 +409,7 @@ func (_class ClusterHostClass) GetUUID(sessionID SessionRef, self ClusterHostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -423,7 +428,7 @@ func (_class ClusterHostClass) GetByUUID(sessionID SessionRef, uuid string) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -442,6 +447,6 @@ func (_class ClusterHostClass) GetRecord(sessionID SessionRef, self ClusterHostR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterHostRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterHostRecordToGo(_method+" -> ", _result.Value)
 	return
 }

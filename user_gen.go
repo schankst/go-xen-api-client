@@ -53,7 +53,7 @@ func (_class UserClass) RemoveFromOtherConfig(sessionID SessionRef, self UserRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -76,7 +76,7 @@ func (_class UserClass) AddToOtherConfig(sessionID SessionRef, self UserRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -95,7 +95,7 @@ func (_class UserClass) SetOtherConfig(sessionID SessionRef, self UserRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -114,7 +114,7 @@ func (_class UserClass) SetFullname(sessionID SessionRef, self UserRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -133,7 +133,7 @@ func (_class UserClass) GetOtherConfig(sessionID SessionRef, self UserRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -152,7 +152,7 @@ func (_class UserClass) GetFullname(sessionID SessionRef, self UserRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -171,7 +171,7 @@ func (_class UserClass) GetShortName(sessionID SessionRef, self UserRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -190,7 +190,7 @@ func (_class UserClass) GetUUID(sessionID SessionRef, self UserRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -205,7 +205,7 @@ func (_class UserClass) Destroy(sessionID SessionRef, self UserRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -224,7 +224,7 @@ func (_class UserClass) Create(sessionID SessionRef, args UserRecord) (_retval U
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUserRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUserRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -243,7 +243,7 @@ func (_class UserClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Us
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUserRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUserRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -262,6 +262,6 @@ func (_class UserClass) GetRecord(sessionID SessionRef, self UserRef) (_retval U
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUserRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUserRecordToGo(_method+" -> ", _result.Value)
 	return
 }

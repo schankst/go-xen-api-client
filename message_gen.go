@@ -67,7 +67,7 @@ type MessageClass struct {
 	client *Client
 }
 
-// GetAllRecordsWhere 
+// GetAllRecordsWhere
 func (_class MessageClass) GetAllRecordsWhere(sessionID SessionRef, expr string) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get_all_records_where"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -82,11 +82,11 @@ func (_class MessageClass) GetAllRecordsWhere(sessionID SessionRef, expr string)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// GetAllRecords 
+// GetAllRecords
 func (_class MessageClass) GetAllRecords(sessionID SessionRef) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -97,11 +97,11 @@ func (_class MessageClass) GetAllRecords(sessionID SessionRef) (_retval map[Mess
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// GetByUUID 
+// GetByUUID
 func (_class MessageClass) GetByUUID(sessionID SessionRef, uuid string) (_retval MessageRef, _err error) {
 	_method := "message.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -116,11 +116,11 @@ func (_class MessageClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// GetRecord 
+// GetRecord
 func (_class MessageClass) GetRecord(sessionID SessionRef, self MessageRef) (_retval MessageRecord, _err error) {
 	_method := "message.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -135,11 +135,11 @@ func (_class MessageClass) GetRecord(sessionID SessionRef, self MessageRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRecordToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// GetSince 
+// GetSince
 func (_class MessageClass) GetSince(sessionID SessionRef, since time.Time) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get_since"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -154,11 +154,11 @@ func (_class MessageClass) GetSince(sessionID SessionRef, since time.Time) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// GetAll 
+// GetAll
 func (_class MessageClass) GetAll(sessionID SessionRef) (_retval []MessageRef, _err error) {
 	_method := "message.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -169,11 +169,11 @@ func (_class MessageClass) GetAll(sessionID SessionRef) (_retval []MessageRef, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// Get 
+// Get
 func (_class MessageClass) Get(sessionID SessionRef, cls Cls, objUUID string, since time.Time) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -196,11 +196,11 @@ func (_class MessageClass) Get(sessionID SessionRef, cls Cls, objUUID string, si
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRefToMessageRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// DestroyAll 
+// DestroyAll
 func (_class MessageClass) DestroyAll(sessionID SessionRef, filters map[string]string) (_err error) {
 	_method := "message.destroy_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -211,11 +211,11 @@ func (_class MessageClass) DestroyAll(sessionID SessionRef, filters map[string]s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _filtersArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _filtersArg)
 	return
 }
 
-// DestroyMany 
+// DestroyMany
 func (_class MessageClass) DestroyMany(sessionID SessionRef, messages []MessageRef) (_err error) {
 	_method := "message.destroy_many"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -226,11 +226,11 @@ func (_class MessageClass) DestroyMany(sessionID SessionRef, messages []MessageR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _messagesArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _messagesArg)
 	return
 }
 
-// Destroy 
+// Destroy
 func (_class MessageClass) Destroy(sessionID SessionRef, self MessageRef) (_err error) {
 	_method := "message.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -241,11 +241,11 @@ func (_class MessageClass) Destroy(sessionID SessionRef, self MessageRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
-// Create 
+// Create
 func (_class MessageClass) Create(sessionID SessionRef, name string, priority int, cls Cls, objUUID string, body string) (_retval MessageRef, _err error) {
 	_method := "message.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -276,6 +276,6 @@ func (_class MessageClass) Create(sessionID SessionRef, name string, priority in
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertMessageRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertMessageRefToGo(_method+" -> ", _result.Value)
 	return
 }

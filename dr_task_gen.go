@@ -45,7 +45,7 @@ func (_class DRTaskClass) GetAllRecords(sessionID SessionRef) (_retval map[DRTas
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDRTaskRefToDRTaskRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDRTaskRefToDRTaskRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -60,7 +60,7 @@ func (_class DRTaskClass) GetAll(sessionID SessionRef) (_retval []DRTaskRef, _er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDRTaskRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDRTaskRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -75,7 +75,7 @@ func (_class DRTaskClass) Destroy(sessionID SessionRef, self DRTaskRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -102,7 +102,7 @@ func (_class DRTaskClass) Create(sessionID SessionRef, atype string, deviceConfi
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDRTaskRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDRTaskRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -121,7 +121,7 @@ func (_class DRTaskClass) GetIntroducedSRs(sessionID SessionRef, self DRTaskRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -140,7 +140,7 @@ func (_class DRTaskClass) GetUUID(sessionID SessionRef, self DRTaskRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -159,7 +159,7 @@ func (_class DRTaskClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDRTaskRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDRTaskRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -178,6 +178,6 @@ func (_class DRTaskClass) GetRecord(sessionID SessionRef, self DRTaskRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDRTaskRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDRTaskRecordToGo(_method+" -> ", _result.Value)
 	return
 }

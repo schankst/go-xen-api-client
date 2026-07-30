@@ -59,7 +59,7 @@ func (_class LVHDClass) EnableThinProvisioning(sessionID SessionRef, host HostRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -78,7 +78,7 @@ func (_class LVHDClass) GetUUID(sessionID SessionRef, self LVHDRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -97,7 +97,7 @@ func (_class LVHDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval LV
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertLVHDRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertLVHDRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -116,6 +116,6 @@ func (_class LVHDClass) GetRecord(sessionID SessionRef, self LVHDRef) (_retval L
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertLVHDRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertLVHDRecordToGo(_method+" -> ", _result.Value)
 	return
 }

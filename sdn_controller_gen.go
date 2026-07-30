@@ -58,7 +58,7 @@ func (_class SDNControllerClass) GetAllRecords(sessionID SessionRef) (_retval ma
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSDNControllerRefToSDNControllerRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSDNControllerRefToSDNControllerRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -73,7 +73,7 @@ func (_class SDNControllerClass) GetAll(sessionID SessionRef) (_retval []SDNCont
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSDNControllerRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSDNControllerRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -88,7 +88,7 @@ func (_class SDNControllerClass) Forget(sessionID SessionRef, self SDNController
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -115,7 +115,7 @@ func (_class SDNControllerClass) Introduce(sessionID SessionRef, protocol SdnCon
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSDNControllerRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSDNControllerRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -134,7 +134,7 @@ func (_class SDNControllerClass) GetPort(sessionID SessionRef, self SDNControlle
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -153,7 +153,7 @@ func (_class SDNControllerClass) GetAddress(sessionID SessionRef, self SDNContro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -172,7 +172,7 @@ func (_class SDNControllerClass) GetProtocol(sessionID SessionRef, self SDNContr
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumSdnControllerProtocolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumSdnControllerProtocolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -191,7 +191,7 @@ func (_class SDNControllerClass) GetUUID(sessionID SessionRef, self SDNControlle
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -210,7 +210,7 @@ func (_class SDNControllerClass) GetByUUID(sessionID SessionRef, uuid string) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSDNControllerRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSDNControllerRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -229,6 +229,6 @@ func (_class SDNControllerClass) GetRecord(sessionID SessionRef, self SDNControl
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSDNControllerRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSDNControllerRecordToGo(_method+" -> ", _result.Value)
 	return
 }

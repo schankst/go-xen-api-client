@@ -82,7 +82,7 @@ func (_class SMClass) GetAllRecords(sessionID SessionRef) (_retval map[SMRef]SMR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSMRefToSMRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSMRefToSMRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -97,7 +97,7 @@ func (_class SMClass) GetAll(sessionID SessionRef) (_retval []SMRef, _err error)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -116,7 +116,7 @@ func (_class SMClass) RemoveFromOtherConfig(sessionID SessionRef, self SMRef, ke
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -139,7 +139,7 @@ func (_class SMClass) AddToOtherConfig(sessionID SessionRef, self SMRef, key str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -158,7 +158,7 @@ func (_class SMClass) SetOtherConfig(sessionID SessionRef, self SMRef, value map
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -177,7 +177,7 @@ func (_class SMClass) GetSupportedImageFormats(sessionID SessionRef, self SMRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumImageFormatTypeSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumImageFormatTypeSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -196,7 +196,7 @@ func (_class SMClass) GetRequiredClusterStack(sessionID SessionRef, self SMRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -215,7 +215,7 @@ func (_class SMClass) GetDriverFilename(sessionID SessionRef, self SMRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -234,7 +234,7 @@ func (_class SMClass) GetOtherConfig(sessionID SessionRef, self SMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -253,7 +253,7 @@ func (_class SMClass) GetFeatures(sessionID SessionRef, self SMRef) (_retval map
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToIntMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToIntMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -272,7 +272,7 @@ func (_class SMClass) GetCapabilities(sessionID SessionRef, self SMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -291,7 +291,7 @@ func (_class SMClass) GetConfiguration(sessionID SessionRef, self SMRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -310,7 +310,7 @@ func (_class SMClass) GetRequiredAPIVersion(sessionID SessionRef, self SMRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -329,7 +329,7 @@ func (_class SMClass) GetVersion(sessionID SessionRef, self SMRef) (_retval stri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -348,7 +348,7 @@ func (_class SMClass) GetCopyright(sessionID SessionRef, self SMRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -367,7 +367,7 @@ func (_class SMClass) GetVendor(sessionID SessionRef, self SMRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -386,7 +386,7 @@ func (_class SMClass) GetType(sessionID SessionRef, self SMRef) (_retval string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -405,7 +405,7 @@ func (_class SMClass) GetNameDescription(sessionID SessionRef, self SMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -424,7 +424,7 @@ func (_class SMClass) GetNameLabel(sessionID SessionRef, self SMRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -443,7 +443,7 @@ func (_class SMClass) GetUUID(sessionID SessionRef, self SMRef) (_retval string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -462,7 +462,7 @@ func (_class SMClass) GetByNameLabel(sessionID SessionRef, label string) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -481,7 +481,7 @@ func (_class SMClass) GetByUUID(sessionID SessionRef, uuid string) (_retval SMRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -500,6 +500,6 @@ func (_class SMClass) GetRecord(sessionID SessionRef, self SMRef) (_retval SMRec
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSMRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSMRecordToGo(_method+" -> ", _result.Value)
 	return
 }

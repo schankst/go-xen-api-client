@@ -99,7 +99,7 @@ func (_class TaskClass) GetAllRecords(sessionID SessionRef) (_retval map[TaskRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefToTaskRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefToTaskRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -114,7 +114,7 @@ func (_class TaskClass) GetAll(sessionID SessionRef) (_retval []TaskRef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -133,7 +133,7 @@ func (_class TaskClass) SetOtherConfig(sessionID SessionRef, self TaskRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -152,7 +152,7 @@ func (_class TaskClass) RemoveFromOtherConfig(sessionID SessionRef, self TaskRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -175,7 +175,7 @@ func (_class TaskClass) AddToOtherConfig(sessionID SessionRef, self TaskRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -194,7 +194,7 @@ func (_class TaskClass) SetErrorInfo(sessionID SessionRef, self TaskRef, value [
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -213,7 +213,7 @@ func (_class TaskClass) SetResult(sessionID SessionRef, self TaskRef, value stri
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -232,7 +232,7 @@ func (_class TaskClass) SetProgress(sessionID SessionRef, self TaskRef, value fl
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -251,14 +251,15 @@ func (_class TaskClass) SetStatus(sessionID SessionRef, self TaskRef, value Task
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // Cancel Request that a task be cancelled. Note that a task may fail to be cancelled and may complete or fail normally and note that, even when a task does cancel, it might take an arbitrary amount of time.
 //
 // Errors:
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 func (_class TaskClass) Cancel(sessionID SessionRef, task TaskRef) (_err error) {
 	_method := "task.cancel"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -269,7 +270,7 @@ func (_class TaskClass) Cancel(sessionID SessionRef, task TaskRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _taskArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _taskArg)
 	return
 }
 
@@ -284,7 +285,7 @@ func (_class TaskClass) Destroy(sessionID SessionRef, self TaskRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -307,7 +308,7 @@ func (_class TaskClass) Create(sessionID SessionRef, label string, description s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -326,7 +327,7 @@ func (_class TaskClass) GetBacktrace(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -345,7 +346,7 @@ func (_class TaskClass) GetSubtasks(sessionID SessionRef, self TaskRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -364,7 +365,7 @@ func (_class TaskClass) GetSubtaskOf(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -383,7 +384,7 @@ func (_class TaskClass) GetOtherConfig(sessionID SessionRef, self TaskRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -402,7 +403,7 @@ func (_class TaskClass) GetErrorInfo(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -421,7 +422,7 @@ func (_class TaskClass) GetResult(sessionID SessionRef, self TaskRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -440,7 +441,7 @@ func (_class TaskClass) GetType(sessionID SessionRef, self TaskRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -459,7 +460,7 @@ func (_class TaskClass) GetProgress(sessionID SessionRef, self TaskRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -478,7 +479,7 @@ func (_class TaskClass) GetResidentOn(sessionID SessionRef, self TaskRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -497,7 +498,7 @@ func (_class TaskClass) GetStatus(sessionID SessionRef, self TaskRef) (_retval T
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumTaskStatusTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumTaskStatusTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -516,7 +517,7 @@ func (_class TaskClass) GetFinished(sessionID SessionRef, self TaskRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -535,7 +536,7 @@ func (_class TaskClass) GetCreated(sessionID SessionRef, self TaskRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -554,7 +555,7 @@ func (_class TaskClass) GetCurrentOperations(sessionID SessionRef, self TaskRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumTaskAllowedOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumTaskAllowedOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -573,7 +574,7 @@ func (_class TaskClass) GetAllowedOperations(sessionID SessionRef, self TaskRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumTaskAllowedOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumTaskAllowedOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -592,7 +593,7 @@ func (_class TaskClass) GetNameDescription(sessionID SessionRef, self TaskRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -611,7 +612,7 @@ func (_class TaskClass) GetNameLabel(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -630,7 +631,7 @@ func (_class TaskClass) GetUUID(sessionID SessionRef, self TaskRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -649,7 +650,7 @@ func (_class TaskClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -668,7 +669,7 @@ func (_class TaskClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ta
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -687,6 +688,6 @@ func (_class TaskClass) GetRecord(sessionID SessionRef, self TaskRef) (_retval T
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRecordToGo(_method+" -> ", _result.Value)
 	return
 }

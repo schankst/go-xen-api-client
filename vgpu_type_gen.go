@@ -88,7 +88,7 @@ func (_class VGPUTypeClass) GetAllRecords(sessionID SessionRef) (_retval map[VGP
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPUTypeRefToVGPUTypeRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPUTypeRefToVGPUTypeRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -103,7 +103,7 @@ func (_class VGPUTypeClass) GetAll(sessionID SessionRef) (_retval []VGPUTypeRef,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPUTypeRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPUTypeRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -122,7 +122,7 @@ func (_class VGPUTypeClass) GetCompatibleTypesInVM(sessionID SessionRef, self VG
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPUTypeRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPUTypeRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -141,7 +141,7 @@ func (_class VGPUTypeClass) GetExperimental(sessionID SessionRef, self VGPUTypeR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -160,7 +160,7 @@ func (_class VGPUTypeClass) GetIdentifier(sessionID SessionRef, self VGPUTypeRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -179,7 +179,7 @@ func (_class VGPUTypeClass) GetImplementation(sessionID SessionRef, self VGPUTyp
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVgpuTypeImplementationToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVgpuTypeImplementationToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -198,7 +198,7 @@ func (_class VGPUTypeClass) GetEnabledOnGPUGroups(sessionID SessionRef, self VGP
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertGPUGroupRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertGPUGroupRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -217,7 +217,7 @@ func (_class VGPUTypeClass) GetSupportedOnGPUGroups(sessionID SessionRef, self V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertGPUGroupRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertGPUGroupRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -236,7 +236,7 @@ func (_class VGPUTypeClass) GetVGPUs(sessionID SessionRef, self VGPUTypeRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -255,7 +255,7 @@ func (_class VGPUTypeClass) GetEnabledOnPGPUs(sessionID SessionRef, self VGPUTyp
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPGPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPGPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -274,7 +274,7 @@ func (_class VGPUTypeClass) GetSupportedOnPGPUs(sessionID SessionRef, self VGPUT
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPGPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPGPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -293,7 +293,7 @@ func (_class VGPUTypeClass) GetMaxResolutionY(sessionID SessionRef, self VGPUTyp
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -312,7 +312,7 @@ func (_class VGPUTypeClass) GetMaxResolutionX(sessionID SessionRef, self VGPUTyp
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -331,7 +331,7 @@ func (_class VGPUTypeClass) GetMaxHeads(sessionID SessionRef, self VGPUTypeRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -350,7 +350,7 @@ func (_class VGPUTypeClass) GetFramebufferSize(sessionID SessionRef, self VGPUTy
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -369,7 +369,7 @@ func (_class VGPUTypeClass) GetModelName(sessionID SessionRef, self VGPUTypeRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -388,7 +388,7 @@ func (_class VGPUTypeClass) GetVendorName(sessionID SessionRef, self VGPUTypeRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -407,7 +407,7 @@ func (_class VGPUTypeClass) GetUUID(sessionID SessionRef, self VGPUTypeRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -426,7 +426,7 @@ func (_class VGPUTypeClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPUTypeRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPUTypeRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -445,6 +445,6 @@ func (_class VGPUTypeClass) GetRecord(sessionID SessionRef, self VGPUTypeRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPUTypeRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPUTypeRecordToGo(_method+" -> ", _result.Value)
 	return
 }

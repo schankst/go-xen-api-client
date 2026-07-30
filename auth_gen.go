@@ -42,7 +42,7 @@ func (_class AuthClass) GetGroupMembership(sessionID SessionRef, subjectIdentifi
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -61,7 +61,7 @@ func (_class AuthClass) GetSubjectInformationFromIdentifier(sessionID SessionRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -80,6 +80,6 @@ func (_class AuthClass) GetSubjectIdentifier(sessionID SessionRef, subjectName s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }

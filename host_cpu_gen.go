@@ -67,7 +67,7 @@ func (_class HostCPUClass) GetAllRecords(sessionID SessionRef) (_retval map[Host
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCPURefToHostCPURecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCPURefToHostCPURecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -82,7 +82,7 @@ func (_class HostCPUClass) GetAll(sessionID SessionRef) (_retval []HostCPURef, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -101,7 +101,7 @@ func (_class HostCPUClass) RemoveFromOtherConfig(sessionID SessionRef, self Host
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -124,7 +124,7 @@ func (_class HostCPUClass) AddToOtherConfig(sessionID SessionRef, self HostCPURe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -143,7 +143,7 @@ func (_class HostCPUClass) SetOtherConfig(sessionID SessionRef, self HostCPURef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -162,7 +162,7 @@ func (_class HostCPUClass) GetOtherConfig(sessionID SessionRef, self HostCPURef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -181,7 +181,7 @@ func (_class HostCPUClass) GetUtilisation(sessionID SessionRef, self HostCPURef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -200,7 +200,7 @@ func (_class HostCPUClass) GetFeatures(sessionID SessionRef, self HostCPURef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -219,7 +219,7 @@ func (_class HostCPUClass) GetFlags(sessionID SessionRef, self HostCPURef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -238,7 +238,7 @@ func (_class HostCPUClass) GetStepping(sessionID SessionRef, self HostCPURef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -257,7 +257,7 @@ func (_class HostCPUClass) GetModel(sessionID SessionRef, self HostCPURef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -276,7 +276,7 @@ func (_class HostCPUClass) GetFamily(sessionID SessionRef, self HostCPURef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -295,7 +295,7 @@ func (_class HostCPUClass) GetModelname(sessionID SessionRef, self HostCPURef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -314,7 +314,7 @@ func (_class HostCPUClass) GetSpeed(sessionID SessionRef, self HostCPURef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -333,7 +333,7 @@ func (_class HostCPUClass) GetVendor(sessionID SessionRef, self HostCPURef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -352,7 +352,7 @@ func (_class HostCPUClass) GetNumber(sessionID SessionRef, self HostCPURef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -371,7 +371,7 @@ func (_class HostCPUClass) GetHost(sessionID SessionRef, self HostCPURef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -390,7 +390,7 @@ func (_class HostCPUClass) GetUUID(sessionID SessionRef, self HostCPURef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -409,7 +409,7 @@ func (_class HostCPUClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCPURefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCPURefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -428,6 +428,6 @@ func (_class HostCPUClass) GetRecord(sessionID SessionRef, self HostCPURef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCPURecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCPURecordToGo(_method+" -> ", _result.Value)
 	return
 }

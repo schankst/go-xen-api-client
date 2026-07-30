@@ -11,7 +11,9 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
+	"go/format"
 	"io"
 	"net/http"
 	"os"
@@ -149,14 +151,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	out, err := os.Create("error.go")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "creating error.go:", err)
-		os.Exit(1)
-	}
-	defer out.Close()
-	w := bufio.NewWriter(out)
-	defer w.Flush()
+	// Rendered into memory and run through go/format before being written,
+	// so error.go is gofmt-clean by construction (the const block's
+	// alignment depends on the longest error name, which changes upstream).
+	w := &bytes.Buffer{}
 
 	fmt.Fprint(w, `package xenapi
 
@@ -211,6 +209,16 @@ func (e *Error) UUID() string {
 	return e.uuid
 }
 `)
+
+	formatted, err := format.Source(w.Bytes())
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "generated error.go does not parse:", err)
+		os.Exit(1)
+	}
+	if err := os.WriteFile("error.go", formatted, 0644); err != nil {
+		fmt.Fprintln(os.Stderr, "writing error.go:", err)
+		os.Exit(1)
+	}
 
 	fmt.Printf("wrote %d error constants to error.go (%d source chunks skipped as non-error boilerplate)\n", len(entries), len(skipped))
 }

@@ -57,7 +57,7 @@ func (_class ObserverClass) GetAllRecords(sessionID SessionRef) (_retval map[Obs
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertObserverRefToObserverRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertObserverRefToObserverRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -72,7 +72,7 @@ func (_class ObserverClass) GetAll(sessionID SessionRef) (_retval []ObserverRef,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertObserverRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertObserverRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -91,7 +91,7 @@ func (_class ObserverClass) SetComponents(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -110,7 +110,7 @@ func (_class ObserverClass) SetEndpoints(sessionID SessionRef, self ObserverRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -129,7 +129,7 @@ func (_class ObserverClass) SetAttributes(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -148,7 +148,7 @@ func (_class ObserverClass) SetEnabled(sessionID SessionRef, self ObserverRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -167,7 +167,7 @@ func (_class ObserverClass) SetHosts(sessionID SessionRef, self ObserverRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -186,7 +186,7 @@ func (_class ObserverClass) SetNameDescription(sessionID SessionRef, self Observ
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -205,7 +205,7 @@ func (_class ObserverClass) SetNameLabel(sessionID SessionRef, self ObserverRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -224,7 +224,7 @@ func (_class ObserverClass) GetEnabled(sessionID SessionRef, self ObserverRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -243,7 +243,7 @@ func (_class ObserverClass) GetComponents(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -262,7 +262,7 @@ func (_class ObserverClass) GetEndpoints(sessionID SessionRef, self ObserverRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -281,7 +281,7 @@ func (_class ObserverClass) GetAttributes(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -300,7 +300,7 @@ func (_class ObserverClass) GetHosts(sessionID SessionRef, self ObserverRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -319,7 +319,7 @@ func (_class ObserverClass) GetNameDescription(sessionID SessionRef, self Observ
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -338,7 +338,7 @@ func (_class ObserverClass) GetNameLabel(sessionID SessionRef, self ObserverRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -357,7 +357,7 @@ func (_class ObserverClass) GetUUID(sessionID SessionRef, self ObserverRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -376,7 +376,7 @@ func (_class ObserverClass) GetByNameLabel(sessionID SessionRef, label string) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertObserverRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertObserverRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -391,7 +391,7 @@ func (_class ObserverClass) Destroy(sessionID SessionRef, self ObserverRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -410,7 +410,7 @@ func (_class ObserverClass) Create(sessionID SessionRef, args ObserverRecord) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertObserverRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertObserverRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -429,7 +429,7 @@ func (_class ObserverClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertObserverRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertObserverRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -448,6 +448,6 @@ func (_class ObserverClass) GetRecord(sessionID SessionRef, self ObserverRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertObserverRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertObserverRecordToGo(_method+" -> ", _result.Value)
 	return
 }

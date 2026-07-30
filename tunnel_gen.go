@@ -62,7 +62,7 @@ func (_class TunnelClass) GetAllRecords(sessionID SessionRef) (_retval map[Tunne
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTunnelRefToTunnelRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTunnelRefToTunnelRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -77,7 +77,7 @@ func (_class TunnelClass) GetAll(sessionID SessionRef) (_retval []TunnelRef, _er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTunnelRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTunnelRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -92,16 +92,17 @@ func (_class TunnelClass) Destroy(sessionID SessionRef, self TunnelRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a tunnel
 //
 // Errors:
-//  OPENVSWITCH_NOT_ACTIVE - This operation needs the OpenVSwitch networking backend to be enabled on all hosts in the pool.
-//  TRANSPORT_PIF_NOT_CONFIGURED - The tunnel transport PIF has no IP configuration set.
-//  IS_TUNNEL_ACCESS_PIF - Cannot create a VLAN or tunnel on top of a tunnel access PIF - use the underlying transport PIF instead.
+//
+//	OPENVSWITCH_NOT_ACTIVE - This operation needs the OpenVSwitch networking backend to be enabled on all hosts in the pool.
+//	TRANSPORT_PIF_NOT_CONFIGURED - The tunnel transport PIF has no IP configuration set.
+//	IS_TUNNEL_ACCESS_PIF - Cannot create a VLAN or tunnel on top of a tunnel access PIF - use the underlying transport PIF instead.
 func (_class TunnelClass) Create(sessionID SessionRef, transportPIF PIFRef, network NetworkRef, protocol TunnelProtocol) (_retval TunnelRef, _err error) {
 	_method := "tunnel.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -124,7 +125,7 @@ func (_class TunnelClass) Create(sessionID SessionRef, transportPIF PIFRef, netw
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTunnelRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTunnelRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -143,7 +144,7 @@ func (_class TunnelClass) SetProtocol(sessionID SessionRef, self TunnelRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -162,7 +163,7 @@ func (_class TunnelClass) RemoveFromOtherConfig(sessionID SessionRef, self Tunne
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -185,7 +186,7 @@ func (_class TunnelClass) AddToOtherConfig(sessionID SessionRef, self TunnelRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -204,7 +205,7 @@ func (_class TunnelClass) SetOtherConfig(sessionID SessionRef, self TunnelRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -223,7 +224,7 @@ func (_class TunnelClass) RemoveFromStatus(sessionID SessionRef, self TunnelRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -246,7 +247,7 @@ func (_class TunnelClass) AddToStatus(sessionID SessionRef, self TunnelRef, key 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -265,7 +266,7 @@ func (_class TunnelClass) SetStatus(sessionID SessionRef, self TunnelRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -284,7 +285,7 @@ func (_class TunnelClass) GetProtocol(sessionID SessionRef, self TunnelRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumTunnelProtocolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumTunnelProtocolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -303,7 +304,7 @@ func (_class TunnelClass) GetOtherConfig(sessionID SessionRef, self TunnelRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -322,7 +323,7 @@ func (_class TunnelClass) GetStatus(sessionID SessionRef, self TunnelRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -341,7 +342,7 @@ func (_class TunnelClass) GetTransportPIF(sessionID SessionRef, self TunnelRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -360,7 +361,7 @@ func (_class TunnelClass) GetAccessPIF(sessionID SessionRef, self TunnelRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -379,7 +380,7 @@ func (_class TunnelClass) GetUUID(sessionID SessionRef, self TunnelRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -398,7 +399,7 @@ func (_class TunnelClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTunnelRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTunnelRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -417,6 +418,6 @@ func (_class TunnelClass) GetRecord(sessionID SessionRef, self TunnelRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTunnelRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTunnelRecordToGo(_method+" -> ", _result.Value)
 	return
 }

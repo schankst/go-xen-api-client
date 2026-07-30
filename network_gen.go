@@ -98,7 +98,7 @@ func (_class NetworkClass) GetAllRecords(sessionID SessionRef) (_retval map[Netw
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefToNetworkRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefToNetworkRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -113,7 +113,7 @@ func (_class NetworkClass) GetAll(sessionID SessionRef) (_retval []NetworkRef, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -132,14 +132,15 @@ func (_class NetworkClass) RemovePurpose(sessionID SessionRef, self NetworkRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // AddPurpose Give a network a new purpose (if not present already)
 //
 // Errors:
-//  NETWORK_INCOMPATIBLE_PURPOSES - You tried to add a purpose to a network but the new purpose is not compatible with an existing purpose of the network or other networks.
+//
+//	NETWORK_INCOMPATIBLE_PURPOSES - You tried to add a purpose to a network but the new purpose is not compatible with an existing purpose of the network or other networks.
 func (_class NetworkClass) AddPurpose(sessionID SessionRef, self NetworkRef, value NetworkPurpose) (_err error) {
 	_method := "network.add_purpose"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -154,7 +155,7 @@ func (_class NetworkClass) AddPurpose(sessionID SessionRef, self NetworkRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -173,7 +174,7 @@ func (_class NetworkClass) SetDefaultLockingMode(sessionID SessionRef, network N
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _networkArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _networkArg, _valueArg)
 	return
 }
 
@@ -204,7 +205,7 @@ func (_class NetworkClass) CreateNewBlob(sessionID SessionRef, network NetworkRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBlobRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBlobRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -223,7 +224,7 @@ func (_class NetworkClass) RemoveTags(sessionID SessionRef, self NetworkRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -242,7 +243,7 @@ func (_class NetworkClass) AddTags(sessionID SessionRef, self NetworkRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -261,7 +262,7 @@ func (_class NetworkClass) SetTags(sessionID SessionRef, self NetworkRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -280,7 +281,7 @@ func (_class NetworkClass) RemoveFromOtherConfig(sessionID SessionRef, self Netw
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -303,7 +304,7 @@ func (_class NetworkClass) AddToOtherConfig(sessionID SessionRef, self NetworkRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -322,7 +323,7 @@ func (_class NetworkClass) SetOtherConfig(sessionID SessionRef, self NetworkRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -341,7 +342,7 @@ func (_class NetworkClass) SetMTU(sessionID SessionRef, self NetworkRef, value i
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -360,7 +361,7 @@ func (_class NetworkClass) SetNameDescription(sessionID SessionRef, self Network
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -379,7 +380,7 @@ func (_class NetworkClass) SetNameLabel(sessionID SessionRef, self NetworkRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -398,7 +399,7 @@ func (_class NetworkClass) GetPurpose(sessionID SessionRef, self NetworkRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumNetworkPurposeSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumNetworkPurposeSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -417,7 +418,7 @@ func (_class NetworkClass) GetAssignedIps(sessionID SessionRef, self NetworkRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -436,7 +437,7 @@ func (_class NetworkClass) GetDefaultLockingMode(sessionID SessionRef, self Netw
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumNetworkDefaultLockingModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumNetworkDefaultLockingModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -455,7 +456,7 @@ func (_class NetworkClass) GetTags(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -474,7 +475,7 @@ func (_class NetworkClass) GetBlobs(sessionID SessionRef, self NetworkRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToBlobRefMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToBlobRefMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -493,7 +494,7 @@ func (_class NetworkClass) GetManaged(sessionID SessionRef, self NetworkRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -512,7 +513,7 @@ func (_class NetworkClass) GetBridge(sessionID SessionRef, self NetworkRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -531,7 +532,7 @@ func (_class NetworkClass) GetOtherConfig(sessionID SessionRef, self NetworkRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -550,7 +551,7 @@ func (_class NetworkClass) GetMTU(sessionID SessionRef, self NetworkRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -569,7 +570,7 @@ func (_class NetworkClass) GetPIFs(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -588,7 +589,7 @@ func (_class NetworkClass) GetVIFs(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -607,7 +608,7 @@ func (_class NetworkClass) GetCurrentOperations(sessionID SessionRef, self Netwo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumNetworkOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumNetworkOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -626,7 +627,7 @@ func (_class NetworkClass) GetAllowedOperations(sessionID SessionRef, self Netwo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumNetworkOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumNetworkOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -645,7 +646,7 @@ func (_class NetworkClass) GetNameDescription(sessionID SessionRef, self Network
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -664,7 +665,7 @@ func (_class NetworkClass) GetNameLabel(sessionID SessionRef, self NetworkRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -683,7 +684,7 @@ func (_class NetworkClass) GetUUID(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -702,7 +703,7 @@ func (_class NetworkClass) GetByNameLabel(sessionID SessionRef, label string) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -717,7 +718,7 @@ func (_class NetworkClass) Destroy(sessionID SessionRef, self NetworkRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -736,7 +737,7 @@ func (_class NetworkClass) Create(sessionID SessionRef, args NetworkRecord) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -755,7 +756,7 @@ func (_class NetworkClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -774,6 +775,6 @@ func (_class NetworkClass) GetRecord(sessionID SessionRef, self NetworkRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRecordToGo(_method+" -> ", _result.Value)
 	return
 }

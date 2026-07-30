@@ -51,7 +51,7 @@ func (_class RoleClass) GetAllRecords(sessionID SessionRef) (_retval map[RoleRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefToRoleRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefToRoleRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -66,7 +66,7 @@ func (_class RoleClass) GetAll(sessionID SessionRef) (_retval []RoleRef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -85,7 +85,7 @@ func (_class RoleClass) GetByPermissionNameLabel(sessionID SessionRef, label str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -104,7 +104,7 @@ func (_class RoleClass) GetByPermission(sessionID SessionRef, permission RoleRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -123,7 +123,7 @@ func (_class RoleClass) GetPermissionsNameLabel(sessionID SessionRef, self RoleR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -142,7 +142,7 @@ func (_class RoleClass) GetPermissions(sessionID SessionRef, self RoleRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -161,7 +161,7 @@ func (_class RoleClass) GetIsInternal(sessionID SessionRef, self RoleRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -180,7 +180,7 @@ func (_class RoleClass) GetSubroles(sessionID SessionRef, self RoleRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -199,7 +199,7 @@ func (_class RoleClass) GetNameDescription(sessionID SessionRef, self RoleRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -218,7 +218,7 @@ func (_class RoleClass) GetNameLabel(sessionID SessionRef, self RoleRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -237,7 +237,7 @@ func (_class RoleClass) GetUUID(sessionID SessionRef, self RoleRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -256,7 +256,7 @@ func (_class RoleClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -275,7 +275,7 @@ func (_class RoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -294,6 +294,6 @@ func (_class RoleClass) GetRecord(sessionID SessionRef, self RoleRef) (_retval R
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRoleRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRoleRecordToGo(_method+" -> ", _result.Value)
 	return
 }

@@ -143,7 +143,7 @@ func (_class VIFClass) GetAllRecords(sessionID SessionRef) (_retval map[VIFRef]V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefToVIFRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefToVIFRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -158,7 +158,7 @@ func (_class VIFClass) GetAll(sessionID SessionRef) (_retval []VIFRef, _err erro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -177,7 +177,7 @@ func (_class VIFClass) SetTrunks(sessionID SessionRef, self VIFRef, value []int)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -196,7 +196,7 @@ func (_class VIFClass) RemoveTrunks(sessionID SessionRef, self VIFRef, value int
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -215,7 +215,7 @@ func (_class VIFClass) AddTrunks(sessionID SessionRef, self VIFRef, value int) (
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -242,7 +242,7 @@ func (_class VIFClass) ConfigureIpv6(sessionID SessionRef, self VIFRef, mode Vif
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _addressArg, _gatewayArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _addressArg, _gatewayArg)
 	return
 }
 
@@ -269,7 +269,7 @@ func (_class VIFClass) ConfigureIpv4(sessionID SessionRef, self VIFRef, mode Vif
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _addressArg, _gatewayArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _modeArg, _addressArg, _gatewayArg)
 	return
 }
 
@@ -288,7 +288,7 @@ func (_class VIFClass) RemoveIpv6Allowed(sessionID SessionRef, self VIFRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -307,7 +307,7 @@ func (_class VIFClass) AddIpv6Allowed(sessionID SessionRef, self VIFRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -326,7 +326,7 @@ func (_class VIFClass) SetIpv6Allowed(sessionID SessionRef, self VIFRef, value [
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -345,7 +345,7 @@ func (_class VIFClass) RemoveIpv4Allowed(sessionID SessionRef, self VIFRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -364,7 +364,7 @@ func (_class VIFClass) AddIpv4Allowed(sessionID SessionRef, self VIFRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -383,7 +383,7 @@ func (_class VIFClass) SetIpv4Allowed(sessionID SessionRef, self VIFRef, value [
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -402,7 +402,7 @@ func (_class VIFClass) SetLockingMode(sessionID SessionRef, self VIFRef, value V
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -421,7 +421,7 @@ func (_class VIFClass) Move(sessionID SessionRef, self VIFRef, network NetworkRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _networkArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _networkArg)
 	return
 }
 
@@ -436,7 +436,7 @@ func (_class VIFClass) UnplugForce(sessionID SessionRef, self VIFRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -451,7 +451,7 @@ func (_class VIFClass) Unplug(sessionID SessionRef, self VIFRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -466,7 +466,7 @@ func (_class VIFClass) Plug(sessionID SessionRef, self VIFRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -485,7 +485,7 @@ func (_class VIFClass) RemoveFromQosAlgorithmParams(sessionID SessionRef, self V
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -508,7 +508,7 @@ func (_class VIFClass) AddToQosAlgorithmParams(sessionID SessionRef, self VIFRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -527,7 +527,7 @@ func (_class VIFClass) SetQosAlgorithmParams(sessionID SessionRef, self VIFRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -546,7 +546,7 @@ func (_class VIFClass) SetQosAlgorithmType(sessionID SessionRef, self VIFRef, va
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -565,7 +565,7 @@ func (_class VIFClass) RemoveFromOtherConfig(sessionID SessionRef, self VIFRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -588,7 +588,7 @@ func (_class VIFClass) AddToOtherConfig(sessionID SessionRef, self VIFRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -607,7 +607,7 @@ func (_class VIFClass) SetOtherConfig(sessionID SessionRef, self VIFRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -626,7 +626,7 @@ func (_class VIFClass) GetTrunks(sessionID SessionRef, self VIFRef) (_retval []i
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -645,7 +645,7 @@ func (_class VIFClass) GetIpv6Gateway(sessionID SessionRef, self VIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -664,7 +664,7 @@ func (_class VIFClass) GetIpv6Addresses(sessionID SessionRef, self VIFRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -683,7 +683,7 @@ func (_class VIFClass) GetIpv6ConfigurationMode(sessionID SessionRef, self VIFRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVifIpv6ConfigurationModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVifIpv6ConfigurationModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -702,7 +702,7 @@ func (_class VIFClass) GetIpv4Gateway(sessionID SessionRef, self VIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -721,7 +721,7 @@ func (_class VIFClass) GetIpv4Addresses(sessionID SessionRef, self VIFRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -740,7 +740,7 @@ func (_class VIFClass) GetIpv4ConfigurationMode(sessionID SessionRef, self VIFRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVifIpv4ConfigurationModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVifIpv4ConfigurationModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -759,7 +759,7 @@ func (_class VIFClass) GetIpv6Allowed(sessionID SessionRef, self VIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -778,7 +778,7 @@ func (_class VIFClass) GetIpv4Allowed(sessionID SessionRef, self VIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -797,7 +797,7 @@ func (_class VIFClass) GetLockingMode(sessionID SessionRef, self VIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVifLockingModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVifLockingModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -816,7 +816,7 @@ func (_class VIFClass) GetMACAutogenerated(sessionID SessionRef, self VIFRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -835,7 +835,7 @@ func (_class VIFClass) GetMetrics(sessionID SessionRef, self VIFRef) (_retval VI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -854,7 +854,7 @@ func (_class VIFClass) GetQosSupportedAlgorithms(sessionID SessionRef, self VIFR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -873,7 +873,7 @@ func (_class VIFClass) GetQosAlgorithmParams(sessionID SessionRef, self VIFRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -892,7 +892,7 @@ func (_class VIFClass) GetQosAlgorithmType(sessionID SessionRef, self VIFRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -911,7 +911,7 @@ func (_class VIFClass) GetRuntimeProperties(sessionID SessionRef, self VIFRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -930,7 +930,7 @@ func (_class VIFClass) GetStatusDetail(sessionID SessionRef, self VIFRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -949,7 +949,7 @@ func (_class VIFClass) GetStatusCode(sessionID SessionRef, self VIFRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -968,7 +968,7 @@ func (_class VIFClass) GetCurrentlyAttached(sessionID SessionRef, self VIFRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -987,7 +987,7 @@ func (_class VIFClass) GetOtherConfig(sessionID SessionRef, self VIFRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1006,7 +1006,7 @@ func (_class VIFClass) GetMTU(sessionID SessionRef, self VIFRef) (_retval int, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1025,7 +1025,7 @@ func (_class VIFClass) GetMAC(sessionID SessionRef, self VIFRef) (_retval string
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1044,7 +1044,7 @@ func (_class VIFClass) GetVM(sessionID SessionRef, self VIFRef) (_retval VMRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1063,7 +1063,7 @@ func (_class VIFClass) GetNetwork(sessionID SessionRef, self VIFRef) (_retval Ne
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1082,7 +1082,7 @@ func (_class VIFClass) GetDevice(sessionID SessionRef, self VIFRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1101,7 +1101,7 @@ func (_class VIFClass) GetCurrentOperations(sessionID SessionRef, self VIFRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumVifOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumVifOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1120,7 +1120,7 @@ func (_class VIFClass) GetAllowedOperations(sessionID SessionRef, self VIFRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVifOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVifOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1139,7 +1139,7 @@ func (_class VIFClass) GetUUID(sessionID SessionRef, self VIFRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1154,7 +1154,7 @@ func (_class VIFClass) Destroy(sessionID SessionRef, self VIFRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1173,7 +1173,7 @@ func (_class VIFClass) Create(sessionID SessionRef, args VIFRecord) (_retval VIF
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1192,7 +1192,7 @@ func (_class VIFClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VIF
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1211,6 +1211,6 @@ func (_class VIFClass) GetRecord(sessionID SessionRef, self VIFRef) (_retval VIF
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRecordToGo(_method+" -> ", _result.Value)
 	return
 }

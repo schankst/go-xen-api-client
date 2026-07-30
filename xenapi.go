@@ -35,8 +35,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"go/format"
+	"io"
 	"io/ioutil"
-	"os"
 	"regexp"
 	"sort"
 	"strings"
@@ -1196,6 +1197,30 @@ func (generator *apiGenerator) getOrCreateConverterFunc(xenType string, directio
 	return
 }
 
+// writeGoFile renders generated source into memory via render, runs it
+// through go/format, and only then writes filename. Formatting here
+// rather than hand-tuning whitespace in the templates keeps the
+// templates readable and makes every generated file gofmt-clean by
+// construction, so a formatting check can be enforced over the whole
+// repository. A format error means the templates emitted source that
+// doesn't parse, which is a generator bug - it's reported with the file
+// name rather than silently writing something unbuildable.
+func writeGoFile(filename string, render func(w io.Writer) error) (err error) {
+	var buffer bytes.Buffer
+
+	err = render(&buffer)
+	if err != nil {
+		return
+	}
+
+	formatted, err := format.Source(buffer.Bytes())
+	if err != nil {
+		return fmt.Errorf("generated %s does not parse: %s", filename, err)
+	}
+
+	return ioutil.WriteFile(filename, formatted, 0644)
+}
+
 // generateClassAPI writes class's <name>_gen.go: the file header, its
 // enums (skipping any already emitted under another class - see
 // emittedEnums), its record type (if it has fields), its Class type, and
@@ -1203,64 +1228,59 @@ func (generator *apiGenerator) getOrCreateConverterFunc(xenType string, directio
 func (generator *apiGenerator) generateClassAPI(class *xapiClass) (err error) {
 	apiFilename := fmt.Sprintf("%s_gen.go", strings.ToLower(class.Name))
 
-	fileHandle, err := os.Create(apiFilename)
-	if err != nil {
-		return
-	}
-
-	defer fileHandle.Close()
-
-	err = generator.templates.ExecuteTemplate(fileHandle, "FileHeader", nil)
-	if err != nil {
-		return
-	}
-
-	for _, enum := range class.Enums {
-		// The same enum can be declared under more than one class (e.g. a
-		// shared type module); only emit its Go type once.
-		if generator.emittedEnums[enum.Name] {
-			continue
-		}
-		generator.emittedEnums[enum.Name] = true
-
-		err = generator.templates.ExecuteTemplate(fileHandle, "EnumType", enum)
-		if err != nil {
-			return
-		}
-	}
-
-	if len(class.Fields) > 0 {
-		err = generator.templates.ExecuteTemplate(fileHandle, "RecordType", class)
-		if err != nil {
-			return
-		}
-	}
-
-	err = generator.templates.ExecuteTemplate(fileHandle, "RefType", class)
-	if err != nil {
-		return
-	}
-
-	err = generator.templates.ExecuteTemplate(fileHandle, "ClassType", class)
-	if err != nil {
-		return
-	}
-
-	for _, message := range class.Messages {
-
-		context := map[string]interface{}{
-			"Class":   class,
-			"Message": message,
-		}
-
-		err = generator.templates.ExecuteTemplate(fileHandle, "MessageFunc", context)
+	return writeGoFile(apiFilename, func(out io.Writer) (err error) {
+		err = generator.templates.ExecuteTemplate(out, "FileHeader", nil)
 		if err != nil {
 			return
 		}
 
-	}
+		for _, enum := range class.Enums {
+			// The same enum can be declared under more than one class (e.g. a
+			// shared type module); only emit its Go type once.
+			if generator.emittedEnums[enum.Name] {
+				continue
+			}
+			generator.emittedEnums[enum.Name] = true
 
-	return
+			err = generator.templates.ExecuteTemplate(out, "EnumType", enum)
+			if err != nil {
+				return
+			}
+		}
+
+		if len(class.Fields) > 0 {
+			err = generator.templates.ExecuteTemplate(out, "RecordType", class)
+			if err != nil {
+				return
+			}
+		}
+
+		err = generator.templates.ExecuteTemplate(out, "RefType", class)
+		if err != nil {
+			return
+		}
+
+		err = generator.templates.ExecuteTemplate(out, "ClassType", class)
+		if err != nil {
+			return
+		}
+
+		for _, message := range class.Messages {
+
+			context := map[string]interface{}{
+				"Class":   class,
+				"Message": message,
+			}
+
+			err = generator.templates.ExecuteTemplate(out, "MessageFunc", context)
+			if err != nil {
+				return
+			}
+
+		}
+
+		return
+	})
 }
 
 // generateConverters writes convert_gen.go: every converter function
@@ -1269,54 +1289,42 @@ func (generator *apiGenerator) generateClassAPI(class *xapiClass) (err error) {
 // diff between regenerations. Must run after every generateClassAPI call
 // - it only knows about converters that were actually requested.
 func (generator *apiGenerator) generateConverters() (err error) {
-	fileHandle, err := os.Create("convert_gen.go")
-	if err != nil {
-		return
-	}
-
-	defer fileHandle.Close()
-
-	err = generator.templates.ExecuteTemplate(fileHandle, "FileHeader", nil)
-	if err != nil {
-		return
-	}
-
-	var keys []string
-	for key := range generator.converters {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	for _, key := range keys {
-		converter := generator.converters[key]
-		_, err = fileHandle.WriteString(converter.definition)
+	return writeGoFile("convert_gen.go", func(out io.Writer) (err error) {
+		err = generator.templates.ExecuteTemplate(out, "FileHeader", nil)
 		if err != nil {
 			return
 		}
-	}
 
-	return
+		var keys []string
+		for key := range generator.converters {
+			keys = append(keys, key)
+		}
+		sort.Strings(keys)
+		for _, key := range keys {
+			converter := generator.converters[key]
+			_, err = io.WriteString(out, converter.definition)
+			if err != nil {
+				return
+			}
+		}
+
+		return
+	})
 }
 
 // generateClient writes client_gen.go: the top-level Client struct and
 // its prepClient constructor helper, one field per class.
 func (generator *apiGenerator) generateClient() (err error) {
-	fileHandle, err := os.Create("client_gen.go")
-	if err != nil {
-		return
-	}
+	return writeGoFile("client_gen.go", func(out io.Writer) (err error) {
+		err = generator.templates.ExecuteTemplate(out, "FileHeader", nil)
+		if err != nil {
+			return
+		}
 
-	defer fileHandle.Close()
-
-	err = generator.templates.ExecuteTemplate(fileHandle, "FileHeader", nil)
-	if err != nil {
-		return
-	}
-
-	err = generator.templates.ExecuteTemplate(fileHandle, "ClientStruct", map[string]interface{}{
-		"Classes": generator.classes,
+		return generator.templates.ExecuteTemplate(out, "ClientStruct", map[string]interface{}{
+			"Classes": generator.classes,
+		})
 	})
-
-	return
 }
 
 // run is the whole generation pipeline, in order: load xenapi.json,

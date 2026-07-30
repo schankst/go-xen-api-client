@@ -74,7 +74,7 @@ func (_class EventClass) Inject(sessionID SessionRef, class string, ref string) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -89,15 +89,16 @@ func (_class EventClass) GetCurrentID(sessionID SessionRef) (_retval int, _err e
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // From Blocking call which returns a new token and a (possibly empty) batch of events. The returned token can be used in subsequent calls to this function. It eliminates redundant events (for example, same field updated multiple times).
 //
 // Errors:
-//  EVENT_FROM_TOKEN_PARSE_FAILURE - The event.from token could not be parsed. Valid values include: '', and a value returned from a previous event.from call.
-//  EVENT_SUBSCRIPTION_PARSE_FAILURE - The server failed to parse your event subscription. Valid values include: *, class-name, class-name/object-reference.
+//
+//	EVENT_FROM_TOKEN_PARSE_FAILURE - The event.from token could not be parsed. Valid values include: '', and a value returned from a previous event.from call.
+//	EVENT_SUBSCRIPTION_PARSE_FAILURE - The server failed to parse your event subscription. Valid values include: *, class-name, class-name/object-reference.
 func (_class EventClass) From(sessionID SessionRef, classes []string, token string, timeout float64) (_retval xmlrpc.Struct, _err error) {
 	_method := "event.from"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -120,16 +121,17 @@ func (_class EventClass) From(sessionID SessionRef, classes []string, token stri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEventBatchToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEventBatchToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Next Blocking call which returns a (possibly empty) batch of events. This method is only recommended for legacy use.It stores events in a buffer of limited size, raising EVENTS_LOST if too many events got generated. New development should use event.from which supersedes this method.
 //
 // Errors:
-//  SESSION_NOT_REGISTERED - This session is not registered to receive events. You must call event.register before event.next. The session handle you are using is echoed.
-//  EVENTS_LOST - Some events have been lost from the queue and cannot be retrieved.
-//  EVENT_SUBSCRIPTION_PARSE_FAILURE - The server failed to parse your event subscription. Valid values include: *, class-name, class-name/object-reference.
+//
+//	SESSION_NOT_REGISTERED - This session is not registered to receive events. You must call event.register before event.next. The session handle you are using is echoed.
+//	EVENTS_LOST - Some events have been lost from the queue and cannot be retrieved.
+//	EVENT_SUBSCRIPTION_PARSE_FAILURE - The server failed to parse your event subscription. Valid values include: *, class-name, class-name/object-reference.
 func (_class EventClass) Next(sessionID SessionRef) (_retval []EventRecord, _err error) {
 	_method := "event.next"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -140,7 +142,7 @@ func (_class EventClass) Next(sessionID SessionRef) (_retval []EventRecord, _err
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEventRecordSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEventRecordSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -155,7 +157,7 @@ func (_class EventClass) Unregister(sessionID SessionRef, classes []string) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _classesArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _classesArg)
 	return
 }
 
@@ -170,6 +172,6 @@ func (_class EventClass) Register(sessionID SessionRef, classes []string) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _classesArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _classesArg)
 	return
 }

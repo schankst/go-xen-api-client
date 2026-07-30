@@ -73,7 +73,7 @@ func (_class SessionClass) LogoutSubjectIdentifier(sessionID SessionRef, subject
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _subjectIdentifierArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _subjectIdentifierArg)
 	return
 }
 
@@ -88,7 +88,7 @@ func (_class SessionClass) GetAllSubjectIdentifiers(sessionID SessionRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -99,11 +99,11 @@ func (_class SessionClass) LocalLogout(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
-// CreateFromDbFile 
+// CreateFromDbFile
 func (_class SessionClass) CreateFromDbFile(sessionID SessionRef, filename string) (_retval SessionRef, _err error) {
 	_method := "session.create_from_db_file"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -118,7 +118,7 @@ func (_class SessionClass) CreateFromDbFile(sessionID SessionRef, filename strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSessionRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSessionRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -137,7 +137,7 @@ func (_class SessionClass) SlaveLocalLoginWithPassword(uname string, pwd string)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSessionRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSessionRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -156,7 +156,7 @@ func (_class SessionClass) ChangePassword(sessionID SessionRef, oldPwd string, n
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _oldPwdArg, _newPwdArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _oldPwdArg, _newPwdArg)
 	return
 }
 
@@ -167,15 +167,16 @@ func (_class SessionClass) Logout(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
 // LoginWithPassword Attempt to authenticate the user, returning a session reference if successful
 //
 // Errors:
-//  SESSION_AUTHENTICATION_FAILED - The credentials given by the user are incorrect, so access has been denied, and you have not been issued a session handle.
-//  HOST_IS_SLAVE - You cannot make regular API calls directly on a supporter. Please pass API calls via the coordinator host.
+//
+//	SESSION_AUTHENTICATION_FAILED - The credentials given by the user are incorrect, so access has been denied, and you have not been issued a session handle.
+//	HOST_IS_SLAVE - You cannot make regular API calls directly on a supporter. Please pass API calls via the coordinator host.
 func (_class SessionClass) LoginWithPassword(uname string, pwd string, version string, originator string) (_retval SessionRef, _err error) {
 	_method := "session.login_with_password"
 	_unameArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "uname"), uname)
@@ -198,7 +199,7 @@ func (_class SessionClass) LoginWithPassword(uname string, pwd string, version s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSessionRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSessionRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -217,7 +218,7 @@ func (_class SessionClass) RemoveFromOtherConfig(sessionID SessionRef, self Sess
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -240,7 +241,7 @@ func (_class SessionClass) AddToOtherConfig(sessionID SessionRef, self SessionRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -259,7 +260,7 @@ func (_class SessionClass) SetOtherConfig(sessionID SessionRef, self SessionRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -278,7 +279,7 @@ func (_class SessionClass) GetClientCertificate(sessionID SessionRef, self Sessi
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -297,7 +298,7 @@ func (_class SessionClass) GetOriginator(sessionID SessionRef, self SessionRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -316,7 +317,7 @@ func (_class SessionClass) GetParent(sessionID SessionRef, self SessionRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSessionRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSessionRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -335,7 +336,7 @@ func (_class SessionClass) GetTasks(sessionID SessionRef, self SessionRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTaskRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTaskRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -354,7 +355,7 @@ func (_class SessionClass) GetRbacPermissions(sessionID SessionRef, self Session
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -373,7 +374,7 @@ func (_class SessionClass) GetAuthUserName(sessionID SessionRef, self SessionRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -392,7 +393,7 @@ func (_class SessionClass) GetAuthUserSid(sessionID SessionRef, self SessionRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -411,7 +412,7 @@ func (_class SessionClass) GetValidationTime(sessionID SessionRef, self SessionR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -430,7 +431,7 @@ func (_class SessionClass) GetSubject(sessionID SessionRef, self SessionRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSubjectRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSubjectRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -449,7 +450,7 @@ func (_class SessionClass) GetIsLocalSuperuser(sessionID SessionRef, self Sessio
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -468,7 +469,7 @@ func (_class SessionClass) GetOtherConfig(sessionID SessionRef, self SessionRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -487,7 +488,7 @@ func (_class SessionClass) GetPool(sessionID SessionRef, self SessionRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -506,7 +507,7 @@ func (_class SessionClass) GetLastActive(sessionID SessionRef, self SessionRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -525,7 +526,7 @@ func (_class SessionClass) GetThisUser(sessionID SessionRef, self SessionRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertUserRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertUserRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -544,7 +545,7 @@ func (_class SessionClass) GetThisHost(sessionID SessionRef, self SessionRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -563,7 +564,7 @@ func (_class SessionClass) GetUUID(sessionID SessionRef, self SessionRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -582,7 +583,7 @@ func (_class SessionClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSessionRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSessionRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -601,6 +602,6 @@ func (_class SessionClass) GetRecord(sessionID SessionRef, self SessionRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSessionRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSessionRecordToGo(_method+" -> ", _result.Value)
 	return
 }

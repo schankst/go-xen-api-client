@@ -51,7 +51,7 @@ func (_class VLANClass) GetAllRecords(sessionID SessionRef) (_retval map[VLANRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVLANRefToVLANRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVLANRefToVLANRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -66,7 +66,7 @@ func (_class VLANClass) GetAll(sessionID SessionRef) (_retval []VLANRef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVLANRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVLANRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -81,7 +81,7 @@ func (_class VLANClass) Destroy(sessionID SessionRef, self VLANRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -108,7 +108,7 @@ func (_class VLANClass) Create(sessionID SessionRef, taggedPIF PIFRef, tag int, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVLANRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVLANRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -127,7 +127,7 @@ func (_class VLANClass) RemoveFromOtherConfig(sessionID SessionRef, self VLANRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -150,7 +150,7 @@ func (_class VLANClass) AddToOtherConfig(sessionID SessionRef, self VLANRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -169,7 +169,7 @@ func (_class VLANClass) SetOtherConfig(sessionID SessionRef, self VLANRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -188,7 +188,7 @@ func (_class VLANClass) GetOtherConfig(sessionID SessionRef, self VLANRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -207,7 +207,7 @@ func (_class VLANClass) GetTag(sessionID SessionRef, self VLANRef) (_retval int,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -226,7 +226,7 @@ func (_class VLANClass) GetUntaggedPIF(sessionID SessionRef, self VLANRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -245,7 +245,7 @@ func (_class VLANClass) GetTaggedPIF(sessionID SessionRef, self VLANRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -264,7 +264,7 @@ func (_class VLANClass) GetUUID(sessionID SessionRef, self VLANRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -283,7 +283,7 @@ func (_class VLANClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VL
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVLANRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVLANRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -302,6 +302,6 @@ func (_class VLANClass) GetRecord(sessionID SessionRef, self VLANRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVLANRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVLANRecordToGo(_method+" -> ", _result.Value)
 	return
 }

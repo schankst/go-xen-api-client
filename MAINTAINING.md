@@ -82,3 +82,18 @@ If XenAPI was updated, it is required to regenerate all of files with a new API 
   naming the offending type string — add a case for it in `goTypeForXenType`,
   `funcPartialForXenType`, and `buildConverterFunc` (see `xenapi.go`'s own
   file-level comment and the existing cases for examples).
+
+## Formatting of generated code
+Both generators render into memory and run the result through `go/format`
+before writing it, so `*_gen.go` and `error.go` are gofmt-clean by
+construction and never need hand-formatting — `test.yml` enforces that with
+a `gofmt -l .` check over the whole repository.
+
+The consequence is that the toolchain you generate with decides what the
+committed files look like, because gofmt's rules change between Go releases
+(Go 1.19's doc-comment reformatting, for one). Regenerate with a current Go,
+not with the `go 1.16` from `go.mod` — that's the library's minimum for
+*consumers*, verified separately by `test.yml`'s version matrix, and both CI
+workflows pin the generators to `stable` for the same reason. Generating with
+an older toolchain would reformat every generated file and show up as a large
+whitespace-only diff.

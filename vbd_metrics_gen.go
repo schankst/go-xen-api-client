@@ -51,7 +51,7 @@ func (_class VBDMetricsClass) GetAllRecords(sessionID SessionRef) (_retval map[V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDMetricsRefToVBDMetricsRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDMetricsRefToVBDMetricsRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -66,7 +66,7 @@ func (_class VBDMetricsClass) GetAll(sessionID SessionRef) (_retval []VBDMetrics
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDMetricsRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDMetricsRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -85,7 +85,7 @@ func (_class VBDMetricsClass) RemoveFromOtherConfig(sessionID SessionRef, self V
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -108,7 +108,7 @@ func (_class VBDMetricsClass) AddToOtherConfig(sessionID SessionRef, self VBDMet
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -127,7 +127,7 @@ func (_class VBDMetricsClass) SetOtherConfig(sessionID SessionRef, self VBDMetri
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -146,7 +146,7 @@ func (_class VBDMetricsClass) GetOtherConfig(sessionID SessionRef, self VBDMetri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -165,7 +165,7 @@ func (_class VBDMetricsClass) GetLastUpdated(sessionID SessionRef, self VBDMetri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -184,7 +184,7 @@ func (_class VBDMetricsClass) GetIoWriteKbs(sessionID SessionRef, self VBDMetric
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -203,7 +203,7 @@ func (_class VBDMetricsClass) GetIoReadKbs(sessionID SessionRef, self VBDMetrics
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -222,7 +222,7 @@ func (_class VBDMetricsClass) GetUUID(sessionID SessionRef, self VBDMetricsRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -241,7 +241,7 @@ func (_class VBDMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -260,6 +260,6 @@ func (_class VBDMetricsClass) GetRecord(sessionID SessionRef, self VBDMetricsRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDMetricsRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDMetricsRecordToGo(_method+" -> ", _result.Value)
 	return
 }

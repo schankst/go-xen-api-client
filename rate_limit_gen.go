@@ -53,7 +53,7 @@ func (_class RateLimitClass) GetAllRecords(sessionID SessionRef) (_retval map[Ra
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRateLimitRefToRateLimitRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRateLimitRefToRateLimitRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -68,7 +68,7 @@ func (_class RateLimitClass) GetAll(sessionID SessionRef) (_retval []RateLimitRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRateLimitRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRateLimitRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -87,7 +87,7 @@ func (_class RateLimitClass) SetFillRate(sessionID SessionRef, self RateLimitRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -106,7 +106,7 @@ func (_class RateLimitClass) SetBurstSize(sessionID SessionRef, self RateLimitRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -125,7 +125,7 @@ func (_class RateLimitClass) RemoveCaller(sessionID SessionRef, self RateLimitRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _callerArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _callerArg)
 	return
 }
 
@@ -144,7 +144,7 @@ func (_class RateLimitClass) AddCaller(sessionID SessionRef, self RateLimitRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _callerArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _callerArg)
 	return
 }
 
@@ -163,7 +163,7 @@ func (_class RateLimitClass) SetNameDescription(sessionID SessionRef, self RateL
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -182,7 +182,7 @@ func (_class RateLimitClass) SetNameLabel(sessionID SessionRef, self RateLimitRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -201,7 +201,7 @@ func (_class RateLimitClass) GetFillRate(sessionID SessionRef, self RateLimitRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -220,7 +220,7 @@ func (_class RateLimitClass) GetBurstSize(sessionID SessionRef, self RateLimitRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -239,7 +239,7 @@ func (_class RateLimitClass) GetCallers(sessionID SessionRef, self RateLimitRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCallerRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCallerRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -258,7 +258,7 @@ func (_class RateLimitClass) GetNameDescription(sessionID SessionRef, self RateL
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -277,7 +277,7 @@ func (_class RateLimitClass) GetNameLabel(sessionID SessionRef, self RateLimitRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -296,7 +296,7 @@ func (_class RateLimitClass) GetUUID(sessionID SessionRef, self RateLimitRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -315,7 +315,7 @@ func (_class RateLimitClass) GetByNameLabel(sessionID SessionRef, label string) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRateLimitRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRateLimitRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -330,7 +330,7 @@ func (_class RateLimitClass) Destroy(sessionID SessionRef, self RateLimitRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -349,7 +349,7 @@ func (_class RateLimitClass) Create(sessionID SessionRef, args RateLimitRecord) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRateLimitRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRateLimitRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -368,7 +368,7 @@ func (_class RateLimitClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRateLimitRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRateLimitRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -387,6 +387,6 @@ func (_class RateLimitClass) GetRecord(sessionID SessionRef, self RateLimitRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRateLimitRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRateLimitRecordToGo(_method+" -> ", _result.Value)
 	return
 }

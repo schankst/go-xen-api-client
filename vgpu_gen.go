@@ -65,7 +65,7 @@ func (_class VGPUClass) GetAllRecords(sessionID SessionRef) (_retval map[VGPURef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPURefToVGPURecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPURefToVGPURecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -80,11 +80,11 @@ func (_class VGPUClass) GetAll(sessionID SessionRef) (_retval []VGPURef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// Destroy 
+// Destroy
 func (_class VGPUClass) Destroy(sessionID SessionRef, self VGPURef) (_err error) {
 	_method := "VGPU.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -95,11 +95,11 @@ func (_class VGPUClass) Destroy(sessionID SessionRef, self VGPURef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
-// Create 
+// Create
 func (_class VGPUClass) Create(sessionID SessionRef, vm VMRef, gpuGroup GPUGroupRef, device string, otherConfig map[string]string, atype VGPUTypeRef) (_retval VGPURef, _err error) {
 	_method := "VGPU.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -130,7 +130,7 @@ func (_class VGPUClass) Create(sessionID SessionRef, vm VMRef, gpuGroup GPUGroup
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPURefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPURefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -149,7 +149,7 @@ func (_class VGPUClass) SetExtraArgs(sessionID SessionRef, self VGPURef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -168,7 +168,7 @@ func (_class VGPUClass) RemoveFromOtherConfig(sessionID SessionRef, self VGPURef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -191,7 +191,7 @@ func (_class VGPUClass) AddToOtherConfig(sessionID SessionRef, self VGPURef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -210,7 +210,7 @@ func (_class VGPUClass) SetOtherConfig(sessionID SessionRef, self VGPURef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -229,7 +229,7 @@ func (_class VGPUClass) GetPCI(sessionID SessionRef, self VGPURef) (_retval PCIR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -248,7 +248,7 @@ func (_class VGPUClass) GetExtraArgs(sessionID SessionRef, self VGPURef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -267,7 +267,7 @@ func (_class VGPUClass) GetCompatibilityMetadata(sessionID SessionRef, self VGPU
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -286,7 +286,7 @@ func (_class VGPUClass) GetScheduledToBeResidentOn(sessionID SessionRef, self VG
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPGPURefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPGPURefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -305,7 +305,7 @@ func (_class VGPUClass) GetResidentOn(sessionID SessionRef, self VGPURef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPGPURefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPGPURefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -324,7 +324,7 @@ func (_class VGPUClass) GetType(sessionID SessionRef, self VGPURef) (_retval VGP
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPUTypeRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPUTypeRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -343,7 +343,7 @@ func (_class VGPUClass) GetOtherConfig(sessionID SessionRef, self VGPURef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -362,7 +362,7 @@ func (_class VGPUClass) GetCurrentlyAttached(sessionID SessionRef, self VGPURef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -381,7 +381,7 @@ func (_class VGPUClass) GetDevice(sessionID SessionRef, self VGPURef) (_retval s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -400,7 +400,7 @@ func (_class VGPUClass) GetGPUGroup(sessionID SessionRef, self VGPURef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertGPUGroupRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertGPUGroupRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -419,7 +419,7 @@ func (_class VGPUClass) GetVM(sessionID SessionRef, self VGPURef) (_retval VMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -438,7 +438,7 @@ func (_class VGPUClass) GetUUID(sessionID SessionRef, self VGPURef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -457,7 +457,7 @@ func (_class VGPUClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VG
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPURefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPURefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -476,6 +476,6 @@ func (_class VGPUClass) GetRecord(sessionID SessionRef, self VGPURef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPURecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPURecordToGo(_method+" -> ", _result.Value)
 	return
 }

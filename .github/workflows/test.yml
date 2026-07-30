@@ -41,3 +41,30 @@ jobs:
       # on localhost:40080 that CI has no way to provide.
       - name: Test
         run: go test -short -race ./...
+
+  # Separate from the matrix: gofmt's own rules change between Go releases
+  # (Go 1.19 reformatted doc comments, for one), so the check has to run on
+  # one toolchain - the same "stable" the generators run under in
+  # regenerate.yml, since they format their output with go/format.
+  format:
+    runs-on: ubuntu-latest
+    name: gofmt
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Check formatting
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "These files are not gofmt-clean:"
+            echo "$unformatted"
+            echo
+            echo "Generated files are formatted by the generator itself - if a"
+            echo "*_gen.go file is listed here, regenerate rather than hand-format."
+            gofmt -d .
+            exit 1
+          fi

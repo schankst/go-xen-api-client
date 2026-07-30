@@ -51,7 +51,7 @@ func (_class VIFMetricsClass) GetAllRecords(sessionID SessionRef) (_retval map[V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFMetricsRefToVIFMetricsRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFMetricsRefToVIFMetricsRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -66,7 +66,7 @@ func (_class VIFMetricsClass) GetAll(sessionID SessionRef) (_retval []VIFMetrics
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFMetricsRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFMetricsRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -85,7 +85,7 @@ func (_class VIFMetricsClass) RemoveFromOtherConfig(sessionID SessionRef, self V
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -108,7 +108,7 @@ func (_class VIFMetricsClass) AddToOtherConfig(sessionID SessionRef, self VIFMet
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -127,7 +127,7 @@ func (_class VIFMetricsClass) SetOtherConfig(sessionID SessionRef, self VIFMetri
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -146,7 +146,7 @@ func (_class VIFMetricsClass) GetOtherConfig(sessionID SessionRef, self VIFMetri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -165,7 +165,7 @@ func (_class VIFMetricsClass) GetLastUpdated(sessionID SessionRef, self VIFMetri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -184,7 +184,7 @@ func (_class VIFMetricsClass) GetIoWriteKbs(sessionID SessionRef, self VIFMetric
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -203,7 +203,7 @@ func (_class VIFMetricsClass) GetIoReadKbs(sessionID SessionRef, self VIFMetrics
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -222,7 +222,7 @@ func (_class VIFMetricsClass) GetUUID(sessionID SessionRef, self VIFMetricsRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -241,7 +241,7 @@ func (_class VIFMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -260,6 +260,6 @@ func (_class VIFMetricsClass) GetRecord(sessionID SessionRef, self VIFMetricsRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFMetricsRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFMetricsRecordToGo(_method+" -> ", _result.Value)
 	return
 }

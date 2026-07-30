@@ -90,7 +90,7 @@ func (_class ClusterClass) GetAllRecords(sessionID SessionRef) (_retval map[Clus
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterRefToClusterRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterRefToClusterRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -105,7 +105,7 @@ func (_class ClusterClass) GetAll(sessionID SessionRef) (_retval []ClusterRef, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -120,16 +120,17 @@ func (_class ClusterClass) PoolResync(sessionID SessionRef, self ClusterRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // PoolDestroy Attempt to destroy the Cluster_host objects for all hosts in the pool and then destroy the Cluster.
 //
 // Errors:
-//  CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
-//  CLUSTERING_DISABLED - An operation was attempted while clustering was disabled on the cluster_host.
-//  CLUSTER_HOST_IS_LAST - The last cluster host cannot be destroyed. Destroy the cluster instead
+//
+//	CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
+//	CLUSTERING_DISABLED - An operation was attempted while clustering was disabled on the cluster_host.
+//	CLUSTER_HOST_IS_LAST - The last cluster host cannot be destroyed. Destroy the cluster instead
 func (_class ClusterClass) PoolDestroy(sessionID SessionRef, self ClusterRef) (_err error) {
 	_method := "Cluster.pool_destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -140,14 +141,15 @@ func (_class ClusterClass) PoolDestroy(sessionID SessionRef, self ClusterRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // PoolForceDestroy Attempt to force destroy the Cluster_host objects, and then destroy the Cluster.
 //
 // Errors:
-//  CLUSTER_FORCE_DESTROY_FAILED - Force destroy failed on a Cluster_host while force destroying the cluster.
+//
+//	CLUSTER_FORCE_DESTROY_FAILED - Force destroy failed on a Cluster_host while force destroying the cluster.
 func (_class ClusterClass) PoolForceDestroy(sessionID SessionRef, self ClusterRef) (_err error) {
 	_method := "Cluster.pool_force_destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -158,7 +160,7 @@ func (_class ClusterClass) PoolForceDestroy(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -189,7 +191,7 @@ func (_class ClusterClass) PoolCreate(sessionID SessionRef, network NetworkRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -208,15 +210,16 @@ func (_class ClusterClass) GetNetwork(sessionID SessionRef, self ClusterRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertNetworkRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertNetworkRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Destroy Destroys a Cluster object and the one remaining Cluster_host member
 //
 // Errors:
-//  CLUSTER_DOES_NOT_HAVE_ONE_NODE - An operation failed as it expected the cluster to have only one node but found multiple cluster_hosts.
-//  CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
+//
+//	CLUSTER_DOES_NOT_HAVE_ONE_NODE - An operation failed as it expected the cluster to have only one node but found multiple cluster_hosts.
+//	CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
 func (_class ClusterClass) Destroy(sessionID SessionRef, self ClusterRef) (_err error) {
 	_method := "Cluster.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -227,17 +230,18 @@ func (_class ClusterClass) Destroy(sessionID SessionRef, self ClusterRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Creates a Cluster object and one Cluster_host object as its first member
 //
 // Errors:
-//  INVALID_CLUSTER_STACK - The cluster stack provided is not supported.
-//  INVALID_VALUE - The value given is invalid
-//  PIF_ALLOWS_UNPLUG - The operation you requested cannot be performed because the specified PIF allows unplug.
-//  REQUIRED_PIF_IS_UNPLUGGED - The operation you requested cannot be performed because the specified PIF is currently unplugged.
+//
+//	INVALID_CLUSTER_STACK - The cluster stack provided is not supported.
+//	INVALID_VALUE - The value given is invalid
+//	PIF_ALLOWS_UNPLUG - The operation you requested cannot be performed because the specified PIF allows unplug.
+//	REQUIRED_PIF_IS_UNPLUGGED - The operation you requested cannot be performed because the specified PIF is currently unplugged.
 func (_class ClusterClass) Create(sessionID SessionRef, pif PIFRef, clusterStack string, poolAutoJoin bool, tokenTimeout float64, tokenTimeoutCoefficient float64) (_retval ClusterRef, _err error) {
 	_method := "Cluster.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -268,7 +272,7 @@ func (_class ClusterClass) Create(sessionID SessionRef, pif PIFRef, clusterStack
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -287,7 +291,7 @@ func (_class ClusterClass) RemoveFromOtherConfig(sessionID SessionRef, self Clus
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -310,7 +314,7 @@ func (_class ClusterClass) AddToOtherConfig(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -329,7 +333,7 @@ func (_class ClusterClass) SetOtherConfig(sessionID SessionRef, self ClusterRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -348,7 +352,7 @@ func (_class ClusterClass) GetOtherConfig(sessionID SessionRef, self ClusterRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -367,7 +371,7 @@ func (_class ClusterClass) GetClusterConfig(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -386,7 +390,7 @@ func (_class ClusterClass) GetTokenTimeoutCoefficient(sessionID SessionRef, self
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -405,7 +409,7 @@ func (_class ClusterClass) GetTokenTimeout(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -424,7 +428,7 @@ func (_class ClusterClass) GetPoolAutoJoin(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -443,7 +447,7 @@ func (_class ClusterClass) GetCurrentOperations(sessionID SessionRef, self Clust
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumClusterOperationMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumClusterOperationMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -462,7 +466,7 @@ func (_class ClusterClass) GetAllowedOperations(sessionID SessionRef, self Clust
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumClusterOperationSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumClusterOperationSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -481,7 +485,7 @@ func (_class ClusterClass) GetExpectedHosts(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -500,7 +504,7 @@ func (_class ClusterClass) GetLiveHosts(sessionID SessionRef, self ClusterRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -519,7 +523,7 @@ func (_class ClusterClass) GetQuorum(sessionID SessionRef, self ClusterRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -538,7 +542,7 @@ func (_class ClusterClass) GetIsQuorate(sessionID SessionRef, self ClusterRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -557,7 +561,7 @@ func (_class ClusterClass) GetClusterStackVersion(sessionID SessionRef, self Clu
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -576,7 +580,7 @@ func (_class ClusterClass) GetClusterStack(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -595,7 +599,7 @@ func (_class ClusterClass) GetClusterToken(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -614,7 +618,7 @@ func (_class ClusterClass) GetPendingForget(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -633,7 +637,7 @@ func (_class ClusterClass) GetClusterHosts(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterHostRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterHostRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -652,7 +656,7 @@ func (_class ClusterClass) GetUUID(sessionID SessionRef, self ClusterRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -671,7 +675,7 @@ func (_class ClusterClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -690,6 +694,6 @@ func (_class ClusterClass) GetRecord(sessionID SessionRef, self ClusterRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertClusterRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertClusterRecordToGo(_method+" -> ", _result.Value)
 	return
 }

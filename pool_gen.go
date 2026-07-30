@@ -250,7 +250,7 @@ func (_class PoolClass) GetAllRecords(sessionID SessionRef) (_retval map[PoolRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolRefToPoolRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolRefToPoolRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -265,7 +265,7 @@ func (_class PoolClass) GetAll(sessionID SessionRef) (_retval []PoolRef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -300,7 +300,7 @@ func (_class PoolClass) SyncTrustedCertificatesFrom(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCertificateRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCertificateRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -319,7 +319,7 @@ func (_class PoolClass) UninstallTrustedCertificate(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _certificateArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _certificateArg)
 	return
 }
 
@@ -346,7 +346,7 @@ func (_class PoolClass) InstallTrustedCertificate(sessionID SessionRef, self Poo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _caArg, _certArg, _purposeArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _caArg, _certArg, _purposeArg)
 	return
 }
 
@@ -365,7 +365,7 @@ func (_class PoolClass) SetSSHAutoMode(sessionID SessionRef, self PoolRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -384,7 +384,7 @@ func (_class PoolClass) SetConsoleIdleTimeout(sessionID SessionRef, self PoolRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -403,7 +403,7 @@ func (_class PoolClass) SetSSHEnabledTimeout(sessionID SessionRef, self PoolRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -418,7 +418,7 @@ func (_class PoolClass) DisableSSH(sessionID SessionRef, self PoolRef) (_err err
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -433,11 +433,11 @@ func (_class PoolClass) EnableSSH(sessionID SessionRef, self PoolRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
-// GetGuestSecurebootReadiness 
+// GetGuestSecurebootReadiness
 func (_class PoolClass) GetGuestSecurebootReadiness(sessionID SessionRef, self PoolRef) (_retval PoolGuestSecurebootReadiness, _err error) {
 	_method := "pool.get_guest_secureboot_readiness"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -452,11 +452,11 @@ func (_class PoolClass) GetGuestSecurebootReadiness(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPoolGuestSecurebootReadinessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPoolGuestSecurebootReadinessToGo(_method+" -> ", _result.Value)
 	return
 }
 
-// SetExtAuthCacheExpiry 
+// SetExtAuthCacheExpiry
 func (_class PoolClass) SetExtAuthCacheExpiry(sessionID SessionRef, self PoolRef, value int) (_err error) {
 	_method := "pool.set_ext_auth_cache_expiry"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -471,11 +471,11 @@ func (_class PoolClass) SetExtAuthCacheExpiry(sessionID SessionRef, self PoolRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetExtAuthCacheSize 
+// SetExtAuthCacheSize
 func (_class PoolClass) SetExtAuthCacheSize(sessionID SessionRef, self PoolRef, value int) (_err error) {
 	_method := "pool.set_ext_auth_cache_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -490,11 +490,11 @@ func (_class PoolClass) SetExtAuthCacheSize(sessionID SessionRef, self PoolRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetExtAuthCacheEnabled 
+// SetExtAuthCacheEnabled
 func (_class PoolClass) SetExtAuthCacheEnabled(sessionID SessionRef, self PoolRef, value bool) (_err error) {
 	_method := "pool.set_ext_auth_cache_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -509,11 +509,11 @@ func (_class PoolClass) SetExtAuthCacheEnabled(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetExtAuthMaxThreads 
+// SetExtAuthMaxThreads
 func (_class PoolClass) SetExtAuthMaxThreads(sessionID SessionRef, self PoolRef, value int) (_err error) {
 	_method := "pool.set_ext_auth_max_threads"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -528,11 +528,11 @@ func (_class PoolClass) SetExtAuthMaxThreads(sessionID SessionRef, self PoolRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// SetLocalAuthMaxThreads 
+// SetLocalAuthMaxThreads
 func (_class PoolClass) SetLocalAuthMaxThreads(sessionID SessionRef, self PoolRef, value int) (_err error) {
 	_method := "pool.set_local_auth_max_threads"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -547,7 +547,7 @@ func (_class PoolClass) SetLocalAuthMaxThreads(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -566,7 +566,7 @@ func (_class PoolClass) SetUpdateSyncEnabled(sessionID SessionRef, self PoolRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -589,7 +589,7 @@ func (_class PoolClass) ConfigureUpdateSync(sessionID SessionRef, self PoolRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _updateSyncFrequencyArg, _updateSyncDayArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _updateSyncFrequencyArg, _updateSyncDayArg)
 	return
 }
 
@@ -604,7 +604,7 @@ func (_class PoolClass) ResetTelemetryUUID(sessionID SessionRef, self PoolRef) (
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -623,7 +623,7 @@ func (_class PoolClass) SetTelemetryNextCollection(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -642,7 +642,7 @@ func (_class PoolClass) SetHTTPSOnly(sessionID SessionRef, self PoolRef, value b
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -661,7 +661,7 @@ func (_class PoolClass) SetCustomUefiCertificates(sessionID SessionRef, self Poo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -680,7 +680,7 @@ func (_class PoolClass) SetUefiCertificates(sessionID SessionRef, self PoolRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -695,7 +695,7 @@ func (_class PoolClass) DisableRepositoryProxy(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -722,7 +722,7 @@ func (_class PoolClass) ConfigureRepositoryProxy(sessionID SessionRef, self Pool
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _urlArg, _usernameArg, _passwordArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _urlArg, _usernameArg, _passwordArg)
 	return
 }
 
@@ -737,7 +737,7 @@ func (_class PoolClass) DisableClientCertificateAuth(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -756,7 +756,7 @@ func (_class PoolClass) EnableClientCertificateAuth(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _nameArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _nameArg)
 	return
 }
 
@@ -779,7 +779,7 @@ func (_class PoolClass) CheckUpdateReadiness(sessionID SessionRef, self PoolRef,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -818,7 +818,7 @@ func (_class PoolClass) SyncUpdates(sessionID SessionRef, self PoolRef, force bo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -837,7 +837,7 @@ func (_class PoolClass) RemoveRepository(sessionID SessionRef, self PoolRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -856,7 +856,7 @@ func (_class PoolClass) AddRepository(sessionID SessionRef, self PoolRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -875,25 +875,26 @@ func (_class PoolClass) SetRepositories(sessionID SessionRef, self PoolRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// RotateSecret 
+// RotateSecret
 //
 // Errors:
-//  INTERNAL_ERROR - The server failed to handle your request, due to an internal error. The given message may give details useful for debugging the problem.
-//  HOST_IS_SLAVE - You cannot make regular API calls directly on a supporter. Please pass API calls via the coordinator host.
-//  CANNOT_CONTACT_HOST - Cannot forward messages because the server cannot be contacted. The server may be switched off or there may be network connectivity problems.
-//  HA_IS_ENABLED - The operation could not be performed because HA is enabled on the Pool
-//  NOT_SUPPORTED_DURING_UPGRADE - This operation is not supported during an upgrade.
+//
+//	INTERNAL_ERROR - The server failed to handle your request, due to an internal error. The given message may give details useful for debugging the problem.
+//	HOST_IS_SLAVE - You cannot make regular API calls directly on a supporter. Please pass API calls via the coordinator host.
+//	CANNOT_CONTACT_HOST - Cannot forward messages because the server cannot be contacted. The server may be switched off or there may be network connectivity problems.
+//	HA_IS_ENABLED - The operation could not be performed because HA is enabled on the Pool
+//	NOT_SUPPORTED_DURING_UPGRADE - This operation is not supported during an upgrade.
 func (_class PoolClass) RotateSecret(sessionID SessionRef) (_err error) {
 	_method := "pool.rotate_secret"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -912,7 +913,7 @@ func (_class PoolClass) RemoveFromGuestAgentConfig(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -935,7 +936,7 @@ func (_class PoolClass) AddToGuestAgentConfig(sessionID SessionRef, self PoolRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -958,7 +959,7 @@ func (_class PoolClass) HasExtension(sessionID SessionRef, self PoolRef, name st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -977,7 +978,7 @@ func (_class PoolClass) SetIgmpSnoopingEnabled(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -992,7 +993,7 @@ func (_class PoolClass) DisableSslLegacy(sessionID SessionRef, self PoolRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1007,7 +1008,7 @@ func (_class PoolClass) EnableSslLegacy(sessionID SessionRef, self PoolRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1026,7 +1027,7 @@ func (_class PoolClass) ApplyEdition(sessionID SessionRef, self PoolRef, edition
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _editionArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _editionArg)
 	return
 }
 
@@ -1045,7 +1046,7 @@ func (_class PoolClass) GetLicenseState(sessionID SessionRef, self PoolRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1060,7 +1061,7 @@ func (_class PoolClass) DisableLocalStorageCaching(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1075,7 +1076,7 @@ func (_class PoolClass) EnableLocalStorageCaching(sessionID SessionRef, self Poo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1098,7 +1099,7 @@ func (_class PoolClass) TestArchiveTarget(sessionID SessionRef, self PoolRef, co
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1113,7 +1114,7 @@ func (_class PoolClass) SetVswitchController(sessionID SessionRef, address strin
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _addressArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _addressArg)
 	return
 }
 
@@ -1124,7 +1125,7 @@ func (_class PoolClass) DisableRedoLog(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1139,7 +1140,7 @@ func (_class PoolClass) EnableRedoLog(sessionID SessionRef, sr SRRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
 	return
 }
 
@@ -1150,7 +1151,7 @@ func (_class PoolClass) EnableTLSVerification(sessionID SessionRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1161,7 +1162,7 @@ func (_class PoolClass) CertificateSync(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1176,7 +1177,7 @@ func (_class PoolClass) CrlList(sessionID SessionRef) (_retval []string, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1191,7 +1192,7 @@ func (_class PoolClass) CrlUninstall(sessionID SessionRef, name string) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _nameArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _nameArg)
 	return
 }
 
@@ -1210,7 +1211,7 @@ func (_class PoolClass) CrlInstall(sessionID SessionRef, name string, cert strin
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _nameArg, _certArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _nameArg, _certArg)
 	return
 }
 
@@ -1229,7 +1230,7 @@ func (_class PoolClass) UninstallCaCertificate(sessionID SessionRef, name string
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _nameArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _nameArg, _forceArg)
 	return
 }
 
@@ -1248,7 +1249,7 @@ func (_class PoolClass) InstallCaCertificate(sessionID SessionRef, name string, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _nameArg, _certArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _nameArg, _certArg)
 	return
 }
 
@@ -1263,7 +1264,7 @@ func (_class PoolClass) CertificateList(sessionID SessionRef) (_retval []string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1278,7 +1279,7 @@ func (_class PoolClass) CertificateUninstall(sessionID SessionRef, name string) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _nameArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _nameArg)
 	return
 }
 
@@ -1297,7 +1298,7 @@ func (_class PoolClass) CertificateInstall(sessionID SessionRef, name string, ce
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _nameArg, _certArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _nameArg, _certArg)
 	return
 }
 
@@ -1324,7 +1325,7 @@ func (_class PoolClass) SendTestPost(sessionID SessionRef, host string, port int
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1339,7 +1340,7 @@ func (_class PoolClass) RetrieveWlbRecommendations(sessionID SessionRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToStringSetMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToStringSetMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1354,7 +1355,7 @@ func (_class PoolClass) RetrieveWlbConfiguration(sessionID SessionRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1369,7 +1370,7 @@ func (_class PoolClass) SendWlbConfiguration(sessionID SessionRef, config map[st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _configArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _configArg)
 	return
 }
 
@@ -1380,7 +1381,7 @@ func (_class PoolClass) DeconfigureWlb(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1411,7 +1412,7 @@ func (_class PoolClass) InitializeWlb(sessionID SessionRef, wlbURL string, wlbUs
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _wlbURLArg, _wlbUsernameArg, _wlbPasswordArg, _xenserverUsernameArg, _xenserverPasswordArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _wlbURLArg, _wlbUsernameArg, _wlbPasswordArg, _xenserverUsernameArg, _xenserverPasswordArg)
 	return
 }
 
@@ -1426,7 +1427,7 @@ func (_class PoolClass) DetectNonhomogeneousExternalAuth(sessionID SessionRef, p
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _poolArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _poolArg)
 	return
 }
 
@@ -1449,7 +1450,7 @@ func (_class PoolClass) ExternalAuthSetLdaps(sessionID SessionRef, pool PoolRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _poolArg, _ldapsArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _poolArg, _ldapsArg, _forceArg)
 	return
 }
 
@@ -1468,7 +1469,7 @@ func (_class PoolClass) DisableExternalAuth(sessionID SessionRef, pool PoolRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _poolArg, _configArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _poolArg, _configArg)
 	return
 }
 
@@ -1495,7 +1496,7 @@ func (_class PoolClass) EnableExternalAuth(sessionID SessionRef, pool PoolRef, c
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _poolArg, _configArg, _serviceNameArg, _authTypeArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _poolArg, _configArg, _serviceNameArg, _authTypeArg)
 	return
 }
 
@@ -1526,7 +1527,7 @@ func (_class PoolClass) CreateNewBlob(sessionID SessionRef, pool PoolRef, name s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBlobRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBlobRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1545,7 +1546,7 @@ func (_class PoolClass) SetHaHostFailuresToTolerate(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1568,7 +1569,7 @@ func (_class PoolClass) HaComputeVMFailoverPlan(sessionID SessionRef, failedHost
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToStringToStringMapMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToStringToStringMapMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1587,7 +1588,7 @@ func (_class PoolClass) HaComputeHypotheticalMaxHostFailuresToTolerate(sessionID
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1602,7 +1603,7 @@ func (_class PoolClass) HaComputeMaxHostFailuresToTolerate(sessionID SessionRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1621,7 +1622,7 @@ func (_class PoolClass) HaFailoverPlanExists(sessionID SessionRef, n int) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1636,7 +1637,7 @@ func (_class PoolClass) HaPreventRestartsFor(sessionID SessionRef, seconds int) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _secondsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _secondsArg)
 	return
 }
 
@@ -1651,7 +1652,7 @@ func (_class PoolClass) DesignateNewMaster(sessionID SessionRef, host HostRef) (
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1662,7 +1663,7 @@ func (_class PoolClass) SyncDatabase(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1673,7 +1674,7 @@ func (_class PoolClass) DisableHa(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1692,14 +1693,15 @@ func (_class PoolClass) EnableHa(sessionID SessionRef, heartbeatSrs []SRRef, con
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _heartbeatSrsArg, _configurationArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _heartbeatSrsArg, _configurationArg)
 	return
 }
 
 // CreateVLANFromPIF Create a pool-wide VLAN by taking the PIF.
 //
 // Errors:
-//  VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
+//
+//	VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
 func (_class PoolClass) CreateVLANFromPIF(sessionID SessionRef, pif PIFRef, network NetworkRef, vlan int) (_retval []PIFRef, _err error) {
 	_method := "pool.create_VLAN_from_PIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1722,19 +1724,20 @@ func (_class PoolClass) CreateVLANFromPIF(sessionID SessionRef, pif PIFRef, netw
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // ManagementReconfigure Reconfigure the management network interface for all Hosts in the Pool
 //
 // Errors:
-//  HA_IS_ENABLED - The operation could not be performed because HA is enabled on the Pool
-//  PIF_NOT_PRESENT - This host has no PIF on the given network.
-//  CANNOT_PLUG_BOND_SLAVE - This PIF is a bond member and cannot be plugged.
-//  PIF_INCOMPATIBLE_PRIMARY_ADDRESS_TYPE - The primary address types are not compatible
-//  PIF_HAS_NO_NETWORK_CONFIGURATION - PIF has no IP configuration (mode currently set to 'none')
-//  PIF_HAS_NO_V6_NETWORK_CONFIGURATION - PIF has no IPv6 configuration (mode currently set to 'none')
+//
+//	HA_IS_ENABLED - The operation could not be performed because HA is enabled on the Pool
+//	PIF_NOT_PRESENT - This host has no PIF on the given network.
+//	CANNOT_PLUG_BOND_SLAVE - This PIF is a bond member and cannot be plugged.
+//	PIF_INCOMPATIBLE_PRIMARY_ADDRESS_TYPE - The primary address types are not compatible
+//	PIF_HAS_NO_NETWORK_CONFIGURATION - PIF has no IP configuration (mode currently set to 'none')
+//	PIF_HAS_NO_V6_NETWORK_CONFIGURATION - PIF has no IPv6 configuration (mode currently set to 'none')
 func (_class PoolClass) ManagementReconfigure(sessionID SessionRef, network NetworkRef) (_err error) {
 	_method := "pool.management_reconfigure"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1745,14 +1748,15 @@ func (_class PoolClass) ManagementReconfigure(sessionID SessionRef, network Netw
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _networkArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _networkArg)
 	return
 }
 
 // CreateVLAN Create PIFs, mapping a network to the same physical interface/VLAN on each host. This call is deprecated: use Pool.create_VLAN_from_PIF instead.
 //
 // Errors:
-//  VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
+//
+//	VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
 func (_class PoolClass) CreateVLAN(sessionID SessionRef, device string, network NetworkRef, vlan int) (_retval []PIFRef, _err error) {
 	_method := "pool.create_VLAN"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1775,7 +1779,7 @@ func (_class PoolClass) CreateVLAN(sessionID SessionRef, device string, network 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1790,7 +1794,7 @@ func (_class PoolClass) RecoverSlaves(sessionID SessionRef) (_retval []HostRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1805,7 +1809,7 @@ func (_class PoolClass) EmergencyResetMaster(sessionID SessionRef, masterAddress
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _masterAddressArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _masterAddressArg)
 	return
 }
 
@@ -1816,7 +1820,7 @@ func (_class PoolClass) EmergencyTransitionToMaster(sessionID SessionRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1831,7 +1835,7 @@ func (_class PoolClass) Eject(sessionID SessionRef, host HostRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1854,14 +1858,15 @@ func (_class PoolClass) JoinForce(sessionID SessionRef, masterAddress string, ma
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _masterAddressArg, _masterUsernameArg, _masterPasswordArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _masterAddressArg, _masterUsernameArg, _masterPasswordArg)
 	return
 }
 
 // Join Instruct host to join a new pool
 //
 // Errors:
-//  JOINING_HOST_CANNOT_CONTAIN_SHARED_SRS - The server joining the pool cannot contain any shared storage.
+//
+//	JOINING_HOST_CANNOT_CONTAIN_SHARED_SRS - The server joining the pool cannot contain any shared storage.
 func (_class PoolClass) Join(sessionID SessionRef, masterAddress string, masterUsername string, masterPassword string) (_err error) {
 	_method := "pool.join"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1880,7 +1885,7 @@ func (_class PoolClass) Join(sessionID SessionRef, masterAddress string, masterU
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _masterAddressArg, _masterUsernameArg, _masterPasswordArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _masterAddressArg, _masterUsernameArg, _masterPasswordArg)
 	return
 }
 
@@ -1899,7 +1904,7 @@ func (_class PoolClass) SetAutoUpdateVMSecurebootCertificates(sessionID SessionR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1918,7 +1923,7 @@ func (_class PoolClass) SetVMConsoleIdleTimeout(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1937,7 +1942,7 @@ func (_class PoolClass) SetLimitConsoleSessions(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1956,7 +1961,7 @@ func (_class PoolClass) SetHaRebootVMOnInternalShutdown(sessionID SessionRef, se
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1975,7 +1980,7 @@ func (_class PoolClass) RemoveFromLicenseServer(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -1998,7 +2003,7 @@ func (_class PoolClass) AddToLicenseServer(sessionID SessionRef, self PoolRef, k
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2017,7 +2022,7 @@ func (_class PoolClass) SetLicenseServer(sessionID SessionRef, self PoolRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2036,7 +2041,7 @@ func (_class PoolClass) SetCoordinatorBias(sessionID SessionRef, self PoolRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2055,7 +2060,7 @@ func (_class PoolClass) SetMigrationCompression(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2074,7 +2079,7 @@ func (_class PoolClass) SetIsPsrPending(sessionID SessionRef, self PoolRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2093,7 +2098,7 @@ func (_class PoolClass) SetLivePatchingDisabled(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2112,7 +2117,7 @@ func (_class PoolClass) SetPolicyNoVendorDevice(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2131,7 +2136,7 @@ func (_class PoolClass) SetWlbVerifyCert(sessionID SessionRef, self PoolRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2150,7 +2155,7 @@ func (_class PoolClass) SetWlbEnabled(sessionID SessionRef, self PoolRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2169,7 +2174,7 @@ func (_class PoolClass) RemoveFromHealthCheckConfig(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2192,7 +2197,7 @@ func (_class PoolClass) AddToHealthCheckConfig(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2211,7 +2216,7 @@ func (_class PoolClass) SetHealthCheckConfig(sessionID SessionRef, self PoolRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2230,7 +2235,7 @@ func (_class PoolClass) RemoveFromGuiConfig(sessionID SessionRef, self PoolRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2253,7 +2258,7 @@ func (_class PoolClass) AddToGuiConfig(sessionID SessionRef, self PoolRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2272,7 +2277,7 @@ func (_class PoolClass) SetGuiConfig(sessionID SessionRef, self PoolRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2291,7 +2296,7 @@ func (_class PoolClass) RemoveTags(sessionID SessionRef, self PoolRef, value str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2310,7 +2315,7 @@ func (_class PoolClass) AddTags(sessionID SessionRef, self PoolRef, value string
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2329,7 +2334,7 @@ func (_class PoolClass) SetTags(sessionID SessionRef, self PoolRef, value []stri
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2348,7 +2353,7 @@ func (_class PoolClass) SetHaAllowOvercommit(sessionID SessionRef, self PoolRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2367,7 +2372,7 @@ func (_class PoolClass) RemoveFromOtherConfig(sessionID SessionRef, self PoolRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2390,7 +2395,7 @@ func (_class PoolClass) AddToOtherConfig(sessionID SessionRef, self PoolRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2409,7 +2414,7 @@ func (_class PoolClass) SetOtherConfig(sessionID SessionRef, self PoolRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2428,7 +2433,7 @@ func (_class PoolClass) SetCrashDumpSR(sessionID SessionRef, self PoolRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2447,7 +2452,7 @@ func (_class PoolClass) SetSuspendImageSR(sessionID SessionRef, self PoolRef, va
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2466,7 +2471,7 @@ func (_class PoolClass) SetDefaultSR(sessionID SessionRef, self PoolRef, value S
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2485,7 +2490,7 @@ func (_class PoolClass) SetNameDescription(sessionID SessionRef, self PoolRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2504,7 +2509,7 @@ func (_class PoolClass) SetNameLabel(sessionID SessionRef, self PoolRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2523,7 +2528,7 @@ func (_class PoolClass) GetAutoUpdateVMSecurebootCertificates(sessionID SessionR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2542,7 +2547,7 @@ func (_class PoolClass) GetVMConsoleIdleTimeout(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2561,7 +2566,7 @@ func (_class PoolClass) GetLimitConsoleSessions(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2580,7 +2585,7 @@ func (_class PoolClass) GetHaRebootVMOnInternalShutdown(sessionID SessionRef, se
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2599,7 +2604,7 @@ func (_class PoolClass) GetLicenseServer(sessionID SessionRef, self PoolRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2618,7 +2623,7 @@ func (_class PoolClass) GetRecommendations(sessionID SessionRef, self PoolRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2637,7 +2642,7 @@ func (_class PoolClass) GetUpdateSyncEnabled(sessionID SessionRef, self PoolRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2656,7 +2661,7 @@ func (_class PoolClass) GetUpdateSyncDay(sessionID SessionRef, self PoolRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2675,7 +2680,7 @@ func (_class PoolClass) GetUpdateSyncFrequency(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumUpdateSyncFrequencyToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumUpdateSyncFrequencyToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2694,7 +2699,7 @@ func (_class PoolClass) GetLastUpdateSync(sessionID SessionRef, self PoolRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2713,7 +2718,7 @@ func (_class PoolClass) GetTelemetryNextCollection(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2732,7 +2737,7 @@ func (_class PoolClass) GetTelemetryFrequency(sessionID SessionRef, self PoolRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumTelemetryFrequencyToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumTelemetryFrequencyToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2751,7 +2756,7 @@ func (_class PoolClass) GetTelemetryUUID(sessionID SessionRef, self PoolRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSecretRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSecretRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2770,7 +2775,7 @@ func (_class PoolClass) GetExtAuthCacheExpiry(sessionID SessionRef, self PoolRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2789,7 +2794,7 @@ func (_class PoolClass) GetExtAuthCacheSize(sessionID SessionRef, self PoolRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2808,7 +2813,7 @@ func (_class PoolClass) GetExtAuthCacheEnabled(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2827,7 +2832,7 @@ func (_class PoolClass) GetExtAuthMaxThreads(sessionID SessionRef, self PoolRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2846,7 +2851,7 @@ func (_class PoolClass) GetLocalAuthMaxThreads(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2865,7 +2870,7 @@ func (_class PoolClass) GetCoordinatorBias(sessionID SessionRef, self PoolRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2884,7 +2889,7 @@ func (_class PoolClass) GetMigrationCompression(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2903,7 +2908,7 @@ func (_class PoolClass) GetRepositoryProxyPassword(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSecretRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSecretRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2922,7 +2927,7 @@ func (_class PoolClass) GetRepositoryProxyUsername(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2941,7 +2946,7 @@ func (_class PoolClass) GetRepositoryProxyURL(sessionID SessionRef, self PoolRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2960,7 +2965,7 @@ func (_class PoolClass) GetClientCertificateAuthName(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2979,7 +2984,7 @@ func (_class PoolClass) GetClientCertificateAuthEnabled(sessionID SessionRef, se
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2998,7 +3003,7 @@ func (_class PoolClass) GetRepositories(sessionID SessionRef, self PoolRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3017,7 +3022,7 @@ func (_class PoolClass) GetTLSVerificationEnabled(sessionID SessionRef, self Poo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3036,7 +3041,7 @@ func (_class PoolClass) GetIsPsrPending(sessionID SessionRef, self PoolRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3055,7 +3060,7 @@ func (_class PoolClass) GetCustomUefiCertificates(sessionID SessionRef, self Poo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3074,7 +3079,7 @@ func (_class PoolClass) GetUefiCertificates(sessionID SessionRef, self PoolRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3093,7 +3098,7 @@ func (_class PoolClass) GetIgmpSnoopingEnabled(sessionID SessionRef, self PoolRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3112,7 +3117,7 @@ func (_class PoolClass) GetLivePatchingDisabled(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3131,7 +3136,7 @@ func (_class PoolClass) GetPolicyNoVendorDevice(sessionID SessionRef, self PoolR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3150,7 +3155,7 @@ func (_class PoolClass) GetCPUInfo(sessionID SessionRef, self PoolRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3169,7 +3174,7 @@ func (_class PoolClass) GetGuestAgentConfig(sessionID SessionRef, self PoolRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3188,7 +3193,7 @@ func (_class PoolClass) GetCurrentOperations(sessionID SessionRef, self PoolRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumPoolAllowedOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumPoolAllowedOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3207,7 +3212,7 @@ func (_class PoolClass) GetAllowedOperations(sessionID SessionRef, self PoolRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPoolAllowedOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPoolAllowedOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3226,7 +3231,7 @@ func (_class PoolClass) GetHaClusterStack(sessionID SessionRef, self PoolRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3245,7 +3250,7 @@ func (_class PoolClass) GetMetadataVDIs(sessionID SessionRef, self PoolRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3264,7 +3269,7 @@ func (_class PoolClass) GetRestrictions(sessionID SessionRef, self PoolRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3283,7 +3288,7 @@ func (_class PoolClass) GetVswitchController(sessionID SessionRef, self PoolRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3302,7 +3307,7 @@ func (_class PoolClass) GetRedoLogVdi(sessionID SessionRef, self PoolRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3321,7 +3326,7 @@ func (_class PoolClass) GetRedoLogEnabled(sessionID SessionRef, self PoolRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3340,7 +3345,7 @@ func (_class PoolClass) GetWlbVerifyCert(sessionID SessionRef, self PoolRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3359,7 +3364,7 @@ func (_class PoolClass) GetWlbEnabled(sessionID SessionRef, self PoolRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3378,7 +3383,7 @@ func (_class PoolClass) GetWlbUsername(sessionID SessionRef, self PoolRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3397,7 +3402,7 @@ func (_class PoolClass) GetWlbURL(sessionID SessionRef, self PoolRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3416,7 +3421,7 @@ func (_class PoolClass) GetHealthCheckConfig(sessionID SessionRef, self PoolRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3435,7 +3440,7 @@ func (_class PoolClass) GetGuiConfig(sessionID SessionRef, self PoolRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3454,7 +3459,7 @@ func (_class PoolClass) GetTags(sessionID SessionRef, self PoolRef) (_retval []s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3473,7 +3478,7 @@ func (_class PoolClass) GetBlobs(sessionID SessionRef, self PoolRef) (_retval ma
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToBlobRefMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToBlobRefMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3492,7 +3497,7 @@ func (_class PoolClass) GetHaOvercommitted(sessionID SessionRef, self PoolRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3511,7 +3516,7 @@ func (_class PoolClass) GetHaAllowOvercommit(sessionID SessionRef, self PoolRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3530,7 +3535,7 @@ func (_class PoolClass) GetHaPlanExistsFor(sessionID SessionRef, self PoolRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3549,7 +3554,7 @@ func (_class PoolClass) GetHaHostFailuresToTolerate(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3568,7 +3573,7 @@ func (_class PoolClass) GetHaStatefiles(sessionID SessionRef, self PoolRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3587,7 +3592,7 @@ func (_class PoolClass) GetHaConfiguration(sessionID SessionRef, self PoolRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3606,7 +3611,7 @@ func (_class PoolClass) GetHaEnabled(sessionID SessionRef, self PoolRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3625,7 +3630,7 @@ func (_class PoolClass) GetOtherConfig(sessionID SessionRef, self PoolRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3644,7 +3649,7 @@ func (_class PoolClass) GetCrashDumpSR(sessionID SessionRef, self PoolRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3663,7 +3668,7 @@ func (_class PoolClass) GetSuspendImageSR(sessionID SessionRef, self PoolRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3682,7 +3687,7 @@ func (_class PoolClass) GetDefaultSR(sessionID SessionRef, self PoolRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3701,7 +3706,7 @@ func (_class PoolClass) GetMaster(sessionID SessionRef, self PoolRef) (_retval H
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3720,7 +3725,7 @@ func (_class PoolClass) GetNameDescription(sessionID SessionRef, self PoolRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3739,7 +3744,7 @@ func (_class PoolClass) GetNameLabel(sessionID SessionRef, self PoolRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3758,7 +3763,7 @@ func (_class PoolClass) GetUUID(sessionID SessionRef, self PoolRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3777,7 +3782,7 @@ func (_class PoolClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Po
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3796,6 +3801,6 @@ func (_class PoolClass) GetRecord(sessionID SessionRef, self PoolRef) (_retval P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolRecordToGo(_method+" -> ", _result.Value)
 	return
 }

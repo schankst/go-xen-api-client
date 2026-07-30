@@ -74,7 +74,7 @@ func (_class PoolPatchClass) GetAllRecords(sessionID SessionRef) (_retval map[Po
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolPatchRefToPoolPatchRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolPatchRefToPoolPatchRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -89,7 +89,7 @@ func (_class PoolPatchClass) GetAll(sessionID SessionRef) (_retval []PoolPatchRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolPatchRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolPatchRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -108,7 +108,7 @@ func (_class PoolPatchClass) CleanOnHost(sessionID SessionRef, self PoolPatchRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _hostArg)
 	return
 }
 
@@ -123,7 +123,7 @@ func (_class PoolPatchClass) Destroy(sessionID SessionRef, self PoolPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -138,7 +138,7 @@ func (_class PoolPatchClass) PoolClean(sessionID SessionRef, self PoolPatchRef) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -153,7 +153,7 @@ func (_class PoolPatchClass) Clean(sessionID SessionRef, self PoolPatchRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -176,7 +176,7 @@ func (_class PoolPatchClass) Precheck(sessionID SessionRef, self PoolPatchRef, h
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -191,7 +191,7 @@ func (_class PoolPatchClass) PoolApply(sessionID SessionRef, self PoolPatchRef) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -214,7 +214,7 @@ func (_class PoolPatchClass) Apply(sessionID SessionRef, self PoolPatchRef, host
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -233,7 +233,7 @@ func (_class PoolPatchClass) RemoveFromOtherConfig(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -256,7 +256,7 @@ func (_class PoolPatchClass) AddToOtherConfig(sessionID SessionRef, self PoolPat
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -275,7 +275,7 @@ func (_class PoolPatchClass) SetOtherConfig(sessionID SessionRef, self PoolPatch
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -294,7 +294,7 @@ func (_class PoolPatchClass) GetOtherConfig(sessionID SessionRef, self PoolPatch
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -313,7 +313,7 @@ func (_class PoolPatchClass) GetPoolUpdate(sessionID SessionRef, self PoolPatchR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolUpdateRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolUpdateRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -332,7 +332,7 @@ func (_class PoolPatchClass) GetAfterApplyGuidance(sessionID SessionRef, self Po
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumAfterApplyGuidanceSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumAfterApplyGuidanceSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -351,7 +351,7 @@ func (_class PoolPatchClass) GetHostPatches(sessionID SessionRef, self PoolPatch
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostPatchRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostPatchRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -370,7 +370,7 @@ func (_class PoolPatchClass) GetPoolApplied(sessionID SessionRef, self PoolPatch
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -389,7 +389,7 @@ func (_class PoolPatchClass) GetSize(sessionID SessionRef, self PoolPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -408,7 +408,7 @@ func (_class PoolPatchClass) GetVersion(sessionID SessionRef, self PoolPatchRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -427,7 +427,7 @@ func (_class PoolPatchClass) GetNameDescription(sessionID SessionRef, self PoolP
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -446,7 +446,7 @@ func (_class PoolPatchClass) GetNameLabel(sessionID SessionRef, self PoolPatchRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -465,7 +465,7 @@ func (_class PoolPatchClass) GetUUID(sessionID SessionRef, self PoolPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -484,7 +484,7 @@ func (_class PoolPatchClass) GetByNameLabel(sessionID SessionRef, label string) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolPatchRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolPatchRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -503,7 +503,7 @@ func (_class PoolPatchClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolPatchRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolPatchRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -522,6 +522,6 @@ func (_class PoolPatchClass) GetRecord(sessionID SessionRef, self PoolPatchRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolPatchRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolPatchRecordToGo(_method+" -> ", _result.Value)
 	return
 }

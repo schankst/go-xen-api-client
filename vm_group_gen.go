@@ -60,7 +60,7 @@ func (_class VMGroupClass) GetAllRecords(sessionID SessionRef) (_retval map[VMGr
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGroupRefToVMGroupRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGroupRefToVMGroupRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -75,7 +75,7 @@ func (_class VMGroupClass) GetAll(sessionID SessionRef) (_retval []VMGroupRef, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGroupRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGroupRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -94,7 +94,7 @@ func (_class VMGroupClass) SetNameDescription(sessionID SessionRef, self VMGroup
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -113,7 +113,7 @@ func (_class VMGroupClass) SetNameLabel(sessionID SessionRef, self VMGroupRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -132,7 +132,7 @@ func (_class VMGroupClass) GetVMs(sessionID SessionRef, self VMGroupRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -151,7 +151,7 @@ func (_class VMGroupClass) GetPlacement(sessionID SessionRef, self VMGroupRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPlacementPolicyToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPlacementPolicyToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -170,7 +170,7 @@ func (_class VMGroupClass) GetNameDescription(sessionID SessionRef, self VMGroup
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -189,7 +189,7 @@ func (_class VMGroupClass) GetNameLabel(sessionID SessionRef, self VMGroupRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -208,7 +208,7 @@ func (_class VMGroupClass) GetUUID(sessionID SessionRef, self VMGroupRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -227,7 +227,7 @@ func (_class VMGroupClass) GetByNameLabel(sessionID SessionRef, label string) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGroupRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGroupRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -242,7 +242,7 @@ func (_class VMGroupClass) Destroy(sessionID SessionRef, self VMGroupRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -261,7 +261,7 @@ func (_class VMGroupClass) Create(sessionID SessionRef, args VMGroupRecord) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGroupRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGroupRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -280,7 +280,7 @@ func (_class VMGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGroupRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGroupRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -299,6 +299,6 @@ func (_class VMGroupClass) GetRecord(sessionID SessionRef, self VMGroupRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGroupRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGroupRecordToGo(_method+" -> ", _result.Value)
 	return
 }

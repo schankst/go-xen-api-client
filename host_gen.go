@@ -285,7 +285,7 @@ func (_class HostClass) GetAllRecords(sessionID SessionRef) (_retval map[HostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToHostRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToHostRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -300,7 +300,7 @@ func (_class HostClass) GetAll(sessionID SessionRef) (_retval []HostRef, _err er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -319,7 +319,7 @@ func (_class HostClass) SetServertime(sessionID SessionRef, self HostRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -338,7 +338,7 @@ func (_class HostClass) GetNtpSynchronized(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -357,7 +357,7 @@ func (_class HostClass) ListTimezones(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -376,7 +376,7 @@ func (_class HostClass) SetTimezone(sessionID SessionRef, self HostRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -395,7 +395,7 @@ func (_class HostClass) GetNtpServersStatus(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -414,7 +414,7 @@ func (_class HostClass) SetNtpCustomServers(sessionID SessionRef, self HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -433,7 +433,7 @@ func (_class HostClass) SetNtpMode(sessionID SessionRef, self HostRef, value Hos
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -452,7 +452,7 @@ func (_class HostClass) SetMaxCstate(sessionID SessionRef, self HostRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -471,7 +471,7 @@ func (_class HostClass) GetTrackedUserAgents(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -490,7 +490,7 @@ func (_class HostClass) SetSSHAutoMode(sessionID SessionRef, self HostRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -509,7 +509,7 @@ func (_class HostClass) SetConsoleIdleTimeout(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -528,7 +528,7 @@ func (_class HostClass) SetSSHEnabledTimeout(sessionID SessionRef, self HostRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -543,7 +543,7 @@ func (_class HostClass) DisableSSH(sessionID SessionRef, self HostRef) (_err err
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -558,7 +558,7 @@ func (_class HostClass) EnableSSH(sessionID SessionRef, self HostRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -569,7 +569,7 @@ func (_class HostClass) EmergencyClearMandatoryGuidance(sessionID SessionRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -584,7 +584,7 @@ func (_class HostClass) ApplyRecommendedGuidances(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -603,7 +603,7 @@ func (_class HostClass) SetHTTPSOnly(sessionID SessionRef, self HostRef, value b
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -618,7 +618,7 @@ func (_class HostClass) RescanDrivers(sessionID SessionRef, self HostRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -641,7 +641,7 @@ func (_class HostClass) ApplyUpdates(sessionID SessionRef, self HostRef, hash st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -652,7 +652,7 @@ func (_class HostClass) EmergencyReenableTLSVerification(sessionID SessionRef) (
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -663,7 +663,7 @@ func (_class HostClass) EmergencyDisableTLSVerification(sessionID SessionRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -682,7 +682,7 @@ func (_class HostClass) SetNumaAffinityPolicy(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -701,7 +701,7 @@ func (_class HostClass) GetSchedGran(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumHostSchedGranToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumHostSchedGranToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -720,7 +720,7 @@ func (_class HostClass) SetSchedGran(sessionID SessionRef, self HostRef, value H
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -739,7 +739,7 @@ func (_class HostClass) SetUefiCertificates(sessionID SessionRef, host HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
 	return
 }
 
@@ -758,7 +758,7 @@ func (_class HostClass) SetMultipathing(sessionID SessionRef, host HostRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
 	return
 }
 
@@ -777,7 +777,7 @@ func (_class HostClass) SetIscsiIqn(sessionID SessionRef, host HostRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
 	return
 }
 
@@ -796,7 +796,7 @@ func (_class HostClass) SetSslLegacy(sessionID SessionRef, self HostRef, value b
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -815,7 +815,7 @@ func (_class HostClass) DisableDisplay(sessionID SessionRef, host HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumHostDisplayToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumHostDisplayToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -834,7 +834,7 @@ func (_class HostClass) EnableDisplay(sessionID SessionRef, host HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumHostDisplayToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumHostDisplayToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -849,7 +849,7 @@ func (_class HostClass) DeclareDead(sessionID SessionRef, host HostRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -876,7 +876,7 @@ func (_class HostClass) MigrateReceive(sessionID SessionRef, host HostRef, netwo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -891,7 +891,7 @@ func (_class HostClass) DisableLocalStorageCaching(sessionID SessionRef, host Ho
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -910,7 +910,7 @@ func (_class HostClass) EnableLocalStorageCaching(sessionID SessionRef, host Hos
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _srArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _srArg)
 	return
 }
 
@@ -925,7 +925,7 @@ func (_class HostClass) ResetCPUFeatures(sessionID SessionRef, host HostRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -944,7 +944,7 @@ func (_class HostClass) SetCPUFeatures(sessionID SessionRef, host HostRef, featu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _featuresArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _featuresArg)
 	return
 }
 
@@ -967,7 +967,7 @@ func (_class HostClass) SetPowerOnMode(sessionID SessionRef, self HostRef, power
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _powerOnModeArg, _powerOnConfigArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _powerOnModeArg, _powerOnConfigArg)
 	return
 }
 
@@ -982,7 +982,7 @@ func (_class HostClass) RefreshPackInfo(sessionID SessionRef, host HostRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1005,7 +1005,7 @@ func (_class HostClass) ApplyEdition(sessionID SessionRef, host HostRef, edition
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _editionArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _editionArg, _forceArg)
 	return
 }
 
@@ -1020,7 +1020,7 @@ func (_class HostClass) ResetServerCertificate(sessionID SessionRef, host HostRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1031,7 +1031,7 @@ func (_class HostClass) EmergencyResetServerCertificate(sessionID SessionRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1058,7 +1058,7 @@ func (_class HostClass) InstallServerCertificate(sessionID SessionRef, host Host
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _certificateArg, _privateKeyArg, _certificateChainArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _certificateArg, _privateKeyArg, _certificateChainArg)
 	return
 }
 
@@ -1073,7 +1073,7 @@ func (_class HostClass) RefreshServerCertificate(sessionID SessionRef, host Host
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1092,7 +1092,7 @@ func (_class HostClass) GetServerCertificate(sessionID SessionRef, host HostRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1111,7 +1111,7 @@ func (_class HostClass) RetrieveWlbEvacuateRecommendations(sessionID SessionRef,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToStringSetMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToStringSetMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1134,7 +1134,7 @@ func (_class HostClass) ExternalAuthSetLdaps(sessionID SessionRef, host HostRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _ldapsArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _ldapsArg, _forceArg)
 	return
 }
 
@@ -1157,7 +1157,7 @@ func (_class HostClass) DisableExternalAuth(sessionID SessionRef, host HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _configArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _configArg, _forceArg)
 	return
 }
 
@@ -1184,7 +1184,7 @@ func (_class HostClass) EnableExternalAuth(sessionID SessionRef, host HostRef, c
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _configArg, _serviceNameArg, _authTypeArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _configArg, _serviceNameArg, _authTypeArg)
 	return
 }
 
@@ -1203,7 +1203,7 @@ func (_class HostClass) GetServerLocaltime(sessionID SessionRef, host HostRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1222,7 +1222,7 @@ func (_class HostClass) GetServertime(sessionID SessionRef, host HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1245,7 +1245,7 @@ func (_class HostClass) CallExtension(sessionID SessionRef, host HostRef, call s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1268,7 +1268,7 @@ func (_class HostClass) HasExtension(sessionID SessionRef, host HostRef, name st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1299,7 +1299,7 @@ func (_class HostClass) CallPlugin(sessionID SessionRef, host HostRef, plugin st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1330,7 +1330,7 @@ func (_class HostClass) CreateNewBlob(sessionID SessionRef, host HostRef, name s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBlobRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBlobRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1349,7 +1349,7 @@ func (_class HostClass) BackupRrds(sessionID SessionRef, host HostRef, delay flo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _delayArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _delayArg)
 	return
 }
 
@@ -1364,7 +1364,7 @@ func (_class HostClass) SyncData(sessionID SessionRef, host HostRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1383,7 +1383,7 @@ func (_class HostClass) ComputeMemoryOverhead(sessionID SessionRef, host HostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1402,14 +1402,15 @@ func (_class HostClass) ComputeFreeMemory(sessionID SessionRef, host HostRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // SetHostnameLive Sets the host name to the specified string.  Both the API and lower-level system hostname are changed immediately.
 //
 // Errors:
-//  HOST_NAME_INVALID - The server name is invalid.
+//
+//	HOST_NAME_INVALID - The server name is invalid.
 func (_class HostClass) SetHostnameLive(sessionID SessionRef, host HostRef, hostname string) (_err error) {
 	_method := "host.set_hostname_live"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1424,7 +1425,7 @@ func (_class HostClass) SetHostnameLive(sessionID SessionRef, host HostRef, host
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _hostnameArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _hostnameArg)
 	return
 }
 
@@ -1435,7 +1436,7 @@ func (_class HostClass) ShutdownAgent(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1450,11 +1451,11 @@ func (_class HostClass) RestartAgent(sessionID SessionRef, host HostRef) (_err e
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
-// GetSystemStatusCapabilities 
+// GetSystemStatusCapabilities
 func (_class HostClass) GetSystemStatusCapabilities(sessionID SessionRef, host HostRef) (_retval string, _err error) {
 	_method := "host.get_system_status_capabilities"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1469,7 +1470,7 @@ func (_class HostClass) GetSystemStatusCapabilities(sessionID SessionRef, host H
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1488,7 +1489,7 @@ func (_class HostClass) GetManagementInterface(sessionID SessionRef, host HostRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1499,7 +1500,7 @@ func (_class HostClass) ManagementDisable(sessionID SessionRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
 	return
 }
 
@@ -1514,7 +1515,7 @@ func (_class HostClass) LocalManagementReconfigure(sessionID SessionRef, iface s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _ifaceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _ifaceArg)
 	return
 }
 
@@ -1529,7 +1530,7 @@ func (_class HostClass) ManagementReconfigure(sessionID SessionRef, pif PIFRef) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _pifArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _pifArg)
 	return
 }
 
@@ -1544,7 +1545,7 @@ func (_class HostClass) SyslogReconfigure(sessionID SessionRef, host HostRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1567,7 +1568,7 @@ func (_class HostClass) Evacuate(sessionID SessionRef, host HostRef, network Net
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _networkArg, _evacuateBatchSizeArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _networkArg, _evacuateBatchSizeArg)
 	return
 }
 
@@ -1586,7 +1587,7 @@ func (_class HostClass) GetUncooperativeResidentVMs(sessionID SessionRef, self H
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1605,7 +1606,7 @@ func (_class HostClass) GetVmsWhichPreventEvacuation(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToStringSetMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToStringSetMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1620,7 +1621,7 @@ func (_class HostClass) AssertCanEvacuate(sessionID SessionRef, host HostRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1639,7 +1640,7 @@ func (_class HostClass) ForgetDataSourceArchives(sessionID SessionRef, host Host
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _dataSourceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _dataSourceArg)
 	return
 }
 
@@ -1662,7 +1663,7 @@ func (_class HostClass) QueryDataSource(sessionID SessionRef, host HostRef, data
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1681,11 +1682,11 @@ func (_class HostClass) RecordDataSource(sessionID SessionRef, host HostRef, dat
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _dataSourceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _dataSourceArg)
 	return
 }
 
-// GetDataSources 
+// GetDataSources
 func (_class HostClass) GetDataSources(sessionID SessionRef, host HostRef) (_retval []DataSourceRecord, _err error) {
 	_method := "host.get_data_sources"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1700,7 +1701,7 @@ func (_class HostClass) GetDataSources(sessionID SessionRef, host HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDataSourceRecordSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDataSourceRecordSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1715,7 +1716,7 @@ func (_class HostClass) EmergencyHaDisable(sessionID SessionRef, soft bool) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _softArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _softArg)
 	return
 }
 
@@ -1730,7 +1731,7 @@ func (_class HostClass) PowerOn(sessionID SessionRef, host HostRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1745,7 +1746,7 @@ func (_class HostClass) Destroy(sessionID SessionRef, self HostRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1760,14 +1761,15 @@ func (_class HostClass) LicenseRemove(sessionID SessionRef, host HostRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
 // LicenseAdd Apply a new license to a host
 //
 // Errors:
-//  LICENSE_PROCESSING_ERROR - There was an error processing your license. Please contact your support representative.
+//
+//	LICENSE_PROCESSING_ERROR - There was an error processing your license. Please contact your support representative.
 func (_class HostClass) LicenseAdd(sessionID SessionRef, host HostRef, contents string) (_err error) {
 	_method := "host.license_add"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1782,14 +1784,15 @@ func (_class HostClass) LicenseAdd(sessionID SessionRef, host HostRef, contents 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _contentsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _contentsArg)
 	return
 }
 
 // LicenseApply Apply a new license to a host
 //
 // Errors:
-//  LICENSE_PROCESSING_ERROR - There was an error processing your license. Please contact your support representative.
+//
+//	LICENSE_PROCESSING_ERROR - There was an error processing your license. Please contact your support representative.
 func (_class HostClass) LicenseApply(sessionID SessionRef, host HostRef, contents string) (_err error) {
 	_method := "host.license_apply"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1804,7 +1807,7 @@ func (_class HostClass) LicenseApply(sessionID SessionRef, host HostRef, content
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _contentsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _contentsArg)
 	return
 }
 
@@ -1819,7 +1822,7 @@ func (_class HostClass) ListMethods(sessionID SessionRef) (_retval []string, _er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1842,7 +1845,7 @@ func (_class HostClass) BugreportUpload(sessionID SessionRef, host HostRef, url 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _urlArg, _optionsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _urlArg, _optionsArg)
 	return
 }
 
@@ -1861,7 +1864,7 @@ func (_class HostClass) SendDebugKeys(sessionID SessionRef, host HostRef, keys s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _keysArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _keysArg)
 	return
 }
 
@@ -1880,7 +1883,7 @@ func (_class HostClass) GetLog(sessionID SessionRef, host HostRef) (_retval stri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1899,7 +1902,7 @@ func (_class HostClass) DmesgClear(sessionID SessionRef, host HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1918,7 +1921,7 @@ func (_class HostClass) Dmesg(sessionID SessionRef, host HostRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1933,7 +1936,7 @@ func (_class HostClass) Reboot(sessionID SessionRef, host HostRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1948,7 +1951,7 @@ func (_class HostClass) Shutdown(sessionID SessionRef, host HostRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1963,7 +1966,7 @@ func (_class HostClass) Enable(sessionID SessionRef, host HostRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1982,7 +1985,7 @@ func (_class HostClass) Disable(sessionID SessionRef, host HostRef, autoEnable b
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _hostArg, _autoEnableArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _autoEnableArg)
 	return
 }
 
@@ -2001,7 +2004,7 @@ func (_class HostClass) SetDisplay(sessionID SessionRef, self HostRef, value Hos
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2020,7 +2023,7 @@ func (_class HostClass) RemoveFromGuestVCPUsParams(sessionID SessionRef, self Ho
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2043,7 +2046,7 @@ func (_class HostClass) AddToGuestVCPUsParams(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2062,7 +2065,7 @@ func (_class HostClass) SetGuestVCPUsParams(sessionID SessionRef, self HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2081,7 +2084,7 @@ func (_class HostClass) RemoveFromLicenseServer(sessionID SessionRef, self HostR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2104,7 +2107,7 @@ func (_class HostClass) AddToLicenseServer(sessionID SessionRef, self HostRef, k
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2123,7 +2126,7 @@ func (_class HostClass) SetLicenseServer(sessionID SessionRef, self HostRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2142,7 +2145,7 @@ func (_class HostClass) RemoveTags(sessionID SessionRef, self HostRef, value str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2161,7 +2164,7 @@ func (_class HostClass) AddTags(sessionID SessionRef, self HostRef, value string
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2180,7 +2183,7 @@ func (_class HostClass) SetTags(sessionID SessionRef, self HostRef, value []stri
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2199,7 +2202,7 @@ func (_class HostClass) SetAddress(sessionID SessionRef, self HostRef, value str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2218,7 +2221,7 @@ func (_class HostClass) SetHostname(sessionID SessionRef, self HostRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2237,7 +2240,7 @@ func (_class HostClass) SetCrashDumpSr(sessionID SessionRef, self HostRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2256,7 +2259,7 @@ func (_class HostClass) SetSuspendImageSr(sessionID SessionRef, self HostRef, va
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2275,7 +2278,7 @@ func (_class HostClass) RemoveFromLogging(sessionID SessionRef, self HostRef, ke
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2298,7 +2301,7 @@ func (_class HostClass) AddToLogging(sessionID SessionRef, self HostRef, key str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2317,7 +2320,7 @@ func (_class HostClass) SetLogging(sessionID SessionRef, self HostRef, value map
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2336,7 +2339,7 @@ func (_class HostClass) RemoveFromOtherConfig(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2359,7 +2362,7 @@ func (_class HostClass) AddToOtherConfig(sessionID SessionRef, self HostRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2378,7 +2381,7 @@ func (_class HostClass) SetOtherConfig(sessionID SessionRef, self HostRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2397,7 +2400,7 @@ func (_class HostClass) SetNameDescription(sessionID SessionRef, self HostRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2416,7 +2419,7 @@ func (_class HostClass) SetNameLabel(sessionID SessionRef, self HostRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2435,7 +2438,7 @@ func (_class HostClass) GetTimezone(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2454,7 +2457,7 @@ func (_class HostClass) GetNtpCustomServers(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2473,7 +2476,7 @@ func (_class HostClass) GetNtpMode(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumHostNtpModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumHostNtpModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2492,7 +2495,7 @@ func (_class HostClass) GetSecureBoot(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2511,7 +2514,7 @@ func (_class HostClass) GetMaxCstate(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2530,7 +2533,7 @@ func (_class HostClass) GetSSHAutoMode(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2549,7 +2552,7 @@ func (_class HostClass) GetConsoleIdleTimeout(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2568,7 +2571,7 @@ func (_class HostClass) GetSSHExpiry(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2587,7 +2590,7 @@ func (_class HostClass) GetSSHEnabledTimeout(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2606,7 +2609,7 @@ func (_class HostClass) GetSSHEnabled(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2625,7 +2628,7 @@ func (_class HostClass) GetLastUpdateHash(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2644,7 +2647,7 @@ func (_class HostClass) GetPendingGuidancesFull(sessionID SessionRef, self HostR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2663,7 +2666,7 @@ func (_class HostClass) GetPendingGuidancesRecommended(sessionID SessionRef, sel
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2682,7 +2685,7 @@ func (_class HostClass) GetNumaAffinityPolicy(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumHostNumaAffinityPolicyToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumHostNumaAffinityPolicyToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2701,7 +2704,7 @@ func (_class HostClass) GetLatestSyncedUpdatesApplied(sessionID SessionRef, self
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumLatestSyncedUpdatesAppliedStateToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumLatestSyncedUpdatesAppliedStateToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2720,7 +2723,7 @@ func (_class HostClass) GetHTTPSOnly(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2739,7 +2742,7 @@ func (_class HostClass) GetLastSoftwareUpdate(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2758,7 +2761,7 @@ func (_class HostClass) GetTLSVerificationEnabled(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2777,7 +2780,7 @@ func (_class HostClass) GetPendingGuidances(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2796,7 +2799,7 @@ func (_class HostClass) GetEditions(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2815,7 +2818,7 @@ func (_class HostClass) GetCertificates(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCertificateRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCertificateRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2834,7 +2837,7 @@ func (_class HostClass) GetUefiCertificates(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2853,7 +2856,7 @@ func (_class HostClass) GetMultipathing(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2872,7 +2875,7 @@ func (_class HostClass) GetIscsiIqn(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2891,7 +2894,7 @@ func (_class HostClass) GetFeatures(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFeatureRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFeatureRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2910,7 +2913,7 @@ func (_class HostClass) GetUpdatesRequiringReboot(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolUpdateRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolUpdateRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2929,7 +2932,7 @@ func (_class HostClass) GetControlDomain(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2948,7 +2951,7 @@ func (_class HostClass) GetVirtualHardwarePlatformVersions(sessionID SessionRef,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2967,7 +2970,7 @@ func (_class HostClass) GetDisplay(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumHostDisplayToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumHostDisplayToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2986,7 +2989,7 @@ func (_class HostClass) GetGuestVCPUsParams(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3005,7 +3008,7 @@ func (_class HostClass) GetSslLegacy(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3024,7 +3027,7 @@ func (_class HostClass) GetPUSBs(sessionID SessionRef, self HostRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPUSBRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPUSBRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3043,7 +3046,7 @@ func (_class HostClass) GetPGPUs(sessionID SessionRef, self HostRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPGPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPGPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3062,7 +3065,7 @@ func (_class HostClass) GetPCIs(sessionID SessionRef, self HostRef) (_retval []P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3081,7 +3084,7 @@ func (_class HostClass) GetChipsetInfo(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3100,7 +3103,7 @@ func (_class HostClass) GetLocalCacheSr(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3119,7 +3122,7 @@ func (_class HostClass) GetPowerOnConfig(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3138,7 +3141,7 @@ func (_class HostClass) GetPowerOnMode(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3157,7 +3160,7 @@ func (_class HostClass) GetBiosStrings(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3176,7 +3179,7 @@ func (_class HostClass) GetLicenseServer(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3195,7 +3198,7 @@ func (_class HostClass) GetEdition(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3214,7 +3217,7 @@ func (_class HostClass) GetExternalAuthConfiguration(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3233,7 +3236,7 @@ func (_class HostClass) GetExternalAuthServiceName(sessionID SessionRef, self Ho
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3252,7 +3255,7 @@ func (_class HostClass) GetExternalAuthType(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3271,7 +3274,7 @@ func (_class HostClass) GetTags(sessionID SessionRef, self HostRef) (_retval []s
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3290,7 +3293,7 @@ func (_class HostClass) GetBlobs(sessionID SessionRef, self HostRef) (_retval ma
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToBlobRefMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToBlobRefMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3309,7 +3312,7 @@ func (_class HostClass) GetHaNetworkPeers(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3328,7 +3331,7 @@ func (_class HostClass) GetHaStatefiles(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3347,7 +3350,7 @@ func (_class HostClass) GetLicenseParams(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3366,7 +3369,7 @@ func (_class HostClass) GetMetrics(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3385,7 +3388,7 @@ func (_class HostClass) GetAddress(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3404,7 +3407,7 @@ func (_class HostClass) GetHostname(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3423,7 +3426,7 @@ func (_class HostClass) GetCPUInfo(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3442,7 +3445,7 @@ func (_class HostClass) GetHostCPUs(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3461,7 +3464,7 @@ func (_class HostClass) GetPBDs(sessionID SessionRef, self HostRef) (_retval []P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPBDRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPBDRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3480,7 +3483,7 @@ func (_class HostClass) GetUpdates(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPoolUpdateRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPoolUpdateRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3499,7 +3502,7 @@ func (_class HostClass) GetPatches(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostPatchRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostPatchRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3518,7 +3521,7 @@ func (_class HostClass) GetCrashdumps(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostCrashdumpRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostCrashdumpRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3537,7 +3540,7 @@ func (_class HostClass) GetCrashDumpSr(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3556,7 +3559,7 @@ func (_class HostClass) GetSuspendImageSr(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3575,7 +3578,7 @@ func (_class HostClass) GetPIFs(sessionID SessionRef, self HostRef) (_retval []P
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3594,7 +3597,7 @@ func (_class HostClass) GetLogging(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3613,7 +3616,7 @@ func (_class HostClass) GetResidentVMs(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3632,7 +3635,7 @@ func (_class HostClass) GetSupportedBootloaders(sessionID SessionRef, self HostR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3651,7 +3654,7 @@ func (_class HostClass) GetSchedPolicy(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3670,7 +3673,7 @@ func (_class HostClass) GetCPUConfiguration(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3689,7 +3692,7 @@ func (_class HostClass) GetCapabilities(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3708,7 +3711,7 @@ func (_class HostClass) GetOtherConfig(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3727,7 +3730,7 @@ func (_class HostClass) GetSoftwareVersion(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3746,7 +3749,7 @@ func (_class HostClass) GetEnabled(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3765,7 +3768,7 @@ func (_class HostClass) GetAPIVersionVendorImplementation(sessionID SessionRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3784,7 +3787,7 @@ func (_class HostClass) GetAPIVersionVendor(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3803,7 +3806,7 @@ func (_class HostClass) GetAPIVersionMinor(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3822,7 +3825,7 @@ func (_class HostClass) GetAPIVersionMajor(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3841,7 +3844,7 @@ func (_class HostClass) GetCurrentOperations(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumHostAllowedOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumHostAllowedOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3860,7 +3863,7 @@ func (_class HostClass) GetAllowedOperations(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumHostAllowedOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumHostAllowedOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3879,7 +3882,7 @@ func (_class HostClass) GetMemoryOverhead(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3898,7 +3901,7 @@ func (_class HostClass) GetNameDescription(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3917,7 +3920,7 @@ func (_class HostClass) GetNameLabel(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3936,7 +3939,7 @@ func (_class HostClass) GetUUID(sessionID SessionRef, self HostRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3955,7 +3958,7 @@ func (_class HostClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3974,7 +3977,7 @@ func (_class HostClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ho
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3993,6 +3996,6 @@ func (_class HostClass) GetRecord(sessionID SessionRef, self HostRef) (_retval H
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRecordToGo(_method+" -> ", _result.Value)
 	return
 }

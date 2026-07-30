@@ -74,7 +74,7 @@ func (_class RepositoryClass) GetAllRecords(sessionID SessionRef) (_retval map[R
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefToRepositoryRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefToRepositoryRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -89,7 +89,7 @@ func (_class RepositoryClass) GetAll(sessionID SessionRef) (_retval []Repository
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -108,7 +108,7 @@ func (_class RepositoryClass) SetGpgkeyPath(sessionID SessionRef, self Repositor
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -123,7 +123,7 @@ func (_class RepositoryClass) Forget(sessionID SessionRef, self RepositoryRef) (
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -154,7 +154,7 @@ func (_class RepositoryClass) IntroduceRemotePool(sessionID SessionRef, nameLabe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -177,7 +177,7 @@ func (_class RepositoryClass) IntroduceBundle(sessionID SessionRef, nameLabel st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -216,7 +216,7 @@ func (_class RepositoryClass) Introduce(sessionID SessionRef, nameLabel string, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -235,7 +235,7 @@ func (_class RepositoryClass) SetNameDescription(sessionID SessionRef, self Repo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -254,7 +254,7 @@ func (_class RepositoryClass) SetNameLabel(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -273,7 +273,7 @@ func (_class RepositoryClass) GetCertificate(sessionID SessionRef, self Reposito
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -292,7 +292,7 @@ func (_class RepositoryClass) GetOrigin(sessionID SessionRef, self RepositoryRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumOriginToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumOriginToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -311,7 +311,7 @@ func (_class RepositoryClass) GetGpgkeyPath(sessionID SessionRef, self Repositor
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -330,7 +330,7 @@ func (_class RepositoryClass) GetUpToDate(sessionID SessionRef, self RepositoryR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -349,7 +349,7 @@ func (_class RepositoryClass) GetHash(sessionID SessionRef, self RepositoryRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -368,7 +368,7 @@ func (_class RepositoryClass) GetUpdate(sessionID SessionRef, self RepositoryRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -387,7 +387,7 @@ func (_class RepositoryClass) GetSourceURL(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -406,7 +406,7 @@ func (_class RepositoryClass) GetBinaryURL(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -425,7 +425,7 @@ func (_class RepositoryClass) GetNameDescription(sessionID SessionRef, self Repo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -444,7 +444,7 @@ func (_class RepositoryClass) GetNameLabel(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -463,7 +463,7 @@ func (_class RepositoryClass) GetUUID(sessionID SessionRef, self RepositoryRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -482,7 +482,7 @@ func (_class RepositoryClass) GetByNameLabel(sessionID SessionRef, label string)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -501,7 +501,7 @@ func (_class RepositoryClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -520,6 +520,6 @@ func (_class RepositoryClass) GetRecord(sessionID SessionRef, self RepositoryRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRepositoryRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRepositoryRecordToGo(_method+" -> ", _result.Value)
 	return
 }

@@ -57,7 +57,7 @@ func (_class CallerClass) GetAllRecords(sessionID SessionRef) (_retval map[Calle
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCallerRefToCallerRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCallerRefToCallerRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -72,7 +72,7 @@ func (_class CallerClass) GetAll(sessionID SessionRef) (_retval []CallerRef, _er
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCallerRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCallerRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -87,7 +87,7 @@ func (_class CallerClass) QueryAllUsage(sessionID SessionRef) (_retval [][]strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -106,7 +106,7 @@ func (_class CallerClass) QueryGroupCallCount(sessionID SessionRef, group string
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -125,7 +125,7 @@ func (_class CallerClass) QueryGroupTokenUsage(sessionID SessionRef, group strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -144,7 +144,7 @@ func (_class CallerClass) QueryCallCount(sessionID SessionRef, self CallerRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -163,7 +163,7 @@ func (_class CallerClass) QueryTokenUsage(sessionID SessionRef, self CallerRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -182,7 +182,7 @@ func (_class CallerClass) RemoveGroup(sessionID SessionRef, self CallerRef, grou
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _groupArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _groupArg)
 	return
 }
 
@@ -201,7 +201,7 @@ func (_class CallerClass) AddGroup(sessionID SessionRef, self CallerRef, group s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _groupArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _groupArg)
 	return
 }
 
@@ -220,7 +220,7 @@ func (_class CallerClass) SetNameDescription(sessionID SessionRef, self CallerRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -239,7 +239,7 @@ func (_class CallerClass) SetNameLabel(sessionID SessionRef, self CallerRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -258,7 +258,7 @@ func (_class CallerClass) GetRateLimit(sessionID SessionRef, self CallerRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertRateLimitRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertRateLimitRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -277,7 +277,7 @@ func (_class CallerClass) GetGroups(sessionID SessionRef, self CallerRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -296,7 +296,7 @@ func (_class CallerClass) GetLastAccess(sessionID SessionRef, self CallerRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -315,7 +315,7 @@ func (_class CallerClass) GetClientIP(sessionID SessionRef, self CallerRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -334,7 +334,7 @@ func (_class CallerClass) GetUserAgent(sessionID SessionRef, self CallerRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -353,7 +353,7 @@ func (_class CallerClass) GetNameDescription(sessionID SessionRef, self CallerRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -372,7 +372,7 @@ func (_class CallerClass) GetNameLabel(sessionID SessionRef, self CallerRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -391,7 +391,7 @@ func (_class CallerClass) GetUUID(sessionID SessionRef, self CallerRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -410,7 +410,7 @@ func (_class CallerClass) GetByNameLabel(sessionID SessionRef, label string) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCallerRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCallerRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -425,7 +425,7 @@ func (_class CallerClass) Destroy(sessionID SessionRef, self CallerRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -444,7 +444,7 @@ func (_class CallerClass) Create(sessionID SessionRef, args CallerRecord) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCallerRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCallerRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -463,7 +463,7 @@ func (_class CallerClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCallerRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCallerRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -482,6 +482,6 @@ func (_class CallerClass) GetRecord(sessionID SessionRef, self CallerRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCallerRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCallerRecordToGo(_method+" -> ", _result.Value)
 	return
 }

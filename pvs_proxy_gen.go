@@ -66,7 +66,7 @@ func (_class PVSProxyClass) GetAllRecords(sessionID SessionRef) (_retval map[PVS
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSProxyRefToPVSProxyRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSProxyRefToPVSProxyRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -81,7 +81,7 @@ func (_class PVSProxyClass) GetAll(sessionID SessionRef) (_retval []PVSProxyRef,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSProxyRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSProxyRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -96,7 +96,7 @@ func (_class PVSProxyClass) Destroy(sessionID SessionRef, self PVSProxyRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -119,7 +119,7 @@ func (_class PVSProxyClass) Create(sessionID SessionRef, site PVSSiteRef, vif VI
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSProxyRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSProxyRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -138,7 +138,7 @@ func (_class PVSProxyClass) GetStatus(sessionID SessionRef, self PVSProxyRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumPvsProxyStatusToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumPvsProxyStatusToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -157,7 +157,7 @@ func (_class PVSProxyClass) GetCurrentlyAttached(sessionID SessionRef, self PVSP
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -176,7 +176,7 @@ func (_class PVSProxyClass) GetVIF(sessionID SessionRef, self PVSProxyRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -195,7 +195,7 @@ func (_class PVSProxyClass) GetSite(sessionID SessionRef, self PVSProxyRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSSiteRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSSiteRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -214,7 +214,7 @@ func (_class PVSProxyClass) GetUUID(sessionID SessionRef, self PVSProxyRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -233,7 +233,7 @@ func (_class PVSProxyClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSProxyRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSProxyRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -252,6 +252,6 @@ func (_class PVSProxyClass) GetRecord(sessionID SessionRef, self PVSProxyRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPVSProxyRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPVSProxyRecordToGo(_method+" -> ", _result.Value)
 	return
 }

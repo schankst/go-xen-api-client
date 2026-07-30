@@ -74,7 +74,7 @@ func (_class CertificateClass) GetAllRecords(sessionID SessionRef) (_retval map[
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCertificateRefToCertificateRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCertificateRefToCertificateRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -89,7 +89,7 @@ func (_class CertificateClass) GetAll(sessionID SessionRef) (_retval []Certifica
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCertificateRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCertificateRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -108,7 +108,7 @@ func (_class CertificateClass) GetPurpose(sessionID SessionRef, self Certificate
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumCertificatePurposeSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumCertificatePurposeSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -127,7 +127,7 @@ func (_class CertificateClass) GetFingerprintSha1(sessionID SessionRef, self Cer
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -146,7 +146,7 @@ func (_class CertificateClass) GetFingerprintSha256(sessionID SessionRef, self C
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -165,7 +165,7 @@ func (_class CertificateClass) GetFingerprint(sessionID SessionRef, self Certifi
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -184,7 +184,7 @@ func (_class CertificateClass) GetNotAfter(sessionID SessionRef, self Certificat
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -203,7 +203,7 @@ func (_class CertificateClass) GetNotBefore(sessionID SessionRef, self Certifica
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -222,7 +222,7 @@ func (_class CertificateClass) GetHost(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -241,7 +241,7 @@ func (_class CertificateClass) GetType(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumCertificateTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumCertificateTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -260,7 +260,7 @@ func (_class CertificateClass) GetName(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -279,7 +279,7 @@ func (_class CertificateClass) GetUUID(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -298,7 +298,7 @@ func (_class CertificateClass) GetByUUID(sessionID SessionRef, uuid string) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCertificateRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCertificateRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -317,6 +317,6 @@ func (_class CertificateClass) GetRecord(sessionID SessionRef, self CertificateR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCertificateRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCertificateRecordToGo(_method+" -> ", _result.Value)
 	return
 }

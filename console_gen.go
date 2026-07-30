@@ -62,7 +62,7 @@ func (_class ConsoleClass) GetAllRecords(sessionID SessionRef) (_retval map[Cons
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertConsoleRefToConsoleRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertConsoleRefToConsoleRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -77,7 +77,7 @@ func (_class ConsoleClass) GetAll(sessionID SessionRef) (_retval []ConsoleRef, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertConsoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertConsoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -96,7 +96,7 @@ func (_class ConsoleClass) RemoveFromOtherConfig(sessionID SessionRef, self Cons
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -119,7 +119,7 @@ func (_class ConsoleClass) AddToOtherConfig(sessionID SessionRef, self ConsoleRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -138,7 +138,7 @@ func (_class ConsoleClass) SetOtherConfig(sessionID SessionRef, self ConsoleRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -157,7 +157,7 @@ func (_class ConsoleClass) GetOtherConfig(sessionID SessionRef, self ConsoleRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -176,7 +176,7 @@ func (_class ConsoleClass) GetVM(sessionID SessionRef, self ConsoleRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -195,7 +195,7 @@ func (_class ConsoleClass) GetLocation(sessionID SessionRef, self ConsoleRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -214,7 +214,7 @@ func (_class ConsoleClass) GetProtocol(sessionID SessionRef, self ConsoleRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumConsoleProtocolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumConsoleProtocolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -233,7 +233,7 @@ func (_class ConsoleClass) GetUUID(sessionID SessionRef, self ConsoleRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -248,7 +248,7 @@ func (_class ConsoleClass) Destroy(sessionID SessionRef, self ConsoleRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -267,7 +267,7 @@ func (_class ConsoleClass) Create(sessionID SessionRef, args ConsoleRecord) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertConsoleRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertConsoleRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -286,7 +286,7 @@ func (_class ConsoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertConsoleRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertConsoleRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -305,6 +305,6 @@ func (_class ConsoleClass) GetRecord(sessionID SessionRef, self ConsoleRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertConsoleRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertConsoleRecordToGo(_method+" -> ", _result.Value)
 	return
 }

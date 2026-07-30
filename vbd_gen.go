@@ -126,7 +126,7 @@ func (_class VBDClass) GetAllRecords(sessionID SessionRef) (_retval map[VBDRef]V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDRefToVBDRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDRefToVBDRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -141,7 +141,7 @@ func (_class VBDClass) GetAll(sessionID SessionRef) (_retval []VBDRef, _err erro
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -160,7 +160,7 @@ func (_class VBDClass) SetMode(sessionID SessionRef, self VBDRef, value VbdMode)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -175,7 +175,7 @@ func (_class VBDClass) AssertAttachable(sessionID SessionRef, self VBDRef) (_err
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -190,15 +190,16 @@ func (_class VBDClass) UnplugForce(sessionID SessionRef, self VBDRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Unplug Hot-unplug the specified VBD, dynamically unattaching it from the running VM
 //
 // Errors:
-//  DEVICE_DETACH_REJECTED - The VM rejected the attempt to detach the device.
-//  DEVICE_ALREADY_DETACHED - The device is not currently attached
+//
+//	DEVICE_DETACH_REJECTED - The VM rejected the attempt to detach the device.
+//	DEVICE_ALREADY_DETACHED - The device is not currently attached
 func (_class VBDClass) Unplug(sessionID SessionRef, self VBDRef) (_err error) {
 	_method := "VBD.unplug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -209,7 +210,7 @@ func (_class VBDClass) Unplug(sessionID SessionRef, self VBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -224,15 +225,16 @@ func (_class VBDClass) Plug(sessionID SessionRef, self VBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Insert Insert new media into the device
 //
 // Errors:
-//  VBD_NOT_REMOVABLE_MEDIA - Media could not be ejected because it is not removable
-//  VBD_NOT_EMPTY - Operation could not be performed because the drive is not empty
+//
+//	VBD_NOT_REMOVABLE_MEDIA - Media could not be ejected because it is not removable
+//	VBD_NOT_EMPTY - Operation could not be performed because the drive is not empty
 func (_class VBDClass) Insert(sessionID SessionRef, vbd VBDRef, vdi VDIRef) (_err error) {
 	_method := "VBD.insert"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -247,15 +249,16 @@ func (_class VBDClass) Insert(sessionID SessionRef, vbd VBDRef, vdi VDIRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vbdArg, _vdiArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vbdArg, _vdiArg)
 	return
 }
 
 // Eject Remove the media from the device and leave it empty
 //
 // Errors:
-//  VBD_NOT_REMOVABLE_MEDIA - Media could not be ejected because it is not removable
-//  VBD_IS_EMPTY - Operation could not be performed because the drive is empty
+//
+//	VBD_NOT_REMOVABLE_MEDIA - Media could not be ejected because it is not removable
+//	VBD_IS_EMPTY - Operation could not be performed because the drive is empty
 func (_class VBDClass) Eject(sessionID SessionRef, vbd VBDRef) (_err error) {
 	_method := "VBD.eject"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -266,7 +269,7 @@ func (_class VBDClass) Eject(sessionID SessionRef, vbd VBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vbdArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vbdArg)
 	return
 }
 
@@ -285,7 +288,7 @@ func (_class VBDClass) RemoveFromQosAlgorithmParams(sessionID SessionRef, self V
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -308,7 +311,7 @@ func (_class VBDClass) AddToQosAlgorithmParams(sessionID SessionRef, self VBDRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -327,7 +330,7 @@ func (_class VBDClass) SetQosAlgorithmParams(sessionID SessionRef, self VBDRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -346,7 +349,7 @@ func (_class VBDClass) SetQosAlgorithmType(sessionID SessionRef, self VBDRef, va
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -365,7 +368,7 @@ func (_class VBDClass) RemoveFromOtherConfig(sessionID SessionRef, self VBDRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -388,7 +391,7 @@ func (_class VBDClass) AddToOtherConfig(sessionID SessionRef, self VBDRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -407,7 +410,7 @@ func (_class VBDClass) SetOtherConfig(sessionID SessionRef, self VBDRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -426,7 +429,7 @@ func (_class VBDClass) SetUnpluggable(sessionID SessionRef, self VBDRef, value b
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -445,7 +448,7 @@ func (_class VBDClass) SetType(sessionID SessionRef, self VBDRef, value VbdType)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -464,7 +467,7 @@ func (_class VBDClass) SetBootable(sessionID SessionRef, self VBDRef, value bool
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -483,7 +486,7 @@ func (_class VBDClass) SetUserdevice(sessionID SessionRef, self VBDRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -502,7 +505,7 @@ func (_class VBDClass) GetMetrics(sessionID SessionRef, self VBDRef) (_retval VB
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -521,7 +524,7 @@ func (_class VBDClass) GetQosSupportedAlgorithms(sessionID SessionRef, self VBDR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -540,7 +543,7 @@ func (_class VBDClass) GetQosAlgorithmParams(sessionID SessionRef, self VBDRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -559,7 +562,7 @@ func (_class VBDClass) GetQosAlgorithmType(sessionID SessionRef, self VBDRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -578,7 +581,7 @@ func (_class VBDClass) GetRuntimeProperties(sessionID SessionRef, self VBDRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -597,7 +600,7 @@ func (_class VBDClass) GetStatusDetail(sessionID SessionRef, self VBDRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -616,7 +619,7 @@ func (_class VBDClass) GetStatusCode(sessionID SessionRef, self VBDRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -635,7 +638,7 @@ func (_class VBDClass) GetCurrentlyAttached(sessionID SessionRef, self VBDRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -654,7 +657,7 @@ func (_class VBDClass) GetOtherConfig(sessionID SessionRef, self VBDRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -673,7 +676,7 @@ func (_class VBDClass) GetEmpty(sessionID SessionRef, self VBDRef) (_retval bool
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -692,7 +695,7 @@ func (_class VBDClass) GetStorageLock(sessionID SessionRef, self VBDRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -711,7 +714,7 @@ func (_class VBDClass) GetUnpluggable(sessionID SessionRef, self VBDRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -730,7 +733,7 @@ func (_class VBDClass) GetType(sessionID SessionRef, self VBDRef) (_retval VbdTy
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVbdTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVbdTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -749,7 +752,7 @@ func (_class VBDClass) GetMode(sessionID SessionRef, self VBDRef) (_retval VbdMo
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVbdModeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVbdModeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -768,7 +771,7 @@ func (_class VBDClass) GetBootable(sessionID SessionRef, self VBDRef) (_retval b
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -787,7 +790,7 @@ func (_class VBDClass) GetUserdevice(sessionID SessionRef, self VBDRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -806,7 +809,7 @@ func (_class VBDClass) GetDevice(sessionID SessionRef, self VBDRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -825,7 +828,7 @@ func (_class VBDClass) GetVDI(sessionID SessionRef, self VBDRef) (_retval VDIRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -844,7 +847,7 @@ func (_class VBDClass) GetVM(sessionID SessionRef, self VBDRef) (_retval VMRef, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -863,7 +866,7 @@ func (_class VBDClass) GetCurrentOperations(sessionID SessionRef, self VBDRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumVbdOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumVbdOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -882,7 +885,7 @@ func (_class VBDClass) GetAllowedOperations(sessionID SessionRef, self VBDRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVbdOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVbdOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -901,7 +904,7 @@ func (_class VBDClass) GetUUID(sessionID SessionRef, self VBDRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -916,7 +919,7 @@ func (_class VBDClass) Destroy(sessionID SessionRef, self VBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -935,7 +938,7 @@ func (_class VBDClass) Create(sessionID SessionRef, args VBDRecord) (_retval VBD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -954,7 +957,7 @@ func (_class VBDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VBD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -973,6 +976,6 @@ func (_class VBDClass) GetRecord(sessionID SessionRef, self VBDRef) (_retval VBD
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDRecordToGo(_method+" -> ", _result.Value)
 	return
 }

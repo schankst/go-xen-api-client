@@ -226,11 +226,11 @@ const (
 	VMOperationsChangingVCPUsLive VMOperations = "changing_VCPUs_live"
 	// Changing NVRAM for a halted VM.
 	VMOperationsChangingNVRAM VMOperations = "changing_NVRAM"
-	// 
+	//
 	VMOperationsAssertOperationValid VMOperations = "assert_operation_valid"
 	// Add, remove, query or list data sources
 	VMOperationsDataSourceOp VMOperations = "data_source_op"
-	// 
+	//
 	VMOperationsUpdateAllowedOperations VMOperations = "update_allowed_operations"
 	// Turning this VM into a template
 	VMOperationsMakeIntoTemplate VMOperations = "make_into_template"
@@ -455,7 +455,7 @@ func (_class VMClass) GetAllRecords(sessionID SessionRef) (_retval map[VMRef]VMR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToVMRecordMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToVMRecordMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -470,7 +470,7 @@ func (_class VMClass) GetAll(sessionID SessionRef) (_retval []VMRef, _err error)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -489,7 +489,7 @@ func (_class VMClass) SetPlatform(sessionID SessionRef, self VMRef, value map[st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -508,7 +508,7 @@ func (_class VMClass) RemoveFromPlatform(sessionID SessionRef, self VMRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -531,7 +531,7 @@ func (_class VMClass) AddToPlatform(sessionID SessionRef, self VMRef, key string
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -550,7 +550,7 @@ func (_class VMClass) SetOtherConfig(sessionID SessionRef, self VMRef, value map
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -569,7 +569,7 @@ func (_class VMClass) RemoveFromOtherConfig(sessionID SessionRef, self VMRef, ke
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -592,7 +592,7 @@ func (_class VMClass) AddToOtherConfig(sessionID SessionRef, self VMRef, key str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -615,7 +615,7 @@ func (_class VMClass) Sysprep(sessionID SessionRef, self VMRef, unattend string,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _unattendArg, _timeoutArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _unattendArg, _timeoutArg)
 	return
 }
 
@@ -634,7 +634,7 @@ func (_class VMClass) RemoveFromBlockedOperations(sessionID SessionRef, self VMR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -657,7 +657,7 @@ func (_class VMClass) AddToBlockedOperations(sessionID SessionRef, self VMRef, k
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -676,7 +676,7 @@ func (_class VMClass) SetBlockedOperations(sessionID SessionRef, self VMRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -695,7 +695,7 @@ func (_class VMClass) UpdateSecurebootCertificatesOnBoot(sessionID SessionRef, s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _markArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _markArg)
 	return
 }
 
@@ -714,7 +714,7 @@ func (_class VMClass) GetSecurebootReadiness(sessionID SessionRef, self VMRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVMSecurebootReadinessToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVMSecurebootReadinessToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -737,18 +737,19 @@ func (_class VMClass) SetUefiMode(sessionID SessionRef, self VMRef, mode VMUefiM
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // RestartDeviceModels Restart device models of the VM
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 func (_class VMClass) RestartDeviceModels(sessionID SessionRef, self VMRef) (_err error) {
 	_method := "VM.restart_device_models"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -759,7 +760,7 @@ func (_class VMClass) RestartDeviceModels(sessionID SessionRef, self VMRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -778,7 +779,7 @@ func (_class VMClass) SetHVMBootPolicy(sessionID SessionRef, self VMRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -797,7 +798,7 @@ func (_class VMClass) SetDomainType(sessionID SessionRef, self VMRef, value Doma
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -816,7 +817,7 @@ func (_class VMClass) SetActionsAfterCrash(sessionID SessionRef, self VMRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -847,7 +848,7 @@ func (_class VMClass) Import(sessionID SessionRef, url string, sr SRRef, fullRes
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -866,7 +867,7 @@ func (_class VMClass) SetHasVendorDevice(sessionID SessionRef, self VMRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -897,7 +898,7 @@ func (_class VMClass) CallHostPlugin(sessionID SessionRef, vm VMRef, plugin stri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -928,7 +929,7 @@ func (_class VMClass) CallPlugin(sessionID SessionRef, vm VMRef, plugin string, 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -947,14 +948,15 @@ func (_class VMClass) QueryServices(sessionID SessionRef, self VMRef) (_retval m
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // SetGroups Associate this VM with VM groups.
 //
 // Errors:
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 func (_class VMClass) SetGroups(sessionID SessionRef, self VMRef, value []VMGroupRef) (_err error) {
 	_method := "VM.set_groups"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -969,7 +971,7 @@ func (_class VMClass) SetGroups(sessionID SessionRef, self VMRef, value []VMGrou
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -988,7 +990,7 @@ func (_class VMClass) SetAppliance(sessionID SessionRef, self VMRef, value VMApp
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1019,7 +1021,7 @@ func (_class VMClass) ImportConvert(sessionID SessionRef, atype string, username
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _atypeArg, _usernameArg, _passwordArg, _srArg, _remoteConfigArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _atypeArg, _usernameArg, _passwordArg, _srArg, _remoteConfigArg)
 	return
 }
 
@@ -1042,7 +1044,7 @@ func (_class VMClass) Recover(sessionID SessionRef, self VMRef, sessionTo Sessio
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _sessionToArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _sessionToArg, _forceArg)
 	return
 }
 
@@ -1065,15 +1067,16 @@ func (_class VMClass) GetSRsRequiredForRecovery(sessionID SessionRef, self VMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // AssertCanBeRecovered Assert whether all SRs required to recover this VM are available.
 //
 // Errors:
-//  VM_IS_PART_OF_AN_APPLIANCE - This operation is not allowed as the VM is part of an appliance.
-//  VM_REQUIRES_SR - You attempted to run a VM on a host which doesn't have access to an SR needed by the VM. The VM has at least one VBD attached to a VDI in the SR.
+//
+//	VM_IS_PART_OF_AN_APPLIANCE - This operation is not allowed as the VM is part of an appliance.
+//	VM_REQUIRES_SR - You attempted to run a VM on a host which doesn't have access to an SR needed by the VM. The VM has at least one VBD attached to a VDI in the SR.
 func (_class VMClass) AssertCanBeRecovered(sessionID SessionRef, self VMRef, sessionTo SessionRef) (_err error) {
 	_method := "VM.assert_can_be_recovered"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1088,7 +1091,7 @@ func (_class VMClass) AssertCanBeRecovered(sessionID SessionRef, self VMRef, ses
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _sessionToArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _sessionToArg)
 	return
 }
 
@@ -1107,7 +1110,7 @@ func (_class VMClass) SetSuspendVDI(sessionID SessionRef, self VMRef, value VDIR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1126,7 +1129,7 @@ func (_class VMClass) SetOrder(sessionID SessionRef, self VMRef, value int) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1145,7 +1148,7 @@ func (_class VMClass) SetShutdownDelay(sessionID SessionRef, self VMRef, value i
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1164,7 +1167,7 @@ func (_class VMClass) SetStartDelay(sessionID SessionRef, self VMRef, value int)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1183,7 +1186,7 @@ func (_class VMClass) SetSnapshotSchedule(sessionID SessionRef, self VMRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1202,7 +1205,7 @@ func (_class VMClass) SetProtectionPolicy(sessionID SessionRef, self VMRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1221,15 +1224,16 @@ func (_class VMClass) CopyBiosStrings(sessionID SessionRef, vm VMRef, host HostR
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg)
 	return
 }
 
 // SetBiosStrings Set custom BIOS strings to this VM. VM will be given a default set of BIOS strings, only some of which can be overridden by the supplied values. Allowed keys are: 'bios-vendor', 'bios-version', 'system-manufacturer', 'system-product-name', 'system-version', 'system-serial-number', 'enclosure-asset-tag', 'baseboard-manufacturer', 'baseboard-product-name', 'baseboard-version', 'baseboard-serial-number', 'baseboard-asset-tag', 'baseboard-location-in-chassis', 'enclosure-asset-tag'
 //
 // Errors:
-//  VM_BIOS_STRINGS_ALREADY_SET - The BIOS strings for this VM have already been set and cannot be changed.
-//  INVALID_VALUE - The value given is invalid
+//
+//	VM_BIOS_STRINGS_ALREADY_SET - The BIOS strings for this VM have already been set and cannot be changed.
+//	INVALID_VALUE - The value given is invalid
 func (_class VMClass) SetBiosStrings(sessionID SessionRef, self VMRef, value map[string]string) (_err error) {
 	_method := "VM.set_bios_strings"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1244,7 +1248,7 @@ func (_class VMClass) SetBiosStrings(sessionID SessionRef, self VMRef, value map
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1263,7 +1267,7 @@ func (_class VMClass) RetrieveWlbRecommendations(sessionID SessionRef, vm VMRef)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToStringSetMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToStringSetMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1278,7 +1282,7 @@ func (_class VMClass) AssertAgile(sessionID SessionRef, self VMRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1309,32 +1313,33 @@ func (_class VMClass) CreateNewBlob(sessionID SessionRef, vm VMRef, name string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBlobRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBlobRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // AssertCanBootHere Returns an error if the VM could not boot on this host for some reason
 //
 // Errors:
-//  HOST_NOT_ENOUGH_FREE_MEMORY - Not enough server memory is available to perform this operation.
-//  HOST_NOT_ENOUGH_PCPUS - The host does not have enough pCPUs to run the VM. It needs at least as many as the VM has vCPUs.
-//  NETWORK_SRIOV_INSUFFICIENT_CAPACITY - There is insufficient capacity for VF reservation
-//  HOST_NOT_LIVE - This operation cannot be completed as the server is not live.
-//  HOST_DISABLED - The specified server is disabled.
-//  HOST_CANNOT_ATTACH_NETWORK - Server cannot attach network (in the case of NIC bonding, this may be because attaching the network on this server would require other networks - that are currently active - to be taken down).
-//  VM_HVM_REQUIRED - HVM is required for this operation
-//  VM_REQUIRES_GPU - You attempted to run a VM on a host which doesn't have a pGPU available in the GPU group needed by the VM. The VM has a vGPU attached to this GPU group.
-//  VM_REQUIRES_IOMMU - You attempted to run a VM on a host which doesn't have I/O virtualization (IOMMU/VT-d) enabled, which is needed by the VM.
-//  VM_REQUIRES_NETWORK - You attempted to run a VM on a host which doesn't have a PIF on a Network needed by the VM. The VM has at least one VIF attached to the Network.
-//  VM_REQUIRES_SR - You attempted to run a VM on a host which doesn't have access to an SR needed by the VM. The VM has at least one VBD attached to a VDI in the SR.
-//  VM_REQUIRES_VGPU - You attempted to run a VM on a host on which the vGPU required by the VM cannot be allocated on any pGPUs in the GPU_group needed by the VM.
-//  VM_HOST_INCOMPATIBLE_VERSION - This VM operation cannot be performed on an older-versioned host during an upgrade.
-//  VM_HOST_INCOMPATIBLE_VIRTUAL_HARDWARE_PLATFORM_VERSION - You attempted to run a VM on a host that cannot provide the VM's required Virtual Hardware Platform version.
-//  INVALID_VALUE - The value given is invalid
-//  MEMORY_CONSTRAINT_VIOLATION - The dynamic memory range does not satisfy the following constraint.
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VALUE_NOT_SUPPORTED - You attempted to set a value that is not supported by this implementation. The fully-qualified field name and the value that you tried to set are returned. Also returned is a developer-only diagnostic reason.
-//  VM_INCOMPATIBLE_WITH_THIS_HOST - The VM is incompatible with the CPU features of this host.
+//
+//	HOST_NOT_ENOUGH_FREE_MEMORY - Not enough server memory is available to perform this operation.
+//	HOST_NOT_ENOUGH_PCPUS - The host does not have enough pCPUs to run the VM. It needs at least as many as the VM has vCPUs.
+//	NETWORK_SRIOV_INSUFFICIENT_CAPACITY - There is insufficient capacity for VF reservation
+//	HOST_NOT_LIVE - This operation cannot be completed as the server is not live.
+//	HOST_DISABLED - The specified server is disabled.
+//	HOST_CANNOT_ATTACH_NETWORK - Server cannot attach network (in the case of NIC bonding, this may be because attaching the network on this server would require other networks - that are currently active - to be taken down).
+//	VM_HVM_REQUIRED - HVM is required for this operation
+//	VM_REQUIRES_GPU - You attempted to run a VM on a host which doesn't have a pGPU available in the GPU group needed by the VM. The VM has a vGPU attached to this GPU group.
+//	VM_REQUIRES_IOMMU - You attempted to run a VM on a host which doesn't have I/O virtualization (IOMMU/VT-d) enabled, which is needed by the VM.
+//	VM_REQUIRES_NETWORK - You attempted to run a VM on a host which doesn't have a PIF on a Network needed by the VM. The VM has at least one VIF attached to the Network.
+//	VM_REQUIRES_SR - You attempted to run a VM on a host which doesn't have access to an SR needed by the VM. The VM has at least one VBD attached to a VDI in the SR.
+//	VM_REQUIRES_VGPU - You attempted to run a VM on a host on which the vGPU required by the VM cannot be allocated on any pGPUs in the GPU_group needed by the VM.
+//	VM_HOST_INCOMPATIBLE_VERSION - This VM operation cannot be performed on an older-versioned host during an upgrade.
+//	VM_HOST_INCOMPATIBLE_VIRTUAL_HARDWARE_PLATFORM_VERSION - You attempted to run a VM on a host that cannot provide the VM's required Virtual Hardware Platform version.
+//	INVALID_VALUE - The value given is invalid
+//	MEMORY_CONSTRAINT_VIOLATION - The dynamic memory range does not satisfy the following constraint.
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VALUE_NOT_SUPPORTED - You attempted to set a value that is not supported by this implementation. The fully-qualified field name and the value that you tried to set are returned. Also returned is a developer-only diagnostic reason.
+//	VM_INCOMPATIBLE_WITH_THIS_HOST - The VM is incompatible with the CPU features of this host.
 func (_class VMClass) AssertCanBootHere(sessionID SessionRef, self VMRef, host HostRef) (_err error) {
 	_method := "VM.assert_can_boot_here"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1349,7 +1354,7 @@ func (_class VMClass) AssertCanBootHere(sessionID SessionRef, self VMRef, host H
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _hostArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _hostArg)
 	return
 }
 
@@ -1368,7 +1373,7 @@ func (_class VMClass) GetPossibleHosts(sessionID SessionRef, vm VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1387,7 +1392,7 @@ func (_class VMClass) GetAllowedVIFDevices(sessionID SessionRef, vm VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1406,7 +1411,7 @@ func (_class VMClass) GetAllowedVBDDevices(sessionID SessionRef, vm VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1421,7 +1426,7 @@ func (_class VMClass) UpdateAllowedOperations(sessionID SessionRef, self VMRef) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1440,7 +1445,7 @@ func (_class VMClass) AssertOperationValid(sessionID SessionRef, self VMRef, op 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _opArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _opArg)
 	return
 }
 
@@ -1459,7 +1464,7 @@ func (_class VMClass) ForgetDataSourceArchives(sessionID SessionRef, self VMRef,
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _dataSourceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _dataSourceArg)
 	return
 }
 
@@ -1482,7 +1487,7 @@ func (_class VMClass) QueryDataSource(sessionID SessionRef, self VMRef, dataSour
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1501,11 +1506,11 @@ func (_class VMClass) RecordDataSource(sessionID SessionRef, self VMRef, dataSou
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _dataSourceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _dataSourceArg)
 	return
 }
 
-// GetDataSources 
+// GetDataSources
 func (_class VMClass) GetDataSources(sessionID SessionRef, self VMRef) (_retval []DataSourceRecord, _err error) {
 	_method := "VM.get_data_sources"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1520,7 +1525,7 @@ func (_class VMClass) GetDataSources(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertDataSourceRecordSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertDataSourceRecordSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1539,14 +1544,15 @@ func (_class VMClass) GetBootRecord(sessionID SessionRef, self VMRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRecordToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // AssertCanMigrate Assert whether a VM can be migrated to the specified destination.
 //
 // Errors:
-//  LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//
+//	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
 func (_class VMClass) AssertCanMigrate(sessionID SessionRef, vm VMRef, dest map[string]string, live bool, vdiMap map[VDIRef]SRRef, vifMap map[VIFRef]NetworkRef, options map[string]string, vgpuMap map[VGPURef]GPUGroupRef) (_err error) {
 	_method := "VM.assert_can_migrate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1581,15 +1587,16 @@ func (_class VMClass) AssertCanMigrate(sessionID SessionRef, vm VMRef, dest map[
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _destArg, _liveArg, _vdiMapArg, _vifMapArg, _optionsArg, _vgpuMapArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _destArg, _liveArg, _vdiMapArg, _vifMapArg, _optionsArg, _vgpuMapArg)
 	return
 }
 
 // MigrateSend Migrate the VM to another host.  This can only be called when the specified VM is in the Running state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
 func (_class VMClass) MigrateSend(sessionID SessionRef, vm VMRef, dest map[string]string, live bool, vdiMap map[VDIRef]SRRef, vifMap map[VIFRef]NetworkRef, options map[string]string, vgpuMap map[VGPURef]GPUGroupRef, vdiFormatMap map[VDIRef]string) (_retval VMRef, _err error) {
 	_method := "VM.migrate_send"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1632,7 +1639,7 @@ func (_class VMClass) MigrateSend(sessionID SessionRef, vm VMRef, dest map[strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1659,14 +1666,15 @@ func (_class VMClass) MaximiseMemory(sessionID SessionRef, self VMRef, total int
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // SendTrigger Send the named trigger to this VM.  This can only be called when the specified VM is in the Running state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 func (_class VMClass) SendTrigger(sessionID SessionRef, vm VMRef, trigger string) (_err error) {
 	_method := "VM.send_trigger"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1681,14 +1689,15 @@ func (_class VMClass) SendTrigger(sessionID SessionRef, vm VMRef, trigger string
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _triggerArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _triggerArg)
 	return
 }
 
 // SendSysrq Send the given key as a sysrq to this VM.  The key is specified as a single character (a String of length 1).  This can only be called when the specified VM is in the Running state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 func (_class VMClass) SendSysrq(sessionID SessionRef, vm VMRef, key string) (_err error) {
 	_method := "VM.send_sysrq"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1703,7 +1712,7 @@ func (_class VMClass) SendSysrq(sessionID SessionRef, vm VMRef, key string) (_er
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _keyArg)
 	return
 }
 
@@ -1722,7 +1731,7 @@ func (_class VMClass) SetVCPUsAtStartup(sessionID SessionRef, self VMRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1741,7 +1750,7 @@ func (_class VMClass) SetVCPUsMax(sessionID SessionRef, self VMRef, value int) (
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1760,7 +1769,7 @@ func (_class VMClass) SetShadowMultiplierLive(sessionID SessionRef, self VMRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _multiplierArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _multiplierArg)
 	return
 }
 
@@ -1779,7 +1788,7 @@ func (_class VMClass) SetHVMShadowMultiplier(sessionID SessionRef, self VMRef, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1798,7 +1807,7 @@ func (_class VMClass) GetCooperative(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -1813,7 +1822,7 @@ func (_class VMClass) WaitMemoryTargetLive(sessionID SessionRef, self VMRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -1832,7 +1841,7 @@ func (_class VMClass) SetMemoryTargetLive(sessionID SessionRef, self VMRef, targ
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _targetArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _targetArg)
 	return
 }
 
@@ -1851,7 +1860,7 @@ func (_class VMClass) SetMemory(sessionID SessionRef, self VMRef, value int) (_e
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1882,7 +1891,7 @@ func (_class VMClass) SetMemoryLimits(sessionID SessionRef, self VMRef, staticMi
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _staticMinArg, _staticMaxArg, _dynamicMinArg, _dynamicMaxArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _staticMinArg, _staticMaxArg, _dynamicMinArg, _dynamicMaxArg)
 	return
 }
 
@@ -1905,7 +1914,7 @@ func (_class VMClass) SetMemoryStaticRange(sessionID SessionRef, self VMRef, min
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _minArg, _maxArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _minArg, _maxArg)
 	return
 }
 
@@ -1924,14 +1933,15 @@ func (_class VMClass) SetMemoryStaticMin(sessionID SessionRef, self VMRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetMemoryStaticMax Set the value of the memory_static_max field
 //
 // Errors:
-//  HA_OPERATION_WOULD_BREAK_FAILOVER_PLAN - This operation cannot be performed because it would invalidate VM failover planning such that the system would be unable to guarantee to restart protected VMs after a Host failure.
+//
+//	HA_OPERATION_WOULD_BREAK_FAILOVER_PLAN - This operation cannot be performed because it would invalidate VM failover planning such that the system would be unable to guarantee to restart protected VMs after a Host failure.
 func (_class VMClass) SetMemoryStaticMax(sessionID SessionRef, self VMRef, value int) (_err error) {
 	_method := "VM.set_memory_static_max"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1946,7 +1956,7 @@ func (_class VMClass) SetMemoryStaticMax(sessionID SessionRef, self VMRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -1969,7 +1979,7 @@ func (_class VMClass) SetMemoryDynamicRange(sessionID SessionRef, self VMRef, mi
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _minArg, _maxArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _minArg, _maxArg)
 	return
 }
 
@@ -1988,7 +1998,7 @@ func (_class VMClass) SetMemoryDynamicMin(sessionID SessionRef, self VMRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2007,7 +2017,7 @@ func (_class VMClass) SetMemoryDynamicMax(sessionID SessionRef, self VMRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2026,7 +2036,7 @@ func (_class VMClass) ComputeMemoryOverhead(sessionID SessionRef, vm VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2045,7 +2055,7 @@ func (_class VMClass) SetHaAlwaysRun(sessionID SessionRef, self VMRef, value boo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2064,11 +2074,11 @@ func (_class VMClass) SetHaRestartPriority(sessionID SessionRef, self VMRef, val
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
-// RemoveFromNVRAM 
+// RemoveFromNVRAM
 func (_class VMClass) RemoveFromNVRAM(sessionID SessionRef, self VMRef, key string) (_err error) {
 	_method := "VM.remove_from_NVRAM"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2083,11 +2093,11 @@ func (_class VMClass) RemoveFromNVRAM(sessionID SessionRef, self VMRef, key stri
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
-// AddToNVRAM 
+// AddToNVRAM
 func (_class VMClass) AddToNVRAM(sessionID SessionRef, self VMRef, key string, value string) (_err error) {
 	_method := "VM.add_to_NVRAM"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2106,11 +2116,11 @@ func (_class VMClass) AddToNVRAM(sessionID SessionRef, self VMRef, key string, v
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
-// SetNVRAM 
+// SetNVRAM
 func (_class VMClass) SetNVRAM(sessionID SessionRef, self VMRef, value map[string]string) (_err error) {
 	_method := "VM.set_NVRAM"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2125,7 +2135,7 @@ func (_class VMClass) SetNVRAM(sessionID SessionRef, self VMRef, value map[strin
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2148,15 +2158,16 @@ func (_class VMClass) AddToVCPUsParamsLive(sessionID SessionRef, self VMRef, key
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetVCPUsNumberLive Set the number of VCPUs for a running VM
 //
 // Errors:
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
 func (_class VMClass) SetVCPUsNumberLive(sessionID SessionRef, self VMRef, nvcpu int) (_err error) {
 	_method := "VM.set_VCPUs_number_live"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2171,18 +2182,19 @@ func (_class VMClass) SetVCPUsNumberLive(sessionID SessionRef, self VMRef, nvcpu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _nvcpuArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _nvcpuArg)
 	return
 }
 
 // PoolMigrate Migrate a VM to another Host.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 func (_class VMClass) PoolMigrate(sessionID SessionRef, vm VMRef, host HostRef, options map[string]string) (_err error) {
 	_method := "VM.pool_migrate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2201,16 +2213,17 @@ func (_class VMClass) PoolMigrate(sessionID SessionRef, vm VMRef, host HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg, _optionsArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg, _optionsArg)
 	return
 }
 
 // ResumeOn Awaken the specified VM and resume it on a particular Host.  This can only be called when the specified VM is in the Suspended state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) ResumeOn(sessionID SessionRef, vm VMRef, host HostRef, startPaused bool, force bool) (_err error) {
 	_method := "VM.resume_on"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2233,16 +2246,17 @@ func (_class VMClass) ResumeOn(sessionID SessionRef, vm VMRef, host HostRef, sta
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg, _startPausedArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg, _startPausedArg, _forceArg)
 	return
 }
 
 // Resume Awaken the specified VM and resume it.  This can only be called when the specified VM is in the Suspended state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) Resume(sessionID SessionRef, vm VMRef, startPaused bool, force bool) (_err error) {
 	_method := "VM.resume"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2261,17 +2275,18 @@ func (_class VMClass) Resume(sessionID SessionRef, vm VMRef, startPaused bool, f
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _startPausedArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _startPausedArg, _forceArg)
 	return
 }
 
 // Suspend Suspend the specified VM to disk.  This can only be called when the specified VM is in the Running state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) Suspend(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.suspend"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2282,17 +2297,18 @@ func (_class VMClass) Suspend(sessionID SessionRef, vm VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // HardReboot Stop executing the specified VM without attempting a clean shutdown and immediately restart the VM.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) HardReboot(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.hard_reboot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2303,7 +2319,7 @@ func (_class VMClass) HardReboot(sessionID SessionRef, vm VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
@@ -2318,17 +2334,18 @@ func (_class VMClass) PowerStateReset(sessionID SessionRef, vm VMRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // HardShutdown Stop executing the specified VM without attempting a clean shutdown.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) HardShutdown(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.hard_shutdown"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2339,17 +2356,18 @@ func (_class VMClass) HardShutdown(sessionID SessionRef, vm VMRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // CleanReboot Attempt to cleanly shutdown the specified VM (Note: this may not be supported, for example, if a guest agent is not installed). This can only be called when the specified VM is in the Running state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) CleanReboot(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.clean_reboot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2360,17 +2378,18 @@ func (_class VMClass) CleanReboot(sessionID SessionRef, vm VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // Shutdown Attempts to first clean shutdown a VM and if it should fail then perform a hard shutdown on it.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) Shutdown(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.shutdown"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2381,17 +2400,18 @@ func (_class VMClass) Shutdown(sessionID SessionRef, vm VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // CleanShutdown Attempt to cleanly shutdown the specified VM. (Note: this may not be supported, for example, if a guest agent is not installed). This can only be called when the specified VM is in the Running state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) CleanShutdown(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.clean_shutdown"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2402,16 +2422,17 @@ func (_class VMClass) CleanShutdown(sessionID SessionRef, vm VMRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // Unpause Resume the specified VM. This can only be called when the specified VM is in the Paused state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) Unpause(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.unpause"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2422,17 +2443,18 @@ func (_class VMClass) Unpause(sessionID SessionRef, vm VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // Pause Pause the specified VM. This can only be called when the specified VM is in the Running state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
 func (_class VMClass) Pause(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.pause"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2443,19 +2465,20 @@ func (_class VMClass) Pause(sessionID SessionRef, vm VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // StartOn Start the specified VM on a particular host.  This function can only be called with the VM is in the Halted State.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  BOOTLOADER_FAILED - The bootloader returned an error
-//  UNKNOWN_BOOTLOADER - The requested bootloader is unknown
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	BOOTLOADER_FAILED - The bootloader returned an error
+//	UNKNOWN_BOOTLOADER - The requested bootloader is unknown
 func (_class VMClass) StartOn(sessionID SessionRef, vm VMRef, host HostRef, startPaused bool, force bool) (_err error) {
 	_method := "VM.start_on"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2478,22 +2501,23 @@ func (_class VMClass) StartOn(sessionID SessionRef, vm VMRef, host HostRef, star
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg, _startPausedArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _hostArg, _startPausedArg, _forceArg)
 	return
 }
 
 // Start Start the specified VM.  This function can only be called with the VM is in the Halted State.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  VM_HVM_REQUIRED - HVM is required for this operation
-//  VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
-//  OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  BOOTLOADER_FAILED - The bootloader returned an error
-//  UNKNOWN_BOOTLOADER - The requested bootloader is unknown
-//  NO_HOSTS_AVAILABLE - There were no servers available to complete the specified operation.
-//  LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	VM_HVM_REQUIRED - HVM is required for this operation
+//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	BOOTLOADER_FAILED - The bootloader returned an error
+//	UNKNOWN_BOOTLOADER - The requested bootloader is unknown
+//	NO_HOSTS_AVAILABLE - There were no servers available to complete the specified operation.
+//	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
 func (_class VMClass) Start(sessionID SessionRef, vm VMRef, startPaused bool, force bool) (_err error) {
 	_method := "VM.start"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2512,17 +2536,18 @@ func (_class VMClass) Start(sessionID SessionRef, vm VMRef, startPaused bool, fo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg, _startPausedArg, _forceArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg, _startPausedArg, _forceArg)
 	return
 }
 
 // Provision Inspects the disk configuration contained within the VM's other_config, creates VDIs and VBDs and then executes any applicable post-install script.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	SR_FULL - The SR is full. Requested new size exceeds the maximum size
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
 func (_class VMClass) Provision(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.provision"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2533,18 +2558,19 @@ func (_class VMClass) Provision(sessionID SessionRef, vm VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _vmArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _vmArg)
 	return
 }
 
 // Checkpoint Checkpoints the specified VM, making a new VM. Checkpoint automatically exploits the capabilities of the underlying storage repository in which the VM's disk images are stored (for example, Copy on Write) and saves the memory image as well.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_CHECKPOINT_SUSPEND_FAILED - An error occured while saving the memory image of the specified virtual machine
-//  VM_CHECKPOINT_RESUME_FAILED - An error occured while restoring the memory image of the specified virtual machine
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	SR_FULL - The SR is full. Requested new size exceeds the maximum size
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_CHECKPOINT_SUSPEND_FAILED - An error occured while saving the memory image of the specified virtual machine
+//	VM_CHECKPOINT_RESUME_FAILED - An error occured while restoring the memory image of the specified virtual machine
 func (_class VMClass) Checkpoint(sessionID SessionRef, vm VMRef, newName string) (_retval VMRef, _err error) {
 	_method := "VM.checkpoint"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2563,17 +2589,18 @@ func (_class VMClass) Checkpoint(sessionID SessionRef, vm VMRef, newName string)
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Revert Reverts the specified VM to a previous state.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//  VM_REVERT_FAILED - An error occured while reverting the specified virtual machine to the specified snapshot
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	SR_FULL - The SR is full. Requested new size exceeds the maximum size
+//	VM_REVERT_FAILED - An error occured while reverting the specified virtual machine to the specified snapshot
 func (_class VMClass) Revert(sessionID SessionRef, snapshot VMRef) (_err error) {
 	_method := "VM.revert"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2584,17 +2611,18 @@ func (_class VMClass) Revert(sessionID SessionRef, snapshot VMRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _snapshotArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _snapshotArg)
 	return
 }
 
 // Copy Copied the specified VM, making a new VM. Unlike clone, copy does not exploits the capabilities of the underlying storage repository in which the VM's disk images are stored. Instead, copy guarantees that the disk images of the newly created VM will be 'full disks' - i.e. not part of a CoW chain.  This function can only be called when the VM is in the Halted State.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	SR_FULL - The SR is full. Requested new size exceeds the maximum size
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
 func (_class VMClass) Copy(sessionID SessionRef, vm VMRef, newName string, sr SRRef) (_retval VMRef, _err error) {
 	_method := "VM.copy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2617,17 +2645,18 @@ func (_class VMClass) Copy(sessionID SessionRef, vm VMRef, newName string, sr SR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Clone Clones the specified VM, making a new VM. Clone automatically exploits the capabilities of the underlying storage repository in which the VM's disk images are stored (for example, Copy on Write). This function can only be called when the VM is in the Halted State.
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	SR_FULL - The SR is full. Requested new size exceeds the maximum size
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
 func (_class VMClass) Clone(sessionID SessionRef, vm VMRef, newName string) (_retval VMRef, _err error) {
 	_method := "VM.clone"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2646,20 +2675,21 @@ func (_class VMClass) Clone(sessionID SessionRef, vm VMRef, newName string) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // SnapshotWithQuiesce Snapshots the specified VM with quiesce, making a new VM. Snapshot automatically exploits the capabilities of the underlying storage repository in which the VM's disk images are stored (for example, Copy on Write).
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//  VM_SNAPSHOT_WITH_QUIESCE_FAILED - The quiesced-snapshot operation failed for an unexpected reason
-//  VM_SNAPSHOT_WITH_QUIESCE_TIMEOUT - The VSS plug-in has timed out
-//  VM_SNAPSHOT_WITH_QUIESCE_PLUGIN_DEOS_NOT_RESPOND - The VSS plug-in cannot be contacted
-//  VM_SNAPSHOT_WITH_QUIESCE_NOT_SUPPORTED - The VSS plug-in is not installed on this virtual machine
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	SR_FULL - The SR is full. Requested new size exceeds the maximum size
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//	VM_SNAPSHOT_WITH_QUIESCE_FAILED - The quiesced-snapshot operation failed for an unexpected reason
+//	VM_SNAPSHOT_WITH_QUIESCE_TIMEOUT - The VSS plug-in has timed out
+//	VM_SNAPSHOT_WITH_QUIESCE_PLUGIN_DEOS_NOT_RESPOND - The VSS plug-in cannot be contacted
+//	VM_SNAPSHOT_WITH_QUIESCE_NOT_SUPPORTED - The VSS plug-in is not installed on this virtual machine
 func (_class VMClass) SnapshotWithQuiesce(sessionID SessionRef, vm VMRef, newName string) (_retval VMRef, _err error) {
 	_method := "VM.snapshot_with_quiesce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2678,16 +2708,17 @@ func (_class VMClass) SnapshotWithQuiesce(sessionID SessionRef, vm VMRef, newNam
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
 // Snapshot Snapshots the specified VM, making a new VM. Snapshot automatically exploits the capabilities of the underlying storage repository in which the VM's disk images are stored (for example, Copy on Write).
 //
 // Errors:
-//  VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//  SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//  OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//
+//	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//	SR_FULL - The SR is full. Requested new size exceeds the maximum size
+//	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 func (_class VMClass) Snapshot(sessionID SessionRef, vm VMRef, newName string, ignoreVdis []VDIRef) (_retval VMRef, _err error) {
 	_method := "VM.snapshot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2710,7 +2741,7 @@ func (_class VMClass) Snapshot(sessionID SessionRef, vm VMRef, newName string, i
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -2729,7 +2760,7 @@ func (_class VMClass) SetHardwarePlatformVersion(sessionID SessionRef, self VMRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2748,7 +2779,7 @@ func (_class VMClass) SetSuspendSR(sessionID SessionRef, self VMRef, value SRRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2767,7 +2798,7 @@ func (_class VMClass) RemoveTags(sessionID SessionRef, self VMRef, value string)
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2786,7 +2817,7 @@ func (_class VMClass) AddTags(sessionID SessionRef, self VMRef, value string) (_
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2805,7 +2836,7 @@ func (_class VMClass) SetTags(sessionID SessionRef, self VMRef, value []string) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2824,7 +2855,7 @@ func (_class VMClass) RemoveFromXenstoreData(sessionID SessionRef, self VMRef, k
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2847,7 +2878,7 @@ func (_class VMClass) AddToXenstoreData(sessionID SessionRef, self VMRef, key st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2866,7 +2897,7 @@ func (_class VMClass) SetXenstoreData(sessionID SessionRef, self VMRef, value ma
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2885,7 +2916,7 @@ func (_class VMClass) SetRecommendations(sessionID SessionRef, self VMRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2904,7 +2935,7 @@ func (_class VMClass) SetPCIBus(sessionID SessionRef, self VMRef, value string) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2923,7 +2954,7 @@ func (_class VMClass) RemoveFromHVMBootParams(sessionID SessionRef, self VMRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -2946,7 +2977,7 @@ func (_class VMClass) AddToHVMBootParams(sessionID SessionRef, self VMRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -2965,7 +2996,7 @@ func (_class VMClass) SetHVMBootParams(sessionID SessionRef, self VMRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -2984,7 +3015,7 @@ func (_class VMClass) SetPVLegacyArgs(sessionID SessionRef, self VMRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3003,7 +3034,7 @@ func (_class VMClass) SetPVBootloaderArgs(sessionID SessionRef, self VMRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3022,7 +3053,7 @@ func (_class VMClass) SetPVArgs(sessionID SessionRef, self VMRef, value string) 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3041,7 +3072,7 @@ func (_class VMClass) SetPVRamdisk(sessionID SessionRef, self VMRef, value strin
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3060,7 +3091,7 @@ func (_class VMClass) SetPVKernel(sessionID SessionRef, self VMRef, value string
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3079,7 +3110,7 @@ func (_class VMClass) SetPVBootloader(sessionID SessionRef, self VMRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3098,7 +3129,7 @@ func (_class VMClass) SetActionsAfterReboot(sessionID SessionRef, self VMRef, va
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3117,7 +3148,7 @@ func (_class VMClass) SetActionsAfterShutdown(sessionID SessionRef, self VMRef, 
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3136,7 +3167,7 @@ func (_class VMClass) SetActionsAfterSoftreboot(sessionID SessionRef, self VMRef
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3155,7 +3186,7 @@ func (_class VMClass) RemoveFromVCPUsParams(sessionID SessionRef, self VMRef, ke
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
@@ -3178,7 +3209,7 @@ func (_class VMClass) AddToVCPUsParams(sessionID SessionRef, self VMRef, key str
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
@@ -3197,7 +3228,7 @@ func (_class VMClass) SetVCPUsParams(sessionID SessionRef, self VMRef, value map
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3216,7 +3247,7 @@ func (_class VMClass) SetAffinity(sessionID SessionRef, self VMRef, value HostRe
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3235,7 +3266,7 @@ func (_class VMClass) SetIsATemplate(sessionID SessionRef, self VMRef, value boo
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3254,7 +3285,7 @@ func (_class VMClass) SetUserVersion(sessionID SessionRef, self VMRef, value int
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3273,7 +3304,7 @@ func (_class VMClass) SetNameDescription(sessionID SessionRef, self VMRef, value
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3292,7 +3323,7 @@ func (_class VMClass) SetNameLabel(sessionID SessionRef, self VMRef, value strin
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -3311,7 +3342,7 @@ func (_class VMClass) GetSecurebootCertificatesState(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVMSecurebootCertificatesStateToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVMSecurebootCertificatesStateToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3330,7 +3361,7 @@ func (_class VMClass) GetGroups(sessionID SessionRef, self VMRef) (_retval []VMG
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGroupRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGroupRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3349,7 +3380,7 @@ func (_class VMClass) GetPendingGuidancesFull(sessionID SessionRef, self VMRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3368,7 +3399,7 @@ func (_class VMClass) GetPendingGuidancesRecommended(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3387,7 +3418,7 @@ func (_class VMClass) GetPendingGuidances(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumUpdateGuidancesSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3406,7 +3437,7 @@ func (_class VMClass) GetNVRAM(sessionID SessionRef, self VMRef) (_retval map[st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3425,7 +3456,7 @@ func (_class VMClass) GetDomainType(sessionID SessionRef, self VMRef) (_retval D
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumDomainTypeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumDomainTypeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3444,7 +3475,7 @@ func (_class VMClass) GetReferenceLabel(sessionID SessionRef, self VMRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3463,7 +3494,7 @@ func (_class VMClass) GetRequiresReboot(sessionID SessionRef, self VMRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3482,7 +3513,7 @@ func (_class VMClass) GetHasVendorDevice(sessionID SessionRef, self VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3501,7 +3532,7 @@ func (_class VMClass) GetHardwarePlatformVersion(sessionID SessionRef, self VMRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3520,7 +3551,7 @@ func (_class VMClass) GetGenerationID(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3539,7 +3570,7 @@ func (_class VMClass) GetVersion(sessionID SessionRef, self VMRef) (_retval int,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3558,7 +3589,7 @@ func (_class VMClass) GetSuspendSR(sessionID SessionRef, self VMRef) (_retval SR
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertSRRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertSRRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3577,7 +3608,7 @@ func (_class VMClass) GetAttachedPCIs(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertPCIRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertPCIRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3596,7 +3627,7 @@ func (_class VMClass) GetVGPUs(sessionID SessionRef, self VMRef) (_retval []VGPU
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVGPURefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVGPURefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3615,7 +3646,7 @@ func (_class VMClass) GetOrder(sessionID SessionRef, self VMRef) (_retval int, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3634,7 +3665,7 @@ func (_class VMClass) GetShutdownDelay(sessionID SessionRef, self VMRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3653,7 +3684,7 @@ func (_class VMClass) GetStartDelay(sessionID SessionRef, self VMRef) (_retval i
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3672,7 +3703,7 @@ func (_class VMClass) GetAppliance(sessionID SessionRef, self VMRef) (_retval VM
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMApplianceRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMApplianceRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3691,7 +3722,7 @@ func (_class VMClass) GetIsVmssSnapshot(sessionID SessionRef, self VMRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3710,7 +3741,7 @@ func (_class VMClass) GetSnapshotSchedule(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMSSRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMSSRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3729,7 +3760,7 @@ func (_class VMClass) GetIsSnapshotFromVmpp(sessionID SessionRef, self VMRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3748,7 +3779,7 @@ func (_class VMClass) GetProtectionPolicy(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMPPRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMPPRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3767,7 +3798,7 @@ func (_class VMClass) GetBiosStrings(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3786,7 +3817,7 @@ func (_class VMClass) GetChildren(sessionID SessionRef, self VMRef) (_retval []V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3805,7 +3836,7 @@ func (_class VMClass) GetParent(sessionID SessionRef, self VMRef) (_retval VMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3824,7 +3855,7 @@ func (_class VMClass) GetSnapshotMetadata(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3843,7 +3874,7 @@ func (_class VMClass) GetSnapshotInfo(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3862,7 +3893,7 @@ func (_class VMClass) GetBlockedOperations(sessionID SessionRef, self VMRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVMOperationsToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVMOperationsToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3881,7 +3912,7 @@ func (_class VMClass) GetTags(sessionID SessionRef, self VMRef) (_retval []strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3900,7 +3931,7 @@ func (_class VMClass) GetBlobs(sessionID SessionRef, self VMRef) (_retval map[st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToBlobRefMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToBlobRefMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3919,7 +3950,7 @@ func (_class VMClass) GetTransportableSnapshotID(sessionID SessionRef, self VMRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3938,7 +3969,7 @@ func (_class VMClass) GetSnapshotTime(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertTimeToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertTimeToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3957,7 +3988,7 @@ func (_class VMClass) GetSnapshots(sessionID SessionRef, self VMRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3976,7 +4007,7 @@ func (_class VMClass) GetSnapshotOf(sessionID SessionRef, self VMRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -3995,7 +4026,7 @@ func (_class VMClass) GetIsASnapshot(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4014,7 +4045,7 @@ func (_class VMClass) GetHaRestartPriority(sessionID SessionRef, self VMRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4033,7 +4064,7 @@ func (_class VMClass) GetHaAlwaysRun(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4052,7 +4083,7 @@ func (_class VMClass) GetXenstoreData(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4071,7 +4102,7 @@ func (_class VMClass) GetRecommendations(sessionID SessionRef, self VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4090,7 +4121,7 @@ func (_class VMClass) GetLastBootedRecord(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4109,7 +4140,7 @@ func (_class VMClass) GetGuestMetrics(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMGuestMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMGuestMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4128,7 +4159,7 @@ func (_class VMClass) GetMetrics(sessionID SessionRef, self VMRef) (_retval VMMe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMMetricsRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMMetricsRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4147,7 +4178,7 @@ func (_class VMClass) GetIsControlDomain(sessionID SessionRef, self VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4166,7 +4197,7 @@ func (_class VMClass) GetLastBootCPUFlags(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4185,7 +4216,7 @@ func (_class VMClass) GetDomarch(sessionID SessionRef, self VMRef) (_retval stri
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4204,7 +4235,7 @@ func (_class VMClass) GetDomid(sessionID SessionRef, self VMRef) (_retval int, _
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4223,7 +4254,7 @@ func (_class VMClass) GetOtherConfig(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4242,7 +4273,7 @@ func (_class VMClass) GetPCIBus(sessionID SessionRef, self VMRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4261,7 +4292,7 @@ func (_class VMClass) GetPlatform(sessionID SessionRef, self VMRef) (_retval map
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4280,7 +4311,7 @@ func (_class VMClass) GetHVMShadowMultiplier(sessionID SessionRef, self VMRef) (
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertFloatToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertFloatToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4299,7 +4330,7 @@ func (_class VMClass) GetHVMBootParams(sessionID SessionRef, self VMRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4318,7 +4349,7 @@ func (_class VMClass) GetHVMBootPolicy(sessionID SessionRef, self VMRef) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4337,7 +4368,7 @@ func (_class VMClass) GetPVLegacyArgs(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4356,7 +4387,7 @@ func (_class VMClass) GetPVBootloaderArgs(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4375,7 +4406,7 @@ func (_class VMClass) GetPVArgs(sessionID SessionRef, self VMRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4394,7 +4425,7 @@ func (_class VMClass) GetPVRamdisk(sessionID SessionRef, self VMRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4413,7 +4444,7 @@ func (_class VMClass) GetPVKernel(sessionID SessionRef, self VMRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4432,7 +4463,7 @@ func (_class VMClass) GetPVBootloader(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4451,7 +4482,7 @@ func (_class VMClass) GetVTPMs(sessionID SessionRef, self VMRef) (_retval []VTPM
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVTPMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVTPMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4470,7 +4501,7 @@ func (_class VMClass) GetCrashDumps(sessionID SessionRef, self VMRef) (_retval [
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertCrashdumpRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertCrashdumpRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4489,7 +4520,7 @@ func (_class VMClass) GetVUSBs(sessionID SessionRef, self VMRef) (_retval []VUSB
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVUSBRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVUSBRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4508,7 +4539,7 @@ func (_class VMClass) GetVBDs(sessionID SessionRef, self VMRef) (_retval []VBDRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVBDRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVBDRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4527,7 +4558,7 @@ func (_class VMClass) GetVIFs(sessionID SessionRef, self VMRef) (_retval []VIFRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVIFRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVIFRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4546,7 +4577,7 @@ func (_class VMClass) GetConsoles(sessionID SessionRef, self VMRef) (_retval []C
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertConsoleRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertConsoleRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4565,7 +4596,7 @@ func (_class VMClass) GetActionsAfterCrash(sessionID SessionRef, self VMRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumOnCrashBehaviourToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumOnCrashBehaviourToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4584,7 +4615,7 @@ func (_class VMClass) GetActionsAfterReboot(sessionID SessionRef, self VMRef) (_
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumOnNormalExitToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumOnNormalExitToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4603,7 +4634,7 @@ func (_class VMClass) GetActionsAfterShutdown(sessionID SessionRef, self VMRef) 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumOnNormalExitToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumOnNormalExitToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4622,7 +4653,7 @@ func (_class VMClass) GetActionsAfterSoftreboot(sessionID SessionRef, self VMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumOnSoftrebootBehaviorToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumOnSoftrebootBehaviorToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4641,7 +4672,7 @@ func (_class VMClass) GetVCPUsAtStartup(sessionID SessionRef, self VMRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4660,7 +4691,7 @@ func (_class VMClass) GetVCPUsMax(sessionID SessionRef, self VMRef) (_retval int
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4679,7 +4710,7 @@ func (_class VMClass) GetVCPUsParams(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToStringMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4698,7 +4729,7 @@ func (_class VMClass) GetMemoryStaticMin(sessionID SessionRef, self VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4717,7 +4748,7 @@ func (_class VMClass) GetMemoryDynamicMin(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4736,7 +4767,7 @@ func (_class VMClass) GetMemoryDynamicMax(sessionID SessionRef, self VMRef) (_re
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4755,7 +4786,7 @@ func (_class VMClass) GetMemoryStaticMax(sessionID SessionRef, self VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4774,7 +4805,7 @@ func (_class VMClass) GetMemoryTarget(sessionID SessionRef, self VMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4793,7 +4824,7 @@ func (_class VMClass) GetMemoryOverhead(sessionID SessionRef, self VMRef) (_retv
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4812,7 +4843,7 @@ func (_class VMClass) GetAffinity(sessionID SessionRef, self VMRef) (_retval Hos
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4831,7 +4862,7 @@ func (_class VMClass) GetScheduledToBeResidentOn(sessionID SessionRef, self VMRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4850,7 +4881,7 @@ func (_class VMClass) GetResidentOn(sessionID SessionRef, self VMRef) (_retval H
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertHostRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertHostRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4869,7 +4900,7 @@ func (_class VMClass) GetSuspendVDI(sessionID SessionRef, self VMRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVDIRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVDIRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4888,7 +4919,7 @@ func (_class VMClass) GetIsDefaultTemplate(sessionID SessionRef, self VMRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4907,7 +4938,7 @@ func (_class VMClass) GetIsATemplate(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertBoolToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4926,7 +4957,7 @@ func (_class VMClass) GetUserVersion(sessionID SessionRef, self VMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertIntToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertIntToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4945,7 +4976,7 @@ func (_class VMClass) GetPowerState(sessionID SessionRef, self VMRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVMPowerStateToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVMPowerStateToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4964,7 +4995,7 @@ func (_class VMClass) GetNameDescription(sessionID SessionRef, self VMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -4983,7 +5014,7 @@ func (_class VMClass) GetNameLabel(sessionID SessionRef, self VMRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -5002,7 +5033,7 @@ func (_class VMClass) GetCurrentOperations(sessionID SessionRef, self VMRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToEnumVMOperationsMapToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToEnumVMOperationsMapToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -5021,7 +5052,7 @@ func (_class VMClass) GetAllowedOperations(sessionID SessionRef, self VMRef) (_r
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertEnumVMOperationsSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertEnumVMOperationsSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -5040,7 +5071,7 @@ func (_class VMClass) GetUUID(sessionID SessionRef, self VMRef) (_retval string,
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertStringToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertStringToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -5059,7 +5090,7 @@ func (_class VMClass) GetByNameLabel(sessionID SessionRef, label string) (_retva
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefSetToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefSetToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -5074,7 +5105,7 @@ func (_class VMClass) Destroy(sessionID SessionRef, self VMRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err =  _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -5093,7 +5124,7 @@ func (_class VMClass) Create(sessionID SessionRef, args VMRecord) (_retval VMRef
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -5112,7 +5143,7 @@ func (_class VMClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VMRe
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRefToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRefToGo(_method+" -> ", _result.Value)
 	return
 }
 
@@ -5131,6 +5162,6 @@ func (_class VMClass) GetRecord(sessionID SessionRef, self VMRef) (_retval VMRec
 	if _err != nil {
 		return
 	}
-	_retval, _err = convertVMRecordToGo(_method + " -> ", _result.Value)
+	_retval, _err = convertVMRecordToGo(_method+" -> ", _result.Value)
 	return
 }
