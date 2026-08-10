@@ -2410,6 +2410,13 @@ func convertCallerRecordToGo(context string, input interface{}) (record CallerRe
 			return
 		}
 	}
+	autoRegisteredValue, ok := rpcStruct["auto_registered"]
+	if ok && autoRegisteredValue != nil {
+		record.AutoRegistered, err = convertBoolToGo(fmt.Sprintf("%s.%s", context, "auto_registered"), autoRegisteredValue)
+		if err != nil {
+			return
+		}
+	}
 	return
 }
 
@@ -2444,6 +2451,10 @@ func convertCallerRecordToXen(context string, record CallerRecord) (rpcStruct xm
 		return
 	}
 	rpcStruct["rate_limit"], err = convertRateLimitRefToXen(fmt.Sprintf("%s.%s", context, "rate_limit"), record.RateLimit)
+	if err != nil {
+		return
+	}
+	rpcStruct["auto_registered"], err = convertBoolToXen(fmt.Sprintf("%s.%s", context, "auto_registered"), record.AutoRegistered)
 	if err != nil {
 		return
 	}

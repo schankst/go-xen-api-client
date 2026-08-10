@@ -37,6 +37,8 @@ type CallerRecord struct {
 	Groups []string
 	// Rate limiter attached to this caller, if any. Populated via Rate_limit.add_caller rather than set directly.
 	RateLimit RateLimitRef
+	// True if this caller was created automatically by the rate limiter rather than by an administrator. Auto-registered callers are subject to the max-auto-registered-callers cap.
+	AutoRegistered bool
 }
 
 type CallerRef string
@@ -240,6 +242,25 @@ func (_class CallerClass) SetNameLabel(sessionID SessionRef, self CallerRef, val
 		return
 	}
 	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetAutoRegistered Get the auto_registered field of the given Caller.
+func (_class CallerClass) GetAutoRegistered(sessionID SessionRef, self CallerRef) (_retval bool, _err error) {
+	_method := "Caller.get_auto_registered"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertCallerRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
