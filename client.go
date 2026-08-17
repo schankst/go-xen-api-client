@@ -17,7 +17,7 @@ import (
 // this release; anything newer falls back to the enum tolerance built
 // into convert_gen.go's converters (see convertEnumTypeToGoFuncTemplate
 // in xenapi.go).
-const SchemaXAPIRelease = "26.16.1-next"
+const SchemaXAPIRelease = "26.17.0"
 
 // APIResult is the raw, untyped result of an APICall - Value holds whatever
 // the XML-RPC response decoded to (a string, xmlrpc.Struct, []interface{},
