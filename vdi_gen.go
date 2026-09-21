@@ -226,7 +226,7 @@ func (_class VDIClass) Revert(sessionID SessionRef, snapshot VDIRef) (_err error
 //
 // Errors:
 //
-//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 func (_class VDIClass) GetNbdInfo(sessionID SessionRef, self VDIRef) (_retval []VdiNbdServerInfoRecord, _err error) {
 	_method := "VDI.get_nbd_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -285,7 +285,7 @@ func (_class VDIClass) ListChangedBlocks(sessionID SessionRef, vdiFrom VDIRef, v
 //	SR_NOT_ATTACHED - The SR is not attached.
 //	SR_HAS_NO_PBDS - The SR has no attached PBDs
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 //	VDI_NO_CBT_METADATA - The requested operation is not allowed because the specified VDI does not have changed block tracking metadata.
 //	VDI_IN_USE - This operation cannot be performed because this VDI is in use by some other operation
 //	VDI_IS_A_PHYSICAL_DEVICE - The operation cannot be performed on physical device
@@ -312,7 +312,7 @@ func (_class VDIClass) DataDestroy(sessionID SessionRef, self VDIRef) (_err erro
 //	SR_NOT_ATTACHED - The SR is not attached.
 //	SR_HAS_NO_PBDS - The SR has no attached PBDs
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 //	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
 func (_class VDIClass) DisableCbt(sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.disable_cbt"
@@ -337,7 +337,7 @@ func (_class VDIClass) DisableCbt(sessionID SessionRef, self VDIRef) (_err error
 //	SR_NOT_ATTACHED - The SR is not attached.
 //	SR_HAS_NO_PBDS - The SR has no attached PBDs
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (eg: an HA statefile cannot be attached to a guest)
+//	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 //	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
 func (_class VDIClass) EnableCbt(sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.enable_cbt"

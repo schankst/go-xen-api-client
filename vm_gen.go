@@ -747,7 +747,7 @@ func (_class VMClass) SetUefiMode(sessionID SessionRef, self VMRef, mode VMUefiM
 //
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 func (_class VMClass) RestartDeviceModels(sessionID SessionRef, self VMRef) (_err error) {
@@ -2192,7 +2192,7 @@ func (_class VMClass) SetVCPUsNumberLive(sessionID SessionRef, self VMRef, nvcpu
 //
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 func (_class VMClass) PoolMigrate(sessionID SessionRef, vm VMRef, host HostRef, options map[string]string) (_err error) {
@@ -2223,7 +2223,7 @@ func (_class VMClass) PoolMigrate(sessionID SessionRef, vm VMRef, host HostRef, 
 //
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) ResumeOn(sessionID SessionRef, vm VMRef, host HostRef, startPaused bool, force bool) (_err error) {
 	_method := "VM.resume_on"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2256,7 +2256,7 @@ func (_class VMClass) ResumeOn(sessionID SessionRef, vm VMRef, host HostRef, sta
 //
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) Resume(sessionID SessionRef, vm VMRef, startPaused bool, force bool) (_err error) {
 	_method := "VM.resume"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2286,7 +2286,7 @@ func (_class VMClass) Resume(sessionID SessionRef, vm VMRef, startPaused bool, f
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) Suspend(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.suspend"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2308,7 +2308,7 @@ func (_class VMClass) Suspend(sessionID SessionRef, vm VMRef) (_err error) {
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) HardReboot(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.hard_reboot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2345,7 +2345,7 @@ func (_class VMClass) PowerStateReset(sessionID SessionRef, vm VMRef) (_err erro
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) HardShutdown(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.hard_shutdown"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2367,7 +2367,7 @@ func (_class VMClass) HardShutdown(sessionID SessionRef, vm VMRef) (_err error) 
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) CleanReboot(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.clean_reboot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2389,7 +2389,7 @@ func (_class VMClass) CleanReboot(sessionID SessionRef, vm VMRef) (_err error) {
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) Shutdown(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.shutdown"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2411,7 +2411,7 @@ func (_class VMClass) Shutdown(sessionID SessionRef, vm VMRef) (_err error) {
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) CleanShutdown(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.clean_shutdown"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2432,7 +2432,7 @@ func (_class VMClass) CleanShutdown(sessionID SessionRef, vm VMRef) (_err error)
 //
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) Unpause(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.unpause"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2454,7 +2454,7 @@ func (_class VMClass) Unpause(sessionID SessionRef, vm VMRef) (_err error) {
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 func (_class VMClass) Pause(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.pause"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2474,7 +2474,7 @@ func (_class VMClass) Pause(sessionID SessionRef, vm VMRef) (_err error) {
 // Errors:
 //
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	BOOTLOADER_FAILED - The bootloader returned an error
@@ -2511,7 +2511,7 @@ func (_class VMClass) StartOn(sessionID SessionRef, vm VMRef, host HostRef, star
 //
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	VM_HVM_REQUIRED - HVM is required for this operation
-//	VM_IS_TEMPLATE - The operation attempted is not valid for a template VM
+//	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 //	OTHER_OPERATION_IN_PROGRESS - Another operation involving the object is currently in progress
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	BOOTLOADER_FAILED - The bootloader returned an error
@@ -2600,7 +2600,7 @@ func (_class VMClass) Checkpoint(sessionID SessionRef, vm VMRef, newName string)
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	SR_FULL - The SR is full. Requested new size exceeds the maximum size
-//	VM_REVERT_FAILED - An error occured while reverting the specified virtual machine to the specified snapshot
+//	VM_REVERT_FAILED - An error occurred while reverting the specified virtual machine to the specified snapshot
 func (_class VMClass) Revert(sessionID SessionRef, snapshot VMRef) (_err error) {
 	_method := "VM.revert"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
