@@ -24,6 +24,10 @@ checked against the XAPI source and/or a live host, noted inline.
 - qcow2 is available on XCP-ng 8.3 (and accepted by xapi as a wire format), but
   the on-SR *image format* is a separate, older concept - see
   [QCOW2](#qcow2-image-format-vs-wire-format).
+- Whole-VM archives are a separate topic: **neither OVA nor VMDK is a VDI wire
+  format**, and the `tar` value is not the OVF container. VM archives move as
+  **XVA** via `PUT /import` (or `VM.Import` pull) - see
+  [Whole-VM archives: OVA and XVA](#whole-vm-archives-ova-and-xva).
 
 ## Where the data actually flows
 
@@ -258,6 +262,88 @@ for {
 }
 ```
 
+## Whole-VM archives: OVA and XVA
+
+The endpoints above move a single disk. A whole VM travels as an *archive*, and
+the two archive formats an XCP-ng host meets are OVA and XVA. They are more
+different than their shared "tar" container suggests.
+
+### Neither OVA nor VMDK is a VDI wire format
+
+`Importexport.Format` has no member for either, so `/import_raw_vdi` cannot take
+an OVA or a VMDK: there is no `format=ova`/`format=vmdk`, and the only accepted
+strings are `raw`, `vhd`, `tar`, `qcow2`. The `tar` member is not the OVF tar
+container either - it is XAPI's own `Stream_vdi` tar (a VDI streamed as
+checksummed chunks, see below), consumed by `Stream_vdi.recv_all_vdi`, and an
+OVA tar does not match its layout. The XAPI tree contains no `ovf`/`ova`/`vmdk`
+handling at all: OVA import is client-side work in XenCenter/Xen Orchestra,
+which unpack the archive, parse the OVF, and feed the disk to the host.
+
+### XVA is a tar too, but its contents are XAPI's
+
+A whole-VM archive moves through a different endpoint, `PUT /import`
+([`ocaml/xapi/import.ml`](https://github.com/xapi-project/xen-api/blob/master/ocaml/xapi/import.ml)),
+or through `VM.Import(url, sr, fullRestore, force)`, which has the **host** pull
+an XVA from a URL. Export is `GET /export`
+([`ocaml/xapi/export.ml`](https://github.com/xapi-project/xen-api/blob/master/ocaml/xapi/export.ml)).
+Inspecting a real XVA exported from a live host shows how little it shares with
+an OVA:
+
+| OVA | XVA |
+| --- | --- |
+| tar container | tar container |
+| `*.ovf` (DMTF/CIM hardware description) + `*.mf` | `ova.xml` (XAPI object graph: `VM`, `VDI`, `VBD`, `VIF`, `network`, `SR`, `VM_metrics`, ... in XML-RPC `<value>` encoding) |
+| one disk, usually a `streamOptimized` VMDK | raw disk split into **1 MiB chunks** `Ref:<vdi-ref>/<8-digit index>`, each with a 16-hex `.xxhash` sibling |
+| no XAPI references | internal `Ref:NNNN` ids, UUIDs, MACs, `platform`, SM config |
+
+So the two share only the tar framing. Converting between them is a real format
+translation: map the OVF hardware model onto XAPI records, decode the VMDK
+(usually inflating a compressed `streamOptimized` grain table), split the raw
+stream into 1 MiB chunks with xxhash checksums, and wrap it all in an
+`ova.xml`. There is no upstream OVA-to-XVA converter; Xen Orchestra offers both
+because it performs exactly these intermediate steps (or, more simply, imports
+the disk and lets the host produce the XVA).
+
+### The pragmatic OVA -> XVA route
+
+Rather than hand-building `ova.xml`, import the OVA's disk into a VM first and
+then export *that* VM as XVA - the host generates the correct metadata and
+checksums itself:
+
+```
+OVA --(untar)--> VMDK --(qemu-img convert -f vmdk -O raw)--> raw
+     --(VDI.create + PUT /import_raw_vdi?format=raw)--> VM
+     --> GET /export?uuid=<vm-uuid> --> XVA
+```
+
+Verified on a live XCP-ng 8.3 host with MikroTik `chr-7.25rc1.ova`:
+
+- `qemu-img` reports the OVF's disk as `streamOptimized`, compressed, virtual
+  size 128 MiB; after conversion the raw file is a GPT image (`EFI PART` at
+  offset 512).
+- The exported XVA (134,436,864 bytes) contained a 20,873-byte `ova.xml`, 128
+  data chunks + 128 `.xxhash` files, and `virtual_size` 134,217,728.
+- Re-importing that XVA with `PUT /import` (`sr_uuid=...`, `task_id=...`)
+  succeeded (HTTP 200, task `success`) and produced a **fresh** VM UUID and
+  **fresh** VIF MAC: `restore=false` regenerates identity, so it does not
+  collide with the source VM. The disk came back at its full 128 MiB virtual
+  size.
+
+### `/import` endpoint facts
+
+- The method is **PUT** (the URI is declared as `put_import`).
+- `Content-Length` is mandatory: chunked transfer encoding is explicitly
+  rejected (`Cannot_handle_chunked`, HTTP 403). Set `req.ContentLength` - Go
+  does not infer it from an `*os.File` body.
+- Query parameters: `session_id` (also used to keep the session alive during a
+  long upload), `sr_id`/`sr_uuid` (target SR; falls back to the default SR when
+  omitted), `task_id` (forward to a task you created, as with VDI import),
+  `restore` (full restore: preserve UUIDs and replace an existing VM) and
+  `force` (ignore checksum failures).
+- Without `restore`, the VM is imported as new: fresh UUIDs and MACs, and the
+  `name_label` from `ova.xml` is kept - XAPI accepts no name override - so
+  rename afterwards if you need a different one.
+
 ## Version compatibility
 
 Generated bindings in this fork are regenerated against the current XenAPI
@@ -274,6 +360,8 @@ format table.
 
 - XAPI upstream: [`xapi-project/xen-api`](https://github.com/xapi-project/xen-api)
   - `ocaml/xapi/importexport.ml`, `import_raw_vdi.ml`, `export_raw_vdi.ml`
+  - `ocaml/xapi/import.ml`, `ocaml/xapi/export.ml` (whole-VM XVA import/export,
+    `PUT /import` and `GET /export`)
   - `ocaml/xapi/vhd_tool_wrapper.ml`, `qcow_tool_wrapper.ml`
   - `ocaml/xapi/xapi_http.ml`, `ocaml/xapi-consts/constants.ml`,
     `ocaml/idl/datamodel.ml`
