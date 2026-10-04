@@ -1334,7 +1334,7 @@ func (_class HostClass) CreateNewBlob(sessionID SessionRef, host HostRef, name s
 	return
 }
 
-// BackupRrds This causes the RRDs to be backed up to the master
+// BackupRrds This causes the RRDs to be backed up to the coordinator
 func (_class HostClass) BackupRrds(sessionID SessionRef, host HostRef, delay float64) (_err error) {
 	_method := "host.backup_rrds"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1353,7 +1353,7 @@ func (_class HostClass) BackupRrds(sessionID SessionRef, host HostRef, delay flo
 	return
 }
 
-// SyncData This causes the synchronisation of the non-database data (messages, RRDs and so on) stored on the master to be synchronised with the host
+// SyncData This causes the non-database data (messages, RRDs and so on) stored on the coordinator to be synchronised with the host
 func (_class HostClass) SyncData(sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.sync_data"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

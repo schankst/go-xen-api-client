@@ -91,7 +91,7 @@ func (_class PBDClass) SetDeviceConfig(sessionID SessionRef, self PBDRef, value 
 	return
 }
 
-// Unplug Deactivate the specified PBD, causing the referenced SR to be detached and nolonger scanned
+// Unplug Deactivate the specified PBD, causing the referenced SR to be detached and no longer scanned
 func (_class PBDClass) Unplug(sessionID SessionRef, self PBDRef) (_err error) {
 	_method := "PBD.unplug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

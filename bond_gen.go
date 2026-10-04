@@ -48,7 +48,7 @@ type BondRecord struct {
 	Properties map[string]string
 	// Number of links up in this bond
 	LinksUp int
-	// true if the MAC was taken from the primary slave when the bond was created, and false if the client specified the MAC
+	// true if the MAC was taken from the primary member when the bond was created, and false if the client specified the MAC
 	AutoUpdateMac bool
 }
 

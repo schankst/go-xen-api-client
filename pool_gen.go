@@ -29,7 +29,7 @@ const (
 	PoolAllowedOperationsHaDisable PoolAllowedOperations = "ha_disable"
 	// Indicates this pool is in the process of creating a cluster
 	PoolAllowedOperationsClusterCreate PoolAllowedOperations = "cluster_create"
-	// Indicates this pool is in the process of changing master
+	// Indicates this pool is in the process of changing coordinator
 	PoolAllowedOperationsDesignateNewMaster PoolAllowedOperations = "designate_new_master"
 	// Indicates this pool is in the process of configuring repositories
 	PoolAllowedOperationsConfigureRepositories PoolAllowedOperations = "configure_repositories"
@@ -104,7 +104,7 @@ type PoolRecord struct {
 	NameLabel string
 	// Description
 	NameDescription string
-	// The host that is pool master
+	// The host that is the pool coordinator
 	Master HostRef
 	// Default SR for VDIs
 	DefaultSR SRRef
@@ -192,7 +192,7 @@ type PoolRecord struct {
 	RepositoryProxyPassword SecretRef
 	// Default behaviour during migration, True if stream compression should be used
 	MigrationCompression bool
-	// true if bias against pool master when scheduling vms is enabled, false otherwise
+	// true if bias against pool coordinator when scheduling vms is enabled, false otherwise
 	CoordinatorBias bool
 	// Maximum number of threads to use for PAM authentication
 	LocalAuthMaxThreads int
@@ -982,7 +982,7 @@ func (_class PoolClass) SetIgmpSnoopingEnabled(sessionID SessionRef, self PoolRe
 	return
 }
 
-// DisableSslLegacy Sets ssl_legacy false on each host, pool-master last. See Host.ssl_legacy and Host.set_ssl_legacy.
+// DisableSslLegacy Sets ssl_legacy false on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
 func (_class PoolClass) DisableSslLegacy(sessionID SessionRef, self PoolRef) (_err error) {
 	_method := "pool.disable_ssl_legacy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -997,7 +997,7 @@ func (_class PoolClass) DisableSslLegacy(sessionID SessionRef, self PoolRef) (_e
 	return
 }
 
-// EnableSslLegacy Sets ssl_legacy true on each host, pool-master last. See Host.ssl_legacy and Host.set_ssl_legacy.
+// EnableSslLegacy Sets ssl_legacy true on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
 func (_class PoolClass) EnableSslLegacy(sessionID SessionRef, self PoolRef) (_err error) {
 	_method := "pool.enable_ssl_legacy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1155,7 +1155,7 @@ func (_class PoolClass) EnableTLSVerification(sessionID SessionRef) (_err error)
 	return
 }
 
-// CertificateSync Copy the TLS CA certificates and CRLs of the master to all slaves.
+// CertificateSync Copy the TLS CA certificates and CRLs of the coordinator to all supporters.
 func (_class PoolClass) CertificateSync(sessionID SessionRef) (_err error) {
 	_method := "pool.certificate_sync"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1416,7 +1416,7 @@ func (_class PoolClass) InitializeWlb(sessionID SessionRef, wlbURL string, wlbUs
 	return
 }
 
-// DetectNonhomogeneousExternalAuth This call asynchronously detects if the external authentication configuration in any slave is different from that in the master and raises appropriate alerts
+// DetectNonhomogeneousExternalAuth This call asynchronously detects if the external authentication configuration in any supporter is different from that in the coordinator and raises appropriate alerts
 func (_class PoolClass) DetectNonhomogeneousExternalAuth(sessionID SessionRef, pool PoolRef) (_err error) {
 	_method := "pool.detect_nonhomogeneous_external_auth"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1641,7 +1641,7 @@ func (_class PoolClass) HaPreventRestartsFor(sessionID SessionRef, seconds int) 
 	return
 }
 
-// DesignateNewMaster Perform an orderly handover of the role of master to the referenced host.
+// DesignateNewMaster Perform an orderly handover of the role of coordinator to the referenced host.
 func (_class PoolClass) DesignateNewMaster(sessionID SessionRef, host HostRef) (_err error) {
 	_method := "pool.designate_new_master"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1783,7 +1783,7 @@ func (_class PoolClass) CreateVLAN(sessionID SessionRef, device string, network 
 	return
 }
 
-// RecoverSlaves Instruct a pool master, M, to try and contact its slaves and, if slaves are in emergency mode, reset their master address to M.
+// RecoverSlaves Instruct a pool coordinator, M, to try and contact its supporters and, if supporters are in emergency mode, reset their coordinator address to M.
 func (_class PoolClass) RecoverSlaves(sessionID SessionRef) (_retval []HostRef, _err error) {
 	_method := "pool.recover_slaves"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1798,7 +1798,7 @@ func (_class PoolClass) RecoverSlaves(sessionID SessionRef) (_retval []HostRef, 
 	return
 }
 
-// EmergencyResetMaster Instruct a slave already in a pool that the master has changed
+// EmergencyResetMaster Instruct a supporter already in a pool that the coordinator has changed
 func (_class PoolClass) EmergencyResetMaster(sessionID SessionRef, masterAddress string) (_err error) {
 	_method := "pool.emergency_reset_master"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1813,7 +1813,7 @@ func (_class PoolClass) EmergencyResetMaster(sessionID SessionRef, masterAddress
 	return
 }
 
-// EmergencyTransitionToMaster Instruct host that's currently a slave to transition to being master
+// EmergencyTransitionToMaster Instruct host that's currently a supporter to transition to being coordinator
 func (_class PoolClass) EmergencyTransitionToMaster(sessionID SessionRef) (_err error) {
 	_method := "pool.emergency_transition_to_master"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -1824,7 +1824,7 @@ func (_class PoolClass) EmergencyTransitionToMaster(sessionID SessionRef) (_err 
 	return
 }
 
-// Eject Instruct a pool master to eject a host from the pool
+// Eject Instruct a pool coordinator to eject a host from the pool
 func (_class PoolClass) Eject(sessionID SessionRef, host HostRef) (_err error) {
 	_method := "pool.eject"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

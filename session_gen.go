@@ -29,7 +29,7 @@ type SessionRecord struct {
 	ThisUser UserRef
 	// Timestamp for last time session was active
 	LastActive time.Time
-	// True if this session relates to a intra-pool login, false otherwise
+	// True if this session relates to an intra-pool login, false otherwise
 	Pool bool
 	// additional configuration
 	OtherConfig map[string]string
@@ -49,7 +49,7 @@ type SessionRecord struct {
 	Tasks []TaskRef
 	// references the parent session that created this session
 	Parent SessionRef
-	// a key string provided by a API user to distinguish itself from other users sharing the same login name
+	// a key string provided by an API user to distinguish itself from other users sharing the same login name
 	Originator string
 	// indicates whether this session was authenticated using a client certificate
 	ClientCertificate bool
@@ -122,7 +122,7 @@ func (_class SessionClass) CreateFromDbFile(sessionID SessionRef, filename strin
 	return
 }
 
-// SlaveLocalLoginWithPassword Authenticate locally against a slave in emergency mode. Note the resulting sessions are only good for use on this host.
+// SlaveLocalLoginWithPassword Authenticate locally against a supporter in emergency mode. Note the resulting sessions are only good for use on this host.
 func (_class SessionClass) SlaveLocalLoginWithPassword(uname string, pwd string) (_retval SessionRef, _err error) {
 	_method := "session.slave_local_login_with_password"
 	_unameArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "uname"), uname)

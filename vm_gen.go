@@ -29,7 +29,7 @@ const (
 	VMPowerStatePaused VMPowerState = "Paused"
 	// Running
 	VMPowerStateRunning VMPowerState = "Running"
-	// VM state has been saved to disk and it is nolonger running. Note that disks remain in-use while the VM is suspended.
+	// VM state has been saved to disk and it is no longer running. Note that disks remain in use while the VM is suspended.
 	VMPowerStateSuspended VMPowerState = "Suspended"
 )
 
@@ -2323,7 +2323,7 @@ func (_class VMClass) HardReboot(sessionID SessionRef, vm VMRef) (_err error) {
 	return
 }
 
-// PowerStateReset Reset the power-state of the VM to halted in the database only. (Used to recover from slave failures in pooling scenarios by resetting the power-states of VMs running on dead slaves to halted.) This is a potentially dangerous operation; use with care.
+// PowerStateReset Reset the power-state of the VM to halted in the database only. (Used to recover from supporter failures in pooling scenarios by resetting the power-states of VMs running on dead supporters to halted.) This is a potentially dangerous operation; use with care.
 func (_class VMClass) PowerStateReset(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.power_state_reset"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2569,8 +2569,8 @@ func (_class VMClass) Provision(sessionID SessionRef, vm VMRef) (_err error) {
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	SR_FULL - The SR is full. Requested new size exceeds the maximum size
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-//	VM_CHECKPOINT_SUSPEND_FAILED - An error occured while saving the memory image of the specified virtual machine
-//	VM_CHECKPOINT_RESUME_FAILED - An error occured while restoring the memory image of the specified virtual machine
+//	VM_CHECKPOINT_SUSPEND_FAILED - An error occurred while saving the memory image of the specified virtual machine
+//	VM_CHECKPOINT_RESUME_FAILED - An error occurred while restoring the memory image of the specified virtual machine
 func (_class VMClass) Checkpoint(sessionID SessionRef, vm VMRef, newName string) (_retval VMRef, _err error) {
 	_method := "VM.checkpoint"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
@@ -2615,7 +2615,7 @@ func (_class VMClass) Revert(sessionID SessionRef, snapshot VMRef) (_err error) 
 	return
 }
 
-// Copy Copied the specified VM, making a new VM. Unlike clone, copy does not exploits the capabilities of the underlying storage repository in which the VM's disk images are stored. Instead, copy guarantees that the disk images of the newly created VM will be 'full disks' - i.e. not part of a CoW chain.  This function can only be called when the VM is in the Halted State.
+// Copy Copies the specified VM, making a new VM. Unlike clone, copy does not exploit the capabilities of the underlying storage repository in which the VM's disk images are stored. Instead, copy guarantees that the disk images of the newly created VM will be 'full disks' - i.e. not part of a CoW chain.  This function can only be called when the VM is in the Halted State.
 //
 // Errors:
 //

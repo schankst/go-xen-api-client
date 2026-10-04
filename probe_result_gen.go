@@ -33,7 +33,7 @@ type ProbeResultRecord struct {
 
 type ProbeResultRef string
 
-// A set of properties that describe one result element of SR.probe. Result elements and properties can change dynamically based on changes to the the SR.probe input-parameters or the target.
+// A set of properties that describe one result element of SR.probe. Result elements and properties can change dynamically based on changes to the SR.probe input-parameters or the target.
 type ProbeResultClass struct {
 	client *Client
 }

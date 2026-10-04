@@ -62,7 +62,7 @@ type MessageRecord struct {
 
 type MessageRef string
 
-// An message for the attention of the administrator
+// A message for the attention of the administrator
 type MessageClass struct {
 	client *Client
 }

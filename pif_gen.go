@@ -27,7 +27,7 @@ const (
 	PifIgmpStatusEnabled PifIgmpStatus = "enabled"
 	// IGMP Snooping is disabled in the corresponding backend bridge.'
 	PifIgmpStatusDisabled PifIgmpStatus = "disabled"
-	// IGMP snooping status is unknown. If this is a VLAN master, then please consult the underlying VLAN slave PIF.
+	// IGMP snooping status is unknown. If this is the untagged PIF of a VLAN, then please consult the underlying tagged PIF.
 	PifIgmpStatusUnknown PifIgmpStatus = "unknown"
 )
 

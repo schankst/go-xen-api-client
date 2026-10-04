@@ -27,7 +27,7 @@ type HostMetricsRecord struct {
 	MemoryTotal int
 	// Free host memory (bytes)
 	MemoryFree int
-	// Pool master thinks this host is live
+	// Pool coordinator thinks this host is live
 	Live bool
 	// Time at which this information was last updated
 	LastUpdated time.Time
