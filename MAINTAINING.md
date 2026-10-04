@@ -51,7 +51,11 @@ does the full regeneration below by itself:
    panics on an unrecognized schema construct, **the workflow fails
    loudly and opens a GitHub issue** rather than pushing anything broken.
 6. On success: commits everything, bumps the minor version (e.g. `v0.1.0` ->
-   `v0.2.0`), tags, and pushes.
+   `v0.2.0`), tags, and pushes **and creates a matching GitHub release** — so
+   the release list stays in step with the tag history. The release is titled
+   after the new tag and XAPI release, its notes carry a compare link to the
+   previous tag, and its creation is idempotent (a re-run leaves an existing
+   release untouched instead of failing).
 
 The one thing this **can't** automate: if `xenapi.json` introduces a schema
 construct `xenapi.go` has never seen (the way `"an event batch"` or

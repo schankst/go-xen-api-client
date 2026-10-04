@@ -62,8 +62,10 @@ jobs:
           go vet ./...
           go test -short ./...
 
-      - name: Commit, tag, and push
+      - name: Commit, tag, push, and release
         if: steps.fetch.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -87,6 +89,27 @@ jobs:
 
           git push origin main
           git push origin "$NEW_TAG"
+
+          # One release per regeneration, so the release list matches the tag
+          # history. Gated on an actual schema change above, so no-op runs
+          # create nothing. Idempotent against re-runs.
+          cat > /tmp/release-notes.md <<EOF
+          Automated schema regeneration - no hand-written code change.
+
+          - xenapi.SchemaXAPIRelease: ${RELEASE}
+          - Generated bindings refreshed from xenapi.json.
+
+          **Full diff**: https://github.com/${GITHUB_REPOSITORY}/compare/${LATEST_TAG}...${NEW_TAG}
+          EOF
+
+          if gh release view "$NEW_TAG" >/dev/null 2>&1; then
+            echo "release $NEW_TAG already exists; leaving it untouched"
+          else
+            gh release create "$NEW_TAG" \
+              --title "$NEW_TAG - Regenerated bindings (XAPI ${RELEASE})" \
+              --notes-file /tmp/release-notes.md \
+              --latest
+          fi
 
       - name: Open an issue if the run failed
         if: failure()
