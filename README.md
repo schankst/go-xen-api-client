@@ -151,6 +151,9 @@ against, that's tracked separately:
 
 - [GOOD_TO_KNOW.md](GOOD_TO_KNOW.md) — real XenAPI behavior/gotchas this
   fork's development turned up, with sources.
+- [IMPORT_EXPORT.md](IMPORT_EXPORT.md) — moving VDI data in and out: the
+  HTTP import/export endpoints, accepted formats (`raw`/`vhd`/`tar`/`qcow2`),
+  push vs. pull, the fixed-VHD gotcha, and task handling.
 - [PERFORMANCE.md](PERFORMANCE.md) — fetching at scale: why per-object RPC
   calls don't scale to real environments, and the batch-fetch pattern to
   use instead.
