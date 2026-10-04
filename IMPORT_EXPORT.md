@@ -25,8 +25,8 @@ checked against the XAPI source and/or a live host, noted inline.
   the on-SR *image format* is a separate, older concept - see
   [QCOW2](#qcow2-image-format-vs-wire-format).
 - Whole-VM archives are a separate topic: **neither OVA nor VMDK is a VDI wire
-  format**, and the `tar` value is not the OVF container. VM archives move as
-  **XVA** via `PUT /import` (or `VM.Import` pull) - see
+  format**, and the `tar` value is not the OVF container. XAPI itself parses
+  only **XVA**, which is imported via `PUT /import` (or `VM.Import` pull) - see
   [Whole-VM archives: OVA and XVA](#whole-vm-archives-ova-and-xva).
 
 ## Where the data actually flows
@@ -265,8 +265,12 @@ for {
 ## Whole-VM archives: OVA and XVA
 
 The endpoints above move a single disk. A whole VM travels as an *archive*, and
-the two archive formats an XCP-ng host meets are OVA and XVA. They are more
-different than their shared "tar" container suggests.
+the only archive format XAPI itself understands is **XVA** - it is not a
+neutral interchange format but a dump of XAPI's own object graph. **OVA** (and
+bare VMDK/disk images) is handled entirely *client-side*: XenCenter and Xen
+Orchestra unpack the archive, parse the OVF, convert the VMDK, and then drive
+the same HTTP endpoints the CLI uses. The two formats share the "tar" framing
+and little else.
 
 ### Neither OVA nor VMDK is a VDI wire format
 
@@ -278,6 +282,29 @@ checksummed chunks, see below), consumed by `Stream_vdi.recv_all_vdi`, and an
 OVA tar does not match its layout. The XAPI tree contains no `ovf`/`ova`/`vmdk`
 handling at all: OVA import is client-side work in XenCenter/Xen Orchestra,
 which unpack the archive, parse the OVF, and feed the disk to the host.
+
+### Why OVA import is client-side
+
+This is a deliberate boundary, not a missing feature:
+
+- **XVA is a XAPI serialisation, not an interchange format.** Its `ova.xml` is
+  the XAPI database rows for one VM; import is largely "replay my own records".
+  The OVF/CIM model has no XAPI refs, so importing it means inventing a lossy
+  mapping (which SR, which network, MACs, `platform`, SM config, VBD device
+  numbers, ...).
+- **Disk readers.** XAPI's import pipeline wires up `vhd-tool` and `qcow-tool`
+  only; there is no VMDK reader in the server, and an OVA's disk is usually a
+  possibly-compressed `streamOptimized` VMDK. VMware imports exist, but they go
+  through `VM.import_convert` (`xe vm-import type=<vendor>`), which drives an
+  external conversion service - still no server-side OVA parsing.
+- **Where conversion belongs.** XenServer/XCP-ng keep XAPI thin and put
+  foreign-format handling in clients/helpers: XenCenter (.NET) and Xen
+  Orchestra (Node) both parse the OVF and convert the VMDK themselves, then
+  reuse the same `/import_raw_vdi` and `/import` endpoints. The "XVA, OVA, ..."
+  menu in XenCenter reflects the *client's* capabilities, not the server's.
+- **Attack surface.** Parsing untrusted OVF/VMDK inside dom0 would enlarge the
+  control plane's attack surface and add an open-ended maintenance burden for a
+  spec with many optional vendor extensions.
 
 ### XVA is a tar too, but its contents are XAPI's
 
