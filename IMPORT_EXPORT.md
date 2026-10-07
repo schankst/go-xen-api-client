@@ -28,6 +28,10 @@ checked against the XAPI source and/or a live host, noted inline.
   format**, and the `tar` value is not the OVF container. XAPI itself parses
   only **XVA**, which is imported via `PUT /import` (or `VM.Import` pull) - see
   [Whole-VM archives: OVA and XVA](#whole-vm-archives-ova-and-xva).
+- **Backups are not a XAPI feature.** XAPI exposes the primitives (VM
+  snapshots, XVA export, VDI export, changed-block tracking, the pool
+  database), but the scheduler, retention and catalog are yours to build - see
+  [Backups](#backups).
 
 ## Where the data actually flows
 
@@ -371,6 +375,122 @@ Verified on a live XCP-ng 8.3 host with MikroTik `chr-7.25rc1.ova`:
   `name_label` from `ova.xml` is kept - XAPI accepts no name override - so
   rename afterwards if you need a different one.
 
+## Backups
+
+XenAPI has no backup subsystem: no scheduler, no retention, no catalog. What it
+has is the *primitives* to build one, exposed over the same two layers as the
+rest of this document (XML-RPC for object state, HTTP for bytes). Everything
+below is checked against the generated bindings and the XAPI sources; the
+routines are what a backup tool has to assemble itself.
+
+### The primitives
+
+XML-RPC:
+
+| Goal | Method |
+| --- | --- |
+| VM point-in-time snapshot (disk state; VM keeps running) | `VM.Snapshot(vm, newName, ignoreVdis)` |
+| application-consistent snapshot (needs guest tools; VSS on Windows) | `VM.SnapshotWithQuiesce(vm, newName)` |
+| snapshot including RAM (running VMs only) | `VM.Checkpoint(vm, newName)` |
+| roll back | `VM.Revert(snapshot)` |
+| list / inspect / delete snapshots | `VM.GetSnapshots`, `VM.GetIsASnapshot`, `VM.GetSnapshotOf`, `VM.Destroy(snap)` |
+| disk snapshot / clone | `VDI.Snapshot`, `VDI.Clone`, `VDI.Copy`, `VDI.Revert` |
+| incremental (changed-block tracking) | `VDI.EnableCbt`/`DisableCbt`/`GetCbtEnabled`, `VDI.ListChangedBlocks(from, to)`, `VDI.GetNbdInfo` |
+| clone / copy a whole VM | `VM.Clone`, `VM.Copy` |
+| disaster recovery | `VM.AssertCanBeRecovered`, `VM.Recover`, `VM.GetSRsRequiredForRecovery` |
+| RRD metrics | `Host.BackupRrds` |
+
+HTTP (the bytes):
+
+| Endpoint | Payload |
+| --- | --- |
+| `GET /export?uuid=<vm>` | whole VM as XVA (disks + metadata) |
+| `GET /export_metadata?uuid=<vm>` | VM metadata only (object graph) |
+| `GET /export_raw_vdi?vdi=<ref>` | one disk (raw/vhd/qcow2) |
+| `GET /pool/xmldbdump` (on the master) | pool database |
+| `GET /host_backup` | host configuration (networking, storage, ...) |
+
+XVA carries both data and metadata; a disk-only export does not, so pair
+`/export_raw_vdi` with `/export_metadata` if you take that route.
+
+### Snapshots are not backups
+
+A snapshot is a copy-on-write child on the *same* SR. Lose the SR and you lose
+the original and the snapshot together. A backup only exists once the snapshot
+has left the host - and since the export is plain HTTP, it can be streamed
+straight to NAS/S3 without staging it on a host disk.
+
+### A full-backup routine
+
+Never export the live disk of a running VM. Snapshot first, export the
+snapshot, delete the snapshot:
+
+```go
+task, _ := xapi.Task.Create(session, "backup "+name, "")
+
+// 1. point-in-time, preferably quiesced
+snap, err := xapi.VM.SnapshotWithQuiesce(session, vm, "bkp-"+name+"-"+ts)
+if err != nil {
+    // guest tools missing / unsupported -> crash-consistent fallback
+    snap, err = xapi.VM.Snapshot(session, vm, "bkp-"+name+"-"+ts, nil)
+}
+
+// 2. stream GET /export?session_id=...&uuid=<snap>&task_id=<task>
+//    straight to the backup target (no host-side staging)
+
+// 3. check the task, not just the HTTP status
+st, _ := xapi.Task.GetStatus(session, task)      // success / failure
+msg, _ := xapi.Task.GetErrorInfo(session, task)  // non-empty on failure
+
+// 4. always clean up, also on failure
+xapi.VM.Destroy(session, snap)
+```
+
+Pool and host configuration are separate artifacts (`/pool/xmldbdump`,
+`/host_backup`); without them a recovered VM may have no network or storage to
+attach to.
+
+### What "stable" requires
+
+- **Consistency level is a choice.** `VM.SnapshotWithQuiesce` is
+  application-consistent only with guest tools (VSS on Windows, the guest agent
+  on Linux). If it fails, fall back to a plain snapshot and record the run as
+  *crash-consistent*. For databases, quiesce in the guest first (flush/freeze,
+  `BACKUP DATABASE`, ...) and snapshot after.
+- **One run per VM (and roughly per SR).** Two concurrent exports of the same
+  CoW chain break the SM's coalescing. Lock on the VM UUID, and avoid racing
+  snapshots on one SR.
+- **Task-based, with a timeout.** Attach each run to a `Task` and poll
+  `Task.GetStatus`/`GetErrorInfo`; treat a stuck task as a failure so the
+  snapshot is still cleaned up.
+- **Idempotent and crash-safe.** Tag the backup snapshot in `other_config` with
+  a run id; at startup, reap orphaned `bkp-*` snapshots left by aborted runs.
+- **Verify integrity.** An XVA has a `.xxhash` per 1 MiB chunk; a disk-level
+  backup can be checked with a SHA256 roundtrip (`/export_raw_vdi` and
+  compare). A `success` task alone is not proof.
+- **Retention (GFS).** Nothing in XAPI prunes; implement daily/weekly/monthly
+  tiers and delete old snapshot VMs (`VM.Destroy`) / VDIs
+  (`VDI.Destroy`/`VDI.DataDestroy`).
+- **Restore drills.** Import into an isolated lab with `PUT /import` *without*
+  `restore` (fresh UUIDs/MACs, no collision); use `restore=true` only to
+  deliberately replace. Boot and verify.
+
+### Incremental backups
+
+`VDI.EnableCbt` turns on changed-block tracking. Take two snapshots and call
+`VDI.ListChangedBlocks(from, to)` for a bitmap of the blocks that changed; read
+those over NBD (`VDI.GetNbdInfo`) or a VHD delta export, and rebuild chains
+from a periodic full. This is where it gets hard - chain management, baseline
+pruning and chain-level consistency are the parts backup tools exist to handle.
+
+### What is missing
+
+XAPI provides no scheduler, no retention, no backup catalog, no dedup/delta
+management, no restore orchestration and no application consistency beyond VSS.
+The de-facto tools are **Xen Orchestra / XO Backup** (built on exactly these
+primitives) and the community `xcp-ng-backup` scripts. A purpose-built routine
+is a reasonable thin layer over the methods above.
+
 ## Version compatibility
 
 Generated bindings in this fork are regenerated against the current XenAPI
@@ -389,6 +509,8 @@ format table.
   - `ocaml/xapi/importexport.ml`, `import_raw_vdi.ml`, `export_raw_vdi.ml`
   - `ocaml/xapi/import.ml`, `ocaml/xapi/export.ml` (whole-VM XVA import/export,
     `PUT /import` and `GET /export`)
+  - `ocaml/xapi/xapi_host_backup.ml`, `ocaml/xapi/pool_db_backup.ml`
+    (`/host_backup`, `/pool/xmldbdump`)
   - `ocaml/xapi/vhd_tool_wrapper.ml`, `qcow_tool_wrapper.ml`
   - `ocaml/xapi/xapi_http.ml`, `ocaml/xapi-consts/constants.ml`,
     `ocaml/idl/datamodel.ml`
