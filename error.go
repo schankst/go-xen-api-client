@@ -369,6 +369,7 @@ const (
 	ERR_UPDATE_ALREADY_APPLIED_IN_POOL                                              = "UPDATE_ALREADY_APPLIED_IN_POOL"
 	ERR_UPDATE_POOL_APPLY_FAILED                                                    = "UPDATE_POOL_APPLY_FAILED"
 	ERR_COULD_NOT_UPDATE_IGMP_SNOOPING_EVERYWHERE                                   = "COULD_NOT_UPDATE_IGMP_SNOOPING_EVERYWHERE"
+	ERR_LLDP_PIF_REPLUG_FAILED                                                      = "LLDP_PIF_REPLUG_FAILED"
 	ERR_UPDATE_APPLY_FAILED                                                         = "UPDATE_APPLY_FAILED"
 	ERR_UPDATE_PRECHECK_FAILED_UNKNOWN_ERROR                                        = "UPDATE_PRECHECK_FAILED_UNKNOWN_ERROR"
 	ERR_UPDATE_PRECHECK_FAILED_PREREQUISITE_MISSING                                 = "UPDATE_PRECHECK_FAILED_PREREQUISITE_MISSING"

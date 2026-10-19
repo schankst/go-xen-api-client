@@ -4170,6 +4170,13 @@ func convertPIFRecordToGo(context string, input interface{}) (record PIFRecord, 
 			return
 		}
 	}
+	lldpModeValue, ok := rpcStruct["lldp_mode"]
+	if ok && lldpModeValue != nil {
+		record.LldpMode, err = convertEnumPifLldpModeToGo(fmt.Sprintf("%s.%s", context, "lldp_mode"), lldpModeValue)
+		if err != nil {
+			return
+		}
+	}
 	return
 }
 
@@ -4311,6 +4318,13 @@ func convertPIFMetricsRecordToGo(context string, input interface{}) (record PIFM
 	otherConfigValue, ok := rpcStruct["other_config"]
 	if ok && otherConfigValue != nil {
 		record.OtherConfig, err = convertStringToStringMapToGo(fmt.Sprintf("%s.%s", context, "other_config"), otherConfigValue)
+		if err != nil {
+			return
+		}
+	}
+	lldpNeighborValue, ok := rpcStruct["lldp_neighbor"]
+	if ok && lldpNeighborValue != nil {
+		record.LldpNeighbor, err = convertStringToStringMapToGo(fmt.Sprintf("%s.%s", context, "lldp_neighbor"), lldpNeighborValue)
 		if err != nil {
 			return
 		}
@@ -10524,6 +10538,31 @@ func convertEnumLivepatchStatusToGo(context string, input interface{}) (value Li
 	return
 }
 
+func convertEnumLldpMulticastAddressToGo(context string, input interface{}) (value LldpMulticastAddress, err error) {
+	strValue, err := convertStringToGo(context, input)
+	if err != nil {
+		return
+	}
+	switch strValue {
+	case "nearestbridge":
+		value = LldpMulticastAddressNearestbridge
+	case "nearestnontpmrbridge":
+		value = LldpMulticastAddressNearestnontpmrbridge
+	case "nearestcustomerbridge":
+		value = LldpMulticastAddressNearestcustomerbridge
+	default:
+		// Unknown value from a newer XAPI version than this was generated
+		// against; pass it through as-is rather than failing the whole
+		// record parse.
+		value = LldpMulticastAddress(strValue)
+	}
+	return
+}
+
+func convertEnumLldpMulticastAddressToXen(context string, value LldpMulticastAddress) (string, error) {
+	return string(value), nil
+}
+
 func convertEnumNetworkDefaultLockingModeToGo(context string, input interface{}) (value NetworkDefaultLockingMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
@@ -10837,6 +10876,31 @@ func convertEnumPifIgmpStatusToGo(context string, input interface{}) (value PifI
 		value = PifIgmpStatus(strValue)
 	}
 	return
+}
+
+func convertEnumPifLldpModeToGo(context string, input interface{}) (value PifLldpMode, err error) {
+	strValue, err := convertStringToGo(context, input)
+	if err != nil {
+		return
+	}
+	switch strValue {
+	case "inherited":
+		value = PifLldpModeInherited
+	case "enabled":
+		value = PifLldpModeEnabled
+	case "disabled":
+		value = PifLldpModeDisabled
+	default:
+		// Unknown value from a newer XAPI version than this was generated
+		// against; pass it through as-is rather than failing the whole
+		// record parse.
+		value = PifLldpMode(strValue)
+	}
+	return
+}
+
+func convertEnumPifLldpModeToXen(context string, value PifLldpMode) (string, error) {
+	return string(value), nil
 }
 
 func convertEnumPlacementPolicyToGo(context string, input interface{}) (value PlacementPolicy, err error) {
@@ -14348,6 +14412,20 @@ func convertPoolRecordToGo(context string, input interface{}) (record PoolRecord
 	autoUpdateVMSecurebootCertificatesValue, ok := rpcStruct["auto_update_vm_secureboot_certificates"]
 	if ok && autoUpdateVMSecurebootCertificatesValue != nil {
 		record.AutoUpdateVMSecurebootCertificates, err = convertBoolToGo(fmt.Sprintf("%s.%s", context, "auto_update_vm_secureboot_certificates"), autoUpdateVMSecurebootCertificatesValue)
+		if err != nil {
+			return
+		}
+	}
+	lldpEnabledValue, ok := rpcStruct["lldp_enabled"]
+	if ok && lldpEnabledValue != nil {
+		record.LldpEnabled, err = convertBoolToGo(fmt.Sprintf("%s.%s", context, "lldp_enabled"), lldpEnabledValue)
+		if err != nil {
+			return
+		}
+	}
+	lldpMulticastAddressValue, ok := rpcStruct["lldp_multicast_address"]
+	if ok && lldpMulticastAddressValue != nil {
+		record.LldpMulticastAddress, err = convertEnumLldpMulticastAddressToGo(fmt.Sprintf("%s.%s", context, "lldp_multicast_address"), lldpMulticastAddressValue)
 		if err != nil {
 			return
 		}

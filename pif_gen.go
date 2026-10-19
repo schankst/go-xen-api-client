@@ -64,6 +64,17 @@ const (
 	PrimaryAddressTypeIPv6 PrimaryAddressType = "IPv6"
 )
 
+type PifLldpMode string
+
+const (
+	// LLDP is enabled or disabled based on pool.lldp_enabled.
+	PifLldpModeInherited PifLldpMode = "inherited"
+	// LLDP is enabled on the NIC of the managed physical PIF, overriding pool.lldp_enabled.
+	PifLldpModeEnabled PifLldpMode = "enabled"
+	// LLDP is disabled on the NIC of the managed physical PIF, overriding pool.lldp_enabled.
+	PifLldpModeDisabled PifLldpMode = "disabled"
+)
+
 type PIFRecord struct {
 	// Unique identifier/object reference
 	UUID string
@@ -135,6 +146,8 @@ type PIFRecord struct {
 	SriovLogicalPIFOf []NetworkSriovRef
 	// Link to underlying PCI device
 	PCI PCIRef
+	// The LLDP mode of the physical NIC for the PIF. This setting does not apply to other types of PIFs, such as non-managed PIFs, bond PIFs, VLAN PIFs, tunnel PIFs, or SR-IOV PIFs.
+	LldpMode PifLldpMode
 }
 
 type PIFRef string
@@ -171,6 +184,29 @@ func (_class PIFClass) GetAll(sessionID SessionRef) (_retval []PIFRef, _err erro
 		return
 	}
 	_retval, _err = convertPIFRefSetToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// SetLldpMode Set the LLDP mode of this PIF, then apply the change by re-plugging the PIF. Only valid for managed physical PIFs.
+func (_class PIFClass) SetLldpMode(sessionID SessionRef, self PIFRef, value PifLldpMode, force bool) (_err error) {
+	_method := "PIF.set_lldp_mode"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPIFRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertEnumPifLldpModeToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_forceArg, _err := convertBoolToXen(fmt.Sprintf("%s(%s)", _method, "force"), force)
+	if _err != nil {
+		return
+	}
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg, _forceArg)
 	return
 }
 
@@ -655,6 +691,25 @@ func (_class PIFClass) SetOtherConfig(sessionID SessionRef, self PIFRef, value m
 		return
 	}
 	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetLldpMode Get the lldp_mode field of the given PIF.
+func (_class PIFClass) GetLldpMode(sessionID SessionRef, self PIFRef) (_retval PifLldpMode, _err error) {
+	_method := "PIF.get_lldp_mode"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPIFRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEnumPifLldpModeToGo(_method+" -> ", _result.Value)
 	return
 }
 

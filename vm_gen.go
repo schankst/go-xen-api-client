@@ -2548,6 +2548,7 @@ func (_class VMClass) Start(sessionID SessionRef, vm VMRef, startPaused bool, fo
 //	SR_FULL - The SR is full. Requested new size exceeds the maximum size
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
+//	DEFAULT_SR_NOT_FOUND - The default SR reference does not point to a valid SR
 func (_class VMClass) Provision(sessionID SessionRef, vm VMRef) (_err error) {
 	_method := "VM.provision"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)

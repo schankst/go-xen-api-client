@@ -47,6 +47,8 @@ type PIFMetricsRecord struct {
 	LastUpdated time.Time
 	// additional configuration
 	OtherConfig map[string]string
+	// The LLDP information for the physical NIC of the corresponding PIF: the effective LLDP state (key 'state', one of enabled, disabled or blocked) and, when a neighbour is seen, the received TLVs (keys 'system_name', 'port_id' and 'port_description'). Empty for PIFs that are not managed physical NICs.
+	LldpNeighbor map[string]string
 }
 
 type PIFMetricsRef string
@@ -144,6 +146,25 @@ func (_class PIFMetricsClass) SetOtherConfig(sessionID SessionRef, self PIFMetri
 		return
 	}
 	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetLldpNeighbor Get the lldp_neighbor field of the given PIF_metrics.
+func (_class PIFMetricsClass) GetLldpNeighbor(sessionID SessionRef, self PIFMetricsRef) (_retval map[string]string, _err error) {
+	_method := "PIF_metrics.get_lldp_neighbor"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPIFMetricsRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertStringToStringMapToGo(_method+" -> ", _result.Value)
 	return
 }
 

@@ -68,6 +68,17 @@ const (
 	TelemetryFrequencyMonthly TelemetryFrequency = "monthly"
 )
 
+type LldpMulticastAddress string
+
+const (
+	// Nearest bridge group address (MAC 01:80:C2:00:00:0E). LLDP frames reach only the immediate neighbor on the physical link.
+	LldpMulticastAddressNearestbridge LldpMulticastAddress = "nearestbridge"
+	// Nearest non-TPMR (Two-Port MAC Relay) bridge group address (MAC 01:80:C2:00:00:03).
+	LldpMulticastAddressNearestnontpmrbridge LldpMulticastAddress = "nearestnontpmrbridge"
+	// Nearest customer bridge group address (MAC 01:80:C2:00:00:00).
+	LldpMulticastAddressNearestcustomerbridge LldpMulticastAddress = "nearestcustomerbridge"
+)
+
 type UpdateSyncFrequency string
 
 const (
@@ -230,6 +241,10 @@ type PoolRecord struct {
 	VMConsoleIdleTimeout int
 	// When true, at VM.create time the pool automatically marks a newly created VM whose Secure Boot certificates are due to expire by setting VM.secureboot_certificates_state to update_on_boot (the same effect as VM.update_secureboot_certificates_on_boot), so the certificates are updated on the VM's next boot. This applies to VMs created by VM.create, including those created by operations that internally call it: the HTTP(s) PUT /import and /import_metadata calls and disaster recovery (VM.recover and VM_appliance.recover); it does not apply to VM.clone or VM.copy, which inherit the source VM's state.
 	AutoUpdateVMSecurebootCertificates bool
+	// When true, LLDP is enabled on the NIC associated with each managed physical PIF on every host in the pool. When false, it is disabled. However, it can be overridden by PIF.lldp_mode settings when mode is not inherited. LLDP receiving and advertising are always enabled or disabled together.
+	LldpEnabled bool
+	// The multicast MAC address used for LLDP advertising. To apply a change, use pool.set_lldp_enabled(with force=true).
+	LldpMulticastAddress LldpMulticastAddress
 }
 
 type PoolRef string
@@ -960,6 +975,29 @@ func (_class PoolClass) HasExtension(sessionID SessionRef, self PoolRef, name st
 		return
 	}
 	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// SetLldpEnabled Enable or disable LLDP on the NIC of every managed physical PIF in the pool, then apply the change by re-plugging the affected PIFs.
+func (_class PoolClass) SetLldpEnabled(sessionID SessionRef, self PoolRef, value bool, force bool) (_err error) {
+	_method := "pool.set_lldp_enabled"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPoolRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertBoolToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_forceArg, _err := convertBoolToXen(fmt.Sprintf("%s(%s)", _method, "force"), force)
+	if _err != nil {
+		return
+	}
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg, _forceArg)
 	return
 }
 
@@ -1889,6 +1927,25 @@ func (_class PoolClass) Join(sessionID SessionRef, masterAddress string, masterU
 	return
 }
 
+// SetLldpMulticastAddress Set the lldp_multicast_address field of the given pool.
+func (_class PoolClass) SetLldpMulticastAddress(sessionID SessionRef, self PoolRef, value LldpMulticastAddress) (_err error) {
+	_method := "pool.set_lldp_multicast_address"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPoolRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertEnumLldpMulticastAddressToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
 // SetAutoUpdateVMSecurebootCertificates Set the auto_update_vm_secureboot_certificates field of the given pool.
 func (_class PoolClass) SetAutoUpdateVMSecurebootCertificates(sessionID SessionRef, self PoolRef, value bool) (_err error) {
 	_method := "pool.set_auto_update_vm_secureboot_certificates"
@@ -2510,6 +2567,44 @@ func (_class PoolClass) SetNameLabel(sessionID SessionRef, self PoolRef, value s
 		return
 	}
 	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// GetLldpMulticastAddress Get the lldp_multicast_address field of the given pool.
+func (_class PoolClass) GetLldpMulticastAddress(sessionID SessionRef, self PoolRef) (_retval LldpMulticastAddress, _err error) {
+	_method := "pool.get_lldp_multicast_address"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPoolRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEnumLldpMulticastAddressToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// GetLldpEnabled Get the lldp_enabled field of the given pool.
+func (_class PoolClass) GetLldpEnabled(sessionID SessionRef, self PoolRef) (_retval bool, _err error) {
+	_method := "pool.get_lldp_enabled"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertPoolRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertBoolToGo(_method+" -> ", _result.Value)
 	return
 }
 
