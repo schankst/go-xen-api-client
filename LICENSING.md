@@ -6,16 +6,17 @@ from or against, for anyone doing due diligence before depending on it.
 
 ## `xmlrpc` (this repo's own code, not a dependency)
 
-Through v0.1.5, `xmlrpc/` was a vendored copy of
-[amfranz/go-xmlrpc-client](https://github.com/amfranz/go-xmlrpc-client),
-which has **no license file, and never had one**. That was a low-risk
-gray area while it was only ever pulled in as a compiled external module
-dependency; once its full source was copied into this repo, it stopped
-being one.
+Until v0.1.1, `xmlrpc/` was the
+[amfranz/go-xmlrpc-client](https://github.com/amfranz/go-xmlrpc-client)
+module, pulled in as an ordinary compiled dependency; it has **no license
+file, and never had one**. v0.1.2 then vendored its source into this repo
+as `xmlrpc/`, which kept that unlicensed code in place but stopped it
+being a module dependency. Vendoring did **not** resolve the licensing
+question - it made it more visible: from v0.1.2 on, unlicensed third-party
+source code was committed and redistributed in this repo (v0.1.2-v0.1.5).
 
-Rather than accept that risk or wait on an upstream response, `xmlrpc`
-was **rewritten from scratch** in v0.2.0: same public contract (`Client`,
-`NewClient`, `Struct`, `Base64`, `Call`), materially different
+So `xmlrpc` was **rewritten from scratch** in v0.2.0: same public contract
+(`Client`, `NewClient`, `Struct`, `Base64`, `Call`), materially different
 architecture (no `net/rpc`, `strings.Builder`-based encoding instead of
 string concatenation, a proper recursive-descent XML decoder instead of
 regex-based response parsing — see `xmlrpc/doc.go` and the v0.2.0 release
@@ -25,7 +26,9 @@ of this repo is unlicensed third-party source code anymore.
 ## `xenapi.json` (data, not code — used to generate most of this package)
 
 Source: https://github.com/xapi-project/xapi-project.github.io — also
-carries **no LICENSE file**.
+carries **no LICENSE file** (checked October 2026: the repo root has no
+`LICENSE`/`COPYING`, and GitHub's license API reports the repository as
+unlicensed).
 
 This is a materially different situation from the `xmlrpc` case above:
 it isn't general-purpose source code, it's XenAPI's own published
