@@ -42,7 +42,11 @@ jobs:
       - name: Regenerate bindings
         if: steps.fetch.outputs.changed == 'true'
         run: |
-          go get github.com/serenize/snaker
+          # Pinned on purpose: unpinned `go get` resolves to whatever the
+          # proxy serves today, so a local run and CI could format the
+          # generated files with different snaker releases. This is the
+          # version MAINTAINING.md names; bump both together.
+          go get github.com/serenize/snaker@v0.0.0-20201027110005-a7ad2135616e
           rm -f *_gen.go
           go run xenapi.go
           go mod tidy

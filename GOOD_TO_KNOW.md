@@ -97,10 +97,18 @@ Every other `datetime`-typed field in the schema turns up on the wire as a
 properly tagged `<dateTime.iso8601>` value, which the `xmlrpc` package
 parses straight into a Go `time.Time`. `Event`'s `timestamp` field - the
 one on `EventRecord` from `event.next`, not `event.from`'s opaque batch -
-is the one exception observed so far: a live XCP-ng host sent it as a
-plain `<string>` containing an OCaml-style float, e.g. `"1784931839."`
-(the trailing dot is `string_of_float`'s own rendering of a whole-number
-float, not a typo).
+is the one exception observed so far **among typed `datetime` fields**:
+a live XCP-ng host sent it as a plain `<string>` containing an
+OCaml-style float, e.g. `"1784931839."` (the trailing dot is
+`string_of_float`'s own rendering of a whole-number float, not a typo).
+
+The scope matters: the same OCaml-float-as-string shape also shows up in
+`other_config["boot_time"]` (see the section below), but that field is
+typed `string` in the schema, so nothing there promises a
+`<dateTime.iso8601>` value to begin with. `Event.timestamp` is the only
+case where a field the schema calls a `datetime` arrives as a string -
+which is what makes it worth a workaround, rather than just expected
+behaviour for an untyped map.
 
 `convertTimeToGo` tolerates this - falling back to `strconv.ParseFloat`
 and `time.Unix` when the value isn't already a `time.Time` - instead of

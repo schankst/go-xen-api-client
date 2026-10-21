@@ -37,8 +37,8 @@ jobs:
       - name: Vet
         run: go vet ./...
 
-      # -short skips TestAuthentication, which needs a live XenAPI server
-      # on localhost:40080 that CI has no way to provide.
+      # -short: the package has no test that needs it today, but it keeps
+      # any future live-host test from becoming an accidental CI dependency.
       - name: Test
         run: go test -short -race ./...
 

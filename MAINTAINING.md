@@ -102,8 +102,14 @@ If XenAPI was updated, it is required to regenerate all of files with a new API 
 - Delete old generated APIs using `rm *_gen.go`
 - The generator (`xenapi.go`) is itself tagged `// +build ignore`, so `go.mod`
   doesn't carry its own dependency (`github.com/serenize/snaker`); fetch it
-  once with `go get github.com/serenize/snaker` before generating, and run
-  `go mod tidy` afterwards to drop it again (matches upstream's own `go.mod`).
+  once with
+  `go get github.com/serenize/snaker@v0.0.0-20201027110005-a7ad2135616e`
+  before generating, and run `go mod tidy` afterwards to drop it again
+  (matches upstream's own `go.mod`). The version is pinned deliberately and
+  matches the one `regenerate.yml` uses — on Go 1.17+ an unpinned `go get`
+  resolves to whatever the module proxy serves that day, so a local run and
+  CI could otherwise produce different output. Bump the pin in both places
+  together.
 - Generate new API with `go generate` (or `go run xenapi.go` directly) -
   enum tolerance is baked into `convertEnumTypeToGoFuncTemplate`, so
   `convert_gen.go` comes out correct with no separate patch step.

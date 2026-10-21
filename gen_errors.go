@@ -3,8 +3,9 @@
 
 // gen_errors.go regenerates error.go from the upstream xen-api error
 // definitions (a separate source from xenapi.json, not covered by
-// `go generate` / xenapi.go — see README.md's "Versioning" and
-// "Implementation notes" sections).
+// `go generate` / xenapi.go - see MAINTAINING.md's "Implementation notes"
+// for the source and the name/value rule, and README.md's "Versioning" for
+// how it relates to the schema release).
 //
 // Run with: go run gen_errors.go
 package main
