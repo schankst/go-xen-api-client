@@ -32,13 +32,10 @@ func TestClientCallSuccess(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL, nil)
-	if err != nil {
-		t.Fatalf("NewClient: %v", err)
-	}
+	client := NewClient(server.URL, nil)
 
 	var reply string
-	err = client.Call("session.login_with_password", []interface{}{"root", "pw"}, &reply)
+	err := client.Call("session.login_with_password", []interface{}{"root", "pw"}, &reply)
 	if err != nil {
 		t.Fatalf("Call: %v", err)
 	}
@@ -57,13 +54,10 @@ func TestClientCallFault(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL, nil)
-	if err != nil {
-		t.Fatalf("NewClient: %v", err)
-	}
+	client := NewClient(server.URL, nil)
 
 	var reply interface{}
-	err = client.Call("some.method", nil, &reply)
+	err := client.Call("some.method", nil, &reply)
 	if err == nil {
 		t.Fatal("expected an error for a fault response, got nil")
 	}
@@ -83,10 +77,7 @@ func callAgainstResponse(t *testing.T, responseBody string, reply interface{}) e
 	}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL, nil)
-	if err != nil {
-		t.Fatalf("NewClient: %v", err)
-	}
+	client := NewClient(server.URL, nil)
 	return client.Call("some.method", nil, reply)
 }
 
@@ -240,10 +231,7 @@ func TestClientCallReplaysCookies(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL, nil)
-	if err != nil {
-		t.Fatalf("NewClient: %v", err)
-	}
+	client := NewClient(server.URL, nil)
 
 	for i := 0; i < 3; i++ {
 		var reply string
@@ -271,10 +259,7 @@ func TestClientCallConcurrent(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL, nil)
-	if err != nil {
-		t.Fatalf("NewClient: %v", err)
-	}
+	client := NewClient(server.URL, nil)
 
 	var wg sync.WaitGroup
 	errs := make(chan error, 20)

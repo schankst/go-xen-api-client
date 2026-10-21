@@ -103,17 +103,16 @@ func detailString(details []interface{}, index int) (string, bool) {
 // InsecureSkipVerify: true - i.e. TLS certificate verification is off by
 // default, matching XCP-ng/XenServer's common self-signed-certificate
 // setup. Pass a transport of your own to verify certificates.
-func NewClient(url string, transport *http.Transport) (*Client, error) {
+//
+// There is no error return: nothing is connected to or parsed until the
+// first call, which reports a malformed URL or an unreachable host from
+// Session.LoginWithPassword.
+func NewClient(url string, transport *http.Transport) *Client {
 	if transport == nil {
 		transport = &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
 	}
 
-	rpc, err := xmlrpc.NewClient(url, transport)
-	if err != nil {
-		return nil, err
-	}
-
-	return prepClient(rpc), nil
+	return prepClient(xmlrpc.NewClient(url, transport))
 }

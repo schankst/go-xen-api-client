@@ -48,10 +48,7 @@ func main() {
         TLSClientConfig: &tls.Config{InsecureSkipVerify: XEN_API_INSECURE},
     }
 
-    xapi, err := xenapi.NewClient(fmt.Sprintf("https://%s/", XEN_API_HOST), transport)
-    if err != nil {
-        panic(err)
-    }
+    xapi := xenapi.NewClient(fmt.Sprintf("https://%s/", XEN_API_HOST), transport)
 
     session, err := xapi.Session.LoginWithPassword(XEN_API_USERNAME, XEN_API_PASSWORD, "1.0", "example")
     if err != nil {

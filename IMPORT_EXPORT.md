@@ -234,7 +234,7 @@ The XML-RPC half comes from this package; the upload is a plain HTTP `PUT`:
 
 ```go
 transport := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
-xapi, _ := xenapi.NewClient("https://10.0.0.10/", transport)
+xapi := xenapi.NewClient("https://10.0.0.10/", transport)
 session, _ := xapi.Session.LoginWithPassword(user, pass, "1.0", "myimport")
 defer xapi.Session.Logout(session)
 

@@ -27,14 +27,19 @@ type Client struct {
 // NewClient creates a Client for the XML-RPC endpoint at url. If
 // transport is nil, http.DefaultTransport's zero-value equivalent
 // (&http.Transport{}) is used.
-func NewClient(url string, transport *http.Transport) (*Client, error) {
+//
+// There is no error return: http.NewRequest is what would normally fail at
+// construction time (a malformed URL), and that happens inside Call, where
+// it is reported per call. Validating the URL here as well would mean
+// duplicating net/url's parsing rules against http.NewRequest's.
+func NewClient(url string, transport *http.Transport) *Client {
 	if transport == nil {
 		transport = &http.Transport{}
 	}
 	return &Client{
 		url:        url,
 		httpClient: &http.Client{Transport: transport},
-	}, nil
+	}
 }
 
 // Call issues an XML-RPC call for method with params and, on success,
