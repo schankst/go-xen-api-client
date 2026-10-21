@@ -33,6 +33,32 @@ plain literal — resolve those the same way if refreshing this file again.
 Go constant names are mechanically derived as `ERR_` + the uppercased OCaml
 identifier, not hand-picked, so name and value can't drift out of sync.
 
+### Constant names follow the OCaml identifier, not always the wire value
+
+The XML-RPC value a failed call actually carries in
+`ErrorDescription[0]` — and therefore the string `Error.Code()` returns —
+is the `add_error` literal, *not* the OCaml identifier. They usually differ
+only in case (`ERR_VM_BAD_POWER_STATE` = `"VM_BAD_POWER_STATE"`), but about
+two dozen entries upstream don't follow that pattern:
+
+| Name | Wire value | Why |
+| --- | --- | --- |
+| `ERR_SR_NO_PBDS` | `SR_HAS_NO_PBDS` | abbreviated identifier |
+| `ERR_VM_TOOMANY_VCPUS` | `VM_TOO_MANY_VCPUS` | missing underscore |
+| `ERR_POOL_JOINING_HOST_CANNOT_*` | `JOINING_HOST_CANNOT_*` | prefix only on the identifier |
+| `ERR_VM_SNAPSHOT_WITH_QUIESCE_PLUGIN_DOES_NOT_RESPOND` | `..._PLUGIN_DEOS_NOT_RESPOND` | typo in the **value** |
+
+`gen_errors.go` emits a `// The wire value is "..."` comment above exactly
+those constants, and prints how many it found, so the exception is visible
+at the point of use instead of having to be remembered. Two rules follow
+from that, for consumers and for anyone editing this file by hand:
+
+- Compare against the constant (`err.Code() == xenapi.ERR_SR_NO_PBDS`), never
+  against a hand-typed string. A string built from the constant's own name
+  matches only the majority case.
+- Don't "fix" a value to match its name. The value is the wire contract: the
+  server sends these bytes, typos included.
+
 ## Automated regeneration
 
 `.github/workflows/regenerate.yml` runs weekly (and on manual dispatch) and

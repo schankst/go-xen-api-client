@@ -164,7 +164,35 @@ import (
 
 const (
 `)
+	// Most constants have ERR_<UPPERCASED IDENTIFIER> = "<VALUE>" with the
+	// two matching barring case. About two dozen upstream entries don't:
+	// the OCaml identifier is abbreviated, carries a prefix the wire value
+	// lacks, or the value itself has a typo (DEOS for DOES). A reader who
+	// assumes the wire value is just the constant's name lowercased then
+	// compares against a string that never matches, or "fixes" a documented
+	// typo. Flag exactly those, and only those, so the marker stays
+	// meaningful instead of appearing on every line.
+	//
+	// A flagged constant closes the preceding const block and starts its
+	// own, so a comment never interrupts the alignment run of its
+	// neighbours - inside one block gofmt aligns every line against the
+	// longest name, and a flagged entry's comment would otherwise drag
+	// unrelated constants into a wider column.
+	divergent := 0
+	openBlock := false
 	for _, e := range entries {
+		flagged := !strings.EqualFold(e.name, e.value)
+		if flagged {
+			divergent++
+			if openBlock {
+				fmt.Fprint(w, ")\n\nconst (\n")
+			}
+			fmt.Fprintf(w, "\t// The wire value is %q - it does not match the constant's name.\n", e.value)
+			fmt.Fprintf(w, "\tERR_%s = %q\n", strings.ToUpper(e.name), e.value)
+			fmt.Fprint(w, ")\n\nconst (\n")
+			openBlock = true
+			continue
+		}
 		fmt.Fprintf(w, "\tERR_%s = %q\n", strings.ToUpper(e.name), e.value)
 	}
 	fmt.Fprint(w, `)
@@ -220,5 +248,5 @@ func (e *Error) UUID() string {
 		os.Exit(1)
 	}
 
-	fmt.Printf("wrote %d error constants to error.go (%d source chunks skipped as non-error boilerplate)\n", len(entries), len(skipped))
+	fmt.Printf("wrote %d error constants to error.go (%d with a wire value that differs from their name, %d source chunks skipped as non-error boilerplate)\n", len(entries), divergent, len(skipped))
 }
