@@ -7,9 +7,9 @@ Meant to save you from re-discovering the same surprises.
 ## Two unrelated "version" numbers
 
 `Host.APIVersionMajor`/`APIVersionMinor` (e.g. `2.21`) and the XAPI
-release your host is actually running (e.g. `26.16.0`) are **completely
-independent numbers from different code paths** - don't compare them or
-expect them to move together.
+release your host is actually running (the `X.Y.Z`-style `xapi` package
+version) are **completely independent numbers from different code paths**
+- don't compare them or expect them to move together.
 
 - `Host.APIVersionMajor`/`Minor` comes from `Datamodel_common.api_version_major`/
   `minor`, which is just `Api_version.api_version_major`/`minor` - a
@@ -20,15 +20,19 @@ expect them to move together.
     (upstream default), [`ocaml/idl/datamodel_common.ml`](https://github.com/xapi-project/xen-api/blob/master/ocaml/idl/datamodel_common.ml)
     (aliases `Api_version`), [`xcp-ng-rpms/xapi`'s `SPECS/xapi.spec`](https://github.com/xcp-ng-rpms/xapi/blob/master/SPECS/xapi.spec)
     lines ~23-24 and ~565 (XCP-ng's own override).
-- The `26.16.0`-style number is the actual `xapi` package/build version,
+- The `X.Y.Z`-style number is the actual `xapi` package/build version,
   parsed from the build's own version string (e.g. a git tag) via OCaml's
   `Build_info.V1.version()` - a completely separate mechanism with no
   code relationship to the field above.
   - Source: [`ocaml/util/xapi_version.ml`](https://github.com/xapi-project/xen-api/blob/master/ocaml/util/xapi_version.ml).
 - **This is also what `xenapi.SchemaXAPIRelease` in this fork tracks** -
   it's the release-name/version tag from `xenapi.json`'s own lifecycle
-  data (see `MAINTAINING.md`), i.e. the same numbering family as
-  `26.16.0`/`26.16.1-next`, not the `2.x` field.
+  data (see `MAINTAINING.md`), i.e. the same numbering family as the
+  `xapi` package version above (including its `-next` pre-release
+  suffix), not the `2.x` field. Its current value is whatever
+  `xenapi.SchemaXAPIRelease` reports at runtime; this document
+  deliberately doesn't repeat it, because it changes on every automated
+  regeneration.
 
 ## The `2.x` API version gates pool membership, not general compatibility
 

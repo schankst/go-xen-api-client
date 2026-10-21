@@ -117,9 +117,9 @@ what changed release to release.
 
 Git tags on this repo (`v0.1.0`, ...) are this module's own SemVer, tracked
 independently of XenAPI's own versioning — deliberately, since tagging this
-module to match an XAPI version number directly (e.g. `v26.16.1`) would make
-Go's module tooling treat it as a `v26` major version and require a `/v26`
-module path suffix, which has nothing to do with XAPI at all.
+module to match an XAPI version number directly (e.g. tagging it `v26.1.2`)
+would make Go's module tooling treat it as a `v26` major version and require
+a `/v26` module path suffix, which has nothing to do with XAPI at all.
 
 To keep it traceable which live XAPI version a given tag was verified
 against, that's tracked separately:

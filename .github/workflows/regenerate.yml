@@ -62,6 +62,24 @@ jobs:
           go vet ./...
           go test -short ./...
 
+      # SchemaXAPIRelease is the single place the verified-against release is
+      # stated (see client.go); the docs deliberately point at it instead of
+      # repeating a number, because this workflow changes that number every
+      # time it runs. This fails the run (and opens the issue below) if a
+      # markdown file starts carrying a release-looking literal again, rather
+      # than letting it drift silently for a release or two.
+      - name: Check docs don't hardcode the schema release
+        if: steps.fetch.outputs.changed == 'true'
+        run: |
+          RELEASE=$(grep -oP '(?<=const SchemaXAPIRelease = ")[^"]+' client.go)
+          BASE=${RELEASE%-next}
+          if grep -nE "\b${BASE//./\\.}(-next)?\b" README.md MAINTAINING.md GOOD_TO_KNOW.md \
+               IMPORT_EXPORT.md PERFORMANCE.md UPDATES_AND_PATCHES.md LICENSING.md; then
+            echo "Docs hardcode the schema release ($RELEASE)."
+            echo "Point at xenapi.SchemaXAPIRelease instead - it changes on every run."
+            exit 1
+          fi
+
       - name: Commit, tag, push, and release
         if: steps.fetch.outputs.changed == 'true'
         env:

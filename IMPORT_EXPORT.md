@@ -494,8 +494,12 @@ is a reasonable thin layer over the methods above.
 ## Version compatibility
 
 Generated bindings in this fork are regenerated against the current XenAPI
-schema (see `xenapi.SchemaXAPIRelease`). At the time of writing that is XAPI
-release `26.17.0`, while the endpoint facts above were verified against a live
+schema. Which release that is is tracked in exactly one place -
+`xenapi.SchemaXAPIRelease` in `client.go`, queryable at runtime - so don't
+rely on a release number quoted in prose instead: it goes stale on every
+automated regeneration, this document included.
+
+The endpoint facts above were verified against a live
 **XCP-ng 8.3.0 / xapi 26.1.16** host. The schema can be ahead of a given host:
 methods or enum values the host does not know fail with
 `MESSAGE_METHOD_UNKNOWN`/`UNIMPLEMENTED`, and enum parsing here tolerates
