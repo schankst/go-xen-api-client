@@ -48,17 +48,31 @@ func (client *Client) APICall(method string, params ...interface{}) (result APIR
 	}
 
 	if status != "Success" {
-		details := rpcResult["ErrorDescription"].([]interface{})
-		_objtype := ""
-		if len(details) > 1 && details[1] != nil {
-			_objtype = details[1].(string)
+		// The envelope's ErrorDescription is [code, objtype?, uuid?] with the
+		// last two explicitly nullable, but everything about it is host-
+		// supplied: a proxy, a different XAPI variant, or a truncated response
+		// can leave the field missing, the wrong kind, or empty. A caller
+		// handling an API failure must not be crashed by the shape of the
+		// failure, so every step here is checked rather than asserted.
+		details, ok := rpcResult["ErrorDescription"].([]interface{})
+		if !ok {
+			err = fmt.Errorf("xenapi: %s failed with status %q but the response has no ErrorDescription array", method, status)
+			return
 		}
-		var _uuid string
-		if len(details) > 2 && details[2] != nil {
-			_uuid = details[2].(string)
+		if len(details) == 0 {
+			err = fmt.Errorf("xenapi: %s failed with status %q but the ErrorDescription array is empty", method, status)
+			return
 		}
+		code, ok := details[0].(string)
+		if !ok {
+			err = fmt.Errorf("xenapi: %s failed with status %q but its error code is %T, not a string", method, status, details[0])
+			return
+		}
+
+		_objtype, _ := detailString(details, 1)
+		_uuid, _ := detailString(details, 2)
 		err = &Error{
-			code:    details[0].(string),
+			code:    code,
 			objtype: _objtype, // might be nil
 			uuid:    _uuid,    // optional
 		}
@@ -67,6 +81,18 @@ func (client *Client) APICall(method string, params ...interface{}) (result APIR
 
 	result.Value = rpcResult["Value"]
 	return
+}
+
+// detailString returns details[index] when it is present and holds a string.
+// The type and uuid slots of ErrorDescription are nullable by design
+// (XenAPI sends null for codes that don't carry them), so a missing, nil,
+// or non-string value means "absent" here rather than a malformed response.
+func detailString(details []interface{}, index int) (string, bool) {
+	if index >= len(details) {
+		return "", false
+	}
+	s, ok := details[index].(string)
+	return s, ok
 }
 
 // NewClient creates a Client for the XenAPI server at url (e.g.
