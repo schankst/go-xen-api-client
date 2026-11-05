@@ -139,7 +139,7 @@ jobs:
                 'Likely cause: xenapi.json introduced a new schema construct that ' +
                 'internal/cmd/genapi does not know how to map yet (the same kind of case ' +
                 'handled manually before for lifecycle/event-batch/option types) ' +
-                '- generation panics with a message naming the offending type ' +
+                '- generation fails with a message naming the offending type ' +
                 'string, which needs a case added in goTypeForXenType, ' +
                 'funcPartialForXenType, and buildConverterFunc.',
                 '',

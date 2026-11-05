@@ -1,0 +1,477 @@
+//
+// This file is generated. To change the content of this file, please do not
+// apply the change to this file because it will get overwritten. Instead,
+// change internal/cmd/genapi and run 'go generate'.
+//
+
+package xenapi
+
+import (
+	"fmt"
+	"github.com/schankst/go-xen-api-client/xmlrpc"
+	"reflect"
+	"strconv"
+	"time"
+)
+
+var _ = fmt.Errorf
+var _ = xmlrpc.NewClient
+var _ = reflect.TypeOf
+var _ = strconv.Atoi
+var _ = time.UTC
+
+func convertEnumThingStateToIntMapToGo(context string, input any) (goMap map[ThingState]int, err error) {
+	xenMap, ok := input.(xmlrpc.Struct)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
+		return
+	}
+	goMap = make(map[ThingState]int, len(xenMap))
+	for xenKey, xenValue := range xenMap {
+		keyContext := fmt.Sprintf("%s[%s]", context, xenKey)
+		goKey, err := convertEnumThingStateToGo(keyContext, xenKey)
+		if err != nil {
+			return goMap, err
+		}
+		goValue, err := convertIntToGo(keyContext, xenValue)
+		if err != nil {
+			return goMap, err
+		}
+		goMap[goKey] = goValue
+	}
+	return
+}
+
+func convertStringToStringMapToGo(context string, input any) (goMap map[string]string, err error) {
+	xenMap, ok := input.(xmlrpc.Struct)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
+		return
+	}
+	goMap = make(map[string]string, len(xenMap))
+	for xenKey, xenValue := range xenMap {
+		keyContext := fmt.Sprintf("%s[%s]", context, xenKey)
+		goKey, err := convertStringToGo(keyContext, xenKey)
+		if err != nil {
+			return goMap, err
+		}
+		goValue, err := convertStringToGo(keyContext, xenValue)
+		if err != nil {
+			return goMap, err
+		}
+		goMap[goKey] = goValue
+	}
+	return
+}
+
+func convertThingRefToStringMapToGo(context string, input any) (goMap map[ThingRef]string, err error) {
+	xenMap, ok := input.(xmlrpc.Struct)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
+		return
+	}
+	goMap = make(map[ThingRef]string, len(xenMap))
+	for xenKey, xenValue := range xenMap {
+		keyContext := fmt.Sprintf("%s[%s]", context, xenKey)
+		goKey, err := convertThingRefToGo(keyContext, xenKey)
+		if err != nil {
+			return goMap, err
+		}
+		goValue, err := convertStringToGo(keyContext, xenValue)
+		if err != nil {
+			return goMap, err
+		}
+		goMap[goKey] = goValue
+	}
+	return
+}
+
+func convertThingRefToThingRecordMapToGo(context string, input any) (goMap map[ThingRef]ThingRecord, err error) {
+	xenMap, ok := input.(xmlrpc.Struct)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
+		return
+	}
+	goMap = make(map[ThingRef]ThingRecord, len(xenMap))
+	for xenKey, xenValue := range xenMap {
+		keyContext := fmt.Sprintf("%s[%s]", context, xenKey)
+		goKey, err := convertThingRefToGo(keyContext, xenKey)
+		if err != nil {
+			return goMap, err
+		}
+		goValue, err := convertThingRecordToGo(keyContext, xenValue)
+		if err != nil {
+			return goMap, err
+		}
+		goMap[goKey] = goValue
+	}
+	return
+}
+
+func convertPolymorphicRecordToGo(context string, input any) (value xmlrpc.Struct, err error) {
+	if input == nil {
+		return
+	}
+	value, ok := input.(xmlrpc.Struct)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
+	}
+	return
+}
+
+func convertVMGuestOSRefToXen(context string, ref VMGuestOSRef) (string, error) {
+	return string(ref), nil
+}
+
+func convertEventBatchToGo(context string, input any) (value xmlrpc.Struct, err error) {
+	if input == nil {
+		return
+	}
+	value, ok := input.(xmlrpc.Struct)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
+	}
+	return
+}
+
+func convertBoolToGo(context string, input any) (value bool, err error) {
+	if input == nil {
+		return
+	}
+	value, ok := input.(bool)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "bool", context, reflect.TypeOf(input), input)
+	}
+	return
+}
+
+func convertTimeToGo(context string, input any) (value time.Time, err error) {
+	if input == nil {
+		return
+	}
+	if t, ok := input.(time.Time); ok {
+		value = t
+		return
+	}
+	if s, ok := input.(string); ok {
+		if seconds, perr := strconv.ParseFloat(s, 64); perr == nil {
+			wholeSeconds := int64(seconds)
+			nanoseconds := int64((seconds - float64(wholeSeconds)) * 1e9)
+			value = time.Unix(wholeSeconds, nanoseconds)
+			return
+		}
+	}
+	err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "time.Time", context, reflect.TypeOf(input), input)
+	return
+}
+
+func convertTimeToXen(context string, value time.Time) (time.Time, error) {
+	return value, nil
+}
+
+func convertEnumSharedModeToGo(context string, input any) (value SharedMode, err error) {
+	strValue, err := convertStringToGo(context, input)
+	if err != nil {
+		return
+	}
+	switch strValue {
+	case "fast":
+		value = SharedModeFast
+	case "safe":
+		value = SharedModeSafe
+	default:
+		// Unknown value from a newer XAPI version than this was generated
+		// against; pass it through as-is rather than failing the whole
+		// record parse.
+		value = SharedMode(strValue)
+	}
+	return
+}
+
+func convertEnumThingStateSetToGo(context string, input any) (slice []ThingState, err error) {
+	set, ok := input.([]any)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
+		return
+	}
+	slice = make([]ThingState, len(set))
+	for index, item := range set {
+		itemContext := fmt.Sprintf("%s[%d]", context, index)
+		itemValue, err := convertEnumThingStateToGo(itemContext, item)
+		if err != nil {
+			return slice, err
+		}
+		slice[index] = itemValue
+	}
+	return
+}
+
+func convertEnumThingStateToGo(context string, input any) (value ThingState, err error) {
+	strValue, err := convertStringToGo(context, input)
+	if err != nil {
+		return
+	}
+	switch strValue {
+	case "on":
+		value = ThingStateOn
+	case "off":
+		value = ThingStateOff
+	default:
+		// Unknown value from a newer XAPI version than this was generated
+		// against; pass it through as-is rather than failing the whole
+		// record parse.
+		value = ThingState(strValue)
+	}
+	return
+}
+
+func convertEnumThingStateToXen(context string, value ThingState) (string, error) {
+	return string(value), nil
+}
+
+func convertFloatToGo(context string, input any) (value float64, err error) {
+	if input == nil {
+		return
+	}
+	value, ok := input.(float64)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "float64", context, reflect.TypeOf(input), input)
+	}
+	return
+}
+
+func convertFloatToXen(context string, value float64) (float64, error) {
+	return value, nil
+}
+
+func convertIntToGo(context string, input any) (value int, err error) {
+	strValue, ok := input.(string)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
+	} else {
+		value, err = strconv.Atoi(strValue)
+	}
+	return
+}
+
+func convertSessionRefToGo(context string, input any) (ref SessionRef, err error) {
+	value, ok := input.(string)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
+	} else {
+		ref = SessionRef(value)
+	}
+	return
+}
+
+func convertSessionRefToXen(context string, ref SessionRef) (string, error) {
+	return string(ref), nil
+}
+
+func convertStringOptionToGo(context string, input any) (value string, err error) {
+	if input == nil {
+		return
+	}
+	value, err = convertStringToGo(context, input)
+	return
+}
+
+func convertStringSetToGo(context string, input any) (slice []string, err error) {
+	set, ok := input.([]any)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
+		return
+	}
+	slice = make([]string, len(set))
+	for index, item := range set {
+		itemContext := fmt.Sprintf("%s[%d]", context, index)
+		itemValue, err := convertStringToGo(itemContext, item)
+		if err != nil {
+			return slice, err
+		}
+		slice[index] = itemValue
+	}
+	return
+}
+
+func convertStringSetToXen(context string, slice []string) (set []any, err error) {
+	set = make([]any, len(slice))
+	for index, item := range slice {
+		itemContext := fmt.Sprintf("%s[%d]", context, index)
+		itemValue, err := convertStringToXen(itemContext, item)
+		if err != nil {
+			return set, err
+		}
+		set[index] = itemValue
+	}
+	return
+}
+
+func convertStringToGo(context string, input any) (value string, err error) {
+	if input == nil {
+		return
+	}
+	value, ok := input.(string)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
+	}
+	return
+}
+
+func convertStringToXen(context string, value string) (string, error) {
+	return value, nil
+}
+
+func convertThingRecordOptionToGo(context string, input any) (value ThingRecord, err error) {
+	if input == nil {
+		return
+	}
+	value, err = convertThingRecordToGo(context, input)
+	return
+}
+
+func convertThingRecordToGo(context string, input any) (record ThingRecord, err error) {
+	rpcStruct, ok := input.(xmlrpc.Struct)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
+		return
+	}
+	uuidValue, ok := rpcStruct["uuid"]
+	if ok && uuidValue != nil {
+		record.UUID, err = convertStringToGo(fmt.Sprintf("%s.%s", context, "uuid"), uuidValue)
+		if err != nil {
+			return
+		}
+	}
+	countValue, ok := rpcStruct["count"]
+	if ok && countValue != nil {
+		record.Count, err = convertIntToGo(fmt.Sprintf("%s.%s", context, "count"), countValue)
+		if err != nil {
+			return
+		}
+	}
+	ratioValue, ok := rpcStruct["ratio"]
+	if ok && ratioValue != nil {
+		record.Ratio, err = convertFloatToGo(fmt.Sprintf("%s.%s", context, "ratio"), ratioValue)
+		if err != nil {
+			return
+		}
+	}
+	enabledValue, ok := rpcStruct["enabled"]
+	if ok && enabledValue != nil {
+		record.Enabled, err = convertBoolToGo(fmt.Sprintf("%s.%s", context, "enabled"), enabledValue)
+		if err != nil {
+			return
+		}
+	}
+	createdValue, ok := rpcStruct["created"]
+	if ok && createdValue != nil {
+		record.Created, err = convertTimeToGo(fmt.Sprintf("%s.%s", context, "created"), createdValue)
+		if err != nil {
+			return
+		}
+	}
+	stateValue, ok := rpcStruct["state"]
+	if ok && stateValue != nil {
+		record.State, err = convertEnumThingStateToGo(fmt.Sprintf("%s.%s", context, "state"), stateValue)
+		if err != nil {
+			return
+		}
+	}
+	statesValue, ok := rpcStruct["states"]
+	if ok && statesValue != nil {
+		record.States, err = convertEnumThingStateSetToGo(fmt.Sprintf("%s.%s", context, "states"), statesValue)
+		if err != nil {
+			return
+		}
+	}
+	tagsValue, ok := rpcStruct["tags"]
+	if ok && tagsValue != nil {
+		record.Tags, err = convertStringSetToGo(fmt.Sprintf("%s.%s", context, "tags"), tagsValue)
+		if err != nil {
+			return
+		}
+	}
+	otherConfigValue, ok := rpcStruct["other_config"]
+	if ok && otherConfigValue != nil {
+		record.OtherConfig, err = convertStringToStringMapToGo(fmt.Sprintf("%s.%s", context, "other_config"), otherConfigValue)
+		if err != nil {
+			return
+		}
+	}
+	byStateValue, ok := rpcStruct["by_state"]
+	if ok && byStateValue != nil {
+		record.ByState, err = convertEnumThingStateToIntMapToGo(fmt.Sprintf("%s.%s", context, "by_state"), byStateValue)
+		if err != nil {
+			return
+		}
+	}
+	parentValue, ok := rpcStruct["parent"]
+	if ok && parentValue != nil {
+		record.Parent, err = convertThingRefToGo(fmt.Sprintf("%s.%s", context, "parent"), parentValue)
+		if err != nil {
+			return
+		}
+	}
+	childrenValue, ok := rpcStruct["children"]
+	if ok && childrenValue != nil {
+		record.Children, err = convertThingRefSetToGo(fmt.Sprintf("%s.%s", context, "children"), childrenValue)
+		if err != nil {
+			return
+		}
+	}
+	labelsValue, ok := rpcStruct["labels"]
+	if ok && labelsValue != nil {
+		record.Labels, err = convertThingRefToStringMapToGo(fmt.Sprintf("%s.%s", context, "labels"), labelsValue)
+		if err != nil {
+			return
+		}
+	}
+	nicknameValue, ok := rpcStruct["nickname"]
+	if ok && nicknameValue != nil {
+		record.Nickname, err = convertStringOptionToGo(fmt.Sprintf("%s.%s", context, "nickname"), nicknameValue)
+		if err != nil {
+			return
+		}
+	}
+	modeValue, ok := rpcStruct["mode"]
+	if ok && modeValue != nil {
+		record.Mode, err = convertEnumSharedModeToGo(fmt.Sprintf("%s.%s", context, "mode"), modeValue)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
+func convertThingRefSetToGo(context string, input any) (slice []ThingRef, err error) {
+	set, ok := input.([]any)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
+		return
+	}
+	slice = make([]ThingRef, len(set))
+	for index, item := range set {
+		itemContext := fmt.Sprintf("%s[%d]", context, index)
+		itemValue, err := convertThingRefToGo(itemContext, item)
+		if err != nil {
+			return slice, err
+		}
+		slice[index] = itemValue
+	}
+	return
+}
+
+func convertThingRefToGo(context string, input any) (ref ThingRef, err error) {
+	value, ok := input.(string)
+	if !ok {
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
+	} else {
+		ref = ThingRef(value)
+	}
+	return
+}
+
+func convertThingRefToXen(context string, ref ThingRef) (string, error) {
+	return string(ref), nil
+}

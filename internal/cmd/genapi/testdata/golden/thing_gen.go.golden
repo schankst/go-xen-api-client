@@ -1,0 +1,231 @@
+//
+// This file is generated. To change the content of this file, please do not
+// apply the change to this file because it will get overwritten. Instead,
+// change internal/cmd/genapi and run 'go generate'.
+//
+
+package xenapi
+
+import (
+	"fmt"
+	"github.com/schankst/go-xen-api-client/xmlrpc"
+	"reflect"
+	"strconv"
+	"time"
+)
+
+var _ = fmt.Errorf
+var _ = xmlrpc.NewClient
+var _ = reflect.TypeOf
+var _ = strconv.Atoi
+var _ = time.UTC
+
+type ThingState string
+
+const (
+	// Switched on
+	ThingStateOn ThingState = "on"
+	// Switched off
+	ThingStateOff ThingState = "off"
+)
+
+type SharedMode string
+
+const (
+	// Fast mode
+	SharedModeFast SharedMode = "fast"
+	// Safe mode
+	SharedModeSafe SharedMode = "safe"
+)
+
+type ThingRecord struct {
+	// uuid
+	UUID string
+	// count
+	Count int
+	// ratio
+	Ratio float64
+	// enabled
+	Enabled bool
+	// created
+	Created time.Time
+	// state
+	State ThingState
+	// states
+	States []ThingState
+	// tags
+	Tags []string
+	// other config
+	OtherConfig map[string]string
+	// by state
+	ByState map[ThingState]int
+	// parent
+	Parent ThingRef
+	// children
+	Children []ThingRef
+	// labels
+	Labels map[ThingRef]string
+	// nickname
+	Nickname string
+	// mode
+	Mode SharedMode
+}
+
+type ThingRef string
+
+// A thing that exercises every type shape the generator supports
+type ThingClass struct {
+	client *Client
+}
+
+// GetRecord get record
+func (_class ThingClass) GetRecord(sessionID SessionRef, self ThingRef) (_retval ThingRecord, _err error) {
+	_method := "thing.get_record"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertThingRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertThingRecordToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// GetAllRecords get all records
+func (_class ThingClass) GetAllRecords(sessionID SessionRef) (_retval map[ThingRef]ThingRecord, _err error) {
+	_method := "thing.get_all_records"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertThingRefToThingRecordMapToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// SetState set state
+func (_class ThingClass) SetState(sessionID SessionRef, self ThingRef, value ThingState) (_err error) {
+	_method := "thing.set_state"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertThingRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertEnumThingStateToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// SetTags set tags
+func (_class ThingClass) SetTags(sessionID SessionRef, self ThingRef, value []string) (_err error) {
+	_method := "thing.set_tags"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertThingRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_valueArg, _err := convertStringSetToXen(fmt.Sprintf("%s(%s)", _method, "value"), value)
+	if _err != nil {
+		return
+	}
+	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	return
+}
+
+// FindStat find stat
+func (_class ThingClass) FindStat(sessionID SessionRef, self ThingRef) (_retval ThingRecord, _err error) {
+	_method := "thing.find_stat"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertThingRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertThingRecordOptionToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// Watch watch
+func (_class ThingClass) Watch(sessionID SessionRef, token string, timeout float64) (_retval xmlrpc.Struct, _err error) {
+	_method := "thing.watch"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_tokenArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "token"), token)
+	if _err != nil {
+		return
+	}
+	_timeoutArg, _err := convertFloatToXen(fmt.Sprintf("%s(%s)", _method, "timeout"), timeout)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _tokenArg, _timeoutArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertEventBatchToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// Snapshot snapshot
+func (_class ThingClass) Snapshot(sessionID SessionRef, self ThingRef) (_retval xmlrpc.Struct, _err error) {
+	_method := "thing.snapshot"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_selfArg, _err := convertThingRefToXen(fmt.Sprintf("%s(%s)", _method, "self"), self)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertPolymorphicRecordToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// CreatedAfter created after
+func (_class ThingClass) CreatedAfter(sessionID SessionRef, since time.Time) (_retval []ThingRef, _err error) {
+	_method := "thing.created_after"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_sinceArg, _err := convertTimeToXen(fmt.Sprintf("%s(%s)", _method, "since"), since)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _sessionIDArg, _sinceArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertThingRefSetToGo(_method+" -> ", _result.Value)
+	return
+}
