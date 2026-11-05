@@ -427,7 +427,12 @@
       "required": true
      }
     ],
-    "errors": [],
+    "errors": [
+     {
+      "name": "HANDLE_INVALID",
+      "doc": "The handle is invalid.\nfunc injected() {}\r\nsecond line"
+     }
+    ],
     "roles": [
      "pool-admin"
     ],
