@@ -100,9 +100,7 @@ If XenAPI was updated, it is required to regenerate all of files with a new API 
 - Get newest `xenapi.json` from the link above (e.g.
   `https://raw.githubusercontent.com/xapi-project/xapi-project.github.io/master/_data/xenapi.json`).
 - Delete old generated APIs using `rm *_gen.go`
-- Generate new API with `go generate ./...` -
-  enum tolerance is baked into `convertEnumTypeToGoFuncTemplate`, so
-  `convert_gen.go` comes out correct with no separate patch step.
+- Generate new API with `go generate ./...`.
 - If the schema introduced a new construct the generator doesn't know how to
   map yet, generation fails with a message like `Unsupported XenAPI type: ...`
   naming the offending type string — add a case for it in `goTypeForXenType`,
