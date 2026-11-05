@@ -17,12 +17,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Deliberately not go-version-file: go.mod. The generators format
-      # their output with go/format, so the toolchain running them decides
-      # what the committed *_gen.go files look like - pinning that to the
-      # module's minimum (1.16, whose gofmt predates the Go 1.19 doc-comment
-      # rules) would rewrite every generated file on each run. The library's
-      # minimum-version guarantee is covered by test.yml's matrix instead.
+      # The generators format their output with go/format, so generate with
+      # the same toolchain the gofmt check in test.yml uses.
       - uses: actions/setup-go@v5
         with:
           go-version: stable

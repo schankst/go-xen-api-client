@@ -1,6 +1,7 @@
 package xmlrpc
 
 import (
+	"bytes"
 	"encoding/xml"
 	"fmt"
 	"strconv"
@@ -15,8 +16,8 @@ import (
 // in the previous (vendored) implementation of this package skipped that
 // check in several places, which could spin forever re-fetching the same
 // error on malformed or truncated input instead of returning it.
-func decodeResponse(body []byte) (interface{}, error) {
-	dec := xml.NewDecoder(strings.NewReader(string(body)))
+func decodeResponse(body []byte) (any, error) {
+	dec := xml.NewDecoder(bytes.NewReader(body))
 
 	if _, err := findStart(dec, "methodResponse"); err != nil {
 		return nil, err
@@ -85,7 +86,7 @@ func nextStart(dec *xml.Decoder) (xml.StartElement, error) {
 // already consumed the opening <value> StartElement (e.g. via
 // findStart/nextStart); decodeValue consumes through the matching
 // </value>.
-func decodeValue(dec *xml.Decoder) (interface{}, error) {
+func decodeValue(dec *xml.Decoder) (any, error) {
 	tok, err := dec.Token()
 	if err != nil {
 		return nil, fmt.Errorf("xmlrpc: reading value: %w", err)
@@ -123,7 +124,7 @@ func decodeValue(dec *xml.Decoder) (interface{}, error) {
 // decodeTyped decodes the content of a typed value element whose opening
 // tag (name) was already consumed, and consumes through its own matching
 // end element.
-func decodeTyped(dec *xml.Decoder, name string) (interface{}, error) {
+func decodeTyped(dec *xml.Decoder, name string) (any, error) {
 	switch name {
 	case "string":
 		return readText(dec, name)
@@ -266,7 +267,7 @@ func decodeStruct(dec *xml.Decoder) (Struct, error) {
 	}
 }
 
-func decodeMember(dec *xml.Decoder) (name string, value interface{}, err error) {
+func decodeMember(dec *xml.Decoder) (name string, value any, err error) {
 	for {
 		tok, terr := dec.Token()
 		if terr != nil {
@@ -297,11 +298,11 @@ func decodeMember(dec *xml.Decoder) (name string, value interface{}, err error) 
 	}
 }
 
-func decodeArray(dec *xml.Decoder) ([]interface{}, error) {
+func decodeArray(dec *xml.Decoder) ([]any, error) {
 	if _, err := findStart(dec, "data"); err != nil {
 		return nil, fmt.Errorf("xmlrpc: reading array: %w", err)
 	}
-	result := []interface{}{}
+	result := []any{}
 	for {
 		tok, err := dec.Token()
 		if err != nil {

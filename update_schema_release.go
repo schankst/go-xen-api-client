@@ -1,5 +1,4 @@
 //go:build ignore
-// +build ignore
 
 // update_schema_release.go scans xenapi.json for the newest XAPI release
 // version and rewrites the SchemaXAPIRelease constant in client.go to
@@ -74,7 +73,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "SchemaXAPIRelease const not found in client.go")
 		os.Exit(1)
 	}
-	updated := reConst.ReplaceAll(clientGo, []byte(fmt.Sprintf(`const SchemaXAPIRelease = %q`, latest.raw)))
+	updated := reConst.ReplaceAll(clientGo, fmt.Appendf(nil, `const SchemaXAPIRelease = %q`, latest.raw))
 
 	if err := os.WriteFile("client.go", updated, 0644); err != nil {
 		fmt.Fprintln(os.Stderr, "writing client.go:", err)
