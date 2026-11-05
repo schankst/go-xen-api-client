@@ -5,6 +5,8 @@ import (
 	"crypto/x509"
 	"errors"
 	"fmt"
+	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,9 +14,12 @@ import (
 
 func newTLSServer(t *testing.T) *httptest.Server {
 	t.Helper()
-	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	server := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, successResponse(`<string>ok</string>`))
 	}))
+	// Rejected handshakes are the point of some tests; don't log them.
+	server.Config.ErrorLog = log.New(io.Discard, "", 0)
+	server.StartTLS()
 	t.Cleanup(server.Close)
 	return server
 }

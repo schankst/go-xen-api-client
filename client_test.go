@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"slices"
 	"strings"
 	"testing"
 )
@@ -95,47 +96,61 @@ func TestAPICallSuccessExposesValue(t *testing.T) {
 }
 
 func TestAPICallErrorResponse(t *testing.T) {
-	client := newTestClient(t, failureResponse(
-		stringArray("HANDLE_INVALID", "VM", "OpaqueRef:dead-vm")))
-
-	_, err := client.APICall(t.Context(), "VM.get_record", "OpaqueRef:dead-vm")
-	if err == nil {
-		t.Fatal("expected an error for a Failure response, got nil")
+	cases := []struct {
+		name        string
+		description string
+		want        Error
+		wantString  string
+	}{
+		{
+			name:        "no params",
+			description: stringArray("PERMISSION_DENIED"),
+			want:        Error{Code: ERR_PERMISSION_DENIED},
+			wantString:  "xenapi: PERMISSION_DENIED",
+		},
+		{
+			name:        "two params",
+			description: stringArray("HANDLE_INVALID", "VM", "OpaqueRef:dead-vm"),
+			want:        Error{Code: ERR_HANDLE_INVALID, Params: []string{"VM", "OpaqueRef:dead-vm"}},
+			wantString:  `xenapi: HANDLE_INVALID ["VM" "OpaqueRef:dead-vm"]`,
+		},
+		{
+			name:        "three params",
+			description: stringArray("VM_BAD_POWER_STATE", "OpaqueRef:vm", "halted", "running"),
+			want:        Error{Code: ERR_VM_BAD_POWER_STATE, Params: []string{"OpaqueRef:vm", "halted", "running"}},
+			wantString:  `xenapi: VM_BAD_POWER_STATE ["OpaqueRef:vm" "halted" "running"]`,
+		},
+		{
+			name:        "backend output with spaces and newlines",
+			description: stringArray("SR_BACKEND_FAILURE_47", "", "The SR is not available", "stderr line 1\nline 2"),
+			want:        Error{Code: "SR_BACKEND_FAILURE_47", Params: []string{"", "The SR is not available", "stderr line 1\nline 2"}},
+			wantString:  `xenapi: SR_BACKEND_FAILURE_47 ["" "The SR is not available" "stderr line 1\nline 2"]`,
+		},
+		{
+			name: "nil and non-string params are kept",
+			description: `<array><data><value><string>HANDLE_INVALID</string></value>` +
+				`<value></value><value><int>3</int></value></data></array>`,
+			want:       Error{Code: ERR_HANDLE_INVALID, Params: []string{"", "3"}},
+			wantString: `xenapi: HANDLE_INVALID ["" "3"]`,
+		},
 	}
 
-	apiErr, ok := err.(*Error)
-	if !ok {
-		t.Fatalf("got error of type %T, want *Error", err)
-	}
-	if got := apiErr.Code(); got != ERR_HANDLE_INVALID {
-		t.Errorf("Code() = %q, want %q", got, ERR_HANDLE_INVALID)
-	}
-	if got := apiErr.Type(); got != "VM" {
-		t.Errorf("Type() = %q, want %q", got, "VM")
-	}
-	if got := apiErr.UUID(); got != "OpaqueRef:dead-vm" {
-		t.Errorf("UUID() = %q, want %q", got, "OpaqueRef:dead-vm")
-	}
-	if got, want := apiErr.Error(), "API Error: HANDLE_INVALID VM OpaqueRef:dead-vm"; got != want {
-		t.Errorf("Error() = %q, want %q", got, want)
-	}
-}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			client := newTestClient(t, failureResponse(tc.description))
+			_, err := client.APICall(t.Context(), "some.method")
 
-// Error codes that carry no type/uuid (most of them) must not render empty
-// fields - see Error()'s implementation.
-func TestAPICallErrorResponseWithoutTypeOrUUID(t *testing.T) {
-	client := newTestClient(t, failureResponse(stringArray("PERMISSION_DENIED")))
-
-	_, err := client.APICall(t.Context(), "session.get_this_host")
-	apiErr, ok := err.(*Error)
-	if !ok {
-		t.Fatalf("got error of type %T, want *Error", err)
-	}
-	if apiErr.Type() != "" || apiErr.UUID() != "" {
-		t.Errorf("Type()/UUID() = %q/%q, want empty", apiErr.Type(), apiErr.UUID())
-	}
-	if got, want := apiErr.Error(), "API Error: PERMISSION_DENIED"; got != want {
-		t.Errorf("Error() = %q, want %q", got, want)
+			var apiErr *Error
+			if !errors.As(err, &apiErr) {
+				t.Fatalf("APICall error = %v (%T), want *Error", err, err)
+			}
+			if apiErr.Code != tc.want.Code || !slices.Equal(apiErr.Params, tc.want.Params) {
+				t.Errorf("error = %+v, want %+v", *apiErr, tc.want)
+			}
+			if got := apiErr.Error(); got != tc.wantString {
+				t.Errorf("Error() = %s, want %s", got, tc.wantString)
+			}
+		})
 	}
 }
 
@@ -173,10 +188,6 @@ func TestAPICallMalformedResponseReturnsError(t *testing.T) {
 			name:     "ErrorDescription code is not a string",
 			response: failureResponse(`<array><data><value><int>1</int></value></data></array>`),
 		},
-		{
-			name:     "ErrorDescription type is not a string",
-			response: failureResponse(stringArray("HANDLE_INVALID")),
-		},
 	}
 
 	for _, tc := range cases {
@@ -193,34 +204,6 @@ func TestAPICallMalformedResponseReturnsError(t *testing.T) {
 				t.Fatal("expected an error for a malformed response, got nil")
 			}
 		})
-	}
-}
-
-// The type/uuid slots are explicitly nullable in the XenAPI envelope, so a
-// nil there is normal rather than malformed.
-func TestAPICallErrorResponseWithNilTypeAndUUID(t *testing.T) {
-	response := `<?xml version="1.0"?><methodResponse><params><param><value><struct>` +
-		`<member><name>Status</name><value><string>Failure</string></value></member>` +
-		`<member><name>ErrorDescription</name><value><array><data>` +
-		`<value><string>HANDLE_INVALID</string></value>` +
-		`<value></value><value></value>` +
-		`</data></array></value></member>` +
-		`</struct></value></param></params></methodResponse>`
-
-	client := newTestClient(t, response)
-	_, err := client.APICall(t.Context(), "VM.get_record", "OpaqueRef:x")
-	apiErr, ok := err.(*Error)
-	if !ok {
-		t.Fatalf("got error of type %T (%v), want *Error", err, err)
-	}
-	if apiErr.Code() != ERR_HANDLE_INVALID {
-		t.Errorf("Code() = %q, want %q", apiErr.Code(), ERR_HANDLE_INVALID)
-	}
-	if apiErr.Type() != "" || apiErr.UUID() != "" {
-		t.Errorf("Type()/UUID() = %q/%q, want empty", apiErr.Type(), apiErr.UUID())
-	}
-	if strings.Contains(apiErr.Error(), "  ") {
-		t.Errorf("Error() has an empty field: %q", apiErr.Error())
 	}
 }
 

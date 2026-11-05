@@ -56,12 +56,8 @@ func (client *Client) APICall(ctx context.Context, method string, params ...any)
 	}
 
 	if status != "Success" {
-		// The envelope's ErrorDescription is [code, objtype?, uuid?] with the
-		// last two explicitly nullable, but everything about it is host-
-		// supplied: a proxy, a different XAPI variant, or a truncated response
-		// can leave the field missing, the wrong kind, or empty. A caller
-		// handling an API failure must not be crashed by the shape of the
-		// failure, so every step here is checked rather than asserted.
+		// ErrorDescription is [code, param...]; it is host-supplied, so
+		// its shape is checked rather than asserted.
 		details, ok := rpcResult["ErrorDescription"].([]any)
 		if !ok {
 			err = fmt.Errorf("xenapi: %s failed with status %q but the response has no ErrorDescription array", method, status)
@@ -77,13 +73,11 @@ func (client *Client) APICall(ctx context.Context, method string, params ...any)
 			return
 		}
 
-		_objtype, _ := detailString(details, 1)
-		_uuid, _ := detailString(details, 2)
-		err = &Error{
-			code:    code,
-			objtype: _objtype, // might be nil
-			uuid:    _uuid,    // optional
+		apiErr := &Error{Code: code}
+		for _, d := range details[1:] {
+			apiErr.Params = append(apiErr.Params, errorParam(d))
 		}
+		err = apiErr
 		return
 	}
 
@@ -91,16 +85,17 @@ func (client *Client) APICall(ctx context.Context, method string, params ...any)
 	return
 }
 
-// detailString returns details[index] when it is present and holds a string.
-// The type and uuid slots of ErrorDescription are nullable by design
-// (XenAPI sends null for codes that don't carry them), so a missing, nil,
-// or non-string value means "absent" here rather than a malformed response.
-func detailString(details []any, index int) (string, bool) {
-	if index >= len(details) {
-		return "", false
+// errorParam renders one ErrorDescription parameter. XenAPI sends strings;
+// anything else is kept in its printed form rather than dropped.
+func errorParam(v any) string {
+	switch v := v.(type) {
+	case string:
+		return v
+	case nil:
+		return ""
+	default:
+		return fmt.Sprint(v)
 	}
-	s, ok := details[index].(string)
-	return s, ok
 }
 
 // Option configures a Client created by NewClient.
