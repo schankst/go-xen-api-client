@@ -8,12 +8,7 @@ name: Regenerate bindings
 on:
   schedule:
     - cron: '0 6 * * 1' # Monday 06:00 UTC
-  workflow_dispatch:
-    inputs:
-      force:
-        description: Regenerate even if xenapi.json is unchanged
-        type: boolean
-        default: false
+  workflow_dispatch: {}
 
 permissions:
   contents: write
@@ -27,6 +22,7 @@ concurrency:
 jobs:
   regenerate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       branch: ${{ steps.pr.outputs.branch }}
       pr: ${{ steps.pr.outputs.pr }}
@@ -40,24 +36,12 @@ jobs:
         with:
           go-version: stable
 
-      - name: Fetch current xenapi.json
-        id: fetch
-        env:
-          FORCE: ${{ inputs.force }}
-        run: |
-          curl -fsSL --retry 3 -o xenapi.json.new \
-            https://raw.githubusercontent.com/xapi-project/xapi-project.github.io/master/_data/xenapi.json
-          if cmp -s xenapi.json xenapi.json.new && [ "$FORCE" != "true" ]; then
-            echo "xenapi.json unchanged, nothing to do"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            mv xenapi.json.new xenapi.json
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
+      # Always regenerate: either source can change, and so can the
+      # generators. The next step stops if nothing changed.
       - name: Regenerate
-        if: steps.fetch.outputs.changed == 'true'
         run: |
+          curl -fsSL --retry 3 -o xenapi.json \
+            https://raw.githubusercontent.com/xapi-project/xapi-project.github.io/master/_data/xenapi.json
           rm -f *_gen.go
           go generate ./...
           go run ./internal/cmd/generrors
@@ -65,7 +49,6 @@ jobs:
 
       - name: Open pull request
         id: pr
-        if: steps.fetch.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -82,6 +65,13 @@ jobs:
           git add -A
           git commit -m "Regenerate bindings from xenapi.json (XAPI release ${release})"
           git push origin "$branch"
+
+          # Supersede earlier regeneration PRs left open by failed runs.
+          gh pr list --state open --json number,headRefName \
+            --jq '.[] | select(.headRefName | startswith("regenerate/")) | .number' |
+            while read -r old; do
+              gh pr close "$old" --delete-branch --comment "Superseded by a newer regeneration run."
+            done
 
           pr=$(gh pr create --base main --head "$branch" \
             --title "Regenerate bindings (XAPI release ${release})" \
@@ -102,6 +92,7 @@ jobs:
   release:
     needs: [regenerate, test]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
         with:
@@ -127,7 +118,7 @@ jobs:
 
           gh release create "$tag" --verify-tag --latest \
             --title "$tag - Regenerated bindings (XAPI ${RELEASE})" \
-            --notes "Automated schema regeneration ($PR), no hand-written code change.
+            --notes "Automated regeneration ($PR).
 
           - xenapi.SchemaXAPIRelease: ${RELEASE}
 
@@ -137,6 +128,7 @@ jobs:
     needs: [regenerate, test, release]
     if: failure()
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Open an issue
         env:
