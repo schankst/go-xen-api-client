@@ -36,7 +36,7 @@ identifier, not hand-picked, so name and value can't drift out of sync.
 ### Constant names follow the OCaml identifier, not always the wire value
 
 The XML-RPC value a failed call actually carries in
-`ErrorDescription[0]` — and therefore the string `Error.Code()` returns —
+`ErrorDescription[0]` — and therefore `Error.Code` —
 is the `add_error` literal, *not* the OCaml identifier. They usually differ
 only in case (`ERR_VM_BAD_POWER_STATE` = `"VM_BAD_POWER_STATE"`), but about
 two dozen entries upstream don't follow that pattern:
@@ -53,7 +53,7 @@ those constants, and prints how many it found, so the exception is visible
 at the point of use instead of having to be remembered. Two rules follow
 from that, for consumers and for anyone editing this file by hand:
 
-- Compare against the constant (`err.Code() == xenapi.ERR_SR_NO_PBDS`), never
+- Compare against the constant (`apiErr.Code == xenapi.ERR_SR_NO_PBDS`), never
   against a hand-typed string. A string built from the constant's own name
   matches only the majority case.
 - Don't "fix" a value to match its name. The value is the wire contract: the
