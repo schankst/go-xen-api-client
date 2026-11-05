@@ -209,47 +209,43 @@ func TestClientCallReplyTypeMatchStillWorks(t *testing.T) {
 	})
 }
 
-// XCP-ng/XenServer pools use cookies to pin a client to whichever host
-// handled the first request. Call must capture the first response's
-// cookies and replay them on every subsequent call.
-func TestClientCallReplaysCookies(t *testing.T) {
-	var receivedCookies []string
-	requestCount := 0
+// Cookies (e.g. a load balancer's affinity cookie) follow normal cookie
+// semantics: set on any response, updated, and deleted.
+func TestClientCallCookies(t *testing.T) {
+	steps := []struct {
+		set  *http.Cookie // cookie the server sets in its response
+		want string       // value the request must carry, "" for none
+	}{
+		{set: nil, want: ""},
+		{set: &http.Cookie{Name: "lb", Value: "host-1"}, want: ""},
+		{set: &http.Cookie{Name: "lb", Value: "host-2"}, want: "host-1"},
+		{set: &http.Cookie{Name: "lb", MaxAge: -1}, want: "host-2"},
+		{set: nil, want: ""},
+	}
 
+	var step int
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		requestCount++
-		if cookie, err := r.Cookie("pool_session"); err == nil {
-			receivedCookies = append(receivedCookies, cookie.Value)
-		} else {
-			receivedCookies = append(receivedCookies, "")
+		got := ""
+		if c, err := r.Cookie("lb"); err == nil {
+			got = c.Value
 		}
-
-		if requestCount == 1 {
-			http.SetCookie(w, &http.Cookie{Name: "pool_session", Value: "pinned-to-host-1"})
+		if got != steps[step].want {
+			t.Errorf("request %d carried lb=%q, want %q", step+1, got, steps[step].want)
 		}
-		w.Header().Set("Content-Type", "text/xml")
-		w.Write([]byte(`<?xml version="1.0"?><methodResponse><params><param>` +
-			`<value><string>ok</string></value></param></params></methodResponse>`))
+		if steps[step].set != nil {
+			http.SetCookie(w, steps[step].set)
+		}
+		step++
+		_, _ = io.WriteString(w, `<?xml version="1.0"?><methodResponse><params><param>`+
+			`<value><string>ok</string></value></param></params></methodResponse>`)
 	}))
 	defer server.Close()
 
 	client := NewClient(server.URL, nil)
-
-	for i := range 3 {
-		var reply string
-		if err := client.Call("noop", nil, &reply); err != nil {
-			t.Fatalf("Call #%d: %v", i+1, err)
+	for i := range steps {
+		if err := client.Call("noop", nil, nil); err != nil {
+			t.Fatalf("Call %d: %v", i+1, err)
 		}
-	}
-
-	if len(receivedCookies) != 3 {
-		t.Fatalf("got %d requests, want 3", len(receivedCookies))
-	}
-	if receivedCookies[0] != "" {
-		t.Errorf("first request should have no cookie yet, got %q", receivedCookies[0])
-	}
-	if receivedCookies[1] != "pinned-to-host-1" || receivedCookies[2] != "pinned-to-host-1" {
-		t.Errorf("subsequent requests should replay the captured cookie, got %v", receivedCookies[1:])
 	}
 }
 
