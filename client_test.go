@@ -29,7 +29,10 @@ func newTestClient(t *testing.T, body string) *Client {
 	}))
 	t.Cleanup(server.Close)
 
-	client := NewClient(server.URL, nil)
+	client, err := NewClient(server.URL)
+	if err != nil {
+		t.Fatal(err)
+	}
 	return client
 }
 

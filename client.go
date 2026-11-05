@@ -5,8 +5,10 @@ package xenapi
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
@@ -96,24 +98,60 @@ func detailString(details []any, index int) (string, bool) {
 	return s, ok
 }
 
-// NewClient creates a Client for the XenAPI server at url (e.g.
-// "https://10.0.0.10/"). Call Client.Session.LoginWithPassword before
-// using it for anything else.
+// Option configures a Client created by NewClient.
+type Option func(*clientOptions)
+
+type clientOptions struct {
+	httpClient *http.Client
+	tlsConfig  *tls.Config
+}
+
+// WithHTTPClient makes the Client send its requests through c, e.g. to use
+// a custom RoundTripper for logging or tests. TLS settings belong to c's
+// transport then, so it cannot be combined with WithTLSConfig.
+func WithHTTPClient(c *http.Client) Option {
+	return func(o *clientOptions) { o.httpClient = c }
+}
+
+// WithTLSConfig sets the TLS configuration of the default HTTP client.
+// Use it to trust a host's self-signed certificate:
 //
-// If transport is nil, a default *http.Transport is used with
-// InsecureSkipVerify: true - i.e. TLS certificate verification is off by
-// default, matching XCP-ng/XenServer's common self-signed-certificate
-// setup. Pass a transport of your own to verify certificates.
+//	pool := x509.NewCertPool()
+//	pool.AppendCertsFromPEM(hostCertPEM)
+//	client, err := xenapi.NewClient(url, xenapi.WithTLSConfig(&tls.Config{RootCAs: pool}))
 //
-// There is no error return: nothing is connected to or parsed until the
-// first call, which reports a malformed URL or an unreachable host from
-// Session.LoginWithPassword.
-func NewClient(url string, transport *http.Transport) *Client {
-	if transport == nil {
-		transport = &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		}
+// Certificate verification is only disabled if cfg sets InsecureSkipVerify.
+func WithTLSConfig(cfg *tls.Config) Option {
+	return func(o *clientOptions) { o.tlsConfig = cfg }
+}
+
+// NewClient creates a Client for the XenAPI server at rawURL, which must be
+// an absolute http or https URL such as "https://10.0.0.10". Call
+// Client.Session.LoginWithPassword before using it for anything else.
+//
+// By default, requests go through xmlrpc.DefaultHTTPClient and the host's
+// TLS certificate is verified against the system roots; see WithTLSConfig
+// for hosts with a self-signed certificate.
+func NewClient(rawURL string, opts ...Option) (*Client, error) {
+	u, err := url.Parse(rawURL)
+	if err != nil {
+		return nil, fmt.Errorf("xenapi: invalid URL: %w", err)
+	}
+	if (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" {
+		return nil, fmt.Errorf("xenapi: URL %q must be absolute with an http or https scheme", rawURL)
 	}
 
-	return prepClient(xmlrpc.NewClient(url, transport))
+	var o clientOptions
+	for _, opt := range opts {
+		opt(&o)
+	}
+	if o.httpClient != nil && o.tlsConfig != nil {
+		return nil, errors.New("xenapi: WithHTTPClient and WithTLSConfig cannot be combined; configure TLS on the HTTP client's transport")
+	}
+	httpClient := o.httpClient
+	if httpClient == nil {
+		httpClient = xmlrpc.DefaultHTTPClient(o.tlsConfig)
+	}
+
+	return prepClient(xmlrpc.NewClient(rawURL, httpClient)), nil
 }

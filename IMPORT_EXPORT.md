@@ -233,8 +233,7 @@ truncated or mis-routed uploads that still returned HTTP 200.
 The XML-RPC half comes from this package; the upload is a plain HTTP `PUT`:
 
 ```go
-transport := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
-xapi := xenapi.NewClient("https://10.0.0.10/", transport)
+xapi, _ := xenapi.NewClient("https://10.0.0.10")
 session, _ := xapi.Session.LoginWithPassword(user, pass, "1.0", "myimport")
 defer xapi.Session.Logout(session)
 

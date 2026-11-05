@@ -2,6 +2,7 @@ package xmlrpc
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"net/http"
@@ -22,23 +23,38 @@ type Client struct {
 	httpClient *http.Client
 }
 
-// NewClient creates a Client for the XML-RPC endpoint at url. If
-// transport is nil, http.DefaultTransport's zero-value equivalent
-// (&http.Transport{}) is used.
+// NewClient creates a Client for the XML-RPC endpoint at url that sends
+// its requests through httpClient. If httpClient is nil, it uses
+// DefaultHTTPClient(nil).
 //
-// There is no error return: building the request is what would normally fail at
-// construction time (a malformed URL), and that happens inside Call, where
-// it is reported per call. Validating the URL here as well would mean
-// duplicating net/url's parsing rules against http.NewRequest's.
-func NewClient(url string, transport *http.Transport) *Client {
-	if transport == nil {
-		transport = &http.Transport{}
+// The URL is not validated here; a malformed URL is reported by Call.
+func NewClient(url string, httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = DefaultHTTPClient(nil)
+	}
+	return &Client{url: url, httpClient: httpClient}
+}
+
+// DefaultHTTPClient returns an http.Client with a cookie jar and a clone of
+// http.DefaultTransport (proxy from environment, dial and TLS handshake
+// timeouts, HTTP/2). If tlsConfig is non-nil, the transport uses a clone
+// of it.
+//
+// The client has no overall timeout, since XenAPI calls such as VM
+// migration can legitimately run for a long time; bound each call with
+// the context passed to Call instead.
+func DefaultHTTPClient(tlsConfig *tls.Config) *http.Client {
+	transport, ok := http.DefaultTransport.(*http.Transport)
+	if ok {
+		transport = transport.Clone()
+	} else {
+		transport = &http.Transport{Proxy: http.ProxyFromEnvironment}
+	}
+	if tlsConfig != nil {
+		transport.TLSClientConfig = tlsConfig.Clone()
 	}
 	jar, _ := cookiejar.New(nil) // never fails
-	return &Client{
-		url:        url,
-		httpClient: &http.Client{Transport: transport, Jar: jar},
-	}
+	return &http.Client{Transport: transport, Jar: jar}
 }
 
 // Call issues an XML-RPC call for method with params and, on success,
