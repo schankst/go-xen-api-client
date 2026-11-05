@@ -29,6 +29,10 @@ type APIResult struct {
 // methods wrap it; use it for calls they don't cover. A failure reported
 // by XenAPI is returned as *Error.
 //
+// Parameters may be Refs, enums, strings, bools, float64, time.Time,
+// slices and string-keyed maps of these, or xmlrpc.Struct. XenAPI ints
+// travel as decimal strings: pass strconv.FormatInt(n, 10), not n.
+//
 // Canceling ctx abandons the request; an operation XAPI has already
 // started keeps running on the host.
 func (client *Client) APICall(ctx context.Context, method string, params ...any) (result APIResult, err error) {

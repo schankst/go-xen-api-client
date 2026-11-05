@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"slices"
@@ -220,5 +221,30 @@ func TestErrorIs(t *testing.T) {
 	}
 	if !errors.Is(wrapped, ErrorCode("HANDLE_INVALID")) {
 		t.Error("errors.Is with an ErrorCode built from the wire string = false, want true")
+	}
+}
+
+func TestAPICallAcceptsOwnTypes(t *testing.T) {
+	var body string
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		b, _ := io.ReadAll(r.Body)
+		body = string(b)
+		fmt.Fprint(w, successResponse(`<string>ok</string>`))
+	}))
+	t.Cleanup(server.Close)
+	client, err := NewClient(server.URL)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	_, err = client.APICall(t.Context(), "VM.set_other_config",
+		SessionRef("OpaqueRef:s"), VMRef("OpaqueRef:vm"), map[string]string{"k": "v"}, []VMOperations{VMOperationsStart})
+	if err != nil {
+		t.Fatalf("APICall: %v", err)
+	}
+	for _, want := range []string{"<string>OpaqueRef:s</string>", "<string>OpaqueRef:vm</string>", "<name>k</name>", "<string>start</string>"} {
+		if !strings.Contains(body, want) {
+			t.Errorf("request body lacks %s:\n%s", want, body)
+		}
 	}
 }
