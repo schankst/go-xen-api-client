@@ -29,7 +29,7 @@ func decodeResponse(body []byte) (any, error) {
 		if _, err := findStart(dec, "value"); err != nil {
 			return nil, fmt.Errorf("xmlrpc: reading fault: %w", err)
 		}
-		faultValue, err := decodeValue(dec)
+		faultValue, err := decodeValue(dec, 0)
 		if err != nil {
 			return nil, fmt.Errorf("xmlrpc: decoding fault: %w", err)
 		}
@@ -45,7 +45,7 @@ func decodeResponse(body []byte) (any, error) {
 		if _, err := findStart(dec, "value"); err != nil {
 			return nil, fmt.Errorf("xmlrpc: reading params: %w", err)
 		}
-		return decodeValue(dec)
+		return decodeValue(dec, 0)
 	default:
 		return nil, fmt.Errorf("xmlrpc: unexpected <%s> inside methodResponse", root.Name.Local)
 	}
@@ -78,9 +78,16 @@ func nextStart(dec *xml.Decoder) (xml.StartElement, error) {
 	}
 }
 
+// maxDepth bounds value nesting so a hostile response can't exhaust the
+// stack. XenAPI values nest a handful of levels.
+const maxDepth = 64
+
 // decodeValue decodes the content of a <value> whose start tag was already
 // read, through its end tag.
-func decodeValue(dec *xml.Decoder) (any, error) {
+func decodeValue(dec *xml.Decoder, depth int) (any, error) {
+	if depth > maxDepth {
+		return nil, fmt.Errorf("xmlrpc: values nested deeper than %d levels", maxDepth)
+	}
 	tok, err := dec.Token()
 	if err != nil {
 		return nil, fmt.Errorf("xmlrpc: reading value: %w", err)
@@ -92,32 +99,51 @@ func decodeValue(dec *xml.Decoder) (any, error) {
 		return "", nil
 
 	case xml.CharData:
-		// Bare text with no type wrapper defaults to <string> per the
-		// XML-RPC spec.
+		// Untyped text is a string; whitespace before a typed element is
+		// just formatting.
 		text := string(t)
-		if err := expectEnd(dec, "value"); err != nil {
-			return nil, err
+		next, err := dec.Token()
+		if err != nil {
+			return nil, fmt.Errorf("xmlrpc: reading value: %w", err)
 		}
-		return text, nil
+		switch n := next.(type) {
+		case xml.EndElement:
+			if n.Name.Local != "value" {
+				return nil, fmt.Errorf("xmlrpc: expected </value>, got </%s>", n.Name.Local)
+			}
+			return text, nil
+		case xml.StartElement:
+			if strings.TrimSpace(text) != "" {
+				return nil, fmt.Errorf("xmlrpc: unexpected text %q before <%s>", text, n.Name.Local)
+			}
+			return decodeTypedValue(dec, n.Name.Local, depth)
+		default:
+			return nil, fmt.Errorf("xmlrpc: unexpected token %T in value", next)
+		}
 
 	case xml.StartElement:
-		value, err := decodeTyped(dec, t.Name.Local)
-		if err != nil {
-			return nil, err
-		}
-		if err := expectEnd(dec, "value"); err != nil {
-			return nil, err
-		}
-		return value, nil
+		return decodeTypedValue(dec, t.Name.Local, depth)
 
 	default:
 		return nil, fmt.Errorf("xmlrpc: unexpected token %T in value", tok)
 	}
 }
 
+// decodeTypedValue decodes a typed element and the </value> after it.
+func decodeTypedValue(dec *xml.Decoder, name string, depth int) (any, error) {
+	value, err := decodeTyped(dec, name, depth)
+	if err != nil {
+		return nil, err
+	}
+	if err := expectEnd(dec, "value"); err != nil {
+		return nil, err
+	}
+	return value, nil
+}
+
 // decodeTyped decodes a typed element whose start tag was already read,
 // through its end tag.
-func decodeTyped(dec *xml.Decoder, name string) (any, error) {
+func decodeTyped(dec *xml.Decoder, name string, depth int) (any, error) {
 	switch name {
 	case "string":
 		return readText(dec, name)
@@ -178,10 +204,10 @@ func decodeTyped(dec *xml.Decoder, name string) (any, error) {
 		return t, nil
 
 	case "struct":
-		return decodeStruct(dec)
+		return decodeStruct(dec, depth)
 
 	case "array":
-		return decodeArray(dec)
+		return decodeArray(dec, depth)
 
 	default:
 		return nil, fmt.Errorf("xmlrpc: unsupported value type <%s>", name)
@@ -233,7 +259,7 @@ func expectEnd(dec *xml.Decoder, name string) error {
 	}
 }
 
-func decodeStruct(dec *xml.Decoder) (Struct, error) {
+func decodeStruct(dec *xml.Decoder, depth int) (Struct, error) {
 	result := Struct{}
 	for {
 		tok, err := dec.Token()
@@ -250,7 +276,7 @@ func decodeStruct(dec *xml.Decoder) (Struct, error) {
 			if t.Name.Local != "member" {
 				return nil, fmt.Errorf("xmlrpc: unexpected <%s> in struct", t.Name.Local)
 			}
-			name, value, err := decodeMember(dec)
+			name, value, err := decodeMember(dec, depth)
 			if err != nil {
 				return nil, err
 			}
@@ -259,7 +285,7 @@ func decodeStruct(dec *xml.Decoder) (Struct, error) {
 	}
 }
 
-func decodeMember(dec *xml.Decoder) (name string, value any, err error) {
+func decodeMember(dec *xml.Decoder, depth int) (name string, value any, err error) {
 	for {
 		tok, terr := dec.Token()
 		if terr != nil {
@@ -279,7 +305,7 @@ func decodeMember(dec *xml.Decoder) (name string, value any, err error) {
 					return "", nil, err
 				}
 			case "value":
-				value, err = decodeValue(dec)
+				value, err = decodeValue(dec, depth+1)
 				if err != nil {
 					return "", nil, err
 				}
@@ -290,7 +316,7 @@ func decodeMember(dec *xml.Decoder) (name string, value any, err error) {
 	}
 }
 
-func decodeArray(dec *xml.Decoder) ([]any, error) {
+func decodeArray(dec *xml.Decoder, depth int) ([]any, error) {
 	if _, err := findStart(dec, "data"); err != nil {
 		return nil, fmt.Errorf("xmlrpc: reading array: %w", err)
 	}
@@ -314,7 +340,7 @@ func decodeArray(dec *xml.Decoder) ([]any, error) {
 			if t.Name.Local != "value" {
 				return nil, fmt.Errorf("xmlrpc: unexpected <%s> in array data", t.Name.Local)
 			}
-			value, err := decodeValue(dec)
+			value, err := decodeValue(dec, depth+1)
 			if err != nil {
 				return nil, err
 			}

@@ -49,6 +49,10 @@ jobs:
       - name: Test
         run: go test -short -race ./...
 
+      - name: Fuzz the XML-RPC decoder
+        if: matrix.go-version == 'stable'
+        run: go test -run '^$' -fuzz FuzzDecodeResponse -fuzztime 30s ./xmlrpc
+
   # Separate from the matrix: gofmt's own rules change between Go releases
   # (Go 1.19 reformatted doc comments, for one), so the check has to run on
   # one toolchain - the same "stable" the generators run under in

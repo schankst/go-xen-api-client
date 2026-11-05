@@ -403,3 +403,21 @@ func TestClientCallInvalidReplySendsNothing(t *testing.T) {
 		t.Errorf("server received %d requests, want 0", n)
 	}
 }
+
+func TestClientCallResponseSizeLimit(t *testing.T) {
+	response := `<?xml version="1.0"?><methodResponse><params><param><value><string>` +
+		strings.Repeat("x", 1000) + `</string></value></param></params></methodResponse>`
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, _ = io.WriteString(w, response)
+	}))
+	defer server.Close()
+
+	var reply string
+	err := NewClient(server.URL, nil, MaxResponseSize(500)).Call(t.Context(), "big", nil, &reply)
+	if err == nil || !strings.Contains(err.Error(), "exceeds 500 bytes") {
+		t.Fatalf("Call error = %v, want the size limit", err)
+	}
+	if err := NewClient(server.URL, nil, MaxResponseSize(int64(len(response)))).Call(t.Context(), "big", nil, &reply); err != nil {
+		t.Fatalf("Call at exactly the limit: %v", err)
+	}
+}

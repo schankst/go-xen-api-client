@@ -98,6 +98,7 @@ type Option func(*clientOptions)
 type clientOptions struct {
 	httpClient *http.Client
 	tlsConfig  *tls.Config
+	rpcOptions []xmlrpc.Option
 }
 
 // WithHTTPClient makes the Client send its requests through c, e.g. to use
@@ -112,6 +113,12 @@ func WithHTTPClient(c *http.Client) Option {
 // disabled if cfg sets InsecureSkipVerify.
 func WithTLSConfig(cfg *tls.Config) Option {
 	return func(o *clientOptions) { o.tlsConfig = cfg }
+}
+
+// WithMaxResponseSize sets the largest response, in bytes, the Client
+// accepts (default xmlrpc.DefaultMaxResponseSize).
+func WithMaxResponseSize(n int64) Option {
+	return func(o *clientOptions) { o.rpcOptions = append(o.rpcOptions, xmlrpc.MaxResponseSize(n)) }
 }
 
 // NewClient creates a Client for the XenAPI server at rawURL, an absolute
@@ -139,5 +146,5 @@ func NewClient(rawURL string, opts ...Option) (*Client, error) {
 		httpClient = xmlrpc.DefaultHTTPClient(o.tlsConfig)
 	}
 
-	return prepClient(xmlrpc.NewClient(rawURL, httpClient)), nil
+	return prepClient(xmlrpc.NewClient(rawURL, httpClient, o.rpcOptions...)), nil
 }

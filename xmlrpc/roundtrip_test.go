@@ -233,3 +233,38 @@ func TestWriteValueRejectsCharactersXMLCannotCarry(t *testing.T) {
 		}
 	}
 }
+
+func TestDecodeResponseDepthLimit(t *testing.T) {
+	nest := func(n int) []byte {
+		v := strings.Repeat("<value><array><data>", n) + "<value>x</value>" + strings.Repeat("</data></array></value>", n)
+		return []byte(wrapAsResponse(v))
+	}
+	if _, err := decodeResponse(nest(maxDepth)); err != nil {
+		t.Errorf("nesting %d levels: %v", maxDepth, err)
+	}
+	if _, err := decodeResponse(nest(maxDepth + 1)); err == nil {
+		t.Errorf("nesting %d levels succeeded, want an error", maxDepth+1)
+	}
+	// Far beyond the limit must still be an error, not a stack overflow.
+	if _, err := decodeResponse(nest(100_000)); err == nil {
+		t.Error("nesting 100000 levels succeeded, want an error")
+	}
+}
+
+func TestDecodeResponseWhitespace(t *testing.T) {
+	cases := map[string]any{
+		"<value>\n  <string>x</string>\n</value>": "x",
+		"<value>\n  <int>7</int>\n</value>":       int64(7),
+		"<value>\n  <struct>\n    <member>\n      <name>k</name>\n      <value>\n        <boolean>1</boolean>\n      </value>\n    </member>\n  </struct>\n</value>": Struct{"k": true},
+		"<value>  untyped  </value>": "  untyped  ",
+	}
+	for in, want := range cases {
+		got, err := decodeResponse([]byte(wrapAsResponse(in)))
+		if err != nil || !reflect.DeepEqual(got, want) {
+			t.Errorf("decodeResponse(%q) = %#v, %v; want %#v", in, got, err, want)
+		}
+	}
+	if _, err := decodeResponse([]byte(wrapAsResponse("<value>text<string>x</string></value>"))); err == nil {
+		t.Error("text before a typed element was accepted, want an error")
+	}
+}

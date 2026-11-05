@@ -14,8 +14,23 @@ import (
 // Client is an XML-RPC client over HTTP; each Call is one HTTP request.
 // It is safe for concurrent use.
 type Client struct {
-	url        string
-	httpClient *http.Client
+	url             string
+	httpClient      *http.Client
+	maxResponseSize int64
+}
+
+// DefaultMaxResponseSize is the response size limit of a Client unless
+// set with MaxResponseSize. It leaves room for get_all_records on large
+// pools.
+const DefaultMaxResponseSize = 1 << 30
+
+// An Option configures a Client.
+type Option func(*Client)
+
+// MaxResponseSize sets the largest response body, in bytes, a Client
+// reads; larger responses fail instead of exhausting memory.
+func MaxResponseSize(n int64) Option {
+	return func(c *Client) { c.maxResponseSize = n }
 }
 
 // NewClient creates a Client for the XML-RPC endpoint at url that sends
@@ -23,11 +38,15 @@ type Client struct {
 // DefaultHTTPClient(nil).
 //
 // The URL is not validated here; a malformed URL is reported by Call.
-func NewClient(url string, httpClient *http.Client) *Client {
+func NewClient(url string, httpClient *http.Client, opts ...Option) *Client {
 	if httpClient == nil {
 		httpClient = DefaultHTTPClient(nil)
 	}
-	return &Client{url: url, httpClient: httpClient}
+	c := &Client{url: url, httpClient: httpClient, maxResponseSize: DefaultMaxResponseSize}
+	for _, opt := range opts {
+		opt(c)
+	}
+	return c
 }
 
 // DefaultHTTPClient returns an http.Client with a cookie jar and a clone of
@@ -90,9 +109,12 @@ func (c *Client) Call(ctx context.Context, method string, params []any, reply an
 		return &HTTPError{StatusCode: resp.StatusCode, Status: resp.Status, Body: string(excerpt)}
 	}
 
-	respBody, err := io.ReadAll(resp.Body)
+	respBody, err := io.ReadAll(io.LimitReader(resp.Body, c.maxResponseSize+1))
 	if err != nil {
 		return err
+	}
+	if int64(len(respBody)) > c.maxResponseSize {
+		return fmt.Errorf("xmlrpc: response to %q exceeds %d bytes", method, c.maxResponseSize)
 	}
 
 	value, err := decodeResponse(respBody)
