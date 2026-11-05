@@ -170,7 +170,7 @@ func formatGoDoc(input string) string {
 }
 
 func formatSingleLine(input string) string {
-	return strings.Replace(input, "\n", " ", -1)
+	return strings.NewReplacer("\r\n", " ", "\n", " ", "\r", " ").Replace(input)
 }
 
 func exportedGoIdentifier(input string) string {
@@ -402,7 +402,7 @@ const messageFuncTemplate string = `
 {{ .Message.Name|exported|godoc }} {{ .Message.Description|singleLine }}{{ if .Message.Errors }}
 //
 // Errors:{{ range .Message.Errors }}
-//  {{ .Name }} - {{ .Doc }}{{ end }}{{ end }}{{ lifecycle .Message.Lifecycle }}
+//  {{ .Name|singleLine }} - {{ .Doc|singleLine }}{{ end }}{{ end }}{{ lifecycle .Message.Lifecycle }}
 func (c {{ .Class.Name|exported }}Class) {{ .Message.Name|exported }}(ctx context.Context{{ range .Message.Params }}, {{ .Name|internal }} {{ .GoType }}{{ end }}) {{ if .Message.Result.IsVoid }}error{{ else }}({{ .Message.Result.GoType }}, error){{ end }} {
 {{- if .Message.Result.IsVoid }}
 	_, err := c.client.APICall(ctx, "{{ .Class.Name }}.{{ .Message.Name }}"{{ range .Message.Params }}, {{ xenValue .Type (.Name|internal) }}{{ end }})

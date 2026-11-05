@@ -186,3 +186,26 @@ func TestCallAndConvertWrapsMismatch(t *testing.T) {
 		t.Fatalf("error = %v, want one naming the method and the mismatch", err)
 	}
 }
+
+func TestToTimeRejectsImplausibleTimestamps(t *testing.T) {
+	for _, s := range []string{"NaN", "Inf", "-Inf", "1e300", "-1", "253402300800"} {
+		if v, err := toTime(s); err == nil {
+			t.Errorf("toTime(%q) = %v, want an error", s, v)
+		}
+	}
+	if _, err := toTime("253402300799"); err != nil {
+		t.Errorf("toTime(end of year 9999): %v", err)
+	}
+}
+
+func TestToOption(t *testing.T) {
+	if v, err := toOption(nil, toInt); err != nil || v != 0 {
+		t.Errorf("toOption(nil) = %v, %v; want zero value", v, err)
+	}
+	if v, err := toOption("42", toInt); err != nil || v != 42 {
+		t.Errorf("toOption(\"42\") = %v, %v; want 42", v, err)
+	}
+	if _, err := toOption(int64(1), toInt); err == nil {
+		t.Error("toOption with a mismatched value succeeded, want an error")
+	}
+}

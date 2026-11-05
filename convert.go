@@ -83,7 +83,8 @@ func toInt(input any) (int, error) {
 
 // toTime accepts an XML-RPC dateTime and, as a fallback, the Unix
 // timestamp string some deprecated fields (e.g. event.timestamp) carry,
-// which may have a trailing dot ("1784931839."). nil yields the zero time.
+// which may have a trailing dot ("1784931839."). Timestamps outside years
+// 1970-9999 are rejected. nil yields the zero time.
 func toTime(input any) (time.Time, error) {
 	switch v := input.(type) {
 	case nil:
@@ -91,13 +92,16 @@ func toTime(input any) (time.Time, error) {
 	case time.Time:
 		return v, nil
 	case string:
-		if seconds, err := strconv.ParseFloat(v, 64); err == nil {
+		if seconds, err := strconv.ParseFloat(v, 64); err == nil && seconds >= 0 && seconds <= maxUnixSeconds {
 			whole := int64(seconds)
 			return time.Unix(whole, int64((seconds-float64(whole))*1e9)), nil
 		}
 	}
 	return time.Time{}, &conversionError{want: "time.Time", got: input}
 }
+
+// maxUnixSeconds is 9999-12-31T23:59:59Z. The comparison also rejects NaN.
+const maxUnixSeconds = 253402300799
 
 // toOption converts a value that may be absent; nil yields T's zero value.
 func toOption[T any](input any, convert func(any) (T, error)) (T, error) {

@@ -72,6 +72,10 @@ type ThingClass struct {
 }
 
 // GetRecord get record
+//
+// Errors:
+//
+//	HANDLE_INVALID - The handle is invalid. func injected() {} second line
 func (c ThingClass) GetRecord(ctx context.Context, sessionID SessionRef, self ThingRef) (ThingRecord, error) {
 	return callAndConvert(ctx, c.client, "thing.get_record", convertThingRecordToGo, string(sessionID), string(self))
 }

@@ -19,7 +19,8 @@ import (
 const SchemaXAPIRelease = "26.21.1"
 
 // APIResult is the untyped result of APICall: a string, int64, float64,
-// bool, time.Time, xmlrpc.Struct or []any, as decoded from XML-RPC.
+// bool, time.Time, xmlrpc.Base64, xmlrpc.Struct or []any, as decoded from
+// XML-RPC.
 type APIResult struct {
 	Value any
 }
@@ -45,7 +46,7 @@ func (client *Client) APICall(ctx context.Context, method string, params ...any)
 
 	status, ok := rpcResult["Status"].(string)
 	if !ok {
-		err = fmt.Errorf("Expected a field named %q with a string value in the response", "Status")
+		err = fmt.Errorf("xenapi: %s: response has no string Status field", method)
 		return
 	}
 
