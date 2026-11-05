@@ -68,13 +68,13 @@ type VIFRecord struct {
 	// ethernet MAC address of virtual interface, as exposed to guest
 	MAC string
 	// MTU in octets
-	MTU int
+	MTU int64
 	// additional configuration
 	OtherConfig map[string]string
 	// is the device currently attached (erased on reboot)
 	CurrentlyAttached bool
 	// error/success code associated with last attach-operation (erased on reboot)
-	StatusCode int
+	StatusCode int64
 	// error/success information associated with last attach-operation status (erased on reboot)
 	StatusDetail string
 	// Device runtime properties
@@ -112,7 +112,7 @@ type VIFRecord struct {
 	// the 802.1Q VLANs that this port trunks (if available) ; if it is empty, then the port trunks all VLANs.
 	//
 	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
-	Trunks []int
+	Trunks []int64
 }
 
 type VIFRef string
@@ -135,7 +135,7 @@ func (c VIFClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VIFRef, e
 // SetTrunks Set the 802.1Q VLANs to which traffic on this VIF can be restricted
 //
 // Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
-func (c VIFClass) SetTrunks(ctx context.Context, sessionID SessionRef, self VIFRef, value []int) error {
+func (c VIFClass) SetTrunks(ctx context.Context, sessionID SessionRef, self VIFRef, value []int64) error {
 	_, err := c.client.APICall(ctx, "VIF.set_trunks", string(sessionID), string(self), convertIntSetToXen(value))
 	return err
 }
@@ -143,7 +143,7 @@ func (c VIFClass) SetTrunks(ctx context.Context, sessionID SessionRef, self VIFR
 // RemoveTrunks Removes a 802.1Q VLAN from this VIF
 //
 // Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
-func (c VIFClass) RemoveTrunks(ctx context.Context, sessionID SessionRef, self VIFRef, value int) error {
+func (c VIFClass) RemoveTrunks(ctx context.Context, sessionID SessionRef, self VIFRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VIF.remove_trunks", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -151,7 +151,7 @@ func (c VIFClass) RemoveTrunks(ctx context.Context, sessionID SessionRef, self V
 // AddTrunks Associates a 802.1Q VLAN with this VIF
 //
 // Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
-func (c VIFClass) AddTrunks(ctx context.Context, sessionID SessionRef, self VIFRef, value int) error {
+func (c VIFClass) AddTrunks(ctx context.Context, sessionID SessionRef, self VIFRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VIF.add_trunks", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -279,7 +279,7 @@ func (c VIFClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self
 // GetTrunks Get the trunks field of the given VIF.
 //
 // Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
-func (c VIFClass) GetTrunks(ctx context.Context, sessionID SessionRef, self VIFRef) ([]int, error) {
+func (c VIFClass) GetTrunks(ctx context.Context, sessionID SessionRef, self VIFRef) ([]int64, error) {
 	return callAndConvert(ctx, c.client, "VIF.get_trunks", convertIntSetToGo, string(sessionID), string(self))
 }
 
@@ -366,7 +366,7 @@ func (c VIFClass) GetStatusDetail(ctx context.Context, sessionID SessionRef, sel
 }
 
 // GetStatusCode Get the status_code field of the given VIF.
-func (c VIFClass) GetStatusCode(ctx context.Context, sessionID SessionRef, self VIFRef) (int, error) {
+func (c VIFClass) GetStatusCode(ctx context.Context, sessionID SessionRef, self VIFRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VIF.get_status_code", toInt, string(sessionID), string(self))
 }
 
@@ -381,7 +381,7 @@ func (c VIFClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetMTU Get the MTU field of the given VIF.
-func (c VIFClass) GetMTU(ctx context.Context, sessionID SessionRef, self VIFRef) (int, error) {
+func (c VIFClass) GetMTU(ctx context.Context, sessionID SessionRef, self VIFRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VIF.get_MTU", toInt, string(sessionID), string(self))
 }
 

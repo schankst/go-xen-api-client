@@ -104,9 +104,9 @@ type VDIRecord struct {
 	// list of crash dumps that refer to this disk
 	CrashDumps []CrashdumpRef
 	// size of disk as presented to the guest (in bytes). Note that, depending on storage backend type, requested size may not be respected exactly
-	VirtualSize int
+	VirtualSize int64
 	// amount of physical space that the disk image is currently taking up on the storage repository (in bytes)
-	PhysicalUtilisation int
+	PhysicalUtilisation int64
 	// type of the VDI
 	Type VDIType
 	// true if this disk may be shared
@@ -339,20 +339,20 @@ func (c VDIClass) Update(ctx context.Context, sessionID SessionRef, vdi VDIRef) 
 // Errors:
 //
 //	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-func (c VDIClass) Introduce(ctx context.Context, sessionID SessionRef, uuid string, nameLabel string, nameDescription string, sr SRRef, atype VDIType, sharable bool, readOnly bool, otherConfig map[string]string, location string, xenstoreData map[string]string, smConfig map[string]string, managed bool, virtualSize int, physicalUtilisation int, metadataOfPool PoolRef, isASnapshot bool, snapshotTime time.Time, snapshotOf VDIRef) (VDIRef, error) {
+func (c VDIClass) Introduce(ctx context.Context, sessionID SessionRef, uuid string, nameLabel string, nameDescription string, sr SRRef, atype VDIType, sharable bool, readOnly bool, otherConfig map[string]string, location string, xenstoreData map[string]string, smConfig map[string]string, managed bool, virtualSize int64, physicalUtilisation int64, metadataOfPool PoolRef, isASnapshot bool, snapshotTime time.Time, snapshotOf VDIRef) (VDIRef, error) {
 	return callAndConvert(ctx, c.client, "VDI.introduce", toString[VDIRef], string(sessionID), uuid, nameLabel, nameDescription, string(sr), string(atype), sharable, readOnly, convertStringToStringMapToXen(otherConfig), location, convertStringToStringMapToXen(xenstoreData), convertStringToStringMapToXen(smConfig), managed, fromInt(virtualSize), fromInt(physicalUtilisation), string(metadataOfPool), isASnapshot, snapshotTime, string(snapshotOf))
 }
 
 // ResizeOnline Resize the VDI which may or may not be attached to running guests.
 //
 // Deprecated: Removed in XAPI release inverness. Online VDI resize is not supported by any of the storage backends.
-func (c VDIClass) ResizeOnline(ctx context.Context, sessionID SessionRef, vdi VDIRef, size int) error {
+func (c VDIClass) ResizeOnline(ctx context.Context, sessionID SessionRef, vdi VDIRef, size int64) error {
 	_, err := c.client.APICall(ctx, "VDI.resize_online", string(sessionID), string(vdi), fromInt(size))
 	return err
 }
 
 // Resize Resize the VDI.
-func (c VDIClass) Resize(ctx context.Context, sessionID SessionRef, vdi VDIRef, size int) error {
+func (c VDIClass) Resize(ctx context.Context, sessionID SessionRef, vdi VDIRef, size int64) error {
 	_, err := c.client.APICall(ctx, "VDI.resize", string(sessionID), string(vdi), fromInt(size))
 	return err
 }
@@ -552,12 +552,12 @@ func (c VDIClass) GetType(ctx context.Context, sessionID SessionRef, self VDIRef
 }
 
 // GetPhysicalUtilisation Get the physical_utilisation field of the given VDI.
-func (c VDIClass) GetPhysicalUtilisation(ctx context.Context, sessionID SessionRef, self VDIRef) (int, error) {
+func (c VDIClass) GetPhysicalUtilisation(ctx context.Context, sessionID SessionRef, self VDIRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VDI.get_physical_utilisation", toInt, string(sessionID), string(self))
 }
 
 // GetVirtualSize Get the virtual_size field of the given VDI.
-func (c VDIClass) GetVirtualSize(ctx context.Context, sessionID SessionRef, self VDIRef) (int, error) {
+func (c VDIClass) GetVirtualSize(ctx context.Context, sessionID SessionRef, self VDIRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VDI.get_virtual_size", toInt, string(sessionID), string(self))
 }
 

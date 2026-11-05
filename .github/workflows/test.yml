@@ -50,6 +50,11 @@ jobs:
       - name: Test
         run: go test -short -race ./...
 
+      # XenAPI ints are 64-bit; catch anything that assumes a 64-bit int.
+      - name: Test on 32-bit
+        if: matrix.go-version == 'stable'
+        run: GOARCH=386 go test -short ./...
+
       - name: Fuzz the XML-RPC decoder
         if: matrix.go-version == 'stable'
         run: go test -run '^$' -fuzz FuzzDecodeResponse -fuzztime 30s ./xmlrpc

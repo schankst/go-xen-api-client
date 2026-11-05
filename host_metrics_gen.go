@@ -11,11 +11,11 @@ type HostMetricsRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// Total host memory (bytes)
-	MemoryTotal int
+	MemoryTotal int64
 	// Free host memory (bytes)
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
-	MemoryFree int
+	MemoryFree int64
 	// Pool coordinator thinks this host is live
 	Live bool
 	// Time at which this information was last updated
@@ -77,12 +77,12 @@ func (c HostMetricsClass) GetLive(ctx context.Context, sessionID SessionRef, sel
 // GetMemoryFree Get the memory/free field of the given host_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
-func (c HostMetricsClass) GetMemoryFree(ctx context.Context, sessionID SessionRef, self HostMetricsRef) (int, error) {
+func (c HostMetricsClass) GetMemoryFree(ctx context.Context, sessionID SessionRef, self HostMetricsRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_metrics.get_memory_free", toInt, string(sessionID), string(self))
 }
 
 // GetMemoryTotal Get the memory/total field of the given host_metrics.
-func (c HostMetricsClass) GetMemoryTotal(ctx context.Context, sessionID SessionRef, self HostMetricsRef) (int, error) {
+func (c HostMetricsClass) GetMemoryTotal(ctx context.Context, sessionID SessionRef, self HostMetricsRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_metrics.get_memory_total", toInt, string(sessionID), string(self))
 }
 

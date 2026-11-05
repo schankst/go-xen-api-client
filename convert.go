@@ -2,6 +2,7 @@ package xenapi
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 	"time"
@@ -17,16 +18,21 @@ import (
 // schema. path locates the value within the response; it is built up as
 // the error travels out, so successful conversions never pay for it.
 type conversionError struct {
-	path string
-	want string
-	got  any
+	path   string
+	want   string
+	got    any
+	detail error // optional cause, e.g. a strconv range error
 }
 
 func (e *conversionError) Error() string {
-	if e.path == "" {
-		return fmt.Sprintf("got %T %v, want %s", e.got, e.got, e.want)
+	msg := fmt.Sprintf("got %T %v, want %s", e.got, e.got, e.want)
+	if e.detail != nil {
+		msg += " (" + e.detail.Error() + ")"
 	}
-	return fmt.Sprintf("%s: got %T %v, want %s", e.path, e.got, e.got, e.want)
+	if e.path == "" {
+		return msg
+	}
+	return e.path + ": " + msg
 }
 
 // inside prefixes err's path with segment, e.g. "[3]" or ".name_label".
@@ -68,15 +74,19 @@ func toString[T ~string](input any) (T, error) {
 	return T(s), err
 }
 
-// toInt parses XenAPI's int, which travels as a decimal string.
-func toInt(input any) (int, error) {
+// toInt parses XenAPI's 64-bit int, which travels as a decimal string.
+func toInt(input any) (int64, error) {
 	s, ok := input.(string)
 	if !ok {
-		return 0, &conversionError{want: "int (as a decimal string)", got: input}
+		return 0, &conversionError{want: "int64 as a decimal string", got: input}
 	}
-	n, err := strconv.Atoi(s)
+	n, err := strconv.ParseInt(s, 10, 64)
 	if err != nil {
-		return 0, &conversionError{want: "int (as a decimal string)", got: input}
+		var numErr *strconv.NumError
+		if errors.As(err, &numErr) {
+			err = numErr.Err
+		}
+		return 0, &conversionError{want: "int64 as a decimal string", got: input, detail: err}
 	}
 	return n, nil
 }
@@ -165,7 +175,7 @@ func field[T any](s xmlrpc.Struct, name string, dst *T, convert func(any) (T, er
 
 func fromString[T ~string](v T) string { return string(v) }
 
-func fromInt(v int) string { return strconv.Itoa(v) }
+func fromInt(v int64) string { return strconv.FormatInt(v, 10) }
 
 func fromValue[T any](v T) T { return v }
 

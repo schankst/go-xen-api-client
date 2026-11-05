@@ -8,7 +8,7 @@ import (
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
-func convertEnumThingStateToIntMapToGo(input any) (map[ThingState]int, error) {
+func convertEnumThingStateToIntMapToGo(input any) (map[ThingState]int64, error) {
 	return toMap(input, toString[ThingState], toInt)
 }
 

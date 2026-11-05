@@ -11,19 +11,19 @@ type VMMetricsRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// Guest's actual memory (bytes)
-	MemoryActual int
+	MemoryActual int64
 	// Current number of VCPUs
-	VCPUsNumber int
+	VCPUsNumber int64
 	// Utilisation for all of guest's current VCPUs
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
-	VCPUsUtilisation map[int]float64
+	VCPUsUtilisation map[int64]float64
 	// VCPU to PCPU map
-	VCPUsCPU map[int]int
+	VCPUsCPU map[int64]int64
 	// The live equivalent to VM.VCPUs_params
 	VCPUsParams map[string]string
 	// CPU flags (blocked,online,running)
-	VCPUsFlags map[int][]string
+	VCPUsFlags map[int64][]string
 	// The state of the guest, eg blocked, dying etc
 	State []string
 	// Time at which this VM was last booted
@@ -49,11 +49,11 @@ type VMMetricsRecord struct {
 	// number of NUMA nodes of the host the VM is using
 	//
 	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-	NUMANodes int
+	NUMANodes int64
 	// mapping a NUMA node (int) to an amount of memory (bytes) in that node.
 	//
 	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-	NUMANodeMemory map[int]int
+	NUMANodeMemory map[int64]int64
 }
 
 type VMMetricsRef string
@@ -94,14 +94,14 @@ func (c VMMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRef
 // GetNUMANodeMemory Get the numa_node_memory field of the given VM_metrics.
 //
 // Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-func (c VMMetricsClass) GetNUMANodeMemory(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int]int, error) {
+func (c VMMetricsClass) GetNUMANodeMemory(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int64]int64, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_node_memory", convertIntToIntMapToGo, string(sessionID), string(self))
 }
 
 // GetNUMANodes Get the numa_nodes field of the given VM_metrics.
 //
 // Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-func (c VMMetricsClass) GetNUMANodes(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int, error) {
+func (c VMMetricsClass) GetNUMANodes(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_nodes", toInt, string(sessionID), string(self))
 }
 
@@ -158,7 +158,7 @@ func (c VMMetricsClass) GetState(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetVCPUsFlags Get the VCPUs/flags field of the given VM_metrics.
-func (c VMMetricsClass) GetVCPUsFlags(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int][]string, error) {
+func (c VMMetricsClass) GetVCPUsFlags(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int64][]string, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_VCPUs_flags", convertIntToStringSetMapToGo, string(sessionID), string(self))
 }
 
@@ -168,24 +168,24 @@ func (c VMMetricsClass) GetVCPUsParams(ctx context.Context, sessionID SessionRef
 }
 
 // GetVCPUsCPU Get the VCPUs/CPU field of the given VM_metrics.
-func (c VMMetricsClass) GetVCPUsCPU(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int]int, error) {
+func (c VMMetricsClass) GetVCPUsCPU(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int64]int64, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_VCPUs_CPU", convertIntToIntMapToGo, string(sessionID), string(self))
 }
 
 // GetVCPUsUtilisation Get the VCPUs/utilisation field of the given VM_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
-func (c VMMetricsClass) GetVCPUsUtilisation(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int]float64, error) {
+func (c VMMetricsClass) GetVCPUsUtilisation(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int64]float64, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_VCPUs_utilisation", convertIntToFloatMapToGo, string(sessionID), string(self))
 }
 
 // GetVCPUsNumber Get the VCPUs/number field of the given VM_metrics.
-func (c VMMetricsClass) GetVCPUsNumber(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int, error) {
+func (c VMMetricsClass) GetVCPUsNumber(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_VCPUs_number", toInt, string(sessionID), string(self))
 }
 
 // GetMemoryActual Get the memory/actual field of the given VM_metrics.
-func (c VMMetricsClass) GetMemoryActual(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int, error) {
+func (c VMMetricsClass) GetMemoryActual(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_memory_actual", toInt, string(sessionID), string(self))
 }
 

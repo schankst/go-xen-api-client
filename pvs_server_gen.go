@@ -12,9 +12,9 @@ type PVSServerRecord struct {
 	// IPv4 addresses of this server
 	Addresses []string
 	// First UDP port accepted by this server
-	FirstPort int
+	FirstPort int64
 	// Last UDP port accepted by this server
-	LastPort int
+	LastPort int64
 	// PVS site this server is part of
 	Site PVSSiteRef
 }
@@ -43,7 +43,7 @@ func (c PVSServerClass) Forget(ctx context.Context, sessionID SessionRef, self P
 }
 
 // Introduce introduce new PVS server
-func (c PVSServerClass) Introduce(ctx context.Context, sessionID SessionRef, addresses []string, firstPort int, lastPort int, site PVSSiteRef) (PVSServerRef, error) {
+func (c PVSServerClass) Introduce(ctx context.Context, sessionID SessionRef, addresses []string, firstPort int64, lastPort int64, site PVSSiteRef) (PVSServerRef, error) {
 	return callAndConvert(ctx, c.client, "PVS_server.introduce", toString[PVSServerRef], string(sessionID), convertStringSetToXen(addresses), fromInt(firstPort), fromInt(lastPort), string(site))
 }
 
@@ -53,12 +53,12 @@ func (c PVSServerClass) GetSite(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetLastPort Get the last_port field of the given PVS_server.
-func (c PVSServerClass) GetLastPort(ctx context.Context, sessionID SessionRef, self PVSServerRef) (int, error) {
+func (c PVSServerClass) GetLastPort(ctx context.Context, sessionID SessionRef, self PVSServerRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "PVS_server.get_last_port", toInt, string(sessionID), string(self))
 }
 
 // GetFirstPort Get the first_port field of the given PVS_server.
-func (c PVSServerClass) GetFirstPort(ctx context.Context, sessionID SessionRef, self PVSServerRef) (int, error) {
+func (c PVSServerClass) GetFirstPort(ctx context.Context, sessionID SessionRef, self PVSServerRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "PVS_server.get_first_port", toInt, string(sessionID), string(self))
 }
 

@@ -73,9 +73,9 @@ type PIFRecord struct {
 	// ethernet MAC address of physical interface
 	MAC string
 	// MTU in octets
-	MTU int
+	MTU int64
 	// VLAN tag for all traffic passing through this interface
-	VLAN int
+	VLAN int64
 	// metrics associated with this PIF
 	Metrics PIFMetricsRef
 	// true if this represents a physical network interface
@@ -176,7 +176,7 @@ func (c PIFClass) DbForget(ctx context.Context, sessionID SessionRef, self PIFRe
 }
 
 // DbIntroduce Create a new PIF record in the database only
-func (c PIFClass) DbIntroduce(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, host HostRef, mac string, mtu int, vlan int, physical bool, ipConfigurationMode IPConfigurationMode, ip string, netmask string, gateway string, dns string, bondSlaveOf BondRef, vlanMasterOf VLANRef, management bool, otherConfig map[string]string, disallowUnplug bool, ipv6ConfigurationMode IPv6ConfigurationMode, ipv6 []string, ipv6Gateway string, primaryAddressType PrimaryAddressType, managed bool, properties map[string]string) (PIFRef, error) {
+func (c PIFClass) DbIntroduce(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, host HostRef, mac string, mtu int64, vlan int64, physical bool, ipConfigurationMode IPConfigurationMode, ip string, netmask string, gateway string, dns string, bondSlaveOf BondRef, vlanMasterOf VLANRef, management bool, otherConfig map[string]string, disallowUnplug bool, ipv6ConfigurationMode IPv6ConfigurationMode, ipv6 []string, ipv6Gateway string, primaryAddressType PrimaryAddressType, managed bool, properties map[string]string) (PIFRef, error) {
 	return callAndConvert(ctx, c.client, "PIF.db_introduce", toString[PIFRef], string(sessionID), device, string(network), string(host), mac, fromInt(mtu), fromInt(vlan), physical, string(ipConfigurationMode), ip, netmask, gateway, dns, string(bondSlaveOf), string(vlanMasterOf), management, convertStringToStringMapToXen(otherConfig), disallowUnplug, string(ipv6ConfigurationMode), convertStringSetToXen(ipv6), ipv6Gateway, string(primaryAddressType), managed, convertStringToStringMapToXen(properties))
 }
 
@@ -281,7 +281,7 @@ func (c PIFClass) Destroy(ctx context.Context, sessionID SessionRef, self PIFRef
 //	VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
 //
 // Deprecated: Deprecated in XAPI release miami. Replaced by VLAN.create.
-func (c PIFClass) CreateVLAN(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, host HostRef, vlan int) (PIFRef, error) {
+func (c PIFClass) CreateVLAN(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, host HostRef, vlan int64) (PIFRef, error) {
 	return callAndConvert(ctx, c.client, "PIF.create_VLAN", toString[PIFRef], string(sessionID), device, string(network), string(host), fromInt(vlan))
 }
 
@@ -451,12 +451,12 @@ func (c PIFClass) GetMetrics(ctx context.Context, sessionID SessionRef, self PIF
 }
 
 // GetVLAN Get the VLAN field of the given PIF.
-func (c PIFClass) GetVLAN(ctx context.Context, sessionID SessionRef, self PIFRef) (int, error) {
+func (c PIFClass) GetVLAN(ctx context.Context, sessionID SessionRef, self PIFRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "PIF.get_VLAN", toInt, string(sessionID), string(self))
 }
 
 // GetMTU Get the MTU field of the given PIF.
-func (c PIFClass) GetMTU(ctx context.Context, sessionID SessionRef, self PIFRef) (int, error) {
+func (c PIFClass) GetMTU(ctx context.Context, sessionID SessionRef, self PIFRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "PIF.get_MTU", toInt, string(sessionID), string(self))
 }
 

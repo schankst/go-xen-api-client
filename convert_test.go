@@ -132,7 +132,7 @@ func TestConvertRecordRoundTrip(t *testing.T) {
 		NameLabel:         "my-vm",
 		PowerState:        VMPowerStateRunning,
 		VCPUsMax:          4,
-		MemoryStaticMax:   1 << 30,
+		MemoryStaticMax:   64 << 30, // above 2^32: XenAPI ints are 64-bit
 		AllowedOperations: []VMOperations{VMOperationsStart, "future_op"},
 		OtherConfig:       map[string]string{"k": "v"},
 		VBDs:              []VBDRef{"OpaqueRef:1", "OpaqueRef:2"},
@@ -207,5 +207,26 @@ func TestToOption(t *testing.T) {
 	}
 	if _, err := toOption(int64(1), toInt); err == nil {
 		t.Error("toOption with a mismatched value succeeded, want an error")
+	}
+}
+
+func TestToIntIs64Bit(t *testing.T) {
+	cases := map[string]int64{
+		"8589934592":           8 << 30,
+		"-1":                   -1,
+		"9223372036854775807":  9223372036854775807,
+		"-9223372036854775808": -9223372036854775808,
+	}
+	for in, want := range cases {
+		if got, err := toInt(in); err != nil || got != want {
+			t.Errorf("toInt(%q) = %d, %v; want %d", in, got, err, want)
+		}
+	}
+	_, err := toInt("9223372036854775808")
+	if err == nil || !strings.Contains(err.Error(), "value out of range") {
+		t.Errorf("toInt(2^63) error = %v, want one naming the range problem", err)
+	}
+	if got := fromInt(8 << 30); got != "8589934592" {
+		t.Errorf("fromInt(8 GiB) = %q", got)
 	}
 }

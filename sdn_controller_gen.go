@@ -23,7 +23,7 @@ type SDNControllerRecord struct {
 	// IP address of the controller
 	Address string
 	// TCP port of the controller
-	Port int
+	Port int64
 }
 
 type SDNControllerRef string
@@ -50,12 +50,12 @@ func (c SDNControllerClass) Forget(ctx context.Context, sessionID SessionRef, se
 }
 
 // Introduce Introduce an SDN controller to the pool.
-func (c SDNControllerClass) Introduce(ctx context.Context, sessionID SessionRef, protocol SDNControllerProtocol, address string, port int) (SDNControllerRef, error) {
+func (c SDNControllerClass) Introduce(ctx context.Context, sessionID SessionRef, protocol SDNControllerProtocol, address string, port int64) (SDNControllerRef, error) {
 	return callAndConvert(ctx, c.client, "SDN_controller.introduce", toString[SDNControllerRef], string(sessionID), string(protocol), address, fromInt(port))
 }
 
 // GetPort Get the port field of the given SDN_controller.
-func (c SDNControllerClass) GetPort(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (int, error) {
+func (c SDNControllerClass) GetPort(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "SDN_controller.get_port", toInt, string(sessionID), string(self))
 }
 

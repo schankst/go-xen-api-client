@@ -48,7 +48,7 @@ func goTypeForXenType(xenType string) (goType string, err error) {
 	if xenType == "bool" {
 		goType = "bool"
 	} else if xenType == "int" {
-		goType = "int"
+		goType = "int64"
 	} else if xenType == "float" {
 		goType = "float64"
 	} else if xenType == "string" {

@@ -94,7 +94,7 @@ q := url.Values{"session_id": {string(session)}, "vdi": {string(vdi)},
     "format": {"raw"}, "task_id": {string(task)}}
 req, err := http.NewRequestWithContext(ctx, http.MethodPut,
     "https://pool-master/import_raw_vdi?"+q.Encode(), f)
-req.ContentLength = int64(size) // required; Go does not infer it from *os.File
+req.ContentLength = size // required; Go does not infer it from *os.File
 req.Header.Set("Content-Type", "application/octet-stream")
 resp, err := hc.Do(req) // then resp.Body.Close()
 

@@ -79,7 +79,7 @@ func (c CallerClass) QueryAllUsage(ctx context.Context, sessionID SessionRef) ([
 // QueryGroupCallCount Return number of calls made since Xapi startup by the callers in the named group.
 //
 // Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
-func (c CallerClass) QueryGroupCallCount(ctx context.Context, sessionID SessionRef, group string) (int, error) {
+func (c CallerClass) QueryGroupCallCount(ctx context.Context, sessionID SessionRef, group string) (int64, error) {
 	return callAndConvert(ctx, c.client, "Caller.query_group_call_count", toInt, string(sessionID), group)
 }
 
@@ -93,7 +93,7 @@ func (c CallerClass) QueryGroupTokenUsage(ctx context.Context, sessionID Session
 // QueryCallCount Return number of calls made by this caller since Xapi startup
 //
 // Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
-func (c CallerClass) QueryCallCount(ctx context.Context, sessionID SessionRef, self CallerRef) (int, error) {
+func (c CallerClass) QueryCallCount(ctx context.Context, sessionID SessionRef, self CallerRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "Caller.query_call_count", toInt, string(sessionID), string(self))
 }
 
