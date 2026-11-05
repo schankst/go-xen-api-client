@@ -73,7 +73,7 @@ func (client *Client) APICall(ctx context.Context, method string, params ...any)
 			return
 		}
 
-		apiErr := &Error{Code: code}
+		apiErr := &Error{Code: ErrorCode(code)}
 		for _, d := range details[1:] {
 			apiErr.Params = append(apiErr.Params, errorParam(d))
 		}

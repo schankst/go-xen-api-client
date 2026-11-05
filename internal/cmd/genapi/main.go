@@ -42,6 +42,8 @@ import (
 	"slices"
 	"strings"
 	"text/template"
+
+	"github.com/schankst/go-xen-api-client/internal/naming"
 )
 
 // These match XenAPI's compound type grammar, e.g. "VM ref", "VM record",
@@ -98,11 +100,11 @@ func goTypeForXenType(xenType string) (goType string, err error) {
 		}
 		goType = "[]" + goItemType
 	} else if match = reXenRefType.FindStringSubmatch(xenType); match != nil {
-		goType = snakeToCamel(match[1]) + "Ref"
+		goType = naming.SnakeToCamel(match[1]) + "Ref"
 	} else if match = reXenRecordType.FindStringSubmatch(xenType); match != nil {
-		goType = snakeToCamel(match[1]) + "Record"
+		goType = naming.SnakeToCamel(match[1]) + "Record"
 	} else if match = reXenEnumType.FindStringSubmatch(xenType); match != nil {
-		goType = snakeToCamel(match[1])
+		goType = naming.SnakeToCamel(match[1])
 	} else if match = reXenMapType.FindStringSubmatch(xenType); match != nil {
 		var goKeyType string
 		goKeyType, err = goTypeForXenType(match[1])
@@ -161,11 +163,11 @@ func funcPartialForXenType(xenType string) (partial string, err error) {
 		}
 		partial = itemPartial + "Set"
 	} else if match = reXenRefType.FindStringSubmatch(xenType); match != nil {
-		partial = snakeToCamel(match[1]) + "Ref"
+		partial = naming.SnakeToCamel(match[1]) + "Ref"
 	} else if match = reXenRecordType.FindStringSubmatch(xenType); match != nil {
-		partial = snakeToCamel(match[1]) + "Record"
+		partial = naming.SnakeToCamel(match[1]) + "Record"
 	} else if match = reXenEnumType.FindStringSubmatch(xenType); match != nil {
-		partial = "Enum" + snakeToCamel(match[1])
+		partial = "Enum" + naming.SnakeToCamel(match[1])
 	} else if match = reXenMapType.FindStringSubmatch(xenType); match != nil {
 		var keyPartial string
 		keyPartial, err = funcPartialForXenType(match[1])
@@ -224,12 +226,12 @@ func formatSingleLine(input string) string {
 // names, struct field names, method names.
 func exportedGoIdentifier(input string) string {
 	input = strings.ReplaceAll(input, "-", "_")
-	return snakeToCamel(input)
+	return naming.SnakeToCamel(input)
 }
 
 // internalGoIdentifier converts an XenAPI snake_case identifier into an
 // unexported, camelCase Go identifier, e.g. "session_id" -> "sessionID"
-// with initialisms kept in caps (see snakeToCamel). Used for local variable and
+// with initialisms kept in caps (see naming.SnakeToCamel). Used for local variable and
 // method-parameter names. A couple of XenAPI names collide with Go
 // keywords ("type", "interface") and get renamed outright.
 func internalGoIdentifier(input string) (ident string) {
@@ -240,7 +242,7 @@ func internalGoIdentifier(input string) (ident string) {
 	if _index == -1 {
 		ident = strings.ToLower(input)
 	} else {
-		ident = strings.ToLower(input[:_index]) + snakeToCamel(input[_index+1:])
+		ident = strings.ToLower(input[:_index]) + naming.SnakeToCamel(input[_index+1:])
 	}
 
 	// Rename XenAPI identifiers that conflict with Go identifiers.
@@ -366,7 +368,7 @@ func (result *xapiResult) IsVoid() bool {
 
 // xapiError is one of the named errors a message can raise (documented in
 // XenAPI, but not represented as a distinct Go type - see error.go/
-// internal/cmd/generrors instead, which cover the ERR_* constants generically).
+// internal/cmd/generrors instead, which cover the ErrorCode constants generically).
 type xapiError struct {
 	Doc  string `json:"doc"`
 	Name string `json:"name"`
