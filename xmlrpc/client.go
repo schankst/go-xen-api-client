@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/cookiejar"
 	"reflect"
 	"strings"
-	"sync"
 )
 
 // Client is a minimal XML-RPC client over HTTP. Each Call is one
@@ -19,9 +19,6 @@ import (
 type Client struct {
 	url        string
 	httpClient *http.Client
-
-	mu      sync.Mutex
-	cookies []*http.Cookie
 }
 
 // NewClient creates a Client for the XML-RPC endpoint at url. If
@@ -36,9 +33,10 @@ func NewClient(url string, transport *http.Transport) *Client {
 	if transport == nil {
 		transport = &http.Transport{}
 	}
+	jar, _ := cookiejar.New(nil) // never fails
 	return &Client{
 		url:        url,
-		httpClient: &http.Client{Transport: transport},
+		httpClient: &http.Client{Transport: transport, Jar: jar},
 	}
 }
 
@@ -57,9 +55,8 @@ func NewClient(url string, transport *http.Transport) *Client {
 // that merely look equivalent. A mismatch is returned as an error rather
 // than panicking.
 //
-// The first response's cookies are captured and replayed on every
-// subsequent call on this Client, since XCP-ng/XenServer pools use this
-// to pin a client to a specific host after a redirect.
+// Cookies are kept in a cookie jar, so e.g. a load balancer's affinity
+// cookie is honored across calls.
 func (c *Client) Call(method string, params []any, reply any) error {
 	body, err := buildRequest(method, params)
 	if err != nil {
@@ -72,24 +69,11 @@ func (c *Client) Call(method string, params []any, reply any) error {
 	}
 	req.Header.Set("Content-Type", "text/xml")
 
-	c.mu.Lock()
-	cookies := c.cookies
-	c.mu.Unlock()
-	for _, cookie := range cookies {
-		req.AddCookie(cookie)
-	}
-
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
-
-	c.mu.Lock()
-	if c.cookies == nil {
-		c.cookies = resp.Cookies()
-	}
-	c.mu.Unlock()
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		excerpt, _ := io.ReadAll(io.LimitReader(resp.Body, maxErrorBody))
