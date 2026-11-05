@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -33,7 +35,7 @@ type LVHDClass struct {
 }
 
 // EnableThinProvisioning Upgrades an LVHD SR to enable thin-provisioning. Future VDIs created in this SR will be thinly-provisioned, although existing VDIs will be left alone. Note that the SR must be attached to the SRmaster for upgrade to work.
-func (_class LVHDClass) EnableThinProvisioning(sessionID SessionRef, host HostRef, sr SRRef, initialAllocation int, allocationQuantum int) (_retval string, _err error) {
+func (_class LVHDClass) EnableThinProvisioning(ctx context.Context, sessionID SessionRef, host HostRef, sr SRRef, initialAllocation int, allocationQuantum int) (_retval string, _err error) {
 	_method := "LVHD.enable_thin_provisioning"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -55,7 +57,7 @@ func (_class LVHDClass) EnableThinProvisioning(sessionID SessionRef, host HostRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _srArg, _initialAllocationArg, _allocationQuantumArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _srArg, _initialAllocationArg, _allocationQuantumArg)
 	if _err != nil {
 		return
 	}
@@ -64,7 +66,7 @@ func (_class LVHDClass) EnableThinProvisioning(sessionID SessionRef, host HostRe
 }
 
 // GetUUID Get the uuid field of the given LVHD.
-func (_class LVHDClass) GetUUID(sessionID SessionRef, self LVHDRef) (_retval string, _err error) {
+func (_class LVHDClass) GetUUID(ctx context.Context, sessionID SessionRef, self LVHDRef) (_retval string, _err error) {
 	_method := "LVHD.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -74,7 +76,7 @@ func (_class LVHDClass) GetUUID(sessionID SessionRef, self LVHDRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -83,7 +85,7 @@ func (_class LVHDClass) GetUUID(sessionID SessionRef, self LVHDRef) (_retval str
 }
 
 // GetByUUID Get a reference to the LVHD instance with the specified UUID.
-func (_class LVHDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval LVHDRef, _err error) {
+func (_class LVHDClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval LVHDRef, _err error) {
 	_method := "LVHD.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -93,7 +95,7 @@ func (_class LVHDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval LV
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -102,7 +104,7 @@ func (_class LVHDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval LV
 }
 
 // GetRecord Get a record containing the current state of the given LVHD.
-func (_class LVHDClass) GetRecord(sessionID SessionRef, self LVHDRef) (_retval LVHDRecord, _err error) {
+func (_class LVHDClass) GetRecord(ctx context.Context, sessionID SessionRef, self LVHDRef) (_retval LVHDRecord, _err error) {
 	_method := "LVHD.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -112,7 +114,7 @@ func (_class LVHDClass) GetRecord(sessionID SessionRef, self LVHDRef) (_retval L
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -22,7 +24,8 @@ var _ = time.UTC
 
 // Client is a XenAPI client. Create one with NewClient, then log in via
 // Client.Session.LoginWithPassword before calling any other method - every
-// generated method takes the resulting SessionRef as its first argument.
+// generated method takes a context.Context and then the resulting
+// SessionRef as its first arguments.
 // Each exported field (Client.VM, Client.Host, Client.SR, ...) corresponds
 // to one XenAPI class and exposes its Get*/Set*/etc. methods.
 type Client struct {

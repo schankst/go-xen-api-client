@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -41,13 +43,13 @@ type VLANClass struct {
 }
 
 // GetAllRecords Return a map of VLAN references to VLAN records for all VLANs known to the system.
-func (_class VLANClass) GetAllRecords(sessionID SessionRef) (_retval map[VLANRef]VLANRecord, _err error) {
+func (_class VLANClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[VLANRef]VLANRecord, _err error) {
 	_method := "VLAN.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -56,13 +58,13 @@ func (_class VLANClass) GetAllRecords(sessionID SessionRef) (_retval map[VLANRef
 }
 
 // GetAll Return a list of all the VLANs known to the system.
-func (_class VLANClass) GetAll(sessionID SessionRef) (_retval []VLANRef, _err error) {
+func (_class VLANClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []VLANRef, _err error) {
 	_method := "VLAN.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -71,7 +73,7 @@ func (_class VLANClass) GetAll(sessionID SessionRef) (_retval []VLANRef, _err er
 }
 
 // Destroy Destroy a VLAN mux/demuxer
-func (_class VLANClass) Destroy(sessionID SessionRef, self VLANRef) (_err error) {
+func (_class VLANClass) Destroy(ctx context.Context, sessionID SessionRef, self VLANRef) (_err error) {
 	_method := "VLAN.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -81,12 +83,12 @@ func (_class VLANClass) Destroy(sessionID SessionRef, self VLANRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a VLAN mux/demuxer
-func (_class VLANClass) Create(sessionID SessionRef, taggedPIF PIFRef, tag int, network NetworkRef) (_retval VLANRef, _err error) {
+func (_class VLANClass) Create(ctx context.Context, sessionID SessionRef, taggedPIF PIFRef, tag int, network NetworkRef) (_retval VLANRef, _err error) {
 	_method := "VLAN.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -104,7 +106,7 @@ func (_class VLANClass) Create(sessionID SessionRef, taggedPIF PIFRef, tag int, 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _taggedPIFArg, _tagArg, _networkArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _taggedPIFArg, _tagArg, _networkArg)
 	if _err != nil {
 		return
 	}
@@ -113,7 +115,7 @@ func (_class VLANClass) Create(sessionID SessionRef, taggedPIF PIFRef, tag int, 
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given VLAN.  If the key is not in that Map, then do nothing.
-func (_class VLANClass) RemoveFromOtherConfig(sessionID SessionRef, self VLANRef, key string) (_err error) {
+func (_class VLANClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self VLANRef, key string) (_err error) {
 	_method := "VLAN.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -127,12 +129,12 @@ func (_class VLANClass) RemoveFromOtherConfig(sessionID SessionRef, self VLANRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given VLAN.
-func (_class VLANClass) AddToOtherConfig(sessionID SessionRef, self VLANRef, key string, value string) (_err error) {
+func (_class VLANClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self VLANRef, key string, value string) (_err error) {
 	_method := "VLAN.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -150,12 +152,12 @@ func (_class VLANClass) AddToOtherConfig(sessionID SessionRef, self VLANRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given VLAN.
-func (_class VLANClass) SetOtherConfig(sessionID SessionRef, self VLANRef, value map[string]string) (_err error) {
+func (_class VLANClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self VLANRef, value map[string]string) (_err error) {
 	_method := "VLAN.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -169,12 +171,12 @@ func (_class VLANClass) SetOtherConfig(sessionID SessionRef, self VLANRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given VLAN.
-func (_class VLANClass) GetOtherConfig(sessionID SessionRef, self VLANRef) (_retval map[string]string, _err error) {
+func (_class VLANClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self VLANRef) (_retval map[string]string, _err error) {
 	_method := "VLAN.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -184,7 +186,7 @@ func (_class VLANClass) GetOtherConfig(sessionID SessionRef, self VLANRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -193,7 +195,7 @@ func (_class VLANClass) GetOtherConfig(sessionID SessionRef, self VLANRef) (_ret
 }
 
 // GetTag Get the tag field of the given VLAN.
-func (_class VLANClass) GetTag(sessionID SessionRef, self VLANRef) (_retval int, _err error) {
+func (_class VLANClass) GetTag(ctx context.Context, sessionID SessionRef, self VLANRef) (_retval int, _err error) {
 	_method := "VLAN.get_tag"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -203,7 +205,7 @@ func (_class VLANClass) GetTag(sessionID SessionRef, self VLANRef) (_retval int,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -212,7 +214,7 @@ func (_class VLANClass) GetTag(sessionID SessionRef, self VLANRef) (_retval int,
 }
 
 // GetUntaggedPIF Get the untagged_PIF field of the given VLAN.
-func (_class VLANClass) GetUntaggedPIF(sessionID SessionRef, self VLANRef) (_retval PIFRef, _err error) {
+func (_class VLANClass) GetUntaggedPIF(ctx context.Context, sessionID SessionRef, self VLANRef) (_retval PIFRef, _err error) {
 	_method := "VLAN.get_untagged_PIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -222,7 +224,7 @@ func (_class VLANClass) GetUntaggedPIF(sessionID SessionRef, self VLANRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -231,7 +233,7 @@ func (_class VLANClass) GetUntaggedPIF(sessionID SessionRef, self VLANRef) (_ret
 }
 
 // GetTaggedPIF Get the tagged_PIF field of the given VLAN.
-func (_class VLANClass) GetTaggedPIF(sessionID SessionRef, self VLANRef) (_retval PIFRef, _err error) {
+func (_class VLANClass) GetTaggedPIF(ctx context.Context, sessionID SessionRef, self VLANRef) (_retval PIFRef, _err error) {
 	_method := "VLAN.get_tagged_PIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -241,7 +243,7 @@ func (_class VLANClass) GetTaggedPIF(sessionID SessionRef, self VLANRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -250,7 +252,7 @@ func (_class VLANClass) GetTaggedPIF(sessionID SessionRef, self VLANRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given VLAN.
-func (_class VLANClass) GetUUID(sessionID SessionRef, self VLANRef) (_retval string, _err error) {
+func (_class VLANClass) GetUUID(ctx context.Context, sessionID SessionRef, self VLANRef) (_retval string, _err error) {
 	_method := "VLAN.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -260,7 +262,7 @@ func (_class VLANClass) GetUUID(sessionID SessionRef, self VLANRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -269,7 +271,7 @@ func (_class VLANClass) GetUUID(sessionID SessionRef, self VLANRef) (_retval str
 }
 
 // GetByUUID Get a reference to the VLAN instance with the specified UUID.
-func (_class VLANClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VLANRef, _err error) {
+func (_class VLANClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval VLANRef, _err error) {
 	_method := "VLAN.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -279,7 +281,7 @@ func (_class VLANClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VL
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -288,7 +290,7 @@ func (_class VLANClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VL
 }
 
 // GetRecord Get a record containing the current state of the given VLAN.
-func (_class VLANClass) GetRecord(sessionID SessionRef, self VLANRef) (_retval VLANRecord, _err error) {
+func (_class VLANClass) GetRecord(ctx context.Context, sessionID SessionRef, self VLANRef) (_retval VLANRecord, _err error) {
 	_method := "VLAN.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -298,7 +300,7 @@ func (_class VLANClass) GetRecord(sessionID SessionRef, self VLANRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

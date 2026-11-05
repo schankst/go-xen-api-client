@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -52,13 +54,13 @@ type ConsoleClass struct {
 }
 
 // GetAllRecords Return a map of console references to console records for all consoles known to the system.
-func (_class ConsoleClass) GetAllRecords(sessionID SessionRef) (_retval map[ConsoleRef]ConsoleRecord, _err error) {
+func (_class ConsoleClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[ConsoleRef]ConsoleRecord, _err error) {
 	_method := "console.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -67,13 +69,13 @@ func (_class ConsoleClass) GetAllRecords(sessionID SessionRef) (_retval map[Cons
 }
 
 // GetAll Return a list of all the consoles known to the system.
-func (_class ConsoleClass) GetAll(sessionID SessionRef) (_retval []ConsoleRef, _err error) {
+func (_class ConsoleClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []ConsoleRef, _err error) {
 	_method := "console.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -82,7 +84,7 @@ func (_class ConsoleClass) GetAll(sessionID SessionRef) (_retval []ConsoleRef, _
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given console.  If the key is not in that Map, then do nothing.
-func (_class ConsoleClass) RemoveFromOtherConfig(sessionID SessionRef, self ConsoleRef, key string) (_err error) {
+func (_class ConsoleClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self ConsoleRef, key string) (_err error) {
 	_method := "console.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -96,12 +98,12 @@ func (_class ConsoleClass) RemoveFromOtherConfig(sessionID SessionRef, self Cons
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given console.
-func (_class ConsoleClass) AddToOtherConfig(sessionID SessionRef, self ConsoleRef, key string, value string) (_err error) {
+func (_class ConsoleClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self ConsoleRef, key string, value string) (_err error) {
 	_method := "console.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -119,12 +121,12 @@ func (_class ConsoleClass) AddToOtherConfig(sessionID SessionRef, self ConsoleRe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given console.
-func (_class ConsoleClass) SetOtherConfig(sessionID SessionRef, self ConsoleRef, value map[string]string) (_err error) {
+func (_class ConsoleClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self ConsoleRef, value map[string]string) (_err error) {
 	_method := "console.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -138,12 +140,12 @@ func (_class ConsoleClass) SetOtherConfig(sessionID SessionRef, self ConsoleRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given console.
-func (_class ConsoleClass) GetOtherConfig(sessionID SessionRef, self ConsoleRef) (_retval map[string]string, _err error) {
+func (_class ConsoleClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self ConsoleRef) (_retval map[string]string, _err error) {
 	_method := "console.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -153,7 +155,7 @@ func (_class ConsoleClass) GetOtherConfig(sessionID SessionRef, self ConsoleRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -162,7 +164,7 @@ func (_class ConsoleClass) GetOtherConfig(sessionID SessionRef, self ConsoleRef)
 }
 
 // GetVM Get the VM field of the given console.
-func (_class ConsoleClass) GetVM(sessionID SessionRef, self ConsoleRef) (_retval VMRef, _err error) {
+func (_class ConsoleClass) GetVM(ctx context.Context, sessionID SessionRef, self ConsoleRef) (_retval VMRef, _err error) {
 	_method := "console.get_VM"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -172,7 +174,7 @@ func (_class ConsoleClass) GetVM(sessionID SessionRef, self ConsoleRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -181,7 +183,7 @@ func (_class ConsoleClass) GetVM(sessionID SessionRef, self ConsoleRef) (_retval
 }
 
 // GetLocation Get the location field of the given console.
-func (_class ConsoleClass) GetLocation(sessionID SessionRef, self ConsoleRef) (_retval string, _err error) {
+func (_class ConsoleClass) GetLocation(ctx context.Context, sessionID SessionRef, self ConsoleRef) (_retval string, _err error) {
 	_method := "console.get_location"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -191,7 +193,7 @@ func (_class ConsoleClass) GetLocation(sessionID SessionRef, self ConsoleRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -200,7 +202,7 @@ func (_class ConsoleClass) GetLocation(sessionID SessionRef, self ConsoleRef) (_
 }
 
 // GetProtocol Get the protocol field of the given console.
-func (_class ConsoleClass) GetProtocol(sessionID SessionRef, self ConsoleRef) (_retval ConsoleProtocol, _err error) {
+func (_class ConsoleClass) GetProtocol(ctx context.Context, sessionID SessionRef, self ConsoleRef) (_retval ConsoleProtocol, _err error) {
 	_method := "console.get_protocol"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -210,7 +212,7 @@ func (_class ConsoleClass) GetProtocol(sessionID SessionRef, self ConsoleRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -219,7 +221,7 @@ func (_class ConsoleClass) GetProtocol(sessionID SessionRef, self ConsoleRef) (_
 }
 
 // GetUUID Get the uuid field of the given console.
-func (_class ConsoleClass) GetUUID(sessionID SessionRef, self ConsoleRef) (_retval string, _err error) {
+func (_class ConsoleClass) GetUUID(ctx context.Context, sessionID SessionRef, self ConsoleRef) (_retval string, _err error) {
 	_method := "console.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -229,7 +231,7 @@ func (_class ConsoleClass) GetUUID(sessionID SessionRef, self ConsoleRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -238,7 +240,7 @@ func (_class ConsoleClass) GetUUID(sessionID SessionRef, self ConsoleRef) (_retv
 }
 
 // Destroy Destroy the specified console instance.
-func (_class ConsoleClass) Destroy(sessionID SessionRef, self ConsoleRef) (_err error) {
+func (_class ConsoleClass) Destroy(ctx context.Context, sessionID SessionRef, self ConsoleRef) (_err error) {
 	_method := "console.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -248,12 +250,12 @@ func (_class ConsoleClass) Destroy(sessionID SessionRef, self ConsoleRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new console instance, and return its handle. The constructor args are: other_config* (* = non-optional).
-func (_class ConsoleClass) Create(sessionID SessionRef, args ConsoleRecord) (_retval ConsoleRef, _err error) {
+func (_class ConsoleClass) Create(ctx context.Context, sessionID SessionRef, args ConsoleRecord) (_retval ConsoleRef, _err error) {
 	_method := "console.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -263,7 +265,7 @@ func (_class ConsoleClass) Create(sessionID SessionRef, args ConsoleRecord) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -272,7 +274,7 @@ func (_class ConsoleClass) Create(sessionID SessionRef, args ConsoleRecord) (_re
 }
 
 // GetByUUID Get a reference to the console instance with the specified UUID.
-func (_class ConsoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval ConsoleRef, _err error) {
+func (_class ConsoleClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval ConsoleRef, _err error) {
 	_method := "console.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -282,7 +284,7 @@ func (_class ConsoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -291,7 +293,7 @@ func (_class ConsoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 }
 
 // GetRecord Get a record containing the current state of the given console.
-func (_class ConsoleClass) GetRecord(sessionID SessionRef, self ConsoleRef) (_retval ConsoleRecord, _err error) {
+func (_class ConsoleClass) GetRecord(ctx context.Context, sessionID SessionRef, self ConsoleRef) (_retval ConsoleRecord, _err error) {
 	_method := "console.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -301,7 +303,7 @@ func (_class ConsoleClass) GetRecord(sessionID SessionRef, self ConsoleRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

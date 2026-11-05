@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -51,13 +53,13 @@ type HostDriverClass struct {
 }
 
 // GetAllRecords Return a map of Host_driver references to Host_driver records for all Host_drivers known to the system.
-func (_class HostDriverClass) GetAllRecords(sessionID SessionRef) (_retval map[HostDriverRef]HostDriverRecord, _err error) {
+func (_class HostDriverClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[HostDriverRef]HostDriverRecord, _err error) {
 	_method := "Host_driver.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -66,13 +68,13 @@ func (_class HostDriverClass) GetAllRecords(sessionID SessionRef) (_retval map[H
 }
 
 // GetAll Return a list of all the Host_drivers known to the system.
-func (_class HostDriverClass) GetAll(sessionID SessionRef) (_retval []HostDriverRef, _err error) {
+func (_class HostDriverClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []HostDriverRef, _err error) {
 	_method := "Host_driver.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -81,7 +83,7 @@ func (_class HostDriverClass) GetAll(sessionID SessionRef) (_retval []HostDriver
 }
 
 // Rescan UNSUPPORTED. Re-scan a host's drivers and update information about them. This is mostly  for trouble shooting.
-func (_class HostDriverClass) Rescan(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostDriverClass) Rescan(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "Host_driver.rescan"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -91,12 +93,12 @@ func (_class HostDriverClass) Rescan(sessionID SessionRef, host HostRef) (_err e
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // Deselect UNSUPPORTED. Deselect the currently active variant of this driver after reboot. No action will be taken if no variant is currently active.
-func (_class HostDriverClass) Deselect(sessionID SessionRef, self HostDriverRef) (_err error) {
+func (_class HostDriverClass) Deselect(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_err error) {
 	_method := "Host_driver.deselect"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -106,12 +108,12 @@ func (_class HostDriverClass) Deselect(sessionID SessionRef, self HostDriverRef)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Select UNSUPPORTED. Select a variant of the driver to become active after reboot or immediately if currently no version is active
-func (_class HostDriverClass) Select(sessionID SessionRef, self HostDriverRef, variant DriverVariantRef) (_err error) {
+func (_class HostDriverClass) Select(ctx context.Context, sessionID SessionRef, self HostDriverRef, variant DriverVariantRef) (_err error) {
 	_method := "Host_driver.select"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -125,12 +127,12 @@ func (_class HostDriverClass) Select(sessionID SessionRef, self HostDriverRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _variantArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _variantArg)
 	return
 }
 
 // GetInfo Get the info field of the given Host_driver.
-func (_class HostDriverClass) GetInfo(sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
+func (_class HostDriverClass) GetInfo(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
 	_method := "Host_driver.get_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -140,7 +142,7 @@ func (_class HostDriverClass) GetInfo(sessionID SessionRef, self HostDriverRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -149,7 +151,7 @@ func (_class HostDriverClass) GetInfo(sessionID SessionRef, self HostDriverRef) 
 }
 
 // GetDescription Get the description field of the given Host_driver.
-func (_class HostDriverClass) GetDescription(sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
+func (_class HostDriverClass) GetDescription(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
 	_method := "Host_driver.get_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -159,7 +161,7 @@ func (_class HostDriverClass) GetDescription(sessionID SessionRef, self HostDriv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -168,7 +170,7 @@ func (_class HostDriverClass) GetDescription(sessionID SessionRef, self HostDriv
 }
 
 // GetType Get the type field of the given Host_driver.
-func (_class HostDriverClass) GetType(sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
+func (_class HostDriverClass) GetType(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
 	_method := "Host_driver.get_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -178,7 +180,7 @@ func (_class HostDriverClass) GetType(sessionID SessionRef, self HostDriverRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -187,7 +189,7 @@ func (_class HostDriverClass) GetType(sessionID SessionRef, self HostDriverRef) 
 }
 
 // GetSelectedVariant Get the selected_variant field of the given Host_driver.
-func (_class HostDriverClass) GetSelectedVariant(sessionID SessionRef, self HostDriverRef) (_retval DriverVariantRef, _err error) {
+func (_class HostDriverClass) GetSelectedVariant(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval DriverVariantRef, _err error) {
 	_method := "Host_driver.get_selected_variant"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -197,7 +199,7 @@ func (_class HostDriverClass) GetSelectedVariant(sessionID SessionRef, self Host
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -206,7 +208,7 @@ func (_class HostDriverClass) GetSelectedVariant(sessionID SessionRef, self Host
 }
 
 // GetActiveVariant Get the active_variant field of the given Host_driver.
-func (_class HostDriverClass) GetActiveVariant(sessionID SessionRef, self HostDriverRef) (_retval DriverVariantRef, _err error) {
+func (_class HostDriverClass) GetActiveVariant(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval DriverVariantRef, _err error) {
 	_method := "Host_driver.get_active_variant"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -216,7 +218,7 @@ func (_class HostDriverClass) GetActiveVariant(sessionID SessionRef, self HostDr
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -225,7 +227,7 @@ func (_class HostDriverClass) GetActiveVariant(sessionID SessionRef, self HostDr
 }
 
 // GetVariants Get the variants field of the given Host_driver.
-func (_class HostDriverClass) GetVariants(sessionID SessionRef, self HostDriverRef) (_retval []DriverVariantRef, _err error) {
+func (_class HostDriverClass) GetVariants(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval []DriverVariantRef, _err error) {
 	_method := "Host_driver.get_variants"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -235,7 +237,7 @@ func (_class HostDriverClass) GetVariants(sessionID SessionRef, self HostDriverR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -244,7 +246,7 @@ func (_class HostDriverClass) GetVariants(sessionID SessionRef, self HostDriverR
 }
 
 // GetFriendlyName Get the friendly_name field of the given Host_driver.
-func (_class HostDriverClass) GetFriendlyName(sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
+func (_class HostDriverClass) GetFriendlyName(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
 	_method := "Host_driver.get_friendly_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -254,7 +256,7 @@ func (_class HostDriverClass) GetFriendlyName(sessionID SessionRef, self HostDri
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -263,7 +265,7 @@ func (_class HostDriverClass) GetFriendlyName(sessionID SessionRef, self HostDri
 }
 
 // GetName Get the name field of the given Host_driver.
-func (_class HostDriverClass) GetName(sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
+func (_class HostDriverClass) GetName(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
 	_method := "Host_driver.get_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -273,7 +275,7 @@ func (_class HostDriverClass) GetName(sessionID SessionRef, self HostDriverRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -282,7 +284,7 @@ func (_class HostDriverClass) GetName(sessionID SessionRef, self HostDriverRef) 
 }
 
 // GetHost Get the host field of the given Host_driver.
-func (_class HostDriverClass) GetHost(sessionID SessionRef, self HostDriverRef) (_retval HostRef, _err error) {
+func (_class HostDriverClass) GetHost(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval HostRef, _err error) {
 	_method := "Host_driver.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -292,7 +294,7 @@ func (_class HostDriverClass) GetHost(sessionID SessionRef, self HostDriverRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -301,7 +303,7 @@ func (_class HostDriverClass) GetHost(sessionID SessionRef, self HostDriverRef) 
 }
 
 // GetUUID Get the uuid field of the given Host_driver.
-func (_class HostDriverClass) GetUUID(sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
+func (_class HostDriverClass) GetUUID(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval string, _err error) {
 	_method := "Host_driver.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -311,7 +313,7 @@ func (_class HostDriverClass) GetUUID(sessionID SessionRef, self HostDriverRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -320,7 +322,7 @@ func (_class HostDriverClass) GetUUID(sessionID SessionRef, self HostDriverRef) 
 }
 
 // GetByUUID Get a reference to the Host_driver instance with the specified UUID.
-func (_class HostDriverClass) GetByUUID(sessionID SessionRef, uuid string) (_retval HostDriverRef, _err error) {
+func (_class HostDriverClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval HostDriverRef, _err error) {
 	_method := "Host_driver.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -330,7 +332,7 @@ func (_class HostDriverClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -339,7 +341,7 @@ func (_class HostDriverClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 }
 
 // GetRecord Get a record containing the current state of the given Host_driver.
-func (_class HostDriverClass) GetRecord(sessionID SessionRef, self HostDriverRef) (_retval HostDriverRecord, _err error) {
+func (_class HostDriverClass) GetRecord(ctx context.Context, sessionID SessionRef, self HostDriverRef) (_retval HostDriverRecord, _err error) {
 	_method := "Host_driver.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -349,7 +351,7 @@ func (_class HostDriverClass) GetRecord(sessionID SessionRef, self HostDriverRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

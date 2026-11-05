@@ -26,6 +26,7 @@ Start a VM by name label:
 package main
 
 import (
+    "context"
     "fmt"
     "log"
 
@@ -33,18 +34,20 @@ import (
 )
 
 func main() {
+    ctx := context.Background()
+
     xapi, err := xenapi.NewClient("https://10.0.0.10")
     if err != nil {
         log.Fatal(err)
     }
 
-    session, err := xapi.Session.LoginWithPassword("root", "password", "1.0", "example")
+    session, err := xapi.Session.LoginWithPassword(ctx, "root", "password", "1.0", "example")
     if err != nil {
         log.Fatal(err)
     }
-    defer xapi.Session.Logout(session)
+    defer xapi.Session.Logout(ctx, session)
 
-    vms, err := xapi.VM.GetByNameLabel(session, "my-vm")
+    vms, err := xapi.VM.GetByNameLabel(ctx, session, "my-vm")
     if err != nil {
         log.Fatal(err)
     }
@@ -52,7 +55,7 @@ func main() {
         log.Fatal(fmt.Errorf("found %d VMs named my-vm, want 1", len(vms)))
     }
 
-    if err := xapi.VM.Start(session, vms[0], false, false); err != nil {
+    if err := xapi.VM.Start(ctx, session, vms[0], false, false); err != nil {
         log.Fatal(err)
     }
 }

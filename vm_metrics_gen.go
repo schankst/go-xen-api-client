@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -69,13 +71,13 @@ type VMMetricsClass struct {
 }
 
 // GetAllRecords Return a map of VM_metrics references to VM_metrics records for all VM_metrics instances known to the system.
-func (_class VMMetricsClass) GetAllRecords(sessionID SessionRef) (_retval map[VMMetricsRef]VMMetricsRecord, _err error) {
+func (_class VMMetricsClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[VMMetricsRef]VMMetricsRecord, _err error) {
 	_method := "VM_metrics.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -84,13 +86,13 @@ func (_class VMMetricsClass) GetAllRecords(sessionID SessionRef) (_retval map[VM
 }
 
 // GetAll Return a list of all the VM_metrics instances known to the system.
-func (_class VMMetricsClass) GetAll(sessionID SessionRef) (_retval []VMMetricsRef, _err error) {
+func (_class VMMetricsClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []VMMetricsRef, _err error) {
 	_method := "VM_metrics.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -99,7 +101,7 @@ func (_class VMMetricsClass) GetAll(sessionID SessionRef) (_retval []VMMetricsRe
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given VM_metrics.  If the key is not in that Map, then do nothing.
-func (_class VMMetricsClass) RemoveFromOtherConfig(sessionID SessionRef, self VMMetricsRef, key string) (_err error) {
+func (_class VMMetricsClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self VMMetricsRef, key string) (_err error) {
 	_method := "VM_metrics.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -113,12 +115,12 @@ func (_class VMMetricsClass) RemoveFromOtherConfig(sessionID SessionRef, self VM
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given VM_metrics.
-func (_class VMMetricsClass) AddToOtherConfig(sessionID SessionRef, self VMMetricsRef, key string, value string) (_err error) {
+func (_class VMMetricsClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self VMMetricsRef, key string, value string) (_err error) {
 	_method := "VM_metrics.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -136,12 +138,12 @@ func (_class VMMetricsClass) AddToOtherConfig(sessionID SessionRef, self VMMetri
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given VM_metrics.
-func (_class VMMetricsClass) SetOtherConfig(sessionID SessionRef, self VMMetricsRef, value map[string]string) (_err error) {
+func (_class VMMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self VMMetricsRef, value map[string]string) (_err error) {
 	_method := "VM_metrics.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -155,12 +157,12 @@ func (_class VMMetricsClass) SetOtherConfig(sessionID SessionRef, self VMMetrics
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetNumaNodeMemory Get the numa_node_memory field of the given VM_metrics.
-func (_class VMMetricsClass) GetNumaNodeMemory(sessionID SessionRef, self VMMetricsRef) (_retval map[int]int, _err error) {
+func (_class VMMetricsClass) GetNumaNodeMemory(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval map[int]int, _err error) {
 	_method := "VM_metrics.get_numa_node_memory"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -170,7 +172,7 @@ func (_class VMMetricsClass) GetNumaNodeMemory(sessionID SessionRef, self VMMetr
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -179,7 +181,7 @@ func (_class VMMetricsClass) GetNumaNodeMemory(sessionID SessionRef, self VMMetr
 }
 
 // GetNumaNodes Get the numa_nodes field of the given VM_metrics.
-func (_class VMMetricsClass) GetNumaNodes(sessionID SessionRef, self VMMetricsRef) (_retval int, _err error) {
+func (_class VMMetricsClass) GetNumaNodes(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval int, _err error) {
 	_method := "VM_metrics.get_numa_nodes"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -189,7 +191,7 @@ func (_class VMMetricsClass) GetNumaNodes(sessionID SessionRef, self VMMetricsRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -198,7 +200,7 @@ func (_class VMMetricsClass) GetNumaNodes(sessionID SessionRef, self VMMetricsRe
 }
 
 // GetNumaOptimised Get the numa_optimised field of the given VM_metrics.
-func (_class VMMetricsClass) GetNumaOptimised(sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
+func (_class VMMetricsClass) GetNumaOptimised(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
 	_method := "VM_metrics.get_numa_optimised"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -208,7 +210,7 @@ func (_class VMMetricsClass) GetNumaOptimised(sessionID SessionRef, self VMMetri
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -217,7 +219,7 @@ func (_class VMMetricsClass) GetNumaOptimised(sessionID SessionRef, self VMMetri
 }
 
 // GetCurrentDomainType Get the current_domain_type field of the given VM_metrics.
-func (_class VMMetricsClass) GetCurrentDomainType(sessionID SessionRef, self VMMetricsRef) (_retval DomainType, _err error) {
+func (_class VMMetricsClass) GetCurrentDomainType(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval DomainType, _err error) {
 	_method := "VM_metrics.get_current_domain_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -227,7 +229,7 @@ func (_class VMMetricsClass) GetCurrentDomainType(sessionID SessionRef, self VMM
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -236,7 +238,7 @@ func (_class VMMetricsClass) GetCurrentDomainType(sessionID SessionRef, self VMM
 }
 
 // GetNomigrate Get the nomigrate field of the given VM_metrics.
-func (_class VMMetricsClass) GetNomigrate(sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
+func (_class VMMetricsClass) GetNomigrate(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
 	_method := "VM_metrics.get_nomigrate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -246,7 +248,7 @@ func (_class VMMetricsClass) GetNomigrate(sessionID SessionRef, self VMMetricsRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -255,7 +257,7 @@ func (_class VMMetricsClass) GetNomigrate(sessionID SessionRef, self VMMetricsRe
 }
 
 // GetNestedVirt Get the nested_virt field of the given VM_metrics.
-func (_class VMMetricsClass) GetNestedVirt(sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
+func (_class VMMetricsClass) GetNestedVirt(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
 	_method := "VM_metrics.get_nested_virt"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -265,7 +267,7 @@ func (_class VMMetricsClass) GetNestedVirt(sessionID SessionRef, self VMMetricsR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -274,7 +276,7 @@ func (_class VMMetricsClass) GetNestedVirt(sessionID SessionRef, self VMMetricsR
 }
 
 // GetHvm Get the hvm field of the given VM_metrics.
-func (_class VMMetricsClass) GetHvm(sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
+func (_class VMMetricsClass) GetHvm(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval bool, _err error) {
 	_method := "VM_metrics.get_hvm"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -284,7 +286,7 @@ func (_class VMMetricsClass) GetHvm(sessionID SessionRef, self VMMetricsRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -293,7 +295,7 @@ func (_class VMMetricsClass) GetHvm(sessionID SessionRef, self VMMetricsRef) (_r
 }
 
 // GetOtherConfig Get the other_config field of the given VM_metrics.
-func (_class VMMetricsClass) GetOtherConfig(sessionID SessionRef, self VMMetricsRef) (_retval map[string]string, _err error) {
+func (_class VMMetricsClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval map[string]string, _err error) {
 	_method := "VM_metrics.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -303,7 +305,7 @@ func (_class VMMetricsClass) GetOtherConfig(sessionID SessionRef, self VMMetrics
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -312,7 +314,7 @@ func (_class VMMetricsClass) GetOtherConfig(sessionID SessionRef, self VMMetrics
 }
 
 // GetLastUpdated Get the last_updated field of the given VM_metrics.
-func (_class VMMetricsClass) GetLastUpdated(sessionID SessionRef, self VMMetricsRef) (_retval time.Time, _err error) {
+func (_class VMMetricsClass) GetLastUpdated(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval time.Time, _err error) {
 	_method := "VM_metrics.get_last_updated"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -322,7 +324,7 @@ func (_class VMMetricsClass) GetLastUpdated(sessionID SessionRef, self VMMetrics
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -331,7 +333,7 @@ func (_class VMMetricsClass) GetLastUpdated(sessionID SessionRef, self VMMetrics
 }
 
 // GetInstallTime Get the install_time field of the given VM_metrics.
-func (_class VMMetricsClass) GetInstallTime(sessionID SessionRef, self VMMetricsRef) (_retval time.Time, _err error) {
+func (_class VMMetricsClass) GetInstallTime(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval time.Time, _err error) {
 	_method := "VM_metrics.get_install_time"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -341,7 +343,7 @@ func (_class VMMetricsClass) GetInstallTime(sessionID SessionRef, self VMMetrics
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -350,7 +352,7 @@ func (_class VMMetricsClass) GetInstallTime(sessionID SessionRef, self VMMetrics
 }
 
 // GetStartTime Get the start_time field of the given VM_metrics.
-func (_class VMMetricsClass) GetStartTime(sessionID SessionRef, self VMMetricsRef) (_retval time.Time, _err error) {
+func (_class VMMetricsClass) GetStartTime(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval time.Time, _err error) {
 	_method := "VM_metrics.get_start_time"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -360,7 +362,7 @@ func (_class VMMetricsClass) GetStartTime(sessionID SessionRef, self VMMetricsRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -369,7 +371,7 @@ func (_class VMMetricsClass) GetStartTime(sessionID SessionRef, self VMMetricsRe
 }
 
 // GetState Get the state field of the given VM_metrics.
-func (_class VMMetricsClass) GetState(sessionID SessionRef, self VMMetricsRef) (_retval []string, _err error) {
+func (_class VMMetricsClass) GetState(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval []string, _err error) {
 	_method := "VM_metrics.get_state"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -379,7 +381,7 @@ func (_class VMMetricsClass) GetState(sessionID SessionRef, self VMMetricsRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -388,7 +390,7 @@ func (_class VMMetricsClass) GetState(sessionID SessionRef, self VMMetricsRef) (
 }
 
 // GetVCPUsFlags Get the VCPUs/flags field of the given VM_metrics.
-func (_class VMMetricsClass) GetVCPUsFlags(sessionID SessionRef, self VMMetricsRef) (_retval map[int][]string, _err error) {
+func (_class VMMetricsClass) GetVCPUsFlags(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval map[int][]string, _err error) {
 	_method := "VM_metrics.get_VCPUs_flags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -398,7 +400,7 @@ func (_class VMMetricsClass) GetVCPUsFlags(sessionID SessionRef, self VMMetricsR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -407,7 +409,7 @@ func (_class VMMetricsClass) GetVCPUsFlags(sessionID SessionRef, self VMMetricsR
 }
 
 // GetVCPUsParams Get the VCPUs/params field of the given VM_metrics.
-func (_class VMMetricsClass) GetVCPUsParams(sessionID SessionRef, self VMMetricsRef) (_retval map[string]string, _err error) {
+func (_class VMMetricsClass) GetVCPUsParams(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval map[string]string, _err error) {
 	_method := "VM_metrics.get_VCPUs_params"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -417,7 +419,7 @@ func (_class VMMetricsClass) GetVCPUsParams(sessionID SessionRef, self VMMetrics
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -426,7 +428,7 @@ func (_class VMMetricsClass) GetVCPUsParams(sessionID SessionRef, self VMMetrics
 }
 
 // GetVCPUsCPU Get the VCPUs/CPU field of the given VM_metrics.
-func (_class VMMetricsClass) GetVCPUsCPU(sessionID SessionRef, self VMMetricsRef) (_retval map[int]int, _err error) {
+func (_class VMMetricsClass) GetVCPUsCPU(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval map[int]int, _err error) {
 	_method := "VM_metrics.get_VCPUs_CPU"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -436,7 +438,7 @@ func (_class VMMetricsClass) GetVCPUsCPU(sessionID SessionRef, self VMMetricsRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -445,7 +447,7 @@ func (_class VMMetricsClass) GetVCPUsCPU(sessionID SessionRef, self VMMetricsRef
 }
 
 // GetVCPUsUtilisation Get the VCPUs/utilisation field of the given VM_metrics.
-func (_class VMMetricsClass) GetVCPUsUtilisation(sessionID SessionRef, self VMMetricsRef) (_retval map[int]float64, _err error) {
+func (_class VMMetricsClass) GetVCPUsUtilisation(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval map[int]float64, _err error) {
 	_method := "VM_metrics.get_VCPUs_utilisation"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -455,7 +457,7 @@ func (_class VMMetricsClass) GetVCPUsUtilisation(sessionID SessionRef, self VMMe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -464,7 +466,7 @@ func (_class VMMetricsClass) GetVCPUsUtilisation(sessionID SessionRef, self VMMe
 }
 
 // GetVCPUsNumber Get the VCPUs/number field of the given VM_metrics.
-func (_class VMMetricsClass) GetVCPUsNumber(sessionID SessionRef, self VMMetricsRef) (_retval int, _err error) {
+func (_class VMMetricsClass) GetVCPUsNumber(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval int, _err error) {
 	_method := "VM_metrics.get_VCPUs_number"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -474,7 +476,7 @@ func (_class VMMetricsClass) GetVCPUsNumber(sessionID SessionRef, self VMMetrics
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -483,7 +485,7 @@ func (_class VMMetricsClass) GetVCPUsNumber(sessionID SessionRef, self VMMetrics
 }
 
 // GetMemoryActual Get the memory/actual field of the given VM_metrics.
-func (_class VMMetricsClass) GetMemoryActual(sessionID SessionRef, self VMMetricsRef) (_retval int, _err error) {
+func (_class VMMetricsClass) GetMemoryActual(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval int, _err error) {
 	_method := "VM_metrics.get_memory_actual"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -493,7 +495,7 @@ func (_class VMMetricsClass) GetMemoryActual(sessionID SessionRef, self VMMetric
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -502,7 +504,7 @@ func (_class VMMetricsClass) GetMemoryActual(sessionID SessionRef, self VMMetric
 }
 
 // GetUUID Get the uuid field of the given VM_metrics.
-func (_class VMMetricsClass) GetUUID(sessionID SessionRef, self VMMetricsRef) (_retval string, _err error) {
+func (_class VMMetricsClass) GetUUID(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval string, _err error) {
 	_method := "VM_metrics.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -512,7 +514,7 @@ func (_class VMMetricsClass) GetUUID(sessionID SessionRef, self VMMetricsRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -521,7 +523,7 @@ func (_class VMMetricsClass) GetUUID(sessionID SessionRef, self VMMetricsRef) (_
 }
 
 // GetByUUID Get a reference to the VM_metrics instance with the specified UUID.
-func (_class VMMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VMMetricsRef, _err error) {
+func (_class VMMetricsClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval VMMetricsRef, _err error) {
 	_method := "VM_metrics.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -531,7 +533,7 @@ func (_class VMMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -540,7 +542,7 @@ func (_class VMMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 }
 
 // GetRecord Get a record containing the current state of the given VM_metrics.
-func (_class VMMetricsClass) GetRecord(sessionID SessionRef, self VMMetricsRef) (_retval VMMetricsRecord, _err error) {
+func (_class VMMetricsClass) GetRecord(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (_retval VMMetricsRecord, _err error) {
 	_method := "VM_metrics.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -550,7 +552,7 @@ func (_class VMMetricsClass) GetRecord(sessionID SessionRef, self VMMetricsRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

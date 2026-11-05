@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -56,13 +58,13 @@ type PVSProxyClass struct {
 }
 
 // GetAllRecords Return a map of PVS_proxy references to PVS_proxy records for all PVS_proxys known to the system.
-func (_class PVSProxyClass) GetAllRecords(sessionID SessionRef) (_retval map[PVSProxyRef]PVSProxyRecord, _err error) {
+func (_class PVSProxyClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PVSProxyRef]PVSProxyRecord, _err error) {
 	_method := "PVS_proxy.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -71,13 +73,13 @@ func (_class PVSProxyClass) GetAllRecords(sessionID SessionRef) (_retval map[PVS
 }
 
 // GetAll Return a list of all the PVS_proxys known to the system.
-func (_class PVSProxyClass) GetAll(sessionID SessionRef) (_retval []PVSProxyRef, _err error) {
+func (_class PVSProxyClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PVSProxyRef, _err error) {
 	_method := "PVS_proxy.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -86,7 +88,7 @@ func (_class PVSProxyClass) GetAll(sessionID SessionRef) (_retval []PVSProxyRef,
 }
 
 // Destroy remove (or switch off) a PVS proxy for this VM
-func (_class PVSProxyClass) Destroy(sessionID SessionRef, self PVSProxyRef) (_err error) {
+func (_class PVSProxyClass) Destroy(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (_err error) {
 	_method := "PVS_proxy.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -96,12 +98,12 @@ func (_class PVSProxyClass) Destroy(sessionID SessionRef, self PVSProxyRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Configure a VM/VIF to use a PVS proxy
-func (_class PVSProxyClass) Create(sessionID SessionRef, site PVSSiteRef, vif VIFRef) (_retval PVSProxyRef, _err error) {
+func (_class PVSProxyClass) Create(ctx context.Context, sessionID SessionRef, site PVSSiteRef, vif VIFRef) (_retval PVSProxyRef, _err error) {
 	_method := "PVS_proxy.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -115,7 +117,7 @@ func (_class PVSProxyClass) Create(sessionID SessionRef, site PVSSiteRef, vif VI
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _siteArg, _vifArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _siteArg, _vifArg)
 	if _err != nil {
 		return
 	}
@@ -124,7 +126,7 @@ func (_class PVSProxyClass) Create(sessionID SessionRef, site PVSSiteRef, vif VI
 }
 
 // GetStatus Get the status field of the given PVS_proxy.
-func (_class PVSProxyClass) GetStatus(sessionID SessionRef, self PVSProxyRef) (_retval PvsProxyStatus, _err error) {
+func (_class PVSProxyClass) GetStatus(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (_retval PvsProxyStatus, _err error) {
 	_method := "PVS_proxy.get_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -134,7 +136,7 @@ func (_class PVSProxyClass) GetStatus(sessionID SessionRef, self PVSProxyRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -143,7 +145,7 @@ func (_class PVSProxyClass) GetStatus(sessionID SessionRef, self PVSProxyRef) (_
 }
 
 // GetCurrentlyAttached Get the currently_attached field of the given PVS_proxy.
-func (_class PVSProxyClass) GetCurrentlyAttached(sessionID SessionRef, self PVSProxyRef) (_retval bool, _err error) {
+func (_class PVSProxyClass) GetCurrentlyAttached(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (_retval bool, _err error) {
 	_method := "PVS_proxy.get_currently_attached"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -153,7 +155,7 @@ func (_class PVSProxyClass) GetCurrentlyAttached(sessionID SessionRef, self PVSP
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -162,7 +164,7 @@ func (_class PVSProxyClass) GetCurrentlyAttached(sessionID SessionRef, self PVSP
 }
 
 // GetVIF Get the VIF field of the given PVS_proxy.
-func (_class PVSProxyClass) GetVIF(sessionID SessionRef, self PVSProxyRef) (_retval VIFRef, _err error) {
+func (_class PVSProxyClass) GetVIF(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (_retval VIFRef, _err error) {
 	_method := "PVS_proxy.get_VIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -172,7 +174,7 @@ func (_class PVSProxyClass) GetVIF(sessionID SessionRef, self PVSProxyRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -181,7 +183,7 @@ func (_class PVSProxyClass) GetVIF(sessionID SessionRef, self PVSProxyRef) (_ret
 }
 
 // GetSite Get the site field of the given PVS_proxy.
-func (_class PVSProxyClass) GetSite(sessionID SessionRef, self PVSProxyRef) (_retval PVSSiteRef, _err error) {
+func (_class PVSProxyClass) GetSite(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (_retval PVSSiteRef, _err error) {
 	_method := "PVS_proxy.get_site"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -191,7 +193,7 @@ func (_class PVSProxyClass) GetSite(sessionID SessionRef, self PVSProxyRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -200,7 +202,7 @@ func (_class PVSProxyClass) GetSite(sessionID SessionRef, self PVSProxyRef) (_re
 }
 
 // GetUUID Get the uuid field of the given PVS_proxy.
-func (_class PVSProxyClass) GetUUID(sessionID SessionRef, self PVSProxyRef) (_retval string, _err error) {
+func (_class PVSProxyClass) GetUUID(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (_retval string, _err error) {
 	_method := "PVS_proxy.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -210,7 +212,7 @@ func (_class PVSProxyClass) GetUUID(sessionID SessionRef, self PVSProxyRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -219,7 +221,7 @@ func (_class PVSProxyClass) GetUUID(sessionID SessionRef, self PVSProxyRef) (_re
 }
 
 // GetByUUID Get a reference to the PVS_proxy instance with the specified UUID.
-func (_class PVSProxyClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PVSProxyRef, _err error) {
+func (_class PVSProxyClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PVSProxyRef, _err error) {
 	_method := "PVS_proxy.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -229,7 +231,7 @@ func (_class PVSProxyClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -238,7 +240,7 @@ func (_class PVSProxyClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 }
 
 // GetRecord Get a record containing the current state of the given PVS_proxy.
-func (_class PVSProxyClass) GetRecord(sessionID SessionRef, self PVSProxyRef) (_retval PVSProxyRecord, _err error) {
+func (_class PVSProxyClass) GetRecord(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (_retval PVSProxyRecord, _err error) {
 	_method := "PVS_proxy.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -248,7 +250,7 @@ func (_class PVSProxyClass) GetRecord(sessionID SessionRef, self PVSProxyRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

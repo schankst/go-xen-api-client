@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -49,13 +51,13 @@ type CallerClass struct {
 }
 
 // GetAllRecords Return a map of Caller references to Caller records for all Callers known to the system.
-func (_class CallerClass) GetAllRecords(sessionID SessionRef) (_retval map[CallerRef]CallerRecord, _err error) {
+func (_class CallerClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[CallerRef]CallerRecord, _err error) {
 	_method := "Caller.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -64,13 +66,13 @@ func (_class CallerClass) GetAllRecords(sessionID SessionRef) (_retval map[Calle
 }
 
 // GetAll Return a list of all the Callers known to the system.
-func (_class CallerClass) GetAll(sessionID SessionRef) (_retval []CallerRef, _err error) {
+func (_class CallerClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []CallerRef, _err error) {
 	_method := "Caller.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -79,13 +81,13 @@ func (_class CallerClass) GetAll(sessionID SessionRef) (_retval []CallerRef, _er
 }
 
 // QueryAllUsage Return per-caller usage for every known caller, sorted by token use descending.
-func (_class CallerClass) QueryAllUsage(sessionID SessionRef) (_retval [][]string, _err error) {
+func (_class CallerClass) QueryAllUsage(ctx context.Context, sessionID SessionRef) (_retval [][]string, _err error) {
 	_method := "Caller.query_all_usage"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -94,7 +96,7 @@ func (_class CallerClass) QueryAllUsage(sessionID SessionRef) (_retval [][]strin
 }
 
 // QueryGroupCallCount Return number of calls made since Xapi startup by the callers in the named group.
-func (_class CallerClass) QueryGroupCallCount(sessionID SessionRef, group string) (_retval int, _err error) {
+func (_class CallerClass) QueryGroupCallCount(ctx context.Context, sessionID SessionRef, group string) (_retval int, _err error) {
 	_method := "Caller.query_group_call_count"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -104,7 +106,7 @@ func (_class CallerClass) QueryGroupCallCount(sessionID SessionRef, group string
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _groupArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _groupArg)
 	if _err != nil {
 		return
 	}
@@ -113,7 +115,7 @@ func (_class CallerClass) QueryGroupCallCount(sessionID SessionRef, group string
 }
 
 // QueryGroupTokenUsage Return tokens used since Xapi startup by the callers in the named group.
-func (_class CallerClass) QueryGroupTokenUsage(sessionID SessionRef, group string) (_retval float64, _err error) {
+func (_class CallerClass) QueryGroupTokenUsage(ctx context.Context, sessionID SessionRef, group string) (_retval float64, _err error) {
 	_method := "Caller.query_group_token_usage"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -123,7 +125,7 @@ func (_class CallerClass) QueryGroupTokenUsage(sessionID SessionRef, group strin
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _groupArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _groupArg)
 	if _err != nil {
 		return
 	}
@@ -132,7 +134,7 @@ func (_class CallerClass) QueryGroupTokenUsage(sessionID SessionRef, group strin
 }
 
 // QueryCallCount Return number of calls made by this caller since Xapi startup
-func (_class CallerClass) QueryCallCount(sessionID SessionRef, self CallerRef) (_retval int, _err error) {
+func (_class CallerClass) QueryCallCount(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval int, _err error) {
 	_method := "Caller.query_call_count"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -142,7 +144,7 @@ func (_class CallerClass) QueryCallCount(sessionID SessionRef, self CallerRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -151,7 +153,7 @@ func (_class CallerClass) QueryCallCount(sessionID SessionRef, self CallerRef) (
 }
 
 // QueryTokenUsage Return tokens used by this caller since Xapi startup
-func (_class CallerClass) QueryTokenUsage(sessionID SessionRef, self CallerRef) (_retval float64, _err error) {
+func (_class CallerClass) QueryTokenUsage(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval float64, _err error) {
 	_method := "Caller.query_token_usage"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -161,7 +163,7 @@ func (_class CallerClass) QueryTokenUsage(sessionID SessionRef, self CallerRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -170,7 +172,7 @@ func (_class CallerClass) QueryTokenUsage(sessionID SessionRef, self CallerRef) 
 }
 
 // RemoveGroup Remove a caller from a group
-func (_class CallerClass) RemoveGroup(sessionID SessionRef, self CallerRef, group string) (_err error) {
+func (_class CallerClass) RemoveGroup(ctx context.Context, sessionID SessionRef, self CallerRef, group string) (_err error) {
 	_method := "Caller.remove_group"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -184,12 +186,12 @@ func (_class CallerClass) RemoveGroup(sessionID SessionRef, self CallerRef, grou
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _groupArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _groupArg)
 	return
 }
 
 // AddGroup Add a caller to a group
-func (_class CallerClass) AddGroup(sessionID SessionRef, self CallerRef, group string) (_err error) {
+func (_class CallerClass) AddGroup(ctx context.Context, sessionID SessionRef, self CallerRef, group string) (_err error) {
 	_method := "Caller.add_group"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -203,12 +205,12 @@ func (_class CallerClass) AddGroup(sessionID SessionRef, self CallerRef, group s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _groupArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _groupArg)
 	return
 }
 
 // SetNameDescription Set the name/description field of the given Caller.
-func (_class CallerClass) SetNameDescription(sessionID SessionRef, self CallerRef, value string) (_err error) {
+func (_class CallerClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self CallerRef, value string) (_err error) {
 	_method := "Caller.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -222,12 +224,12 @@ func (_class CallerClass) SetNameDescription(sessionID SessionRef, self CallerRe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given Caller.
-func (_class CallerClass) SetNameLabel(sessionID SessionRef, self CallerRef, value string) (_err error) {
+func (_class CallerClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self CallerRef, value string) (_err error) {
 	_method := "Caller.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -241,12 +243,12 @@ func (_class CallerClass) SetNameLabel(sessionID SessionRef, self CallerRef, val
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetAutoRegistered Get the auto_registered field of the given Caller.
-func (_class CallerClass) GetAutoRegistered(sessionID SessionRef, self CallerRef) (_retval bool, _err error) {
+func (_class CallerClass) GetAutoRegistered(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval bool, _err error) {
 	_method := "Caller.get_auto_registered"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -256,7 +258,7 @@ func (_class CallerClass) GetAutoRegistered(sessionID SessionRef, self CallerRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -265,7 +267,7 @@ func (_class CallerClass) GetAutoRegistered(sessionID SessionRef, self CallerRef
 }
 
 // GetRateLimit Get the rate_limit field of the given Caller.
-func (_class CallerClass) GetRateLimit(sessionID SessionRef, self CallerRef) (_retval RateLimitRef, _err error) {
+func (_class CallerClass) GetRateLimit(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval RateLimitRef, _err error) {
 	_method := "Caller.get_rate_limit"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -275,7 +277,7 @@ func (_class CallerClass) GetRateLimit(sessionID SessionRef, self CallerRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -284,7 +286,7 @@ func (_class CallerClass) GetRateLimit(sessionID SessionRef, self CallerRef) (_r
 }
 
 // GetGroups Get the groups field of the given Caller.
-func (_class CallerClass) GetGroups(sessionID SessionRef, self CallerRef) (_retval []string, _err error) {
+func (_class CallerClass) GetGroups(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval []string, _err error) {
 	_method := "Caller.get_groups"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -294,7 +296,7 @@ func (_class CallerClass) GetGroups(sessionID SessionRef, self CallerRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -303,7 +305,7 @@ func (_class CallerClass) GetGroups(sessionID SessionRef, self CallerRef) (_retv
 }
 
 // GetLastAccess Get the last_access field of the given Caller.
-func (_class CallerClass) GetLastAccess(sessionID SessionRef, self CallerRef) (_retval time.Time, _err error) {
+func (_class CallerClass) GetLastAccess(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval time.Time, _err error) {
 	_method := "Caller.get_last_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -313,7 +315,7 @@ func (_class CallerClass) GetLastAccess(sessionID SessionRef, self CallerRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -322,7 +324,7 @@ func (_class CallerClass) GetLastAccess(sessionID SessionRef, self CallerRef) (_
 }
 
 // GetClientIP Get the client_ip field of the given Caller.
-func (_class CallerClass) GetClientIP(sessionID SessionRef, self CallerRef) (_retval string, _err error) {
+func (_class CallerClass) GetClientIP(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval string, _err error) {
 	_method := "Caller.get_client_ip"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -332,7 +334,7 @@ func (_class CallerClass) GetClientIP(sessionID SessionRef, self CallerRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -341,7 +343,7 @@ func (_class CallerClass) GetClientIP(sessionID SessionRef, self CallerRef) (_re
 }
 
 // GetUserAgent Get the user_agent field of the given Caller.
-func (_class CallerClass) GetUserAgent(sessionID SessionRef, self CallerRef) (_retval string, _err error) {
+func (_class CallerClass) GetUserAgent(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval string, _err error) {
 	_method := "Caller.get_user_agent"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -351,7 +353,7 @@ func (_class CallerClass) GetUserAgent(sessionID SessionRef, self CallerRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -360,7 +362,7 @@ func (_class CallerClass) GetUserAgent(sessionID SessionRef, self CallerRef) (_r
 }
 
 // GetNameDescription Get the name/description field of the given Caller.
-func (_class CallerClass) GetNameDescription(sessionID SessionRef, self CallerRef) (_retval string, _err error) {
+func (_class CallerClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval string, _err error) {
 	_method := "Caller.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -370,7 +372,7 @@ func (_class CallerClass) GetNameDescription(sessionID SessionRef, self CallerRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -379,7 +381,7 @@ func (_class CallerClass) GetNameDescription(sessionID SessionRef, self CallerRe
 }
 
 // GetNameLabel Get the name/label field of the given Caller.
-func (_class CallerClass) GetNameLabel(sessionID SessionRef, self CallerRef) (_retval string, _err error) {
+func (_class CallerClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval string, _err error) {
 	_method := "Caller.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -389,7 +391,7 @@ func (_class CallerClass) GetNameLabel(sessionID SessionRef, self CallerRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -398,7 +400,7 @@ func (_class CallerClass) GetNameLabel(sessionID SessionRef, self CallerRef) (_r
 }
 
 // GetUUID Get the uuid field of the given Caller.
-func (_class CallerClass) GetUUID(sessionID SessionRef, self CallerRef) (_retval string, _err error) {
+func (_class CallerClass) GetUUID(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval string, _err error) {
 	_method := "Caller.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -408,7 +410,7 @@ func (_class CallerClass) GetUUID(sessionID SessionRef, self CallerRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -417,7 +419,7 @@ func (_class CallerClass) GetUUID(sessionID SessionRef, self CallerRef) (_retval
 }
 
 // GetByNameLabel Get all the Caller instances with the given label.
-func (_class CallerClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []CallerRef, _err error) {
+func (_class CallerClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []CallerRef, _err error) {
 	_method := "Caller.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -427,7 +429,7 @@ func (_class CallerClass) GetByNameLabel(sessionID SessionRef, label string) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -436,7 +438,7 @@ func (_class CallerClass) GetByNameLabel(sessionID SessionRef, label string) (_r
 }
 
 // Destroy Destroy the specified Caller instance.
-func (_class CallerClass) Destroy(sessionID SessionRef, self CallerRef) (_err error) {
+func (_class CallerClass) Destroy(ctx context.Context, sessionID SessionRef, self CallerRef) (_err error) {
 	_method := "Caller.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -446,12 +448,12 @@ func (_class CallerClass) Destroy(sessionID SessionRef, self CallerRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new Caller instance, and return its handle. The constructor args are: name_label, name_description, user_agent, client_ip (* = non-optional).
-func (_class CallerClass) Create(sessionID SessionRef, args CallerRecord) (_retval CallerRef, _err error) {
+func (_class CallerClass) Create(ctx context.Context, sessionID SessionRef, args CallerRecord) (_retval CallerRef, _err error) {
 	_method := "Caller.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -461,7 +463,7 @@ func (_class CallerClass) Create(sessionID SessionRef, args CallerRecord) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -470,7 +472,7 @@ func (_class CallerClass) Create(sessionID SessionRef, args CallerRecord) (_retv
 }
 
 // GetByUUID Get a reference to the Caller instance with the specified UUID.
-func (_class CallerClass) GetByUUID(sessionID SessionRef, uuid string) (_retval CallerRef, _err error) {
+func (_class CallerClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval CallerRef, _err error) {
 	_method := "Caller.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -480,7 +482,7 @@ func (_class CallerClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -489,7 +491,7 @@ func (_class CallerClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 }
 
 // GetRecord Get a record containing the current state of the given Caller.
-func (_class CallerClass) GetRecord(sessionID SessionRef, self CallerRef) (_retval CallerRecord, _err error) {
+func (_class CallerClass) GetRecord(ctx context.Context, sessionID SessionRef, self CallerRef) (_retval CallerRecord, _err error) {
 	_method := "Caller.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -499,7 +501,7 @@ func (_class CallerClass) GetRecord(sessionID SessionRef, self CallerRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

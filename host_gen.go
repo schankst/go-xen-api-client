@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -275,13 +277,13 @@ type HostClass struct {
 }
 
 // GetAllRecords Return a map of host references to host records for all hosts known to the system.
-func (_class HostClass) GetAllRecords(sessionID SessionRef) (_retval map[HostRef]HostRecord, _err error) {
+func (_class HostClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[HostRef]HostRecord, _err error) {
 	_method := "host.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -290,13 +292,13 @@ func (_class HostClass) GetAllRecords(sessionID SessionRef) (_retval map[HostRef
 }
 
 // GetAll Return a list of all the hosts known to the system.
-func (_class HostClass) GetAll(sessionID SessionRef) (_retval []HostRef, _err error) {
+func (_class HostClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []HostRef, _err error) {
 	_method := "host.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -305,7 +307,7 @@ func (_class HostClass) GetAll(sessionID SessionRef) (_retval []HostRef, _err er
 }
 
 // SetServertime Set the host's system clock when NTP is disabled.
-func (_class HostClass) SetServertime(sessionID SessionRef, self HostRef, value time.Time) (_err error) {
+func (_class HostClass) SetServertime(ctx context.Context, sessionID SessionRef, self HostRef, value time.Time) (_err error) {
 	_method := "host.set_servertime"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -319,12 +321,12 @@ func (_class HostClass) SetServertime(sessionID SessionRef, self HostRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetNtpSynchronized Returns true if the system clock on the host is synchronized with the NTP servers.
-func (_class HostClass) GetNtpSynchronized(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetNtpSynchronized(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_ntp_synchronized"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -334,7 +336,7 @@ func (_class HostClass) GetNtpSynchronized(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -343,7 +345,7 @@ func (_class HostClass) GetNtpSynchronized(sessionID SessionRef, self HostRef) (
 }
 
 // ListTimezones List all available timezones on the host.
-func (_class HostClass) ListTimezones(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) ListTimezones(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.list_timezones"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -353,7 +355,7 @@ func (_class HostClass) ListTimezones(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -362,7 +364,7 @@ func (_class HostClass) ListTimezones(sessionID SessionRef, self HostRef) (_retv
 }
 
 // SetTimezone Set the host's timezone.
-func (_class HostClass) SetTimezone(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) SetTimezone(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.set_timezone"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -376,12 +378,12 @@ func (_class HostClass) SetTimezone(sessionID SessionRef, self HostRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetNtpServersStatus Get the NTP servers status on the host
-func (_class HostClass) GetNtpServersStatus(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetNtpServersStatus(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_ntp_servers_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -391,7 +393,7 @@ func (_class HostClass) GetNtpServersStatus(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -400,7 +402,7 @@ func (_class HostClass) GetNtpServersStatus(sessionID SessionRef, self HostRef) 
 }
 
 // SetNtpCustomServers Set the custom NTP servers for the host
-func (_class HostClass) SetNtpCustomServers(sessionID SessionRef, self HostRef, value []string) (_err error) {
+func (_class HostClass) SetNtpCustomServers(ctx context.Context, sessionID SessionRef, self HostRef, value []string) (_err error) {
 	_method := "host.set_ntp_custom_servers"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -414,12 +416,12 @@ func (_class HostClass) SetNtpCustomServers(sessionID SessionRef, self HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNtpMode Set the NTP mode for the host
-func (_class HostClass) SetNtpMode(sessionID SessionRef, self HostRef, value HostNtpMode) (_err error) {
+func (_class HostClass) SetNtpMode(ctx context.Context, sessionID SessionRef, self HostRef, value HostNtpMode) (_err error) {
 	_method := "host.set_ntp_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -433,12 +435,12 @@ func (_class HostClass) SetNtpMode(sessionID SessionRef, self HostRef, value Hos
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetMaxCstate Sets xen's max-cstate on a host. See: https://xenbits.xen.org/docs/unstable/misc/xen-command-line.html#max_cstate-x86. "" means unlimited; "N" means limit to CN; "N,M" means limit to CN with max sub cstate M. Note: Only C0, C1, unlimited are supported currently.
-func (_class HostClass) SetMaxCstate(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) SetMaxCstate(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.set_max_cstate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -452,12 +454,12 @@ func (_class HostClass) SetMaxCstate(sessionID SessionRef, self HostRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetTrackedUserAgents Get the (name, version) list of tracked user agents on this host. If different versions of the same name are seen, keep the last-seen version. The oldest entry will be removed if reach the max num. Note that the list is cleared after host/XAPI restart
-func (_class HostClass) GetTrackedUserAgents(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetTrackedUserAgents(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_tracked_user_agents"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -467,7 +469,7 @@ func (_class HostClass) GetTrackedUserAgents(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -476,7 +478,7 @@ func (_class HostClass) GetTrackedUserAgents(sessionID SessionRef, self HostRef)
 }
 
 // SetSSHAutoMode Set the SSH auto mode for the host
-func (_class HostClass) SetSSHAutoMode(sessionID SessionRef, self HostRef, value bool) (_err error) {
+func (_class HostClass) SetSSHAutoMode(ctx context.Context, sessionID SessionRef, self HostRef, value bool) (_err error) {
 	_method := "host.set_ssh_auto_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -490,12 +492,12 @@ func (_class HostClass) SetSSHAutoMode(sessionID SessionRef, self HostRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetConsoleIdleTimeout Set the console idle timeout for the host
-func (_class HostClass) SetConsoleIdleTimeout(sessionID SessionRef, self HostRef, value int) (_err error) {
+func (_class HostClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int) (_err error) {
 	_method := "host.set_console_idle_timeout"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -509,12 +511,12 @@ func (_class HostClass) SetConsoleIdleTimeout(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetSSHEnabledTimeout Set the SSH service enabled timeout for the host
-func (_class HostClass) SetSSHEnabledTimeout(sessionID SessionRef, self HostRef, value int) (_err error) {
+func (_class HostClass) SetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int) (_err error) {
 	_method := "host.set_ssh_enabled_timeout"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -528,12 +530,12 @@ func (_class HostClass) SetSSHEnabledTimeout(sessionID SessionRef, self HostRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // DisableSSH Disable SSH access on the host. It will stop the service sshd only if it is running. It will also disable the service sshd only if it is enabled. A newly joined host in the pool or an ejected host from the pool would keep the original status.
-func (_class HostClass) DisableSSH(sessionID SessionRef, self HostRef) (_err error) {
+func (_class HostClass) DisableSSH(ctx context.Context, sessionID SessionRef, self HostRef) (_err error) {
 	_method := "host.disable_ssh"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -543,12 +545,12 @@ func (_class HostClass) DisableSSH(sessionID SessionRef, self HostRef) (_err err
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // EnableSSH Enable SSH access on the host. It will start the service sshd only if it is not running. It will also enable the service sshd only if it is not enabled. A newly joined host in the pool or an ejected host from the pool would keep the original status.
-func (_class HostClass) EnableSSH(sessionID SessionRef, self HostRef) (_err error) {
+func (_class HostClass) EnableSSH(ctx context.Context, sessionID SessionRef, self HostRef) (_err error) {
 	_method := "host.enable_ssh"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -558,23 +560,23 @@ func (_class HostClass) EnableSSH(sessionID SessionRef, self HostRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // EmergencyClearMandatoryGuidance Clear the pending mandatory guidance on this host
-func (_class HostClass) EmergencyClearMandatoryGuidance(sessionID SessionRef) (_err error) {
+func (_class HostClass) EmergencyClearMandatoryGuidance(ctx context.Context, sessionID SessionRef) (_err error) {
 	_method := "host.emergency_clear_mandatory_guidance"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg)
 	return
 }
 
 // ApplyRecommendedGuidances apply all recommended guidances both on the host and on all HVM VMs on the host after updates are applied on the host
-func (_class HostClass) ApplyRecommendedGuidances(sessionID SessionRef, self HostRef) (_err error) {
+func (_class HostClass) ApplyRecommendedGuidances(ctx context.Context, sessionID SessionRef, self HostRef) (_err error) {
 	_method := "host.apply_recommended_guidances"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -584,12 +586,12 @@ func (_class HostClass) ApplyRecommendedGuidances(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // SetHTTPSOnly updates the host firewall to open or close port 80 depending on the value
-func (_class HostClass) SetHTTPSOnly(sessionID SessionRef, self HostRef, value bool) (_err error) {
+func (_class HostClass) SetHTTPSOnly(ctx context.Context, sessionID SessionRef, self HostRef, value bool) (_err error) {
 	_method := "host.set_https_only"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -603,12 +605,12 @@ func (_class HostClass) SetHTTPSOnly(sessionID SessionRef, self HostRef, value b
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RescanDrivers Scan the host and update its driver information.
-func (_class HostClass) RescanDrivers(sessionID SessionRef, self HostRef) (_err error) {
+func (_class HostClass) RescanDrivers(ctx context.Context, sessionID SessionRef, self HostRef) (_err error) {
 	_method := "host.rescan_drivers"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -618,12 +620,12 @@ func (_class HostClass) RescanDrivers(sessionID SessionRef, self HostRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // ApplyUpdates apply updates from current enabled repository on a host
-func (_class HostClass) ApplyUpdates(sessionID SessionRef, self HostRef, hash string) (_retval [][]string, _err error) {
+func (_class HostClass) ApplyUpdates(ctx context.Context, sessionID SessionRef, self HostRef, hash string) (_retval [][]string, _err error) {
 	_method := "host.apply_updates"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -637,7 +639,7 @@ func (_class HostClass) ApplyUpdates(sessionID SessionRef, self HostRef, hash st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg, _hashArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _hashArg)
 	if _err != nil {
 		return
 	}
@@ -646,29 +648,29 @@ func (_class HostClass) ApplyUpdates(sessionID SessionRef, self HostRef, hash st
 }
 
 // EmergencyReenableTLSVerification Reenable TLS verification for this host only, and only after it was emergency disabled
-func (_class HostClass) EmergencyReenableTLSVerification(sessionID SessionRef) (_err error) {
+func (_class HostClass) EmergencyReenableTLSVerification(ctx context.Context, sessionID SessionRef) (_err error) {
 	_method := "host.emergency_reenable_tls_verification"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg)
 	return
 }
 
 // EmergencyDisableTLSVerification Disable TLS verification for this host only
-func (_class HostClass) EmergencyDisableTLSVerification(sessionID SessionRef) (_err error) {
+func (_class HostClass) EmergencyDisableTLSVerification(ctx context.Context, sessionID SessionRef) (_err error) {
 	_method := "host.emergency_disable_tls_verification"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg)
 	return
 }
 
 // SetNumaAffinityPolicy Set VM placement NUMA affinity policy
-func (_class HostClass) SetNumaAffinityPolicy(sessionID SessionRef, self HostRef, value HostNumaAffinityPolicy) (_err error) {
+func (_class HostClass) SetNumaAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef, value HostNumaAffinityPolicy) (_err error) {
 	_method := "host.set_numa_affinity_policy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -682,12 +684,12 @@ func (_class HostClass) SetNumaAffinityPolicy(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetSchedGran Gets xen's sched-gran on a host
-func (_class HostClass) GetSchedGran(sessionID SessionRef, self HostRef) (_retval HostSchedGran, _err error) {
+func (_class HostClass) GetSchedGran(ctx context.Context, sessionID SessionRef, self HostRef) (_retval HostSchedGran, _err error) {
 	_method := "host.get_sched_gran"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -697,7 +699,7 @@ func (_class HostClass) GetSchedGran(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -706,7 +708,7 @@ func (_class HostClass) GetSchedGran(sessionID SessionRef, self HostRef) (_retva
 }
 
 // SetSchedGran Sets xen's sched-gran on a host. See: https://xenbits.xen.org/docs/unstable/misc/xen-command-line.html#sched-gran-x86
-func (_class HostClass) SetSchedGran(sessionID SessionRef, self HostRef, value HostSchedGran) (_err error) {
+func (_class HostClass) SetSchedGran(ctx context.Context, sessionID SessionRef, self HostRef, value HostSchedGran) (_err error) {
 	_method := "host.set_sched_gran"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -720,12 +722,12 @@ func (_class HostClass) SetSchedGran(sessionID SessionRef, self HostRef, value H
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetUefiCertificates Sets the UEFI certificates on a host
-func (_class HostClass) SetUefiCertificates(sessionID SessionRef, host HostRef, value string) (_err error) {
+func (_class HostClass) SetUefiCertificates(ctx context.Context, sessionID SessionRef, host HostRef, value string) (_err error) {
 	_method := "host.set_uefi_certificates"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -739,12 +741,12 @@ func (_class HostClass) SetUefiCertificates(sessionID SessionRef, host HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _valueArg)
 	return
 }
 
 // SetMultipathing Specifies whether multipathing is enabled
-func (_class HostClass) SetMultipathing(sessionID SessionRef, host HostRef, value bool) (_err error) {
+func (_class HostClass) SetMultipathing(ctx context.Context, sessionID SessionRef, host HostRef, value bool) (_err error) {
 	_method := "host.set_multipathing"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -758,12 +760,12 @@ func (_class HostClass) SetMultipathing(sessionID SessionRef, host HostRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _valueArg)
 	return
 }
 
 // SetIscsiIqn Sets the initiator IQN for the host
-func (_class HostClass) SetIscsiIqn(sessionID SessionRef, host HostRef, value string) (_err error) {
+func (_class HostClass) SetIscsiIqn(ctx context.Context, sessionID SessionRef, host HostRef, value string) (_err error) {
 	_method := "host.set_iscsi_iqn"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -777,12 +779,12 @@ func (_class HostClass) SetIscsiIqn(sessionID SessionRef, host HostRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _valueArg)
 	return
 }
 
 // SetSslLegacy Enable/disable SSLv3 for interoperability with older server versions. When this is set to a different value, the host immediately restarts its SSL/TLS listening service; typically this takes less than a second but existing connections to it will be broken. API login sessions will remain valid.
-func (_class HostClass) SetSslLegacy(sessionID SessionRef, self HostRef, value bool) (_err error) {
+func (_class HostClass) SetSslLegacy(ctx context.Context, sessionID SessionRef, self HostRef, value bool) (_err error) {
 	_method := "host.set_ssl_legacy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -796,12 +798,12 @@ func (_class HostClass) SetSslLegacy(sessionID SessionRef, self HostRef, value b
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // DisableDisplay Disable console output to the physical display device next time this host boots
-func (_class HostClass) DisableDisplay(sessionID SessionRef, host HostRef) (_retval HostDisplay, _err error) {
+func (_class HostClass) DisableDisplay(ctx context.Context, sessionID SessionRef, host HostRef) (_retval HostDisplay, _err error) {
 	_method := "host.disable_display"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -811,7 +813,7 @@ func (_class HostClass) DisableDisplay(sessionID SessionRef, host HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -820,7 +822,7 @@ func (_class HostClass) DisableDisplay(sessionID SessionRef, host HostRef) (_ret
 }
 
 // EnableDisplay Enable console output to the physical display device next time this host boots
-func (_class HostClass) EnableDisplay(sessionID SessionRef, host HostRef) (_retval HostDisplay, _err error) {
+func (_class HostClass) EnableDisplay(ctx context.Context, sessionID SessionRef, host HostRef) (_retval HostDisplay, _err error) {
 	_method := "host.enable_display"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -830,7 +832,7 @@ func (_class HostClass) EnableDisplay(sessionID SessionRef, host HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -839,7 +841,7 @@ func (_class HostClass) EnableDisplay(sessionID SessionRef, host HostRef) (_retv
 }
 
 // DeclareDead Declare that a host is dead. This is a dangerous operation, and should only be called if the administrator is absolutely sure the host is definitely dead
-func (_class HostClass) DeclareDead(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) DeclareDead(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.declare_dead"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -849,12 +851,12 @@ func (_class HostClass) DeclareDead(sessionID SessionRef, host HostRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // MigrateReceive Prepare to receive a VM, returning a token which can be passed to VM.migrate.
-func (_class HostClass) MigrateReceive(sessionID SessionRef, host HostRef, network NetworkRef, options map[string]string) (_retval map[string]string, _err error) {
+func (_class HostClass) MigrateReceive(ctx context.Context, sessionID SessionRef, host HostRef, network NetworkRef, options map[string]string) (_retval map[string]string, _err error) {
 	_method := "host.migrate_receive"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -872,7 +874,7 @@ func (_class HostClass) MigrateReceive(sessionID SessionRef, host HostRef, netwo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _networkArg, _optionsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _networkArg, _optionsArg)
 	if _err != nil {
 		return
 	}
@@ -881,7 +883,7 @@ func (_class HostClass) MigrateReceive(sessionID SessionRef, host HostRef, netwo
 }
 
 // DisableLocalStorageCaching Disable the use of a local SR for caching purposes
-func (_class HostClass) DisableLocalStorageCaching(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) DisableLocalStorageCaching(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.disable_local_storage_caching"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -891,12 +893,12 @@ func (_class HostClass) DisableLocalStorageCaching(sessionID SessionRef, host Ho
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // EnableLocalStorageCaching Enable the use of a local SR for caching purposes
-func (_class HostClass) EnableLocalStorageCaching(sessionID SessionRef, host HostRef, sr SRRef) (_err error) {
+func (_class HostClass) EnableLocalStorageCaching(ctx context.Context, sessionID SessionRef, host HostRef, sr SRRef) (_err error) {
 	_method := "host.enable_local_storage_caching"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -910,12 +912,12 @@ func (_class HostClass) EnableLocalStorageCaching(sessionID SessionRef, host Hos
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _srArg)
 	return
 }
 
 // ResetCPUFeatures Remove the feature mask, such that after a reboot all features of the CPU are enabled.
-func (_class HostClass) ResetCPUFeatures(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) ResetCPUFeatures(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.reset_cpu_features"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -925,12 +927,12 @@ func (_class HostClass) ResetCPUFeatures(sessionID SessionRef, host HostRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // SetCPUFeatures Set the CPU features to be used after a reboot, if the given features string is valid.
-func (_class HostClass) SetCPUFeatures(sessionID SessionRef, host HostRef, features string) (_err error) {
+func (_class HostClass) SetCPUFeatures(ctx context.Context, sessionID SessionRef, host HostRef, features string) (_err error) {
 	_method := "host.set_cpu_features"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -944,12 +946,12 @@ func (_class HostClass) SetCPUFeatures(sessionID SessionRef, host HostRef, featu
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _featuresArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _featuresArg)
 	return
 }
 
 // SetPowerOnMode Set the power-on-mode, host, user and password
-func (_class HostClass) SetPowerOnMode(sessionID SessionRef, self HostRef, powerOnMode string, powerOnConfig map[string]string) (_err error) {
+func (_class HostClass) SetPowerOnMode(ctx context.Context, sessionID SessionRef, self HostRef, powerOnMode string, powerOnConfig map[string]string) (_err error) {
 	_method := "host.set_power_on_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -967,12 +969,12 @@ func (_class HostClass) SetPowerOnMode(sessionID SessionRef, self HostRef, power
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _powerOnModeArg, _powerOnConfigArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _powerOnModeArg, _powerOnConfigArg)
 	return
 }
 
 // RefreshPackInfo Refresh the list of installed Supplemental Packs.
-func (_class HostClass) RefreshPackInfo(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) RefreshPackInfo(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.refresh_pack_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -982,12 +984,12 @@ func (_class HostClass) RefreshPackInfo(sessionID SessionRef, host HostRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // ApplyEdition Change to another edition, or reactivate the current edition after a license has expired. This may be subject to the successful checkout of an appropriate license.
-func (_class HostClass) ApplyEdition(sessionID SessionRef, host HostRef, edition string, force bool) (_err error) {
+func (_class HostClass) ApplyEdition(ctx context.Context, sessionID SessionRef, host HostRef, edition string, force bool) (_err error) {
 	_method := "host.apply_edition"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1005,12 +1007,12 @@ func (_class HostClass) ApplyEdition(sessionID SessionRef, host HostRef, edition
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _editionArg, _forceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _editionArg, _forceArg)
 	return
 }
 
 // ResetServerCertificate Delete the current TLS server certificate and replace by a new, self-signed one. This should only be used with extreme care.
-func (_class HostClass) ResetServerCertificate(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) ResetServerCertificate(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.reset_server_certificate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1020,23 +1022,23 @@ func (_class HostClass) ResetServerCertificate(sessionID SessionRef, host HostRe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // EmergencyResetServerCertificate Delete the current TLS server certificate and replace by a new, self-signed one. This should only be used with extreme care.
-func (_class HostClass) EmergencyResetServerCertificate(sessionID SessionRef) (_err error) {
+func (_class HostClass) EmergencyResetServerCertificate(ctx context.Context, sessionID SessionRef) (_err error) {
 	_method := "host.emergency_reset_server_certificate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg)
 	return
 }
 
 // InstallServerCertificate Install the TLS server certificate.
-func (_class HostClass) InstallServerCertificate(sessionID SessionRef, host HostRef, certificate string, privateKey string, certificateChain string) (_err error) {
+func (_class HostClass) InstallServerCertificate(ctx context.Context, sessionID SessionRef, host HostRef, certificate string, privateKey string, certificateChain string) (_err error) {
 	_method := "host.install_server_certificate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1058,12 +1060,12 @@ func (_class HostClass) InstallServerCertificate(sessionID SessionRef, host Host
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _certificateArg, _privateKeyArg, _certificateChainArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _certificateArg, _privateKeyArg, _certificateChainArg)
 	return
 }
 
 // RefreshServerCertificate Replace the internal self-signed host certficate with a new one.
-func (_class HostClass) RefreshServerCertificate(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) RefreshServerCertificate(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.refresh_server_certificate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1073,12 +1075,12 @@ func (_class HostClass) RefreshServerCertificate(sessionID SessionRef, host Host
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // GetServerCertificate Get the installed server public TLS certificate.
-func (_class HostClass) GetServerCertificate(sessionID SessionRef, host HostRef) (_retval string, _err error) {
+func (_class HostClass) GetServerCertificate(ctx context.Context, sessionID SessionRef, host HostRef) (_retval string, _err error) {
 	_method := "host.get_server_certificate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1088,7 +1090,7 @@ func (_class HostClass) GetServerCertificate(sessionID SessionRef, host HostRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1097,7 +1099,7 @@ func (_class HostClass) GetServerCertificate(sessionID SessionRef, host HostRef)
 }
 
 // RetrieveWlbEvacuateRecommendations Retrieves recommended host migrations to perform when evacuating the host from the wlb server. If a VM cannot be migrated from the host the reason is listed instead of a recommendation.
-func (_class HostClass) RetrieveWlbEvacuateRecommendations(sessionID SessionRef, self HostRef) (_retval map[VMRef][]string, _err error) {
+func (_class HostClass) RetrieveWlbEvacuateRecommendations(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[VMRef][]string, _err error) {
 	_method := "host.retrieve_wlb_evacuate_recommendations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1107,7 +1109,7 @@ func (_class HostClass) RetrieveWlbEvacuateRecommendations(sessionID SessionRef,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1116,7 +1118,7 @@ func (_class HostClass) RetrieveWlbEvacuateRecommendations(sessionID SessionRef,
 }
 
 // ExternalAuthSetLdaps This call enables or disables LDAPS for external authentication on the host
-func (_class HostClass) ExternalAuthSetLdaps(sessionID SessionRef, host HostRef, ldaps bool, force bool) (_err error) {
+func (_class HostClass) ExternalAuthSetLdaps(ctx context.Context, sessionID SessionRef, host HostRef, ldaps bool, force bool) (_err error) {
 	_method := "host.external_auth_set_ldaps"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1134,12 +1136,12 @@ func (_class HostClass) ExternalAuthSetLdaps(sessionID SessionRef, host HostRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _ldapsArg, _forceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _ldapsArg, _forceArg)
 	return
 }
 
 // DisableExternalAuth This call disables external authentication on the local host
-func (_class HostClass) DisableExternalAuth(sessionID SessionRef, host HostRef, config map[string]string, force bool) (_err error) {
+func (_class HostClass) DisableExternalAuth(ctx context.Context, sessionID SessionRef, host HostRef, config map[string]string, force bool) (_err error) {
 	_method := "host.disable_external_auth"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1157,12 +1159,12 @@ func (_class HostClass) DisableExternalAuth(sessionID SessionRef, host HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _configArg, _forceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _configArg, _forceArg)
 	return
 }
 
 // EnableExternalAuth This call enables external authentication on a host
-func (_class HostClass) EnableExternalAuth(sessionID SessionRef, host HostRef, config map[string]string, serviceName string, authType string) (_err error) {
+func (_class HostClass) EnableExternalAuth(ctx context.Context, sessionID SessionRef, host HostRef, config map[string]string, serviceName string, authType string) (_err error) {
 	_method := "host.enable_external_auth"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1184,12 +1186,12 @@ func (_class HostClass) EnableExternalAuth(sessionID SessionRef, host HostRef, c
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _configArg, _serviceNameArg, _authTypeArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _configArg, _serviceNameArg, _authTypeArg)
 	return
 }
 
 // GetServerLocaltime This call queries the host's clock for the current time in the host's local timezone
-func (_class HostClass) GetServerLocaltime(sessionID SessionRef, host HostRef) (_retval time.Time, _err error) {
+func (_class HostClass) GetServerLocaltime(ctx context.Context, sessionID SessionRef, host HostRef) (_retval time.Time, _err error) {
 	_method := "host.get_server_localtime"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1199,7 +1201,7 @@ func (_class HostClass) GetServerLocaltime(sessionID SessionRef, host HostRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1208,7 +1210,7 @@ func (_class HostClass) GetServerLocaltime(sessionID SessionRef, host HostRef) (
 }
 
 // GetServertime This call queries the host's clock for the current time
-func (_class HostClass) GetServertime(sessionID SessionRef, host HostRef) (_retval time.Time, _err error) {
+func (_class HostClass) GetServertime(ctx context.Context, sessionID SessionRef, host HostRef) (_retval time.Time, _err error) {
 	_method := "host.get_servertime"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1218,7 +1220,7 @@ func (_class HostClass) GetServertime(sessionID SessionRef, host HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1227,7 +1229,7 @@ func (_class HostClass) GetServertime(sessionID SessionRef, host HostRef) (_retv
 }
 
 // CallExtension Call an API extension on this host
-func (_class HostClass) CallExtension(sessionID SessionRef, host HostRef, call string) (_retval string, _err error) {
+func (_class HostClass) CallExtension(ctx context.Context, sessionID SessionRef, host HostRef, call string) (_retval string, _err error) {
 	_method := "host.call_extension"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1241,7 +1243,7 @@ func (_class HostClass) CallExtension(sessionID SessionRef, host HostRef, call s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _callArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _callArg)
 	if _err != nil {
 		return
 	}
@@ -1250,7 +1252,7 @@ func (_class HostClass) CallExtension(sessionID SessionRef, host HostRef, call s
 }
 
 // HasExtension Return true if the extension is available on the host
-func (_class HostClass) HasExtension(sessionID SessionRef, host HostRef, name string) (_retval bool, _err error) {
+func (_class HostClass) HasExtension(ctx context.Context, sessionID SessionRef, host HostRef, name string) (_retval bool, _err error) {
 	_method := "host.has_extension"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1264,7 +1266,7 @@ func (_class HostClass) HasExtension(sessionID SessionRef, host HostRef, name st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _nameArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _nameArg)
 	if _err != nil {
 		return
 	}
@@ -1273,7 +1275,7 @@ func (_class HostClass) HasExtension(sessionID SessionRef, host HostRef, name st
 }
 
 // CallPlugin Call an API plugin on this host
-func (_class HostClass) CallPlugin(sessionID SessionRef, host HostRef, plugin string, fn string, args map[string]string) (_retval string, _err error) {
+func (_class HostClass) CallPlugin(ctx context.Context, sessionID SessionRef, host HostRef, plugin string, fn string, args map[string]string) (_retval string, _err error) {
 	_method := "host.call_plugin"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1295,7 +1297,7 @@ func (_class HostClass) CallPlugin(sessionID SessionRef, host HostRef, plugin st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _pluginArg, _fnArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _pluginArg, _fnArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -1304,7 +1306,7 @@ func (_class HostClass) CallPlugin(sessionID SessionRef, host HostRef, plugin st
 }
 
 // CreateNewBlob Create a placeholder for a named binary blob of data that is associated with this host
-func (_class HostClass) CreateNewBlob(sessionID SessionRef, host HostRef, name string, mimeType string, public bool) (_retval BlobRef, _err error) {
+func (_class HostClass) CreateNewBlob(ctx context.Context, sessionID SessionRef, host HostRef, name string, mimeType string, public bool) (_retval BlobRef, _err error) {
 	_method := "host.create_new_blob"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1326,7 +1328,7 @@ func (_class HostClass) CreateNewBlob(sessionID SessionRef, host HostRef, name s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _nameArg, _mimeTypeArg, _publicArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _nameArg, _mimeTypeArg, _publicArg)
 	if _err != nil {
 		return
 	}
@@ -1335,7 +1337,7 @@ func (_class HostClass) CreateNewBlob(sessionID SessionRef, host HostRef, name s
 }
 
 // BackupRrds This causes the RRDs to be backed up to the coordinator
-func (_class HostClass) BackupRrds(sessionID SessionRef, host HostRef, delay float64) (_err error) {
+func (_class HostClass) BackupRrds(ctx context.Context, sessionID SessionRef, host HostRef, delay float64) (_err error) {
 	_method := "host.backup_rrds"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1349,12 +1351,12 @@ func (_class HostClass) BackupRrds(sessionID SessionRef, host HostRef, delay flo
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _delayArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _delayArg)
 	return
 }
 
 // SyncData This causes the non-database data (messages, RRDs and so on) stored on the coordinator to be synchronised with the host
-func (_class HostClass) SyncData(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) SyncData(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.sync_data"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1364,12 +1366,12 @@ func (_class HostClass) SyncData(sessionID SessionRef, host HostRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // ComputeMemoryOverhead Computes the virtualization memory overhead of a host.
-func (_class HostClass) ComputeMemoryOverhead(sessionID SessionRef, host HostRef) (_retval int, _err error) {
+func (_class HostClass) ComputeMemoryOverhead(ctx context.Context, sessionID SessionRef, host HostRef) (_retval int, _err error) {
 	_method := "host.compute_memory_overhead"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1379,7 +1381,7 @@ func (_class HostClass) ComputeMemoryOverhead(sessionID SessionRef, host HostRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1388,7 +1390,7 @@ func (_class HostClass) ComputeMemoryOverhead(sessionID SessionRef, host HostRef
 }
 
 // ComputeFreeMemory Computes the amount of free memory on the host.
-func (_class HostClass) ComputeFreeMemory(sessionID SessionRef, host HostRef) (_retval int, _err error) {
+func (_class HostClass) ComputeFreeMemory(ctx context.Context, sessionID SessionRef, host HostRef) (_retval int, _err error) {
 	_method := "host.compute_free_memory"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1398,7 +1400,7 @@ func (_class HostClass) ComputeFreeMemory(sessionID SessionRef, host HostRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1411,7 +1413,7 @@ func (_class HostClass) ComputeFreeMemory(sessionID SessionRef, host HostRef) (_
 // Errors:
 //
 //	HOST_NAME_INVALID - The server name is invalid.
-func (_class HostClass) SetHostnameLive(sessionID SessionRef, host HostRef, hostname string) (_err error) {
+func (_class HostClass) SetHostnameLive(ctx context.Context, sessionID SessionRef, host HostRef, hostname string) (_err error) {
 	_method := "host.set_hostname_live"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1425,23 +1427,23 @@ func (_class HostClass) SetHostnameLive(sessionID SessionRef, host HostRef, host
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _hostnameArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _hostnameArg)
 	return
 }
 
 // ShutdownAgent Shuts the agent down after a 10 second pause. WARNING: this is a dangerous operation. Any operations in progress will be aborted, and unrecoverable data loss may occur. The caller is responsible for ensuring that there are no operations in progress when this method is called.
-func (_class HostClass) ShutdownAgent(sessionID SessionRef) (_err error) {
+func (_class HostClass) ShutdownAgent(ctx context.Context, sessionID SessionRef) (_err error) {
 	_method := "host.shutdown_agent"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg)
 	return
 }
 
 // RestartAgent Restarts the agent after a 10 second pause. WARNING: this is a dangerous operation. Any operations in progress will be aborted, and unrecoverable data loss may occur. The caller is responsible for ensuring that there are no operations in progress when this method is called.
-func (_class HostClass) RestartAgent(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) RestartAgent(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.restart_agent"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1451,12 +1453,12 @@ func (_class HostClass) RestartAgent(sessionID SessionRef, host HostRef) (_err e
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // GetSystemStatusCapabilities
-func (_class HostClass) GetSystemStatusCapabilities(sessionID SessionRef, host HostRef) (_retval string, _err error) {
+func (_class HostClass) GetSystemStatusCapabilities(ctx context.Context, sessionID SessionRef, host HostRef) (_retval string, _err error) {
 	_method := "host.get_system_status_capabilities"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1466,7 +1468,7 @@ func (_class HostClass) GetSystemStatusCapabilities(sessionID SessionRef, host H
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1475,7 +1477,7 @@ func (_class HostClass) GetSystemStatusCapabilities(sessionID SessionRef, host H
 }
 
 // GetManagementInterface Returns the management interface for the specified host
-func (_class HostClass) GetManagementInterface(sessionID SessionRef, host HostRef) (_retval PIFRef, _err error) {
+func (_class HostClass) GetManagementInterface(ctx context.Context, sessionID SessionRef, host HostRef) (_retval PIFRef, _err error) {
 	_method := "host.get_management_interface"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1485,7 +1487,7 @@ func (_class HostClass) GetManagementInterface(sessionID SessionRef, host HostRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1494,18 +1496,18 @@ func (_class HostClass) GetManagementInterface(sessionID SessionRef, host HostRe
 }
 
 // ManagementDisable Disable the management network interface
-func (_class HostClass) ManagementDisable(sessionID SessionRef) (_err error) {
+func (_class HostClass) ManagementDisable(ctx context.Context, sessionID SessionRef) (_err error) {
 	_method := "host.management_disable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg)
 	return
 }
 
 // LocalManagementReconfigure Reconfigure the management network interface. Should only be used if Host.management_reconfigure is impossible because the network configuration is broken.
-func (_class HostClass) LocalManagementReconfigure(sessionID SessionRef, iface string) (_err error) {
+func (_class HostClass) LocalManagementReconfigure(ctx context.Context, sessionID SessionRef, iface string) (_err error) {
 	_method := "host.local_management_reconfigure"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1515,12 +1517,12 @@ func (_class HostClass) LocalManagementReconfigure(sessionID SessionRef, iface s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _ifaceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _ifaceArg)
 	return
 }
 
 // ManagementReconfigure Reconfigure the management network interface
-func (_class HostClass) ManagementReconfigure(sessionID SessionRef, pif PIFRef) (_err error) {
+func (_class HostClass) ManagementReconfigure(ctx context.Context, sessionID SessionRef, pif PIFRef) (_err error) {
 	_method := "host.management_reconfigure"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1530,12 +1532,12 @@ func (_class HostClass) ManagementReconfigure(sessionID SessionRef, pif PIFRef) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _pifArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _pifArg)
 	return
 }
 
 // SyslogReconfigure Re-configure syslog logging
-func (_class HostClass) SyslogReconfigure(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) SyslogReconfigure(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.syslog_reconfigure"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1545,12 +1547,12 @@ func (_class HostClass) SyslogReconfigure(sessionID SessionRef, host HostRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // Evacuate Migrate all VMs off of this host, where possible.
-func (_class HostClass) Evacuate(sessionID SessionRef, host HostRef, network NetworkRef, evacuateBatchSize int) (_err error) {
+func (_class HostClass) Evacuate(ctx context.Context, sessionID SessionRef, host HostRef, network NetworkRef, evacuateBatchSize int) (_err error) {
 	_method := "host.evacuate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1568,12 +1570,12 @@ func (_class HostClass) Evacuate(sessionID SessionRef, host HostRef, network Net
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _networkArg, _evacuateBatchSizeArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _networkArg, _evacuateBatchSizeArg)
 	return
 }
 
 // GetUncooperativeResidentVMs Return a set of VMs which are not co-operating with the host's memory control system
-func (_class HostClass) GetUncooperativeResidentVMs(sessionID SessionRef, self HostRef) (_retval []VMRef, _err error) {
+func (_class HostClass) GetUncooperativeResidentVMs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []VMRef, _err error) {
 	_method := "host.get_uncooperative_resident_VMs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1583,7 +1585,7 @@ func (_class HostClass) GetUncooperativeResidentVMs(sessionID SessionRef, self H
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1592,7 +1594,7 @@ func (_class HostClass) GetUncooperativeResidentVMs(sessionID SessionRef, self H
 }
 
 // GetVmsWhichPreventEvacuation Return a set of VMs which prevent the host being evacuated, with per-VM error codes
-func (_class HostClass) GetVmsWhichPreventEvacuation(sessionID SessionRef, self HostRef) (_retval map[VMRef][]string, _err error) {
+func (_class HostClass) GetVmsWhichPreventEvacuation(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[VMRef][]string, _err error) {
 	_method := "host.get_vms_which_prevent_evacuation"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1602,7 +1604,7 @@ func (_class HostClass) GetVmsWhichPreventEvacuation(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1611,7 +1613,7 @@ func (_class HostClass) GetVmsWhichPreventEvacuation(sessionID SessionRef, self 
 }
 
 // AssertCanEvacuate Check this host can be evacuated.
-func (_class HostClass) AssertCanEvacuate(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) AssertCanEvacuate(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.assert_can_evacuate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1621,12 +1623,12 @@ func (_class HostClass) AssertCanEvacuate(sessionID SessionRef, host HostRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // ForgetDataSourceArchives Forget the recorded statistics related to the specified data source
-func (_class HostClass) ForgetDataSourceArchives(sessionID SessionRef, host HostRef, dataSource string) (_err error) {
+func (_class HostClass) ForgetDataSourceArchives(ctx context.Context, sessionID SessionRef, host HostRef, dataSource string) (_err error) {
 	_method := "host.forget_data_source_archives"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1640,12 +1642,12 @@ func (_class HostClass) ForgetDataSourceArchives(sessionID SessionRef, host Host
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _dataSourceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _dataSourceArg)
 	return
 }
 
 // QueryDataSource Query the latest value of the specified data source
-func (_class HostClass) QueryDataSource(sessionID SessionRef, host HostRef, dataSource string) (_retval float64, _err error) {
+func (_class HostClass) QueryDataSource(ctx context.Context, sessionID SessionRef, host HostRef, dataSource string) (_retval float64, _err error) {
 	_method := "host.query_data_source"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1659,7 +1661,7 @@ func (_class HostClass) QueryDataSource(sessionID SessionRef, host HostRef, data
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _dataSourceArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _dataSourceArg)
 	if _err != nil {
 		return
 	}
@@ -1668,7 +1670,7 @@ func (_class HostClass) QueryDataSource(sessionID SessionRef, host HostRef, data
 }
 
 // RecordDataSource Start recording the specified data source
-func (_class HostClass) RecordDataSource(sessionID SessionRef, host HostRef, dataSource string) (_err error) {
+func (_class HostClass) RecordDataSource(ctx context.Context, sessionID SessionRef, host HostRef, dataSource string) (_err error) {
 	_method := "host.record_data_source"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1682,12 +1684,12 @@ func (_class HostClass) RecordDataSource(sessionID SessionRef, host HostRef, dat
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _dataSourceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _dataSourceArg)
 	return
 }
 
 // GetDataSources
-func (_class HostClass) GetDataSources(sessionID SessionRef, host HostRef) (_retval []DataSourceRecord, _err error) {
+func (_class HostClass) GetDataSources(ctx context.Context, sessionID SessionRef, host HostRef) (_retval []DataSourceRecord, _err error) {
 	_method := "host.get_data_sources"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1697,7 +1699,7 @@ func (_class HostClass) GetDataSources(sessionID SessionRef, host HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1706,7 +1708,7 @@ func (_class HostClass) GetDataSources(sessionID SessionRef, host HostRef) (_ret
 }
 
 // EmergencyHaDisable This call disables HA on the local host. This should only be used with extreme care.
-func (_class HostClass) EmergencyHaDisable(sessionID SessionRef, soft bool) (_err error) {
+func (_class HostClass) EmergencyHaDisable(ctx context.Context, sessionID SessionRef, soft bool) (_err error) {
 	_method := "host.emergency_ha_disable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1716,12 +1718,12 @@ func (_class HostClass) EmergencyHaDisable(sessionID SessionRef, soft bool) (_er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _softArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _softArg)
 	return
 }
 
 // PowerOn Attempt to power-on the host (if the capability exists).
-func (_class HostClass) PowerOn(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) PowerOn(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.power_on"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1731,12 +1733,12 @@ func (_class HostClass) PowerOn(sessionID SessionRef, host HostRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // Destroy Destroy specified host record in database
-func (_class HostClass) Destroy(sessionID SessionRef, self HostRef) (_err error) {
+func (_class HostClass) Destroy(ctx context.Context, sessionID SessionRef, self HostRef) (_err error) {
 	_method := "host.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1746,12 +1748,12 @@ func (_class HostClass) Destroy(sessionID SessionRef, self HostRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // LicenseRemove Remove any license file from the specified host, and switch that host to the unlicensed edition
-func (_class HostClass) LicenseRemove(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) LicenseRemove(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.license_remove"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1761,7 +1763,7 @@ func (_class HostClass) LicenseRemove(sessionID SessionRef, host HostRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
@@ -1770,7 +1772,7 @@ func (_class HostClass) LicenseRemove(sessionID SessionRef, host HostRef) (_err 
 // Errors:
 //
 //	LICENSE_PROCESSING_ERROR - There was an error processing your license. Please contact your support representative.
-func (_class HostClass) LicenseAdd(sessionID SessionRef, host HostRef, contents string) (_err error) {
+func (_class HostClass) LicenseAdd(ctx context.Context, sessionID SessionRef, host HostRef, contents string) (_err error) {
 	_method := "host.license_add"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1784,7 +1786,7 @@ func (_class HostClass) LicenseAdd(sessionID SessionRef, host HostRef, contents 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _contentsArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _contentsArg)
 	return
 }
 
@@ -1793,7 +1795,7 @@ func (_class HostClass) LicenseAdd(sessionID SessionRef, host HostRef, contents 
 // Errors:
 //
 //	LICENSE_PROCESSING_ERROR - There was an error processing your license. Please contact your support representative.
-func (_class HostClass) LicenseApply(sessionID SessionRef, host HostRef, contents string) (_err error) {
+func (_class HostClass) LicenseApply(ctx context.Context, sessionID SessionRef, host HostRef, contents string) (_err error) {
 	_method := "host.license_apply"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1807,18 +1809,18 @@ func (_class HostClass) LicenseApply(sessionID SessionRef, host HostRef, content
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _contentsArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _contentsArg)
 	return
 }
 
 // ListMethods List all supported methods
-func (_class HostClass) ListMethods(sessionID SessionRef) (_retval []string, _err error) {
+func (_class HostClass) ListMethods(ctx context.Context, sessionID SessionRef) (_retval []string, _err error) {
 	_method := "host.list_methods"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -1827,7 +1829,7 @@ func (_class HostClass) ListMethods(sessionID SessionRef) (_retval []string, _er
 }
 
 // BugreportUpload Run xen-bugtool --yestoall and upload the output to support
-func (_class HostClass) BugreportUpload(sessionID SessionRef, host HostRef, url string, options map[string]string) (_err error) {
+func (_class HostClass) BugreportUpload(ctx context.Context, sessionID SessionRef, host HostRef, url string, options map[string]string) (_err error) {
 	_method := "host.bugreport_upload"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1845,12 +1847,12 @@ func (_class HostClass) BugreportUpload(sessionID SessionRef, host HostRef, url 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _urlArg, _optionsArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _urlArg, _optionsArg)
 	return
 }
 
 // SendDebugKeys Inject the given string as debugging keys into Xen
-func (_class HostClass) SendDebugKeys(sessionID SessionRef, host HostRef, keys string) (_err error) {
+func (_class HostClass) SendDebugKeys(ctx context.Context, sessionID SessionRef, host HostRef, keys string) (_err error) {
 	_method := "host.send_debug_keys"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1864,12 +1866,12 @@ func (_class HostClass) SendDebugKeys(sessionID SessionRef, host HostRef, keys s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _keysArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _keysArg)
 	return
 }
 
 // GetLog Get the host's log file
-func (_class HostClass) GetLog(sessionID SessionRef, host HostRef) (_retval string, _err error) {
+func (_class HostClass) GetLog(ctx context.Context, sessionID SessionRef, host HostRef) (_retval string, _err error) {
 	_method := "host.get_log"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1879,7 +1881,7 @@ func (_class HostClass) GetLog(sessionID SessionRef, host HostRef) (_retval stri
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1888,7 +1890,7 @@ func (_class HostClass) GetLog(sessionID SessionRef, host HostRef) (_retval stri
 }
 
 // DmesgClear Get the host xen dmesg, and clear the buffer.
-func (_class HostClass) DmesgClear(sessionID SessionRef, host HostRef) (_retval string, _err error) {
+func (_class HostClass) DmesgClear(ctx context.Context, sessionID SessionRef, host HostRef) (_retval string, _err error) {
 	_method := "host.dmesg_clear"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1898,7 +1900,7 @@ func (_class HostClass) DmesgClear(sessionID SessionRef, host HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1907,7 +1909,7 @@ func (_class HostClass) DmesgClear(sessionID SessionRef, host HostRef) (_retval 
 }
 
 // Dmesg Get the host xen dmesg.
-func (_class HostClass) Dmesg(sessionID SessionRef, host HostRef) (_retval string, _err error) {
+func (_class HostClass) Dmesg(ctx context.Context, sessionID SessionRef, host HostRef) (_retval string, _err error) {
 	_method := "host.dmesg"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1917,7 +1919,7 @@ func (_class HostClass) Dmesg(sessionID SessionRef, host HostRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -1926,7 +1928,7 @@ func (_class HostClass) Dmesg(sessionID SessionRef, host HostRef) (_retval strin
 }
 
 // Reboot Reboot the host. (This function can only be called if there are no currently running VMs on the host and it is disabled.)
-func (_class HostClass) Reboot(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) Reboot(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.reboot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1936,12 +1938,12 @@ func (_class HostClass) Reboot(sessionID SessionRef, host HostRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // Shutdown Shutdown the host. (This function can only be called if there are no currently running VMs on the host and it is disabled.)
-func (_class HostClass) Shutdown(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) Shutdown(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.shutdown"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1951,12 +1953,12 @@ func (_class HostClass) Shutdown(sessionID SessionRef, host HostRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // Enable Puts the host into a state in which new VMs can be started.
-func (_class HostClass) Enable(sessionID SessionRef, host HostRef) (_err error) {
+func (_class HostClass) Enable(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "host.enable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1966,12 +1968,12 @@ func (_class HostClass) Enable(sessionID SessionRef, host HostRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // Disable Puts the host into a state in which no new VMs can be started. Currently active VMs on the host continue to execute.
-func (_class HostClass) Disable(sessionID SessionRef, host HostRef, autoEnable bool) (_err error) {
+func (_class HostClass) Disable(ctx context.Context, sessionID SessionRef, host HostRef, autoEnable bool) (_err error) {
 	_method := "host.disable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1985,12 +1987,12 @@ func (_class HostClass) Disable(sessionID SessionRef, host HostRef, autoEnable b
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg, _autoEnableArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _autoEnableArg)
 	return
 }
 
 // SetDisplay Set the display field of the given host.
-func (_class HostClass) SetDisplay(sessionID SessionRef, self HostRef, value HostDisplay) (_err error) {
+func (_class HostClass) SetDisplay(ctx context.Context, sessionID SessionRef, self HostRef, value HostDisplay) (_err error) {
 	_method := "host.set_display"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2004,12 +2006,12 @@ func (_class HostClass) SetDisplay(sessionID SessionRef, self HostRef, value Hos
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromGuestVCPUsParams Remove the given key and its corresponding value from the guest_VCPUs_params field of the given host.  If the key is not in that Map, then do nothing.
-func (_class HostClass) RemoveFromGuestVCPUsParams(sessionID SessionRef, self HostRef, key string) (_err error) {
+func (_class HostClass) RemoveFromGuestVCPUsParams(ctx context.Context, sessionID SessionRef, self HostRef, key string) (_err error) {
 	_method := "host.remove_from_guest_VCPUs_params"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2023,12 +2025,12 @@ func (_class HostClass) RemoveFromGuestVCPUsParams(sessionID SessionRef, self Ho
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToGuestVCPUsParams Add the given key-value pair to the guest_VCPUs_params field of the given host.
-func (_class HostClass) AddToGuestVCPUsParams(sessionID SessionRef, self HostRef, key string, value string) (_err error) {
+func (_class HostClass) AddToGuestVCPUsParams(ctx context.Context, sessionID SessionRef, self HostRef, key string, value string) (_err error) {
 	_method := "host.add_to_guest_VCPUs_params"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2046,12 +2048,12 @@ func (_class HostClass) AddToGuestVCPUsParams(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetGuestVCPUsParams Set the guest_VCPUs_params field of the given host.
-func (_class HostClass) SetGuestVCPUsParams(sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
+func (_class HostClass) SetGuestVCPUsParams(ctx context.Context, sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
 	_method := "host.set_guest_VCPUs_params"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2065,12 +2067,12 @@ func (_class HostClass) SetGuestVCPUsParams(sessionID SessionRef, self HostRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromLicenseServer Remove the given key and its corresponding value from the license_server field of the given host.  If the key is not in that Map, then do nothing.
-func (_class HostClass) RemoveFromLicenseServer(sessionID SessionRef, self HostRef, key string) (_err error) {
+func (_class HostClass) RemoveFromLicenseServer(ctx context.Context, sessionID SessionRef, self HostRef, key string) (_err error) {
 	_method := "host.remove_from_license_server"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2084,12 +2086,12 @@ func (_class HostClass) RemoveFromLicenseServer(sessionID SessionRef, self HostR
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToLicenseServer Add the given key-value pair to the license_server field of the given host.
-func (_class HostClass) AddToLicenseServer(sessionID SessionRef, self HostRef, key string, value string) (_err error) {
+func (_class HostClass) AddToLicenseServer(ctx context.Context, sessionID SessionRef, self HostRef, key string, value string) (_err error) {
 	_method := "host.add_to_license_server"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2107,12 +2109,12 @@ func (_class HostClass) AddToLicenseServer(sessionID SessionRef, self HostRef, k
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetLicenseServer Set the license_server field of the given host.
-func (_class HostClass) SetLicenseServer(sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
+func (_class HostClass) SetLicenseServer(ctx context.Context, sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
 	_method := "host.set_license_server"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2126,12 +2128,12 @@ func (_class HostClass) SetLicenseServer(sessionID SessionRef, self HostRef, val
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveTags Remove the given value from the tags field of the given host.  If the value is not in that Set, then do nothing.
-func (_class HostClass) RemoveTags(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) RemoveTags(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.remove_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2145,12 +2147,12 @@ func (_class HostClass) RemoveTags(sessionID SessionRef, self HostRef, value str
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // AddTags Add the given value to the tags field of the given host.  If the value is already in that Set, then do nothing.
-func (_class HostClass) AddTags(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) AddTags(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.add_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2164,12 +2166,12 @@ func (_class HostClass) AddTags(sessionID SessionRef, self HostRef, value string
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetTags Set the tags field of the given host.
-func (_class HostClass) SetTags(sessionID SessionRef, self HostRef, value []string) (_err error) {
+func (_class HostClass) SetTags(ctx context.Context, sessionID SessionRef, self HostRef, value []string) (_err error) {
 	_method := "host.set_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2183,12 +2185,12 @@ func (_class HostClass) SetTags(sessionID SessionRef, self HostRef, value []stri
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetAddress Set the address field of the given host.
-func (_class HostClass) SetAddress(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) SetAddress(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.set_address"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2202,12 +2204,12 @@ func (_class HostClass) SetAddress(sessionID SessionRef, self HostRef, value str
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetHostname Set the hostname field of the given host.
-func (_class HostClass) SetHostname(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) SetHostname(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.set_hostname"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2221,12 +2223,12 @@ func (_class HostClass) SetHostname(sessionID SessionRef, self HostRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetCrashDumpSr Set the crash_dump_sr field of the given host.
-func (_class HostClass) SetCrashDumpSr(sessionID SessionRef, self HostRef, value SRRef) (_err error) {
+func (_class HostClass) SetCrashDumpSr(ctx context.Context, sessionID SessionRef, self HostRef, value SRRef) (_err error) {
 	_method := "host.set_crash_dump_sr"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2240,12 +2242,12 @@ func (_class HostClass) SetCrashDumpSr(sessionID SessionRef, self HostRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetSuspendImageSr Set the suspend_image_sr field of the given host.
-func (_class HostClass) SetSuspendImageSr(sessionID SessionRef, self HostRef, value SRRef) (_err error) {
+func (_class HostClass) SetSuspendImageSr(ctx context.Context, sessionID SessionRef, self HostRef, value SRRef) (_err error) {
 	_method := "host.set_suspend_image_sr"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2259,12 +2261,12 @@ func (_class HostClass) SetSuspendImageSr(sessionID SessionRef, self HostRef, va
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromLogging Remove the given key and its corresponding value from the logging field of the given host.  If the key is not in that Map, then do nothing.
-func (_class HostClass) RemoveFromLogging(sessionID SessionRef, self HostRef, key string) (_err error) {
+func (_class HostClass) RemoveFromLogging(ctx context.Context, sessionID SessionRef, self HostRef, key string) (_err error) {
 	_method := "host.remove_from_logging"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2278,12 +2280,12 @@ func (_class HostClass) RemoveFromLogging(sessionID SessionRef, self HostRef, ke
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToLogging Add the given key-value pair to the logging field of the given host.
-func (_class HostClass) AddToLogging(sessionID SessionRef, self HostRef, key string, value string) (_err error) {
+func (_class HostClass) AddToLogging(ctx context.Context, sessionID SessionRef, self HostRef, key string, value string) (_err error) {
 	_method := "host.add_to_logging"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2301,12 +2303,12 @@ func (_class HostClass) AddToLogging(sessionID SessionRef, self HostRef, key str
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetLogging Set the logging field of the given host.
-func (_class HostClass) SetLogging(sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
+func (_class HostClass) SetLogging(ctx context.Context, sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
 	_method := "host.set_logging"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2320,12 +2322,12 @@ func (_class HostClass) SetLogging(sessionID SessionRef, self HostRef, value map
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given host.  If the key is not in that Map, then do nothing.
-func (_class HostClass) RemoveFromOtherConfig(sessionID SessionRef, self HostRef, key string) (_err error) {
+func (_class HostClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self HostRef, key string) (_err error) {
 	_method := "host.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2339,12 +2341,12 @@ func (_class HostClass) RemoveFromOtherConfig(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given host.
-func (_class HostClass) AddToOtherConfig(sessionID SessionRef, self HostRef, key string, value string) (_err error) {
+func (_class HostClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self HostRef, key string, value string) (_err error) {
 	_method := "host.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2362,12 +2364,12 @@ func (_class HostClass) AddToOtherConfig(sessionID SessionRef, self HostRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given host.
-func (_class HostClass) SetOtherConfig(sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
+func (_class HostClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self HostRef, value map[string]string) (_err error) {
 	_method := "host.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2381,12 +2383,12 @@ func (_class HostClass) SetOtherConfig(sessionID SessionRef, self HostRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameDescription Set the name/description field of the given host.
-func (_class HostClass) SetNameDescription(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2400,12 +2402,12 @@ func (_class HostClass) SetNameDescription(sessionID SessionRef, self HostRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given host.
-func (_class HostClass) SetNameLabel(sessionID SessionRef, self HostRef, value string) (_err error) {
+func (_class HostClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self HostRef, value string) (_err error) {
 	_method := "host.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2419,12 +2421,12 @@ func (_class HostClass) SetNameLabel(sessionID SessionRef, self HostRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetTimezone Get the timezone field of the given host.
-func (_class HostClass) GetTimezone(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetTimezone(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_timezone"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2434,7 +2436,7 @@ func (_class HostClass) GetTimezone(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2443,7 +2445,7 @@ func (_class HostClass) GetTimezone(sessionID SessionRef, self HostRef) (_retval
 }
 
 // GetNtpCustomServers Get the ntp_custom_servers field of the given host.
-func (_class HostClass) GetNtpCustomServers(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) GetNtpCustomServers(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.get_ntp_custom_servers"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2453,7 +2455,7 @@ func (_class HostClass) GetNtpCustomServers(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2462,7 +2464,7 @@ func (_class HostClass) GetNtpCustomServers(sessionID SessionRef, self HostRef) 
 }
 
 // GetNtpMode Get the ntp_mode field of the given host.
-func (_class HostClass) GetNtpMode(sessionID SessionRef, self HostRef) (_retval HostNtpMode, _err error) {
+func (_class HostClass) GetNtpMode(ctx context.Context, sessionID SessionRef, self HostRef) (_retval HostNtpMode, _err error) {
 	_method := "host.get_ntp_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2472,7 +2474,7 @@ func (_class HostClass) GetNtpMode(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2481,7 +2483,7 @@ func (_class HostClass) GetNtpMode(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetSecureBoot Get the secure_boot field of the given host.
-func (_class HostClass) GetSecureBoot(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetSecureBoot(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_secure_boot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2491,7 +2493,7 @@ func (_class HostClass) GetSecureBoot(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2500,7 +2502,7 @@ func (_class HostClass) GetSecureBoot(sessionID SessionRef, self HostRef) (_retv
 }
 
 // GetMaxCstate Get the max_cstate field of the given host.
-func (_class HostClass) GetMaxCstate(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetMaxCstate(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_max_cstate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2510,7 +2512,7 @@ func (_class HostClass) GetMaxCstate(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2519,7 +2521,7 @@ func (_class HostClass) GetMaxCstate(sessionID SessionRef, self HostRef) (_retva
 }
 
 // GetSSHAutoMode Get the ssh_auto_mode field of the given host.
-func (_class HostClass) GetSSHAutoMode(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetSSHAutoMode(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_ssh_auto_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2529,7 +2531,7 @@ func (_class HostClass) GetSSHAutoMode(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2538,7 +2540,7 @@ func (_class HostClass) GetSSHAutoMode(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetConsoleIdleTimeout Get the console_idle_timeout field of the given host.
-func (_class HostClass) GetConsoleIdleTimeout(sessionID SessionRef, self HostRef) (_retval int, _err error) {
+func (_class HostClass) GetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (_retval int, _err error) {
 	_method := "host.get_console_idle_timeout"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2548,7 +2550,7 @@ func (_class HostClass) GetConsoleIdleTimeout(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2557,7 +2559,7 @@ func (_class HostClass) GetConsoleIdleTimeout(sessionID SessionRef, self HostRef
 }
 
 // GetSSHExpiry Get the ssh_expiry field of the given host.
-func (_class HostClass) GetSSHExpiry(sessionID SessionRef, self HostRef) (_retval time.Time, _err error) {
+func (_class HostClass) GetSSHExpiry(ctx context.Context, sessionID SessionRef, self HostRef) (_retval time.Time, _err error) {
 	_method := "host.get_ssh_expiry"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2567,7 +2569,7 @@ func (_class HostClass) GetSSHExpiry(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2576,7 +2578,7 @@ func (_class HostClass) GetSSHExpiry(sessionID SessionRef, self HostRef) (_retva
 }
 
 // GetSSHEnabledTimeout Get the ssh_enabled_timeout field of the given host.
-func (_class HostClass) GetSSHEnabledTimeout(sessionID SessionRef, self HostRef) (_retval int, _err error) {
+func (_class HostClass) GetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (_retval int, _err error) {
 	_method := "host.get_ssh_enabled_timeout"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2586,7 +2588,7 @@ func (_class HostClass) GetSSHEnabledTimeout(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2595,7 +2597,7 @@ func (_class HostClass) GetSSHEnabledTimeout(sessionID SessionRef, self HostRef)
 }
 
 // GetSSHEnabled Get the ssh_enabled field of the given host.
-func (_class HostClass) GetSSHEnabled(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetSSHEnabled(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_ssh_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2605,7 +2607,7 @@ func (_class HostClass) GetSSHEnabled(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2614,7 +2616,7 @@ func (_class HostClass) GetSSHEnabled(sessionID SessionRef, self HostRef) (_retv
 }
 
 // GetLastUpdateHash Get the last_update_hash field of the given host.
-func (_class HostClass) GetLastUpdateHash(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetLastUpdateHash(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_last_update_hash"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2624,7 +2626,7 @@ func (_class HostClass) GetLastUpdateHash(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2633,7 +2635,7 @@ func (_class HostClass) GetLastUpdateHash(sessionID SessionRef, self HostRef) (_
 }
 
 // GetPendingGuidancesFull Get the pending_guidances_full field of the given host.
-func (_class HostClass) GetPendingGuidancesFull(sessionID SessionRef, self HostRef) (_retval []UpdateGuidances, _err error) {
+func (_class HostClass) GetPendingGuidancesFull(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []UpdateGuidances, _err error) {
 	_method := "host.get_pending_guidances_full"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2643,7 +2645,7 @@ func (_class HostClass) GetPendingGuidancesFull(sessionID SessionRef, self HostR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2652,7 +2654,7 @@ func (_class HostClass) GetPendingGuidancesFull(sessionID SessionRef, self HostR
 }
 
 // GetPendingGuidancesRecommended Get the pending_guidances_recommended field of the given host.
-func (_class HostClass) GetPendingGuidancesRecommended(sessionID SessionRef, self HostRef) (_retval []UpdateGuidances, _err error) {
+func (_class HostClass) GetPendingGuidancesRecommended(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []UpdateGuidances, _err error) {
 	_method := "host.get_pending_guidances_recommended"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2662,7 +2664,7 @@ func (_class HostClass) GetPendingGuidancesRecommended(sessionID SessionRef, sel
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2671,7 +2673,7 @@ func (_class HostClass) GetPendingGuidancesRecommended(sessionID SessionRef, sel
 }
 
 // GetNumaAffinityPolicy Get the numa_affinity_policy field of the given host.
-func (_class HostClass) GetNumaAffinityPolicy(sessionID SessionRef, self HostRef) (_retval HostNumaAffinityPolicy, _err error) {
+func (_class HostClass) GetNumaAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef) (_retval HostNumaAffinityPolicy, _err error) {
 	_method := "host.get_numa_affinity_policy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2681,7 +2683,7 @@ func (_class HostClass) GetNumaAffinityPolicy(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2690,7 +2692,7 @@ func (_class HostClass) GetNumaAffinityPolicy(sessionID SessionRef, self HostRef
 }
 
 // GetLatestSyncedUpdatesApplied Get the latest_synced_updates_applied field of the given host.
-func (_class HostClass) GetLatestSyncedUpdatesApplied(sessionID SessionRef, self HostRef) (_retval LatestSyncedUpdatesAppliedState, _err error) {
+func (_class HostClass) GetLatestSyncedUpdatesApplied(ctx context.Context, sessionID SessionRef, self HostRef) (_retval LatestSyncedUpdatesAppliedState, _err error) {
 	_method := "host.get_latest_synced_updates_applied"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2700,7 +2702,7 @@ func (_class HostClass) GetLatestSyncedUpdatesApplied(sessionID SessionRef, self
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2709,7 +2711,7 @@ func (_class HostClass) GetLatestSyncedUpdatesApplied(sessionID SessionRef, self
 }
 
 // GetHTTPSOnly Get the https_only field of the given host.
-func (_class HostClass) GetHTTPSOnly(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetHTTPSOnly(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_https_only"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2719,7 +2721,7 @@ func (_class HostClass) GetHTTPSOnly(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2728,7 +2730,7 @@ func (_class HostClass) GetHTTPSOnly(sessionID SessionRef, self HostRef) (_retva
 }
 
 // GetLastSoftwareUpdate Get the last_software_update field of the given host.
-func (_class HostClass) GetLastSoftwareUpdate(sessionID SessionRef, self HostRef) (_retval time.Time, _err error) {
+func (_class HostClass) GetLastSoftwareUpdate(ctx context.Context, sessionID SessionRef, self HostRef) (_retval time.Time, _err error) {
 	_method := "host.get_last_software_update"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2738,7 +2740,7 @@ func (_class HostClass) GetLastSoftwareUpdate(sessionID SessionRef, self HostRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2747,7 +2749,7 @@ func (_class HostClass) GetLastSoftwareUpdate(sessionID SessionRef, self HostRef
 }
 
 // GetTLSVerificationEnabled Get the tls_verification_enabled field of the given host.
-func (_class HostClass) GetTLSVerificationEnabled(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetTLSVerificationEnabled(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_tls_verification_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2757,7 +2759,7 @@ func (_class HostClass) GetTLSVerificationEnabled(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2766,7 +2768,7 @@ func (_class HostClass) GetTLSVerificationEnabled(sessionID SessionRef, self Hos
 }
 
 // GetPendingGuidances Get the pending_guidances field of the given host.
-func (_class HostClass) GetPendingGuidances(sessionID SessionRef, self HostRef) (_retval []UpdateGuidances, _err error) {
+func (_class HostClass) GetPendingGuidances(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []UpdateGuidances, _err error) {
 	_method := "host.get_pending_guidances"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2776,7 +2778,7 @@ func (_class HostClass) GetPendingGuidances(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2785,7 +2787,7 @@ func (_class HostClass) GetPendingGuidances(sessionID SessionRef, self HostRef) 
 }
 
 // GetEditions Get the editions field of the given host.
-func (_class HostClass) GetEditions(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) GetEditions(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.get_editions"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2795,7 +2797,7 @@ func (_class HostClass) GetEditions(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2804,7 +2806,7 @@ func (_class HostClass) GetEditions(sessionID SessionRef, self HostRef) (_retval
 }
 
 // GetCertificates Get the certificates field of the given host.
-func (_class HostClass) GetCertificates(sessionID SessionRef, self HostRef) (_retval []CertificateRef, _err error) {
+func (_class HostClass) GetCertificates(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []CertificateRef, _err error) {
 	_method := "host.get_certificates"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2814,7 +2816,7 @@ func (_class HostClass) GetCertificates(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2823,7 +2825,7 @@ func (_class HostClass) GetCertificates(sessionID SessionRef, self HostRef) (_re
 }
 
 // GetUefiCertificates Get the uefi_certificates field of the given host.
-func (_class HostClass) GetUefiCertificates(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetUefiCertificates(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_uefi_certificates"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2833,7 +2835,7 @@ func (_class HostClass) GetUefiCertificates(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2842,7 +2844,7 @@ func (_class HostClass) GetUefiCertificates(sessionID SessionRef, self HostRef) 
 }
 
 // GetMultipathing Get the multipathing field of the given host.
-func (_class HostClass) GetMultipathing(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetMultipathing(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_multipathing"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2852,7 +2854,7 @@ func (_class HostClass) GetMultipathing(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2861,7 +2863,7 @@ func (_class HostClass) GetMultipathing(sessionID SessionRef, self HostRef) (_re
 }
 
 // GetIscsiIqn Get the iscsi_iqn field of the given host.
-func (_class HostClass) GetIscsiIqn(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetIscsiIqn(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_iscsi_iqn"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2871,7 +2873,7 @@ func (_class HostClass) GetIscsiIqn(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2880,7 +2882,7 @@ func (_class HostClass) GetIscsiIqn(sessionID SessionRef, self HostRef) (_retval
 }
 
 // GetFeatures Get the features field of the given host.
-func (_class HostClass) GetFeatures(sessionID SessionRef, self HostRef) (_retval []FeatureRef, _err error) {
+func (_class HostClass) GetFeatures(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []FeatureRef, _err error) {
 	_method := "host.get_features"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2890,7 +2892,7 @@ func (_class HostClass) GetFeatures(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2899,7 +2901,7 @@ func (_class HostClass) GetFeatures(sessionID SessionRef, self HostRef) (_retval
 }
 
 // GetUpdatesRequiringReboot Get the updates_requiring_reboot field of the given host.
-func (_class HostClass) GetUpdatesRequiringReboot(sessionID SessionRef, self HostRef) (_retval []PoolUpdateRef, _err error) {
+func (_class HostClass) GetUpdatesRequiringReboot(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []PoolUpdateRef, _err error) {
 	_method := "host.get_updates_requiring_reboot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2909,7 +2911,7 @@ func (_class HostClass) GetUpdatesRequiringReboot(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2918,7 +2920,7 @@ func (_class HostClass) GetUpdatesRequiringReboot(sessionID SessionRef, self Hos
 }
 
 // GetControlDomain Get the control_domain field of the given host.
-func (_class HostClass) GetControlDomain(sessionID SessionRef, self HostRef) (_retval VMRef, _err error) {
+func (_class HostClass) GetControlDomain(ctx context.Context, sessionID SessionRef, self HostRef) (_retval VMRef, _err error) {
 	_method := "host.get_control_domain"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2928,7 +2930,7 @@ func (_class HostClass) GetControlDomain(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2937,7 +2939,7 @@ func (_class HostClass) GetControlDomain(sessionID SessionRef, self HostRef) (_r
 }
 
 // GetVirtualHardwarePlatformVersions Get the virtual_hardware_platform_versions field of the given host.
-func (_class HostClass) GetVirtualHardwarePlatformVersions(sessionID SessionRef, self HostRef) (_retval []int, _err error) {
+func (_class HostClass) GetVirtualHardwarePlatformVersions(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []int, _err error) {
 	_method := "host.get_virtual_hardware_platform_versions"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2947,7 +2949,7 @@ func (_class HostClass) GetVirtualHardwarePlatformVersions(sessionID SessionRef,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2956,7 +2958,7 @@ func (_class HostClass) GetVirtualHardwarePlatformVersions(sessionID SessionRef,
 }
 
 // GetDisplay Get the display field of the given host.
-func (_class HostClass) GetDisplay(sessionID SessionRef, self HostRef) (_retval HostDisplay, _err error) {
+func (_class HostClass) GetDisplay(ctx context.Context, sessionID SessionRef, self HostRef) (_retval HostDisplay, _err error) {
 	_method := "host.get_display"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2966,7 +2968,7 @@ func (_class HostClass) GetDisplay(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2975,7 +2977,7 @@ func (_class HostClass) GetDisplay(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetGuestVCPUsParams Get the guest_VCPUs_params field of the given host.
-func (_class HostClass) GetGuestVCPUsParams(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetGuestVCPUsParams(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_guest_VCPUs_params"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -2985,7 +2987,7 @@ func (_class HostClass) GetGuestVCPUsParams(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -2994,7 +2996,7 @@ func (_class HostClass) GetGuestVCPUsParams(sessionID SessionRef, self HostRef) 
 }
 
 // GetSslLegacy Get the ssl_legacy field of the given host.
-func (_class HostClass) GetSslLegacy(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetSslLegacy(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_ssl_legacy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3004,7 +3006,7 @@ func (_class HostClass) GetSslLegacy(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3013,7 +3015,7 @@ func (_class HostClass) GetSslLegacy(sessionID SessionRef, self HostRef) (_retva
 }
 
 // GetPUSBs Get the PUSBs field of the given host.
-func (_class HostClass) GetPUSBs(sessionID SessionRef, self HostRef) (_retval []PUSBRef, _err error) {
+func (_class HostClass) GetPUSBs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []PUSBRef, _err error) {
 	_method := "host.get_PUSBs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3023,7 +3025,7 @@ func (_class HostClass) GetPUSBs(sessionID SessionRef, self HostRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3032,7 +3034,7 @@ func (_class HostClass) GetPUSBs(sessionID SessionRef, self HostRef) (_retval []
 }
 
 // GetPGPUs Get the PGPUs field of the given host.
-func (_class HostClass) GetPGPUs(sessionID SessionRef, self HostRef) (_retval []PGPURef, _err error) {
+func (_class HostClass) GetPGPUs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []PGPURef, _err error) {
 	_method := "host.get_PGPUs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3042,7 +3044,7 @@ func (_class HostClass) GetPGPUs(sessionID SessionRef, self HostRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3051,7 +3053,7 @@ func (_class HostClass) GetPGPUs(sessionID SessionRef, self HostRef) (_retval []
 }
 
 // GetPCIs Get the PCIs field of the given host.
-func (_class HostClass) GetPCIs(sessionID SessionRef, self HostRef) (_retval []PCIRef, _err error) {
+func (_class HostClass) GetPCIs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []PCIRef, _err error) {
 	_method := "host.get_PCIs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3061,7 +3063,7 @@ func (_class HostClass) GetPCIs(sessionID SessionRef, self HostRef) (_retval []P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3070,7 +3072,7 @@ func (_class HostClass) GetPCIs(sessionID SessionRef, self HostRef) (_retval []P
 }
 
 // GetChipsetInfo Get the chipset_info field of the given host.
-func (_class HostClass) GetChipsetInfo(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetChipsetInfo(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_chipset_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3080,7 +3082,7 @@ func (_class HostClass) GetChipsetInfo(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3089,7 +3091,7 @@ func (_class HostClass) GetChipsetInfo(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetLocalCacheSr Get the local_cache_sr field of the given host.
-func (_class HostClass) GetLocalCacheSr(sessionID SessionRef, self HostRef) (_retval SRRef, _err error) {
+func (_class HostClass) GetLocalCacheSr(ctx context.Context, sessionID SessionRef, self HostRef) (_retval SRRef, _err error) {
 	_method := "host.get_local_cache_sr"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3099,7 +3101,7 @@ func (_class HostClass) GetLocalCacheSr(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3108,7 +3110,7 @@ func (_class HostClass) GetLocalCacheSr(sessionID SessionRef, self HostRef) (_re
 }
 
 // GetPowerOnConfig Get the power_on_config field of the given host.
-func (_class HostClass) GetPowerOnConfig(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetPowerOnConfig(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_power_on_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3118,7 +3120,7 @@ func (_class HostClass) GetPowerOnConfig(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3127,7 +3129,7 @@ func (_class HostClass) GetPowerOnConfig(sessionID SessionRef, self HostRef) (_r
 }
 
 // GetPowerOnMode Get the power_on_mode field of the given host.
-func (_class HostClass) GetPowerOnMode(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetPowerOnMode(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_power_on_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3137,7 +3139,7 @@ func (_class HostClass) GetPowerOnMode(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3146,7 +3148,7 @@ func (_class HostClass) GetPowerOnMode(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetBiosStrings Get the bios_strings field of the given host.
-func (_class HostClass) GetBiosStrings(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetBiosStrings(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_bios_strings"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3156,7 +3158,7 @@ func (_class HostClass) GetBiosStrings(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3165,7 +3167,7 @@ func (_class HostClass) GetBiosStrings(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetLicenseServer Get the license_server field of the given host.
-func (_class HostClass) GetLicenseServer(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetLicenseServer(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_license_server"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3175,7 +3177,7 @@ func (_class HostClass) GetLicenseServer(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3184,7 +3186,7 @@ func (_class HostClass) GetLicenseServer(sessionID SessionRef, self HostRef) (_r
 }
 
 // GetEdition Get the edition field of the given host.
-func (_class HostClass) GetEdition(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetEdition(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_edition"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3194,7 +3196,7 @@ func (_class HostClass) GetEdition(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3203,7 +3205,7 @@ func (_class HostClass) GetEdition(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetExternalAuthConfiguration Get the external_auth_configuration field of the given host.
-func (_class HostClass) GetExternalAuthConfiguration(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetExternalAuthConfiguration(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_external_auth_configuration"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3213,7 +3215,7 @@ func (_class HostClass) GetExternalAuthConfiguration(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3222,7 +3224,7 @@ func (_class HostClass) GetExternalAuthConfiguration(sessionID SessionRef, self 
 }
 
 // GetExternalAuthServiceName Get the external_auth_service_name field of the given host.
-func (_class HostClass) GetExternalAuthServiceName(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetExternalAuthServiceName(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_external_auth_service_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3232,7 +3234,7 @@ func (_class HostClass) GetExternalAuthServiceName(sessionID SessionRef, self Ho
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3241,7 +3243,7 @@ func (_class HostClass) GetExternalAuthServiceName(sessionID SessionRef, self Ho
 }
 
 // GetExternalAuthType Get the external_auth_type field of the given host.
-func (_class HostClass) GetExternalAuthType(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetExternalAuthType(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_external_auth_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3251,7 +3253,7 @@ func (_class HostClass) GetExternalAuthType(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3260,7 +3262,7 @@ func (_class HostClass) GetExternalAuthType(sessionID SessionRef, self HostRef) 
 }
 
 // GetTags Get the tags field of the given host.
-func (_class HostClass) GetTags(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) GetTags(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.get_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3270,7 +3272,7 @@ func (_class HostClass) GetTags(sessionID SessionRef, self HostRef) (_retval []s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3279,7 +3281,7 @@ func (_class HostClass) GetTags(sessionID SessionRef, self HostRef) (_retval []s
 }
 
 // GetBlobs Get the blobs field of the given host.
-func (_class HostClass) GetBlobs(sessionID SessionRef, self HostRef) (_retval map[string]BlobRef, _err error) {
+func (_class HostClass) GetBlobs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]BlobRef, _err error) {
 	_method := "host.get_blobs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3289,7 +3291,7 @@ func (_class HostClass) GetBlobs(sessionID SessionRef, self HostRef) (_retval ma
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3298,7 +3300,7 @@ func (_class HostClass) GetBlobs(sessionID SessionRef, self HostRef) (_retval ma
 }
 
 // GetHaNetworkPeers Get the ha_network_peers field of the given host.
-func (_class HostClass) GetHaNetworkPeers(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) GetHaNetworkPeers(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.get_ha_network_peers"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3308,7 +3310,7 @@ func (_class HostClass) GetHaNetworkPeers(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3317,7 +3319,7 @@ func (_class HostClass) GetHaNetworkPeers(sessionID SessionRef, self HostRef) (_
 }
 
 // GetHaStatefiles Get the ha_statefiles field of the given host.
-func (_class HostClass) GetHaStatefiles(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) GetHaStatefiles(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.get_ha_statefiles"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3327,7 +3329,7 @@ func (_class HostClass) GetHaStatefiles(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3336,7 +3338,7 @@ func (_class HostClass) GetHaStatefiles(sessionID SessionRef, self HostRef) (_re
 }
 
 // GetLicenseParams Get the license_params field of the given host.
-func (_class HostClass) GetLicenseParams(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetLicenseParams(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_license_params"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3346,7 +3348,7 @@ func (_class HostClass) GetLicenseParams(sessionID SessionRef, self HostRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3355,7 +3357,7 @@ func (_class HostClass) GetLicenseParams(sessionID SessionRef, self HostRef) (_r
 }
 
 // GetMetrics Get the metrics field of the given host.
-func (_class HostClass) GetMetrics(sessionID SessionRef, self HostRef) (_retval HostMetricsRef, _err error) {
+func (_class HostClass) GetMetrics(ctx context.Context, sessionID SessionRef, self HostRef) (_retval HostMetricsRef, _err error) {
 	_method := "host.get_metrics"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3365,7 +3367,7 @@ func (_class HostClass) GetMetrics(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3374,7 +3376,7 @@ func (_class HostClass) GetMetrics(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetAddress Get the address field of the given host.
-func (_class HostClass) GetAddress(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetAddress(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_address"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3384,7 +3386,7 @@ func (_class HostClass) GetAddress(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3393,7 +3395,7 @@ func (_class HostClass) GetAddress(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetHostname Get the hostname field of the given host.
-func (_class HostClass) GetHostname(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetHostname(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_hostname"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3403,7 +3405,7 @@ func (_class HostClass) GetHostname(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3412,7 +3414,7 @@ func (_class HostClass) GetHostname(sessionID SessionRef, self HostRef) (_retval
 }
 
 // GetCPUInfo Get the cpu_info field of the given host.
-func (_class HostClass) GetCPUInfo(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetCPUInfo(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_cpu_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3422,7 +3424,7 @@ func (_class HostClass) GetCPUInfo(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3431,7 +3433,7 @@ func (_class HostClass) GetCPUInfo(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetHostCPUs Get the host_CPUs field of the given host.
-func (_class HostClass) GetHostCPUs(sessionID SessionRef, self HostRef) (_retval []HostCPURef, _err error) {
+func (_class HostClass) GetHostCPUs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []HostCPURef, _err error) {
 	_method := "host.get_host_CPUs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3441,7 +3443,7 @@ func (_class HostClass) GetHostCPUs(sessionID SessionRef, self HostRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3450,7 +3452,7 @@ func (_class HostClass) GetHostCPUs(sessionID SessionRef, self HostRef) (_retval
 }
 
 // GetPBDs Get the PBDs field of the given host.
-func (_class HostClass) GetPBDs(sessionID SessionRef, self HostRef) (_retval []PBDRef, _err error) {
+func (_class HostClass) GetPBDs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []PBDRef, _err error) {
 	_method := "host.get_PBDs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3460,7 +3462,7 @@ func (_class HostClass) GetPBDs(sessionID SessionRef, self HostRef) (_retval []P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3469,7 +3471,7 @@ func (_class HostClass) GetPBDs(sessionID SessionRef, self HostRef) (_retval []P
 }
 
 // GetUpdates Get the updates field of the given host.
-func (_class HostClass) GetUpdates(sessionID SessionRef, self HostRef) (_retval []PoolUpdateRef, _err error) {
+func (_class HostClass) GetUpdates(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []PoolUpdateRef, _err error) {
 	_method := "host.get_updates"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3479,7 +3481,7 @@ func (_class HostClass) GetUpdates(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3488,7 +3490,7 @@ func (_class HostClass) GetUpdates(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetPatches Get the patches field of the given host.
-func (_class HostClass) GetPatches(sessionID SessionRef, self HostRef) (_retval []HostPatchRef, _err error) {
+func (_class HostClass) GetPatches(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []HostPatchRef, _err error) {
 	_method := "host.get_patches"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3498,7 +3500,7 @@ func (_class HostClass) GetPatches(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3507,7 +3509,7 @@ func (_class HostClass) GetPatches(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetCrashdumps Get the crashdumps field of the given host.
-func (_class HostClass) GetCrashdumps(sessionID SessionRef, self HostRef) (_retval []HostCrashdumpRef, _err error) {
+func (_class HostClass) GetCrashdumps(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []HostCrashdumpRef, _err error) {
 	_method := "host.get_crashdumps"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3517,7 +3519,7 @@ func (_class HostClass) GetCrashdumps(sessionID SessionRef, self HostRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3526,7 +3528,7 @@ func (_class HostClass) GetCrashdumps(sessionID SessionRef, self HostRef) (_retv
 }
 
 // GetCrashDumpSr Get the crash_dump_sr field of the given host.
-func (_class HostClass) GetCrashDumpSr(sessionID SessionRef, self HostRef) (_retval SRRef, _err error) {
+func (_class HostClass) GetCrashDumpSr(ctx context.Context, sessionID SessionRef, self HostRef) (_retval SRRef, _err error) {
 	_method := "host.get_crash_dump_sr"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3536,7 +3538,7 @@ func (_class HostClass) GetCrashDumpSr(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3545,7 +3547,7 @@ func (_class HostClass) GetCrashDumpSr(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetSuspendImageSr Get the suspend_image_sr field of the given host.
-func (_class HostClass) GetSuspendImageSr(sessionID SessionRef, self HostRef) (_retval SRRef, _err error) {
+func (_class HostClass) GetSuspendImageSr(ctx context.Context, sessionID SessionRef, self HostRef) (_retval SRRef, _err error) {
 	_method := "host.get_suspend_image_sr"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3555,7 +3557,7 @@ func (_class HostClass) GetSuspendImageSr(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3564,7 +3566,7 @@ func (_class HostClass) GetSuspendImageSr(sessionID SessionRef, self HostRef) (_
 }
 
 // GetPIFs Get the PIFs field of the given host.
-func (_class HostClass) GetPIFs(sessionID SessionRef, self HostRef) (_retval []PIFRef, _err error) {
+func (_class HostClass) GetPIFs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []PIFRef, _err error) {
 	_method := "host.get_PIFs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3574,7 +3576,7 @@ func (_class HostClass) GetPIFs(sessionID SessionRef, self HostRef) (_retval []P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3583,7 +3585,7 @@ func (_class HostClass) GetPIFs(sessionID SessionRef, self HostRef) (_retval []P
 }
 
 // GetLogging Get the logging field of the given host.
-func (_class HostClass) GetLogging(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetLogging(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_logging"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3593,7 +3595,7 @@ func (_class HostClass) GetLogging(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3602,7 +3604,7 @@ func (_class HostClass) GetLogging(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetResidentVMs Get the resident_VMs field of the given host.
-func (_class HostClass) GetResidentVMs(sessionID SessionRef, self HostRef) (_retval []VMRef, _err error) {
+func (_class HostClass) GetResidentVMs(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []VMRef, _err error) {
 	_method := "host.get_resident_VMs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3612,7 +3614,7 @@ func (_class HostClass) GetResidentVMs(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3621,7 +3623,7 @@ func (_class HostClass) GetResidentVMs(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetSupportedBootloaders Get the supported_bootloaders field of the given host.
-func (_class HostClass) GetSupportedBootloaders(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) GetSupportedBootloaders(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.get_supported_bootloaders"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3631,7 +3633,7 @@ func (_class HostClass) GetSupportedBootloaders(sessionID SessionRef, self HostR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3640,7 +3642,7 @@ func (_class HostClass) GetSupportedBootloaders(sessionID SessionRef, self HostR
 }
 
 // GetSchedPolicy Get the sched_policy field of the given host.
-func (_class HostClass) GetSchedPolicy(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetSchedPolicy(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_sched_policy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3650,7 +3652,7 @@ func (_class HostClass) GetSchedPolicy(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3659,7 +3661,7 @@ func (_class HostClass) GetSchedPolicy(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetCPUConfiguration Get the cpu_configuration field of the given host.
-func (_class HostClass) GetCPUConfiguration(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetCPUConfiguration(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_cpu_configuration"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3669,7 +3671,7 @@ func (_class HostClass) GetCPUConfiguration(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3678,7 +3680,7 @@ func (_class HostClass) GetCPUConfiguration(sessionID SessionRef, self HostRef) 
 }
 
 // GetCapabilities Get the capabilities field of the given host.
-func (_class HostClass) GetCapabilities(sessionID SessionRef, self HostRef) (_retval []string, _err error) {
+func (_class HostClass) GetCapabilities(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []string, _err error) {
 	_method := "host.get_capabilities"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3688,7 +3690,7 @@ func (_class HostClass) GetCapabilities(sessionID SessionRef, self HostRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3697,7 +3699,7 @@ func (_class HostClass) GetCapabilities(sessionID SessionRef, self HostRef) (_re
 }
 
 // GetOtherConfig Get the other_config field of the given host.
-func (_class HostClass) GetOtherConfig(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3707,7 +3709,7 @@ func (_class HostClass) GetOtherConfig(sessionID SessionRef, self HostRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3716,7 +3718,7 @@ func (_class HostClass) GetOtherConfig(sessionID SessionRef, self HostRef) (_ret
 }
 
 // GetSoftwareVersion Get the software_version field of the given host.
-func (_class HostClass) GetSoftwareVersion(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetSoftwareVersion(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_software_version"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3726,7 +3728,7 @@ func (_class HostClass) GetSoftwareVersion(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3735,7 +3737,7 @@ func (_class HostClass) GetSoftwareVersion(sessionID SessionRef, self HostRef) (
 }
 
 // GetEnabled Get the enabled field of the given host.
-func (_class HostClass) GetEnabled(sessionID SessionRef, self HostRef) (_retval bool, _err error) {
+func (_class HostClass) GetEnabled(ctx context.Context, sessionID SessionRef, self HostRef) (_retval bool, _err error) {
 	_method := "host.get_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3745,7 +3747,7 @@ func (_class HostClass) GetEnabled(sessionID SessionRef, self HostRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3754,7 +3756,7 @@ func (_class HostClass) GetEnabled(sessionID SessionRef, self HostRef) (_retval 
 }
 
 // GetAPIVersionVendorImplementation Get the API_version/vendor_implementation field of the given host.
-func (_class HostClass) GetAPIVersionVendorImplementation(sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
+func (_class HostClass) GetAPIVersionVendorImplementation(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]string, _err error) {
 	_method := "host.get_API_version_vendor_implementation"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3764,7 +3766,7 @@ func (_class HostClass) GetAPIVersionVendorImplementation(sessionID SessionRef, 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3773,7 +3775,7 @@ func (_class HostClass) GetAPIVersionVendorImplementation(sessionID SessionRef, 
 }
 
 // GetAPIVersionVendor Get the API_version/vendor field of the given host.
-func (_class HostClass) GetAPIVersionVendor(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetAPIVersionVendor(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_API_version_vendor"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3783,7 +3785,7 @@ func (_class HostClass) GetAPIVersionVendor(sessionID SessionRef, self HostRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3792,7 +3794,7 @@ func (_class HostClass) GetAPIVersionVendor(sessionID SessionRef, self HostRef) 
 }
 
 // GetAPIVersionMinor Get the API_version/minor field of the given host.
-func (_class HostClass) GetAPIVersionMinor(sessionID SessionRef, self HostRef) (_retval int, _err error) {
+func (_class HostClass) GetAPIVersionMinor(ctx context.Context, sessionID SessionRef, self HostRef) (_retval int, _err error) {
 	_method := "host.get_API_version_minor"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3802,7 +3804,7 @@ func (_class HostClass) GetAPIVersionMinor(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3811,7 +3813,7 @@ func (_class HostClass) GetAPIVersionMinor(sessionID SessionRef, self HostRef) (
 }
 
 // GetAPIVersionMajor Get the API_version/major field of the given host.
-func (_class HostClass) GetAPIVersionMajor(sessionID SessionRef, self HostRef) (_retval int, _err error) {
+func (_class HostClass) GetAPIVersionMajor(ctx context.Context, sessionID SessionRef, self HostRef) (_retval int, _err error) {
 	_method := "host.get_API_version_major"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3821,7 +3823,7 @@ func (_class HostClass) GetAPIVersionMajor(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3830,7 +3832,7 @@ func (_class HostClass) GetAPIVersionMajor(sessionID SessionRef, self HostRef) (
 }
 
 // GetCurrentOperations Get the current_operations field of the given host.
-func (_class HostClass) GetCurrentOperations(sessionID SessionRef, self HostRef) (_retval map[string]HostAllowedOperations, _err error) {
+func (_class HostClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self HostRef) (_retval map[string]HostAllowedOperations, _err error) {
 	_method := "host.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3840,7 +3842,7 @@ func (_class HostClass) GetCurrentOperations(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3849,7 +3851,7 @@ func (_class HostClass) GetCurrentOperations(sessionID SessionRef, self HostRef)
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given host.
-func (_class HostClass) GetAllowedOperations(sessionID SessionRef, self HostRef) (_retval []HostAllowedOperations, _err error) {
+func (_class HostClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self HostRef) (_retval []HostAllowedOperations, _err error) {
 	_method := "host.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3859,7 +3861,7 @@ func (_class HostClass) GetAllowedOperations(sessionID SessionRef, self HostRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3868,7 +3870,7 @@ func (_class HostClass) GetAllowedOperations(sessionID SessionRef, self HostRef)
 }
 
 // GetMemoryOverhead Get the memory/overhead field of the given host.
-func (_class HostClass) GetMemoryOverhead(sessionID SessionRef, self HostRef) (_retval int, _err error) {
+func (_class HostClass) GetMemoryOverhead(ctx context.Context, sessionID SessionRef, self HostRef) (_retval int, _err error) {
 	_method := "host.get_memory_overhead"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3878,7 +3880,7 @@ func (_class HostClass) GetMemoryOverhead(sessionID SessionRef, self HostRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3887,7 +3889,7 @@ func (_class HostClass) GetMemoryOverhead(sessionID SessionRef, self HostRef) (_
 }
 
 // GetNameDescription Get the name/description field of the given host.
-func (_class HostClass) GetNameDescription(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3897,7 +3899,7 @@ func (_class HostClass) GetNameDescription(sessionID SessionRef, self HostRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3906,7 +3908,7 @@ func (_class HostClass) GetNameDescription(sessionID SessionRef, self HostRef) (
 }
 
 // GetNameLabel Get the name/label field of the given host.
-func (_class HostClass) GetNameLabel(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3916,7 +3918,7 @@ func (_class HostClass) GetNameLabel(sessionID SessionRef, self HostRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3925,7 +3927,7 @@ func (_class HostClass) GetNameLabel(sessionID SessionRef, self HostRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given host.
-func (_class HostClass) GetUUID(sessionID SessionRef, self HostRef) (_retval string, _err error) {
+func (_class HostClass) GetUUID(ctx context.Context, sessionID SessionRef, self HostRef) (_retval string, _err error) {
 	_method := "host.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3935,7 +3937,7 @@ func (_class HostClass) GetUUID(sessionID SessionRef, self HostRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -3944,7 +3946,7 @@ func (_class HostClass) GetUUID(sessionID SessionRef, self HostRef) (_retval str
 }
 
 // GetByNameLabel Get all the host instances with the given label.
-func (_class HostClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []HostRef, _err error) {
+func (_class HostClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []HostRef, _err error) {
 	_method := "host.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3954,7 +3956,7 @@ func (_class HostClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -3963,7 +3965,7 @@ func (_class HostClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 }
 
 // GetByUUID Get a reference to the host instance with the specified UUID.
-func (_class HostClass) GetByUUID(sessionID SessionRef, uuid string) (_retval HostRef, _err error) {
+func (_class HostClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval HostRef, _err error) {
 	_method := "host.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3973,7 +3975,7 @@ func (_class HostClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ho
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -3982,7 +3984,7 @@ func (_class HostClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ho
 }
 
 // GetRecord Get a record containing the current state of the given host.
-func (_class HostClass) GetRecord(sessionID SessionRef, self HostRef) (_retval HostRecord, _err error) {
+func (_class HostClass) GetRecord(ctx context.Context, sessionID SessionRef, self HostRef) (_retval HostRecord, _err error) {
 	_method := "host.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -3992,7 +3994,7 @@ func (_class HostClass) GetRecord(sessionID SessionRef, self HostRef) (_retval H
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

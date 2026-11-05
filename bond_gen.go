@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -60,13 +62,13 @@ type BondClass struct {
 }
 
 // GetAllRecords Return a map of Bond references to Bond records for all Bonds known to the system.
-func (_class BondClass) GetAllRecords(sessionID SessionRef) (_retval map[BondRef]BondRecord, _err error) {
+func (_class BondClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[BondRef]BondRecord, _err error) {
 	_method := "Bond.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -75,13 +77,13 @@ func (_class BondClass) GetAllRecords(sessionID SessionRef) (_retval map[BondRef
 }
 
 // GetAll Return a list of all the Bonds known to the system.
-func (_class BondClass) GetAll(sessionID SessionRef) (_retval []BondRef, _err error) {
+func (_class BondClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []BondRef, _err error) {
 	_method := "Bond.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -90,7 +92,7 @@ func (_class BondClass) GetAll(sessionID SessionRef) (_retval []BondRef, _err er
 }
 
 // SetProperty Set the value of a property of the bond
-func (_class BondClass) SetProperty(sessionID SessionRef, self BondRef, name string, value string) (_err error) {
+func (_class BondClass) SetProperty(ctx context.Context, sessionID SessionRef, self BondRef, name string, value string) (_err error) {
 	_method := "Bond.set_property"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -108,12 +110,12 @@ func (_class BondClass) SetProperty(sessionID SessionRef, self BondRef, name str
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _nameArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _nameArg, _valueArg)
 	return
 }
 
 // SetMode Change the bond mode
-func (_class BondClass) SetMode(sessionID SessionRef, self BondRef, value BondMode) (_err error) {
+func (_class BondClass) SetMode(ctx context.Context, sessionID SessionRef, self BondRef, value BondMode) (_err error) {
 	_method := "Bond.set_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -127,12 +129,12 @@ func (_class BondClass) SetMode(sessionID SessionRef, self BondRef, value BondMo
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // Destroy Destroy an interface bond
-func (_class BondClass) Destroy(sessionID SessionRef, self BondRef) (_err error) {
+func (_class BondClass) Destroy(ctx context.Context, sessionID SessionRef, self BondRef) (_err error) {
 	_method := "Bond.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -142,12 +144,12 @@ func (_class BondClass) Destroy(sessionID SessionRef, self BondRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create an interface bond
-func (_class BondClass) Create(sessionID SessionRef, network NetworkRef, members []PIFRef, mac string, mode BondMode, properties map[string]string) (_retval BondRef, _err error) {
+func (_class BondClass) Create(ctx context.Context, sessionID SessionRef, network NetworkRef, members []PIFRef, mac string, mode BondMode, properties map[string]string) (_retval BondRef, _err error) {
 	_method := "Bond.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -173,7 +175,7 @@ func (_class BondClass) Create(sessionID SessionRef, network NetworkRef, members
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _networkArg, _membersArg, _macArg, _modeArg, _propertiesArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _networkArg, _membersArg, _macArg, _modeArg, _propertiesArg)
 	if _err != nil {
 		return
 	}
@@ -182,7 +184,7 @@ func (_class BondClass) Create(sessionID SessionRef, network NetworkRef, members
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given Bond.  If the key is not in that Map, then do nothing.
-func (_class BondClass) RemoveFromOtherConfig(sessionID SessionRef, self BondRef, key string) (_err error) {
+func (_class BondClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self BondRef, key string) (_err error) {
 	_method := "Bond.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -196,12 +198,12 @@ func (_class BondClass) RemoveFromOtherConfig(sessionID SessionRef, self BondRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given Bond.
-func (_class BondClass) AddToOtherConfig(sessionID SessionRef, self BondRef, key string, value string) (_err error) {
+func (_class BondClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self BondRef, key string, value string) (_err error) {
 	_method := "Bond.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -219,12 +221,12 @@ func (_class BondClass) AddToOtherConfig(sessionID SessionRef, self BondRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given Bond.
-func (_class BondClass) SetOtherConfig(sessionID SessionRef, self BondRef, value map[string]string) (_err error) {
+func (_class BondClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self BondRef, value map[string]string) (_err error) {
 	_method := "Bond.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -238,12 +240,12 @@ func (_class BondClass) SetOtherConfig(sessionID SessionRef, self BondRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetAutoUpdateMac Get the auto_update_mac field of the given Bond.
-func (_class BondClass) GetAutoUpdateMac(sessionID SessionRef, self BondRef) (_retval bool, _err error) {
+func (_class BondClass) GetAutoUpdateMac(ctx context.Context, sessionID SessionRef, self BondRef) (_retval bool, _err error) {
 	_method := "Bond.get_auto_update_mac"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -253,7 +255,7 @@ func (_class BondClass) GetAutoUpdateMac(sessionID SessionRef, self BondRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -262,7 +264,7 @@ func (_class BondClass) GetAutoUpdateMac(sessionID SessionRef, self BondRef) (_r
 }
 
 // GetLinksUp Get the links_up field of the given Bond.
-func (_class BondClass) GetLinksUp(sessionID SessionRef, self BondRef) (_retval int, _err error) {
+func (_class BondClass) GetLinksUp(ctx context.Context, sessionID SessionRef, self BondRef) (_retval int, _err error) {
 	_method := "Bond.get_links_up"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -272,7 +274,7 @@ func (_class BondClass) GetLinksUp(sessionID SessionRef, self BondRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -281,7 +283,7 @@ func (_class BondClass) GetLinksUp(sessionID SessionRef, self BondRef) (_retval 
 }
 
 // GetProperties Get the properties field of the given Bond.
-func (_class BondClass) GetProperties(sessionID SessionRef, self BondRef) (_retval map[string]string, _err error) {
+func (_class BondClass) GetProperties(ctx context.Context, sessionID SessionRef, self BondRef) (_retval map[string]string, _err error) {
 	_method := "Bond.get_properties"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -291,7 +293,7 @@ func (_class BondClass) GetProperties(sessionID SessionRef, self BondRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -300,7 +302,7 @@ func (_class BondClass) GetProperties(sessionID SessionRef, self BondRef) (_retv
 }
 
 // GetMode Get the mode field of the given Bond.
-func (_class BondClass) GetMode(sessionID SessionRef, self BondRef) (_retval BondMode, _err error) {
+func (_class BondClass) GetMode(ctx context.Context, sessionID SessionRef, self BondRef) (_retval BondMode, _err error) {
 	_method := "Bond.get_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -310,7 +312,7 @@ func (_class BondClass) GetMode(sessionID SessionRef, self BondRef) (_retval Bon
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -319,7 +321,7 @@ func (_class BondClass) GetMode(sessionID SessionRef, self BondRef) (_retval Bon
 }
 
 // GetPrimarySlave Get the primary_slave field of the given Bond.
-func (_class BondClass) GetPrimarySlave(sessionID SessionRef, self BondRef) (_retval PIFRef, _err error) {
+func (_class BondClass) GetPrimarySlave(ctx context.Context, sessionID SessionRef, self BondRef) (_retval PIFRef, _err error) {
 	_method := "Bond.get_primary_slave"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -329,7 +331,7 @@ func (_class BondClass) GetPrimarySlave(sessionID SessionRef, self BondRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -338,7 +340,7 @@ func (_class BondClass) GetPrimarySlave(sessionID SessionRef, self BondRef) (_re
 }
 
 // GetOtherConfig Get the other_config field of the given Bond.
-func (_class BondClass) GetOtherConfig(sessionID SessionRef, self BondRef) (_retval map[string]string, _err error) {
+func (_class BondClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self BondRef) (_retval map[string]string, _err error) {
 	_method := "Bond.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -348,7 +350,7 @@ func (_class BondClass) GetOtherConfig(sessionID SessionRef, self BondRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -357,7 +359,7 @@ func (_class BondClass) GetOtherConfig(sessionID SessionRef, self BondRef) (_ret
 }
 
 // GetSlaves Get the slaves field of the given Bond.
-func (_class BondClass) GetSlaves(sessionID SessionRef, self BondRef) (_retval []PIFRef, _err error) {
+func (_class BondClass) GetSlaves(ctx context.Context, sessionID SessionRef, self BondRef) (_retval []PIFRef, _err error) {
 	_method := "Bond.get_slaves"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -367,7 +369,7 @@ func (_class BondClass) GetSlaves(sessionID SessionRef, self BondRef) (_retval [
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -376,7 +378,7 @@ func (_class BondClass) GetSlaves(sessionID SessionRef, self BondRef) (_retval [
 }
 
 // GetMaster Get the master field of the given Bond.
-func (_class BondClass) GetMaster(sessionID SessionRef, self BondRef) (_retval PIFRef, _err error) {
+func (_class BondClass) GetMaster(ctx context.Context, sessionID SessionRef, self BondRef) (_retval PIFRef, _err error) {
 	_method := "Bond.get_master"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -386,7 +388,7 @@ func (_class BondClass) GetMaster(sessionID SessionRef, self BondRef) (_retval P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -395,7 +397,7 @@ func (_class BondClass) GetMaster(sessionID SessionRef, self BondRef) (_retval P
 }
 
 // GetUUID Get the uuid field of the given Bond.
-func (_class BondClass) GetUUID(sessionID SessionRef, self BondRef) (_retval string, _err error) {
+func (_class BondClass) GetUUID(ctx context.Context, sessionID SessionRef, self BondRef) (_retval string, _err error) {
 	_method := "Bond.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -405,7 +407,7 @@ func (_class BondClass) GetUUID(sessionID SessionRef, self BondRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -414,7 +416,7 @@ func (_class BondClass) GetUUID(sessionID SessionRef, self BondRef) (_retval str
 }
 
 // GetByUUID Get a reference to the Bond instance with the specified UUID.
-func (_class BondClass) GetByUUID(sessionID SessionRef, uuid string) (_retval BondRef, _err error) {
+func (_class BondClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval BondRef, _err error) {
 	_method := "Bond.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -424,7 +426,7 @@ func (_class BondClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Bo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -433,7 +435,7 @@ func (_class BondClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Bo
 }
 
 // GetRecord Get a record containing the current state of the given Bond.
-func (_class BondClass) GetRecord(sessionID SessionRef, self BondRef) (_retval BondRecord, _err error) {
+func (_class BondClass) GetRecord(ctx context.Context, sessionID SessionRef, self BondRef) (_retval BondRecord, _err error) {
 	_method := "Bond.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -443,7 +445,7 @@ func (_class BondClass) GetRecord(sessionID SessionRef, self BondRef) (_retval B
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

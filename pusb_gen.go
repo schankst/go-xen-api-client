@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -59,13 +61,13 @@ type PUSBClass struct {
 }
 
 // GetAllRecords Return a map of PUSB references to PUSB records for all PUSBs known to the system.
-func (_class PUSBClass) GetAllRecords(sessionID SessionRef) (_retval map[PUSBRef]PUSBRecord, _err error) {
+func (_class PUSBClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PUSBRef]PUSBRecord, _err error) {
 	_method := "PUSB.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -74,13 +76,13 @@ func (_class PUSBClass) GetAllRecords(sessionID SessionRef) (_retval map[PUSBRef
 }
 
 // GetAll Return a list of all the PUSBs known to the system.
-func (_class PUSBClass) GetAll(sessionID SessionRef) (_retval []PUSBRef, _err error) {
+func (_class PUSBClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PUSBRef, _err error) {
 	_method := "PUSB.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -89,7 +91,7 @@ func (_class PUSBClass) GetAll(sessionID SessionRef) (_retval []PUSBRef, _err er
 }
 
 // SetPassthroughEnabled
-func (_class PUSBClass) SetPassthroughEnabled(sessionID SessionRef, self PUSBRef, value bool) (_err error) {
+func (_class PUSBClass) SetPassthroughEnabled(ctx context.Context, sessionID SessionRef, self PUSBRef, value bool) (_err error) {
 	_method := "PUSB.set_passthrough_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -103,12 +105,12 @@ func (_class PUSBClass) SetPassthroughEnabled(sessionID SessionRef, self PUSBRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // Scan
-func (_class PUSBClass) Scan(sessionID SessionRef, host HostRef) (_err error) {
+func (_class PUSBClass) Scan(ctx context.Context, sessionID SessionRef, host HostRef) (_err error) {
 	_method := "PUSB.scan"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -118,12 +120,12 @@ func (_class PUSBClass) Scan(sessionID SessionRef, host HostRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given PUSB.  If the key is not in that Map, then do nothing.
-func (_class PUSBClass) RemoveFromOtherConfig(sessionID SessionRef, self PUSBRef, key string) (_err error) {
+func (_class PUSBClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self PUSBRef, key string) (_err error) {
 	_method := "PUSB.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -137,12 +139,12 @@ func (_class PUSBClass) RemoveFromOtherConfig(sessionID SessionRef, self PUSBRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given PUSB.
-func (_class PUSBClass) AddToOtherConfig(sessionID SessionRef, self PUSBRef, key string, value string) (_err error) {
+func (_class PUSBClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self PUSBRef, key string, value string) (_err error) {
 	_method := "PUSB.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -160,12 +162,12 @@ func (_class PUSBClass) AddToOtherConfig(sessionID SessionRef, self PUSBRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given PUSB.
-func (_class PUSBClass) SetOtherConfig(sessionID SessionRef, self PUSBRef, value map[string]string) (_err error) {
+func (_class PUSBClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self PUSBRef, value map[string]string) (_err error) {
 	_method := "PUSB.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -179,12 +181,12 @@ func (_class PUSBClass) SetOtherConfig(sessionID SessionRef, self PUSBRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetSpeed Get the speed field of the given PUSB.
-func (_class PUSBClass) GetSpeed(sessionID SessionRef, self PUSBRef) (_retval float64, _err error) {
+func (_class PUSBClass) GetSpeed(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval float64, _err error) {
 	_method := "PUSB.get_speed"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -194,7 +196,7 @@ func (_class PUSBClass) GetSpeed(sessionID SessionRef, self PUSBRef) (_retval fl
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -203,7 +205,7 @@ func (_class PUSBClass) GetSpeed(sessionID SessionRef, self PUSBRef) (_retval fl
 }
 
 // GetOtherConfig Get the other_config field of the given PUSB.
-func (_class PUSBClass) GetOtherConfig(sessionID SessionRef, self PUSBRef) (_retval map[string]string, _err error) {
+func (_class PUSBClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval map[string]string, _err error) {
 	_method := "PUSB.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -213,7 +215,7 @@ func (_class PUSBClass) GetOtherConfig(sessionID SessionRef, self PUSBRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -222,7 +224,7 @@ func (_class PUSBClass) GetOtherConfig(sessionID SessionRef, self PUSBRef) (_ret
 }
 
 // GetPassthroughEnabled Get the passthrough_enabled field of the given PUSB.
-func (_class PUSBClass) GetPassthroughEnabled(sessionID SessionRef, self PUSBRef) (_retval bool, _err error) {
+func (_class PUSBClass) GetPassthroughEnabled(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval bool, _err error) {
 	_method := "PUSB.get_passthrough_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -232,7 +234,7 @@ func (_class PUSBClass) GetPassthroughEnabled(sessionID SessionRef, self PUSBRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -241,7 +243,7 @@ func (_class PUSBClass) GetPassthroughEnabled(sessionID SessionRef, self PUSBRef
 }
 
 // GetDescription Get the description field of the given PUSB.
-func (_class PUSBClass) GetDescription(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetDescription(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -251,7 +253,7 @@ func (_class PUSBClass) GetDescription(sessionID SessionRef, self PUSBRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -260,7 +262,7 @@ func (_class PUSBClass) GetDescription(sessionID SessionRef, self PUSBRef) (_ret
 }
 
 // GetVersion Get the version field of the given PUSB.
-func (_class PUSBClass) GetVersion(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetVersion(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_version"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -270,7 +272,7 @@ func (_class PUSBClass) GetVersion(sessionID SessionRef, self PUSBRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -279,7 +281,7 @@ func (_class PUSBClass) GetVersion(sessionID SessionRef, self PUSBRef) (_retval 
 }
 
 // GetSerial Get the serial field of the given PUSB.
-func (_class PUSBClass) GetSerial(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetSerial(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_serial"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -289,7 +291,7 @@ func (_class PUSBClass) GetSerial(sessionID SessionRef, self PUSBRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -298,7 +300,7 @@ func (_class PUSBClass) GetSerial(sessionID SessionRef, self PUSBRef) (_retval s
 }
 
 // GetProductDesc Get the product_desc field of the given PUSB.
-func (_class PUSBClass) GetProductDesc(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetProductDesc(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_product_desc"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -308,7 +310,7 @@ func (_class PUSBClass) GetProductDesc(sessionID SessionRef, self PUSBRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -317,7 +319,7 @@ func (_class PUSBClass) GetProductDesc(sessionID SessionRef, self PUSBRef) (_ret
 }
 
 // GetProductID Get the product_id field of the given PUSB.
-func (_class PUSBClass) GetProductID(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetProductID(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_product_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -327,7 +329,7 @@ func (_class PUSBClass) GetProductID(sessionID SessionRef, self PUSBRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -336,7 +338,7 @@ func (_class PUSBClass) GetProductID(sessionID SessionRef, self PUSBRef) (_retva
 }
 
 // GetVendorDesc Get the vendor_desc field of the given PUSB.
-func (_class PUSBClass) GetVendorDesc(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetVendorDesc(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_vendor_desc"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -346,7 +348,7 @@ func (_class PUSBClass) GetVendorDesc(sessionID SessionRef, self PUSBRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -355,7 +357,7 @@ func (_class PUSBClass) GetVendorDesc(sessionID SessionRef, self PUSBRef) (_retv
 }
 
 // GetVendorID Get the vendor_id field of the given PUSB.
-func (_class PUSBClass) GetVendorID(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetVendorID(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_vendor_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -365,7 +367,7 @@ func (_class PUSBClass) GetVendorID(sessionID SessionRef, self PUSBRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -374,7 +376,7 @@ func (_class PUSBClass) GetVendorID(sessionID SessionRef, self PUSBRef) (_retval
 }
 
 // GetPath Get the path field of the given PUSB.
-func (_class PUSBClass) GetPath(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetPath(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_path"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -384,7 +386,7 @@ func (_class PUSBClass) GetPath(sessionID SessionRef, self PUSBRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -393,7 +395,7 @@ func (_class PUSBClass) GetPath(sessionID SessionRef, self PUSBRef) (_retval str
 }
 
 // GetHost Get the host field of the given PUSB.
-func (_class PUSBClass) GetHost(sessionID SessionRef, self PUSBRef) (_retval HostRef, _err error) {
+func (_class PUSBClass) GetHost(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval HostRef, _err error) {
 	_method := "PUSB.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -403,7 +405,7 @@ func (_class PUSBClass) GetHost(sessionID SessionRef, self PUSBRef) (_retval Hos
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -412,7 +414,7 @@ func (_class PUSBClass) GetHost(sessionID SessionRef, self PUSBRef) (_retval Hos
 }
 
 // GetUSBGroup Get the USB_group field of the given PUSB.
-func (_class PUSBClass) GetUSBGroup(sessionID SessionRef, self PUSBRef) (_retval USBGroupRef, _err error) {
+func (_class PUSBClass) GetUSBGroup(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval USBGroupRef, _err error) {
 	_method := "PUSB.get_USB_group"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -422,7 +424,7 @@ func (_class PUSBClass) GetUSBGroup(sessionID SessionRef, self PUSBRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -431,7 +433,7 @@ func (_class PUSBClass) GetUSBGroup(sessionID SessionRef, self PUSBRef) (_retval
 }
 
 // GetUUID Get the uuid field of the given PUSB.
-func (_class PUSBClass) GetUUID(sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
+func (_class PUSBClass) GetUUID(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval string, _err error) {
 	_method := "PUSB.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -441,7 +443,7 @@ func (_class PUSBClass) GetUUID(sessionID SessionRef, self PUSBRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -450,7 +452,7 @@ func (_class PUSBClass) GetUUID(sessionID SessionRef, self PUSBRef) (_retval str
 }
 
 // GetByUUID Get a reference to the PUSB instance with the specified UUID.
-func (_class PUSBClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PUSBRef, _err error) {
+func (_class PUSBClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PUSBRef, _err error) {
 	_method := "PUSB.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -460,7 +462,7 @@ func (_class PUSBClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PU
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -469,7 +471,7 @@ func (_class PUSBClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PU
 }
 
 // GetRecord Get a record containing the current state of the given PUSB.
-func (_class PUSBClass) GetRecord(sessionID SessionRef, self PUSBRef) (_retval PUSBRecord, _err error) {
+func (_class PUSBClass) GetRecord(ctx context.Context, sessionID SessionRef, self PUSBRef) (_retval PUSBRecord, _err error) {
 	_method := "PUSB.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -479,7 +481,7 @@ func (_class PUSBClass) GetRecord(sessionID SessionRef, self PUSBRef) (_retval P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

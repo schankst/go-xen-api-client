@@ -13,13 +13,13 @@ VMs, then loop and fetch each VM's VBDs, then loop those and fetch each
 VDI, then its SR, and so on:
 
 ```go
-vmMap, _ := client.VM.GetAllRecords(session)
+vmMap, _ := client.VM.GetAllRecords(ctx, session)
 
 for vmRef, vmRec := range vmMap {
     for _, vbdRef := range vmRec.VBDs {
-        vbdRec, _ := client.VBD.GetRecord(session, vbdRef)   // 1 RPC
-        vdiRec, _ := client.VDI.GetRecord(session, vbdRec.VDI) // 1 RPC
-        srRec, _ := client.SR.GetRecord(session, vdiRec.SR)    // 1 RPC
+        vbdRec, _ := client.VBD.GetRecord(ctx, session, vbdRef)   // 1 RPC
+        vdiRec, _ := client.VDI.GetRecord(ctx, session, vbdRec.VDI) // 1 RPC
+        srRec, _ := client.SR.GetRecord(ctx, session, vdiRec.SR)    // 1 RPC
         // ...
     }
 }
@@ -39,10 +39,10 @@ keyed by ref, and then treat the rest of the work as ordinary in-memory
 map lookups instead of network calls:
 
 ```go
-vmMap, _ := client.VM.GetAllRecords(session)
-vbdMap, _ := client.VBD.GetAllRecords(session)
-vdiMap, _ := client.VDI.GetAllRecords(session)
-srMap, _ := client.SR.GetAllRecords(session)
+vmMap, _ := client.VM.GetAllRecords(ctx, session)
+vbdMap, _ := client.VBD.GetAllRecords(ctx, session)
+vdiMap, _ := client.VDI.GetAllRecords(ctx, session)
+srMap, _ := client.SR.GetAllRecords(ctx, session)
 
 for _, vmRec := range vmMap {
     for _, vbdRef := range vmRec.VBDs {

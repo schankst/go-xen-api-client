@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -45,13 +47,13 @@ type DriverVariantClass struct {
 }
 
 // GetAllRecords Return a map of Driver_variant references to Driver_variant records for all Driver_variants known to the system.
-func (_class DriverVariantClass) GetAllRecords(sessionID SessionRef) (_retval map[DriverVariantRef]DriverVariantRecord, _err error) {
+func (_class DriverVariantClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[DriverVariantRef]DriverVariantRecord, _err error) {
 	_method := "Driver_variant.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -60,13 +62,13 @@ func (_class DriverVariantClass) GetAllRecords(sessionID SessionRef) (_retval ma
 }
 
 // GetAll Return a list of all the Driver_variants known to the system.
-func (_class DriverVariantClass) GetAll(sessionID SessionRef) (_retval []DriverVariantRef, _err error) {
+func (_class DriverVariantClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []DriverVariantRef, _err error) {
 	_method := "Driver_variant.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -75,7 +77,7 @@ func (_class DriverVariantClass) GetAll(sessionID SessionRef) (_retval []DriverV
 }
 
 // Select UNSUPPORTED Select this variant of a driver to become active after reboot or immediately if currently no version is active
-func (_class DriverVariantClass) Select(sessionID SessionRef, self DriverVariantRef) (_err error) {
+func (_class DriverVariantClass) Select(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_err error) {
 	_method := "Driver_variant.select"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -85,12 +87,12 @@ func (_class DriverVariantClass) Select(sessionID SessionRef, self DriverVariant
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // GetStatus Get the status field of the given Driver_variant.
-func (_class DriverVariantClass) GetStatus(sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
+func (_class DriverVariantClass) GetStatus(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
 	_method := "Driver_variant.get_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -100,7 +102,7 @@ func (_class DriverVariantClass) GetStatus(sessionID SessionRef, self DriverVari
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -109,7 +111,7 @@ func (_class DriverVariantClass) GetStatus(sessionID SessionRef, self DriverVari
 }
 
 // GetPriority Get the priority field of the given Driver_variant.
-func (_class DriverVariantClass) GetPriority(sessionID SessionRef, self DriverVariantRef) (_retval float64, _err error) {
+func (_class DriverVariantClass) GetPriority(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval float64, _err error) {
 	_method := "Driver_variant.get_priority"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -119,7 +121,7 @@ func (_class DriverVariantClass) GetPriority(sessionID SessionRef, self DriverVa
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -128,7 +130,7 @@ func (_class DriverVariantClass) GetPriority(sessionID SessionRef, self DriverVa
 }
 
 // GetHardwarePresent Get the hardware_present field of the given Driver_variant.
-func (_class DriverVariantClass) GetHardwarePresent(sessionID SessionRef, self DriverVariantRef) (_retval bool, _err error) {
+func (_class DriverVariantClass) GetHardwarePresent(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval bool, _err error) {
 	_method := "Driver_variant.get_hardware_present"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -138,7 +140,7 @@ func (_class DriverVariantClass) GetHardwarePresent(sessionID SessionRef, self D
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -147,7 +149,7 @@ func (_class DriverVariantClass) GetHardwarePresent(sessionID SessionRef, self D
 }
 
 // GetVersion Get the version field of the given Driver_variant.
-func (_class DriverVariantClass) GetVersion(sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
+func (_class DriverVariantClass) GetVersion(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
 	_method := "Driver_variant.get_version"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -157,7 +159,7 @@ func (_class DriverVariantClass) GetVersion(sessionID SessionRef, self DriverVar
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -166,7 +168,7 @@ func (_class DriverVariantClass) GetVersion(sessionID SessionRef, self DriverVar
 }
 
 // GetDriver Get the driver field of the given Driver_variant.
-func (_class DriverVariantClass) GetDriver(sessionID SessionRef, self DriverVariantRef) (_retval HostDriverRef, _err error) {
+func (_class DriverVariantClass) GetDriver(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval HostDriverRef, _err error) {
 	_method := "Driver_variant.get_driver"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -176,7 +178,7 @@ func (_class DriverVariantClass) GetDriver(sessionID SessionRef, self DriverVari
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -185,7 +187,7 @@ func (_class DriverVariantClass) GetDriver(sessionID SessionRef, self DriverVari
 }
 
 // GetName Get the name field of the given Driver_variant.
-func (_class DriverVariantClass) GetName(sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
+func (_class DriverVariantClass) GetName(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
 	_method := "Driver_variant.get_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -195,7 +197,7 @@ func (_class DriverVariantClass) GetName(sessionID SessionRef, self DriverVarian
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -204,7 +206,7 @@ func (_class DriverVariantClass) GetName(sessionID SessionRef, self DriverVarian
 }
 
 // GetUUID Get the uuid field of the given Driver_variant.
-func (_class DriverVariantClass) GetUUID(sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
+func (_class DriverVariantClass) GetUUID(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval string, _err error) {
 	_method := "Driver_variant.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -214,7 +216,7 @@ func (_class DriverVariantClass) GetUUID(sessionID SessionRef, self DriverVarian
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -223,7 +225,7 @@ func (_class DriverVariantClass) GetUUID(sessionID SessionRef, self DriverVarian
 }
 
 // GetByUUID Get a reference to the Driver_variant instance with the specified UUID.
-func (_class DriverVariantClass) GetByUUID(sessionID SessionRef, uuid string) (_retval DriverVariantRef, _err error) {
+func (_class DriverVariantClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval DriverVariantRef, _err error) {
 	_method := "Driver_variant.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -233,7 +235,7 @@ func (_class DriverVariantClass) GetByUUID(sessionID SessionRef, uuid string) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -242,7 +244,7 @@ func (_class DriverVariantClass) GetByUUID(sessionID SessionRef, uuid string) (_
 }
 
 // GetRecord Get a record containing the current state of the given Driver_variant.
-func (_class DriverVariantClass) GetRecord(sessionID SessionRef, self DriverVariantRef) (_retval DriverVariantRecord, _err error) {
+func (_class DriverVariantClass) GetRecord(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (_retval DriverVariantRecord, _err error) {
 	_method := "Driver_variant.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -252,7 +254,7 @@ func (_class DriverVariantClass) GetRecord(sessionID SessionRef, self DriverVari
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

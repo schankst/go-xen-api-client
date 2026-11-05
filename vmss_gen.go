@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -73,13 +75,13 @@ type VMSSClass struct {
 }
 
 // GetAllRecords Return a map of VMSS references to VMSS records for all VMSSs known to the system.
-func (_class VMSSClass) GetAllRecords(sessionID SessionRef) (_retval map[VMSSRef]VMSSRecord, _err error) {
+func (_class VMSSClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[VMSSRef]VMSSRecord, _err error) {
 	_method := "VMSS.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -88,13 +90,13 @@ func (_class VMSSClass) GetAllRecords(sessionID SessionRef) (_retval map[VMSSRef
 }
 
 // GetAll Return a list of all the VMSSs known to the system.
-func (_class VMSSClass) GetAll(sessionID SessionRef) (_retval []VMSSRef, _err error) {
+func (_class VMSSClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []VMSSRef, _err error) {
 	_method := "VMSS.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -103,7 +105,7 @@ func (_class VMSSClass) GetAll(sessionID SessionRef) (_retval []VMSSRef, _err er
 }
 
 // SetType
-func (_class VMSSClass) SetType(sessionID SessionRef, self VMSSRef, value VmssType) (_err error) {
+func (_class VMSSClass) SetType(ctx context.Context, sessionID SessionRef, self VMSSRef, value VmssType) (_err error) {
 	_method := "VMSS.set_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -117,12 +119,12 @@ func (_class VMSSClass) SetType(sessionID SessionRef, self VMSSRef, value VmssTy
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetLastRunTime
-func (_class VMSSClass) SetLastRunTime(sessionID SessionRef, self VMSSRef, value time.Time) (_err error) {
+func (_class VMSSClass) SetLastRunTime(ctx context.Context, sessionID SessionRef, self VMSSRef, value time.Time) (_err error) {
 	_method := "VMSS.set_last_run_time"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -136,12 +138,12 @@ func (_class VMSSClass) SetLastRunTime(sessionID SessionRef, self VMSSRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromSchedule
-func (_class VMSSClass) RemoveFromSchedule(sessionID SessionRef, self VMSSRef, key string) (_err error) {
+func (_class VMSSClass) RemoveFromSchedule(ctx context.Context, sessionID SessionRef, self VMSSRef, key string) (_err error) {
 	_method := "VMSS.remove_from_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -155,12 +157,12 @@ func (_class VMSSClass) RemoveFromSchedule(sessionID SessionRef, self VMSSRef, k
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToSchedule
-func (_class VMSSClass) AddToSchedule(sessionID SessionRef, self VMSSRef, key string, value string) (_err error) {
+func (_class VMSSClass) AddToSchedule(ctx context.Context, sessionID SessionRef, self VMSSRef, key string, value string) (_err error) {
 	_method := "VMSS.add_to_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -178,12 +180,12 @@ func (_class VMSSClass) AddToSchedule(sessionID SessionRef, self VMSSRef, key st
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetSchedule
-func (_class VMSSClass) SetSchedule(sessionID SessionRef, self VMSSRef, value map[string]string) (_err error) {
+func (_class VMSSClass) SetSchedule(ctx context.Context, sessionID SessionRef, self VMSSRef, value map[string]string) (_err error) {
 	_method := "VMSS.set_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -197,12 +199,12 @@ func (_class VMSSClass) SetSchedule(sessionID SessionRef, self VMSSRef, value ma
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetFrequency Set the value of the frequency field
-func (_class VMSSClass) SetFrequency(sessionID SessionRef, self VMSSRef, value VmssFrequency) (_err error) {
+func (_class VMSSClass) SetFrequency(ctx context.Context, sessionID SessionRef, self VMSSRef, value VmssFrequency) (_err error) {
 	_method := "VMSS.set_frequency"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -216,12 +218,12 @@ func (_class VMSSClass) SetFrequency(sessionID SessionRef, self VMSSRef, value V
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetRetainedSnapshots
-func (_class VMSSClass) SetRetainedSnapshots(sessionID SessionRef, self VMSSRef, value int) (_err error) {
+func (_class VMSSClass) SetRetainedSnapshots(ctx context.Context, sessionID SessionRef, self VMSSRef, value int) (_err error) {
 	_method := "VMSS.set_retained_snapshots"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -235,12 +237,12 @@ func (_class VMSSClass) SetRetainedSnapshots(sessionID SessionRef, self VMSSRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SnapshotNow This call executes the snapshot schedule immediately
-func (_class VMSSClass) SnapshotNow(sessionID SessionRef, vmss VMSSRef) (_retval string, _err error) {
+func (_class VMSSClass) SnapshotNow(ctx context.Context, sessionID SessionRef, vmss VMSSRef) (_retval string, _err error) {
 	_method := "VMSS.snapshot_now"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -250,7 +252,7 @@ func (_class VMSSClass) SnapshotNow(sessionID SessionRef, vmss VMSSRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vmssArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vmssArg)
 	if _err != nil {
 		return
 	}
@@ -259,7 +261,7 @@ func (_class VMSSClass) SnapshotNow(sessionID SessionRef, vmss VMSSRef) (_retval
 }
 
 // SetEnabled Set the enabled field of the given VMSS.
-func (_class VMSSClass) SetEnabled(sessionID SessionRef, self VMSSRef, value bool) (_err error) {
+func (_class VMSSClass) SetEnabled(ctx context.Context, sessionID SessionRef, self VMSSRef, value bool) (_err error) {
 	_method := "VMSS.set_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -273,12 +275,12 @@ func (_class VMSSClass) SetEnabled(sessionID SessionRef, self VMSSRef, value boo
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameDescription Set the name/description field of the given VMSS.
-func (_class VMSSClass) SetNameDescription(sessionID SessionRef, self VMSSRef, value string) (_err error) {
+func (_class VMSSClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self VMSSRef, value string) (_err error) {
 	_method := "VMSS.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -292,12 +294,12 @@ func (_class VMSSClass) SetNameDescription(sessionID SessionRef, self VMSSRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given VMSS.
-func (_class VMSSClass) SetNameLabel(sessionID SessionRef, self VMSSRef, value string) (_err error) {
+func (_class VMSSClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self VMSSRef, value string) (_err error) {
 	_method := "VMSS.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -311,12 +313,12 @@ func (_class VMSSClass) SetNameLabel(sessionID SessionRef, self VMSSRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetVMs Get the VMs field of the given VMSS.
-func (_class VMSSClass) GetVMs(sessionID SessionRef, self VMSSRef) (_retval []VMRef, _err error) {
+func (_class VMSSClass) GetVMs(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval []VMRef, _err error) {
 	_method := "VMSS.get_VMs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -326,7 +328,7 @@ func (_class VMSSClass) GetVMs(sessionID SessionRef, self VMSSRef) (_retval []VM
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -335,7 +337,7 @@ func (_class VMSSClass) GetVMs(sessionID SessionRef, self VMSSRef) (_retval []VM
 }
 
 // GetLastRunTime Get the last_run_time field of the given VMSS.
-func (_class VMSSClass) GetLastRunTime(sessionID SessionRef, self VMSSRef) (_retval time.Time, _err error) {
+func (_class VMSSClass) GetLastRunTime(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval time.Time, _err error) {
 	_method := "VMSS.get_last_run_time"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -345,7 +347,7 @@ func (_class VMSSClass) GetLastRunTime(sessionID SessionRef, self VMSSRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -354,7 +356,7 @@ func (_class VMSSClass) GetLastRunTime(sessionID SessionRef, self VMSSRef) (_ret
 }
 
 // GetSchedule Get the schedule field of the given VMSS.
-func (_class VMSSClass) GetSchedule(sessionID SessionRef, self VMSSRef) (_retval map[string]string, _err error) {
+func (_class VMSSClass) GetSchedule(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval map[string]string, _err error) {
 	_method := "VMSS.get_schedule"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -364,7 +366,7 @@ func (_class VMSSClass) GetSchedule(sessionID SessionRef, self VMSSRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -373,7 +375,7 @@ func (_class VMSSClass) GetSchedule(sessionID SessionRef, self VMSSRef) (_retval
 }
 
 // GetFrequency Get the frequency field of the given VMSS.
-func (_class VMSSClass) GetFrequency(sessionID SessionRef, self VMSSRef) (_retval VmssFrequency, _err error) {
+func (_class VMSSClass) GetFrequency(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval VmssFrequency, _err error) {
 	_method := "VMSS.get_frequency"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -383,7 +385,7 @@ func (_class VMSSClass) GetFrequency(sessionID SessionRef, self VMSSRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -392,7 +394,7 @@ func (_class VMSSClass) GetFrequency(sessionID SessionRef, self VMSSRef) (_retva
 }
 
 // GetRetainedSnapshots Get the retained_snapshots field of the given VMSS.
-func (_class VMSSClass) GetRetainedSnapshots(sessionID SessionRef, self VMSSRef) (_retval int, _err error) {
+func (_class VMSSClass) GetRetainedSnapshots(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval int, _err error) {
 	_method := "VMSS.get_retained_snapshots"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -402,7 +404,7 @@ func (_class VMSSClass) GetRetainedSnapshots(sessionID SessionRef, self VMSSRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -411,7 +413,7 @@ func (_class VMSSClass) GetRetainedSnapshots(sessionID SessionRef, self VMSSRef)
 }
 
 // GetType Get the type field of the given VMSS.
-func (_class VMSSClass) GetType(sessionID SessionRef, self VMSSRef) (_retval VmssType, _err error) {
+func (_class VMSSClass) GetType(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval VmssType, _err error) {
 	_method := "VMSS.get_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -421,7 +423,7 @@ func (_class VMSSClass) GetType(sessionID SessionRef, self VMSSRef) (_retval Vms
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -430,7 +432,7 @@ func (_class VMSSClass) GetType(sessionID SessionRef, self VMSSRef) (_retval Vms
 }
 
 // GetEnabled Get the enabled field of the given VMSS.
-func (_class VMSSClass) GetEnabled(sessionID SessionRef, self VMSSRef) (_retval bool, _err error) {
+func (_class VMSSClass) GetEnabled(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval bool, _err error) {
 	_method := "VMSS.get_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -440,7 +442,7 @@ func (_class VMSSClass) GetEnabled(sessionID SessionRef, self VMSSRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -449,7 +451,7 @@ func (_class VMSSClass) GetEnabled(sessionID SessionRef, self VMSSRef) (_retval 
 }
 
 // GetNameDescription Get the name/description field of the given VMSS.
-func (_class VMSSClass) GetNameDescription(sessionID SessionRef, self VMSSRef) (_retval string, _err error) {
+func (_class VMSSClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval string, _err error) {
 	_method := "VMSS.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -459,7 +461,7 @@ func (_class VMSSClass) GetNameDescription(sessionID SessionRef, self VMSSRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -468,7 +470,7 @@ func (_class VMSSClass) GetNameDescription(sessionID SessionRef, self VMSSRef) (
 }
 
 // GetNameLabel Get the name/label field of the given VMSS.
-func (_class VMSSClass) GetNameLabel(sessionID SessionRef, self VMSSRef) (_retval string, _err error) {
+func (_class VMSSClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval string, _err error) {
 	_method := "VMSS.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -478,7 +480,7 @@ func (_class VMSSClass) GetNameLabel(sessionID SessionRef, self VMSSRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -487,7 +489,7 @@ func (_class VMSSClass) GetNameLabel(sessionID SessionRef, self VMSSRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given VMSS.
-func (_class VMSSClass) GetUUID(sessionID SessionRef, self VMSSRef) (_retval string, _err error) {
+func (_class VMSSClass) GetUUID(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval string, _err error) {
 	_method := "VMSS.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -497,7 +499,7 @@ func (_class VMSSClass) GetUUID(sessionID SessionRef, self VMSSRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -506,7 +508,7 @@ func (_class VMSSClass) GetUUID(sessionID SessionRef, self VMSSRef) (_retval str
 }
 
 // GetByNameLabel Get all the VMSS instances with the given label.
-func (_class VMSSClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []VMSSRef, _err error) {
+func (_class VMSSClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []VMSSRef, _err error) {
 	_method := "VMSS.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -516,7 +518,7 @@ func (_class VMSSClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -525,7 +527,7 @@ func (_class VMSSClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 }
 
 // Destroy Destroy the specified VMSS instance.
-func (_class VMSSClass) Destroy(sessionID SessionRef, self VMSSRef) (_err error) {
+func (_class VMSSClass) Destroy(ctx context.Context, sessionID SessionRef, self VMSSRef) (_err error) {
 	_method := "VMSS.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -535,12 +537,12 @@ func (_class VMSSClass) Destroy(sessionID SessionRef, self VMSSRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new VMSS instance, and return its handle. The constructor args are: name_label, name_description, enabled, type*, retained_snapshots, frequency*, schedule (* = non-optional).
-func (_class VMSSClass) Create(sessionID SessionRef, args VMSSRecord) (_retval VMSSRef, _err error) {
+func (_class VMSSClass) Create(ctx context.Context, sessionID SessionRef, args VMSSRecord) (_retval VMSSRef, _err error) {
 	_method := "VMSS.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -550,7 +552,7 @@ func (_class VMSSClass) Create(sessionID SessionRef, args VMSSRecord) (_retval V
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -559,7 +561,7 @@ func (_class VMSSClass) Create(sessionID SessionRef, args VMSSRecord) (_retval V
 }
 
 // GetByUUID Get a reference to the VMSS instance with the specified UUID.
-func (_class VMSSClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VMSSRef, _err error) {
+func (_class VMSSClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval VMSSRef, _err error) {
 	_method := "VMSS.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -569,7 +571,7 @@ func (_class VMSSClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VM
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -578,7 +580,7 @@ func (_class VMSSClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VM
 }
 
 // GetRecord Get a record containing the current state of the given VMSS.
-func (_class VMSSClass) GetRecord(sessionID SessionRef, self VMSSRef) (_retval VMSSRecord, _err error) {
+func (_class VMSSClass) GetRecord(ctx context.Context, sessionID SessionRef, self VMSSRef) (_retval VMSSRecord, _err error) {
 	_method := "VMSS.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -588,7 +590,7 @@ func (_class VMSSClass) GetRecord(sessionID SessionRef, self VMSSRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

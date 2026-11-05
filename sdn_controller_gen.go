@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -48,13 +50,13 @@ type SDNControllerClass struct {
 }
 
 // GetAllRecords Return a map of SDN_controller references to SDN_controller records for all SDN_controllers known to the system.
-func (_class SDNControllerClass) GetAllRecords(sessionID SessionRef) (_retval map[SDNControllerRef]SDNControllerRecord, _err error) {
+func (_class SDNControllerClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[SDNControllerRef]SDNControllerRecord, _err error) {
 	_method := "SDN_controller.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -63,13 +65,13 @@ func (_class SDNControllerClass) GetAllRecords(sessionID SessionRef) (_retval ma
 }
 
 // GetAll Return a list of all the SDN_controllers known to the system.
-func (_class SDNControllerClass) GetAll(sessionID SessionRef) (_retval []SDNControllerRef, _err error) {
+func (_class SDNControllerClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []SDNControllerRef, _err error) {
 	_method := "SDN_controller.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -78,7 +80,7 @@ func (_class SDNControllerClass) GetAll(sessionID SessionRef) (_retval []SDNCont
 }
 
 // Forget Remove the OVS manager of the pool and destroy the db record.
-func (_class SDNControllerClass) Forget(sessionID SessionRef, self SDNControllerRef) (_err error) {
+func (_class SDNControllerClass) Forget(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (_err error) {
 	_method := "SDN_controller.forget"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -88,12 +90,12 @@ func (_class SDNControllerClass) Forget(sessionID SessionRef, self SDNController
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Introduce Introduce an SDN controller to the pool.
-func (_class SDNControllerClass) Introduce(sessionID SessionRef, protocol SdnControllerProtocol, address string, port int) (_retval SDNControllerRef, _err error) {
+func (_class SDNControllerClass) Introduce(ctx context.Context, sessionID SessionRef, protocol SdnControllerProtocol, address string, port int) (_retval SDNControllerRef, _err error) {
 	_method := "SDN_controller.introduce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -111,7 +113,7 @@ func (_class SDNControllerClass) Introduce(sessionID SessionRef, protocol SdnCon
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _protocolArg, _addressArg, _portArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _protocolArg, _addressArg, _portArg)
 	if _err != nil {
 		return
 	}
@@ -120,7 +122,7 @@ func (_class SDNControllerClass) Introduce(sessionID SessionRef, protocol SdnCon
 }
 
 // GetPort Get the port field of the given SDN_controller.
-func (_class SDNControllerClass) GetPort(sessionID SessionRef, self SDNControllerRef) (_retval int, _err error) {
+func (_class SDNControllerClass) GetPort(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (_retval int, _err error) {
 	_method := "SDN_controller.get_port"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -130,7 +132,7 @@ func (_class SDNControllerClass) GetPort(sessionID SessionRef, self SDNControlle
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -139,7 +141,7 @@ func (_class SDNControllerClass) GetPort(sessionID SessionRef, self SDNControlle
 }
 
 // GetAddress Get the address field of the given SDN_controller.
-func (_class SDNControllerClass) GetAddress(sessionID SessionRef, self SDNControllerRef) (_retval string, _err error) {
+func (_class SDNControllerClass) GetAddress(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (_retval string, _err error) {
 	_method := "SDN_controller.get_address"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -149,7 +151,7 @@ func (_class SDNControllerClass) GetAddress(sessionID SessionRef, self SDNContro
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -158,7 +160,7 @@ func (_class SDNControllerClass) GetAddress(sessionID SessionRef, self SDNContro
 }
 
 // GetProtocol Get the protocol field of the given SDN_controller.
-func (_class SDNControllerClass) GetProtocol(sessionID SessionRef, self SDNControllerRef) (_retval SdnControllerProtocol, _err error) {
+func (_class SDNControllerClass) GetProtocol(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (_retval SdnControllerProtocol, _err error) {
 	_method := "SDN_controller.get_protocol"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -168,7 +170,7 @@ func (_class SDNControllerClass) GetProtocol(sessionID SessionRef, self SDNContr
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -177,7 +179,7 @@ func (_class SDNControllerClass) GetProtocol(sessionID SessionRef, self SDNContr
 }
 
 // GetUUID Get the uuid field of the given SDN_controller.
-func (_class SDNControllerClass) GetUUID(sessionID SessionRef, self SDNControllerRef) (_retval string, _err error) {
+func (_class SDNControllerClass) GetUUID(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (_retval string, _err error) {
 	_method := "SDN_controller.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -187,7 +189,7 @@ func (_class SDNControllerClass) GetUUID(sessionID SessionRef, self SDNControlle
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -196,7 +198,7 @@ func (_class SDNControllerClass) GetUUID(sessionID SessionRef, self SDNControlle
 }
 
 // GetByUUID Get a reference to the SDN_controller instance with the specified UUID.
-func (_class SDNControllerClass) GetByUUID(sessionID SessionRef, uuid string) (_retval SDNControllerRef, _err error) {
+func (_class SDNControllerClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval SDNControllerRef, _err error) {
 	_method := "SDN_controller.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -206,7 +208,7 @@ func (_class SDNControllerClass) GetByUUID(sessionID SessionRef, uuid string) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -215,7 +217,7 @@ func (_class SDNControllerClass) GetByUUID(sessionID SessionRef, uuid string) (_
 }
 
 // GetRecord Get a record containing the current state of the given SDN_controller.
-func (_class SDNControllerClass) GetRecord(sessionID SessionRef, self SDNControllerRef) (_retval SDNControllerRecord, _err error) {
+func (_class SDNControllerClass) GetRecord(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (_retval SDNControllerRecord, _err error) {
 	_method := "SDN_controller.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -225,7 +227,7 @@ func (_class SDNControllerClass) GetRecord(sessionID SessionRef, self SDNControl
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

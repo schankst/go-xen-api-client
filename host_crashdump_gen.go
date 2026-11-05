@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -41,13 +43,13 @@ type HostCrashdumpClass struct {
 }
 
 // GetAllRecords Return a map of host_crashdump references to host_crashdump records for all host_crashdumps known to the system.
-func (_class HostCrashdumpClass) GetAllRecords(sessionID SessionRef) (_retval map[HostCrashdumpRef]HostCrashdumpRecord, _err error) {
+func (_class HostCrashdumpClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[HostCrashdumpRef]HostCrashdumpRecord, _err error) {
 	_method := "host_crashdump.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -56,13 +58,13 @@ func (_class HostCrashdumpClass) GetAllRecords(sessionID SessionRef) (_retval ma
 }
 
 // GetAll Return a list of all the host_crashdumps known to the system.
-func (_class HostCrashdumpClass) GetAll(sessionID SessionRef) (_retval []HostCrashdumpRef, _err error) {
+func (_class HostCrashdumpClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []HostCrashdumpRef, _err error) {
 	_method := "host_crashdump.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -71,7 +73,7 @@ func (_class HostCrashdumpClass) GetAll(sessionID SessionRef) (_retval []HostCra
 }
 
 // Upload Upload the specified host crash dump to a specified URL
-func (_class HostCrashdumpClass) Upload(sessionID SessionRef, self HostCrashdumpRef, url string, options map[string]string) (_err error) {
+func (_class HostCrashdumpClass) Upload(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef, url string, options map[string]string) (_err error) {
 	_method := "host_crashdump.upload"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -89,12 +91,12 @@ func (_class HostCrashdumpClass) Upload(sessionID SessionRef, self HostCrashdump
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _urlArg, _optionsArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _urlArg, _optionsArg)
 	return
 }
 
 // Destroy Destroy specified host crash dump, removing it from the disk.
-func (_class HostCrashdumpClass) Destroy(sessionID SessionRef, self HostCrashdumpRef) (_err error) {
+func (_class HostCrashdumpClass) Destroy(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (_err error) {
 	_method := "host_crashdump.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -104,12 +106,12 @@ func (_class HostCrashdumpClass) Destroy(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given host_crashdump.  If the key is not in that Map, then do nothing.
-func (_class HostCrashdumpClass) RemoveFromOtherConfig(sessionID SessionRef, self HostCrashdumpRef, key string) (_err error) {
+func (_class HostCrashdumpClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef, key string) (_err error) {
 	_method := "host_crashdump.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -123,12 +125,12 @@ func (_class HostCrashdumpClass) RemoveFromOtherConfig(sessionID SessionRef, sel
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given host_crashdump.
-func (_class HostCrashdumpClass) AddToOtherConfig(sessionID SessionRef, self HostCrashdumpRef, key string, value string) (_err error) {
+func (_class HostCrashdumpClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef, key string, value string) (_err error) {
 	_method := "host_crashdump.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -146,12 +148,12 @@ func (_class HostCrashdumpClass) AddToOtherConfig(sessionID SessionRef, self Hos
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given host_crashdump.
-func (_class HostCrashdumpClass) SetOtherConfig(sessionID SessionRef, self HostCrashdumpRef, value map[string]string) (_err error) {
+func (_class HostCrashdumpClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef, value map[string]string) (_err error) {
 	_method := "host_crashdump.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -165,12 +167,12 @@ func (_class HostCrashdumpClass) SetOtherConfig(sessionID SessionRef, self HostC
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given host_crashdump.
-func (_class HostCrashdumpClass) GetOtherConfig(sessionID SessionRef, self HostCrashdumpRef) (_retval map[string]string, _err error) {
+func (_class HostCrashdumpClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (_retval map[string]string, _err error) {
 	_method := "host_crashdump.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -180,7 +182,7 @@ func (_class HostCrashdumpClass) GetOtherConfig(sessionID SessionRef, self HostC
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -189,7 +191,7 @@ func (_class HostCrashdumpClass) GetOtherConfig(sessionID SessionRef, self HostC
 }
 
 // GetSize Get the size field of the given host_crashdump.
-func (_class HostCrashdumpClass) GetSize(sessionID SessionRef, self HostCrashdumpRef) (_retval int, _err error) {
+func (_class HostCrashdumpClass) GetSize(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (_retval int, _err error) {
 	_method := "host_crashdump.get_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -199,7 +201,7 @@ func (_class HostCrashdumpClass) GetSize(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -208,7 +210,7 @@ func (_class HostCrashdumpClass) GetSize(sessionID SessionRef, self HostCrashdum
 }
 
 // GetTimestamp Get the timestamp field of the given host_crashdump.
-func (_class HostCrashdumpClass) GetTimestamp(sessionID SessionRef, self HostCrashdumpRef) (_retval time.Time, _err error) {
+func (_class HostCrashdumpClass) GetTimestamp(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (_retval time.Time, _err error) {
 	_method := "host_crashdump.get_timestamp"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -218,7 +220,7 @@ func (_class HostCrashdumpClass) GetTimestamp(sessionID SessionRef, self HostCra
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -227,7 +229,7 @@ func (_class HostCrashdumpClass) GetTimestamp(sessionID SessionRef, self HostCra
 }
 
 // GetHost Get the host field of the given host_crashdump.
-func (_class HostCrashdumpClass) GetHost(sessionID SessionRef, self HostCrashdumpRef) (_retval HostRef, _err error) {
+func (_class HostCrashdumpClass) GetHost(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (_retval HostRef, _err error) {
 	_method := "host_crashdump.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -237,7 +239,7 @@ func (_class HostCrashdumpClass) GetHost(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -246,7 +248,7 @@ func (_class HostCrashdumpClass) GetHost(sessionID SessionRef, self HostCrashdum
 }
 
 // GetUUID Get the uuid field of the given host_crashdump.
-func (_class HostCrashdumpClass) GetUUID(sessionID SessionRef, self HostCrashdumpRef) (_retval string, _err error) {
+func (_class HostCrashdumpClass) GetUUID(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (_retval string, _err error) {
 	_method := "host_crashdump.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -256,7 +258,7 @@ func (_class HostCrashdumpClass) GetUUID(sessionID SessionRef, self HostCrashdum
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -265,7 +267,7 @@ func (_class HostCrashdumpClass) GetUUID(sessionID SessionRef, self HostCrashdum
 }
 
 // GetByUUID Get a reference to the host_crashdump instance with the specified UUID.
-func (_class HostCrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_retval HostCrashdumpRef, _err error) {
+func (_class HostCrashdumpClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval HostCrashdumpRef, _err error) {
 	_method := "host_crashdump.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -275,7 +277,7 @@ func (_class HostCrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -284,7 +286,7 @@ func (_class HostCrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_
 }
 
 // GetRecord Get a record containing the current state of the given host_crashdump.
-func (_class HostCrashdumpClass) GetRecord(sessionID SessionRef, self HostCrashdumpRef) (_retval HostCrashdumpRecord, _err error) {
+func (_class HostCrashdumpClass) GetRecord(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (_retval HostCrashdumpRecord, _err error) {
 	_method := "host_crashdump.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -294,7 +296,7 @@ func (_class HostCrashdumpClass) GetRecord(sessionID SessionRef, self HostCrashd
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

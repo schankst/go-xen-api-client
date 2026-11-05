@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -39,7 +41,7 @@ type UserClass struct {
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given user.  If the key is not in that Map, then do nothing.
-func (_class UserClass) RemoveFromOtherConfig(sessionID SessionRef, self UserRef, key string) (_err error) {
+func (_class UserClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self UserRef, key string) (_err error) {
 	_method := "user.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -53,12 +55,12 @@ func (_class UserClass) RemoveFromOtherConfig(sessionID SessionRef, self UserRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given user.
-func (_class UserClass) AddToOtherConfig(sessionID SessionRef, self UserRef, key string, value string) (_err error) {
+func (_class UserClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self UserRef, key string, value string) (_err error) {
 	_method := "user.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -76,12 +78,12 @@ func (_class UserClass) AddToOtherConfig(sessionID SessionRef, self UserRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given user.
-func (_class UserClass) SetOtherConfig(sessionID SessionRef, self UserRef, value map[string]string) (_err error) {
+func (_class UserClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self UserRef, value map[string]string) (_err error) {
 	_method := "user.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -95,12 +97,12 @@ func (_class UserClass) SetOtherConfig(sessionID SessionRef, self UserRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetFullname Set the fullname field of the given user.
-func (_class UserClass) SetFullname(sessionID SessionRef, self UserRef, value string) (_err error) {
+func (_class UserClass) SetFullname(ctx context.Context, sessionID SessionRef, self UserRef, value string) (_err error) {
 	_method := "user.set_fullname"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -114,12 +116,12 @@ func (_class UserClass) SetFullname(sessionID SessionRef, self UserRef, value st
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given user.
-func (_class UserClass) GetOtherConfig(sessionID SessionRef, self UserRef) (_retval map[string]string, _err error) {
+func (_class UserClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self UserRef) (_retval map[string]string, _err error) {
 	_method := "user.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -129,7 +131,7 @@ func (_class UserClass) GetOtherConfig(sessionID SessionRef, self UserRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -138,7 +140,7 @@ func (_class UserClass) GetOtherConfig(sessionID SessionRef, self UserRef) (_ret
 }
 
 // GetFullname Get the fullname field of the given user.
-func (_class UserClass) GetFullname(sessionID SessionRef, self UserRef) (_retval string, _err error) {
+func (_class UserClass) GetFullname(ctx context.Context, sessionID SessionRef, self UserRef) (_retval string, _err error) {
 	_method := "user.get_fullname"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -148,7 +150,7 @@ func (_class UserClass) GetFullname(sessionID SessionRef, self UserRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -157,7 +159,7 @@ func (_class UserClass) GetFullname(sessionID SessionRef, self UserRef) (_retval
 }
 
 // GetShortName Get the short_name field of the given user.
-func (_class UserClass) GetShortName(sessionID SessionRef, self UserRef) (_retval string, _err error) {
+func (_class UserClass) GetShortName(ctx context.Context, sessionID SessionRef, self UserRef) (_retval string, _err error) {
 	_method := "user.get_short_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -167,7 +169,7 @@ func (_class UserClass) GetShortName(sessionID SessionRef, self UserRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -176,7 +178,7 @@ func (_class UserClass) GetShortName(sessionID SessionRef, self UserRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given user.
-func (_class UserClass) GetUUID(sessionID SessionRef, self UserRef) (_retval string, _err error) {
+func (_class UserClass) GetUUID(ctx context.Context, sessionID SessionRef, self UserRef) (_retval string, _err error) {
 	_method := "user.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -186,7 +188,7 @@ func (_class UserClass) GetUUID(sessionID SessionRef, self UserRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -195,7 +197,7 @@ func (_class UserClass) GetUUID(sessionID SessionRef, self UserRef) (_retval str
 }
 
 // Destroy Destroy the specified user instance.
-func (_class UserClass) Destroy(sessionID SessionRef, self UserRef) (_err error) {
+func (_class UserClass) Destroy(ctx context.Context, sessionID SessionRef, self UserRef) (_err error) {
 	_method := "user.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -205,12 +207,12 @@ func (_class UserClass) Destroy(sessionID SessionRef, self UserRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new user instance, and return its handle. The constructor args are: short_name*, fullname*, other_config (* = non-optional).
-func (_class UserClass) Create(sessionID SessionRef, args UserRecord) (_retval UserRef, _err error) {
+func (_class UserClass) Create(ctx context.Context, sessionID SessionRef, args UserRecord) (_retval UserRef, _err error) {
 	_method := "user.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -220,7 +222,7 @@ func (_class UserClass) Create(sessionID SessionRef, args UserRecord) (_retval U
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -229,7 +231,7 @@ func (_class UserClass) Create(sessionID SessionRef, args UserRecord) (_retval U
 }
 
 // GetByUUID Get a reference to the user instance with the specified UUID.
-func (_class UserClass) GetByUUID(sessionID SessionRef, uuid string) (_retval UserRef, _err error) {
+func (_class UserClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval UserRef, _err error) {
 	_method := "user.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -239,7 +241,7 @@ func (_class UserClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Us
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -248,7 +250,7 @@ func (_class UserClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Us
 }
 
 // GetRecord Get a record containing the current state of the given user.
-func (_class UserClass) GetRecord(sessionID SessionRef, self UserRef) (_retval UserRecord, _err error) {
+func (_class UserClass) GetRecord(ctx context.Context, sessionID SessionRef, self UserRef) (_retval UserRecord, _err error) {
 	_method := "user.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -258,7 +260,7 @@ func (_class UserClass) GetRecord(sessionID SessionRef, self UserRef) (_retval U
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

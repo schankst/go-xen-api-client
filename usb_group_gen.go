@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -43,13 +45,13 @@ type USBGroupClass struct {
 }
 
 // GetAllRecords Return a map of USB_group references to USB_group records for all USB_groups known to the system.
-func (_class USBGroupClass) GetAllRecords(sessionID SessionRef) (_retval map[USBGroupRef]USBGroupRecord, _err error) {
+func (_class USBGroupClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[USBGroupRef]USBGroupRecord, _err error) {
 	_method := "USB_group.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -58,13 +60,13 @@ func (_class USBGroupClass) GetAllRecords(sessionID SessionRef) (_retval map[USB
 }
 
 // GetAll Return a list of all the USB_groups known to the system.
-func (_class USBGroupClass) GetAll(sessionID SessionRef) (_retval []USBGroupRef, _err error) {
+func (_class USBGroupClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []USBGroupRef, _err error) {
 	_method := "USB_group.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -73,7 +75,7 @@ func (_class USBGroupClass) GetAll(sessionID SessionRef) (_retval []USBGroupRef,
 }
 
 // Destroy
-func (_class USBGroupClass) Destroy(sessionID SessionRef, self USBGroupRef) (_err error) {
+func (_class USBGroupClass) Destroy(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_err error) {
 	_method := "USB_group.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -83,12 +85,12 @@ func (_class USBGroupClass) Destroy(sessionID SessionRef, self USBGroupRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create
-func (_class USBGroupClass) Create(sessionID SessionRef, nameLabel string, nameDescription string, otherConfig map[string]string) (_retval USBGroupRef, _err error) {
+func (_class USBGroupClass) Create(ctx context.Context, sessionID SessionRef, nameLabel string, nameDescription string, otherConfig map[string]string) (_retval USBGroupRef, _err error) {
 	_method := "USB_group.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -106,7 +108,7 @@ func (_class USBGroupClass) Create(sessionID SessionRef, nameLabel string, nameD
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg, _otherConfigArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg, _otherConfigArg)
 	if _err != nil {
 		return
 	}
@@ -115,7 +117,7 @@ func (_class USBGroupClass) Create(sessionID SessionRef, nameLabel string, nameD
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given USB_group.  If the key is not in that Map, then do nothing.
-func (_class USBGroupClass) RemoveFromOtherConfig(sessionID SessionRef, self USBGroupRef, key string) (_err error) {
+func (_class USBGroupClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self USBGroupRef, key string) (_err error) {
 	_method := "USB_group.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -129,12 +131,12 @@ func (_class USBGroupClass) RemoveFromOtherConfig(sessionID SessionRef, self USB
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given USB_group.
-func (_class USBGroupClass) AddToOtherConfig(sessionID SessionRef, self USBGroupRef, key string, value string) (_err error) {
+func (_class USBGroupClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self USBGroupRef, key string, value string) (_err error) {
 	_method := "USB_group.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -152,12 +154,12 @@ func (_class USBGroupClass) AddToOtherConfig(sessionID SessionRef, self USBGroup
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given USB_group.
-func (_class USBGroupClass) SetOtherConfig(sessionID SessionRef, self USBGroupRef, value map[string]string) (_err error) {
+func (_class USBGroupClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self USBGroupRef, value map[string]string) (_err error) {
 	_method := "USB_group.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -171,12 +173,12 @@ func (_class USBGroupClass) SetOtherConfig(sessionID SessionRef, self USBGroupRe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameDescription Set the name/description field of the given USB_group.
-func (_class USBGroupClass) SetNameDescription(sessionID SessionRef, self USBGroupRef, value string) (_err error) {
+func (_class USBGroupClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self USBGroupRef, value string) (_err error) {
 	_method := "USB_group.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -190,12 +192,12 @@ func (_class USBGroupClass) SetNameDescription(sessionID SessionRef, self USBGro
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given USB_group.
-func (_class USBGroupClass) SetNameLabel(sessionID SessionRef, self USBGroupRef, value string) (_err error) {
+func (_class USBGroupClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self USBGroupRef, value string) (_err error) {
 	_method := "USB_group.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -209,12 +211,12 @@ func (_class USBGroupClass) SetNameLabel(sessionID SessionRef, self USBGroupRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given USB_group.
-func (_class USBGroupClass) GetOtherConfig(sessionID SessionRef, self USBGroupRef) (_retval map[string]string, _err error) {
+func (_class USBGroupClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_retval map[string]string, _err error) {
 	_method := "USB_group.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -224,7 +226,7 @@ func (_class USBGroupClass) GetOtherConfig(sessionID SessionRef, self USBGroupRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -233,7 +235,7 @@ func (_class USBGroupClass) GetOtherConfig(sessionID SessionRef, self USBGroupRe
 }
 
 // GetVUSBs Get the VUSBs field of the given USB_group.
-func (_class USBGroupClass) GetVUSBs(sessionID SessionRef, self USBGroupRef) (_retval []VUSBRef, _err error) {
+func (_class USBGroupClass) GetVUSBs(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_retval []VUSBRef, _err error) {
 	_method := "USB_group.get_VUSBs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -243,7 +245,7 @@ func (_class USBGroupClass) GetVUSBs(sessionID SessionRef, self USBGroupRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -252,7 +254,7 @@ func (_class USBGroupClass) GetVUSBs(sessionID SessionRef, self USBGroupRef) (_r
 }
 
 // GetPUSBs Get the PUSBs field of the given USB_group.
-func (_class USBGroupClass) GetPUSBs(sessionID SessionRef, self USBGroupRef) (_retval []PUSBRef, _err error) {
+func (_class USBGroupClass) GetPUSBs(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_retval []PUSBRef, _err error) {
 	_method := "USB_group.get_PUSBs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -262,7 +264,7 @@ func (_class USBGroupClass) GetPUSBs(sessionID SessionRef, self USBGroupRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -271,7 +273,7 @@ func (_class USBGroupClass) GetPUSBs(sessionID SessionRef, self USBGroupRef) (_r
 }
 
 // GetNameDescription Get the name/description field of the given USB_group.
-func (_class USBGroupClass) GetNameDescription(sessionID SessionRef, self USBGroupRef) (_retval string, _err error) {
+func (_class USBGroupClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_retval string, _err error) {
 	_method := "USB_group.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -281,7 +283,7 @@ func (_class USBGroupClass) GetNameDescription(sessionID SessionRef, self USBGro
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -290,7 +292,7 @@ func (_class USBGroupClass) GetNameDescription(sessionID SessionRef, self USBGro
 }
 
 // GetNameLabel Get the name/label field of the given USB_group.
-func (_class USBGroupClass) GetNameLabel(sessionID SessionRef, self USBGroupRef) (_retval string, _err error) {
+func (_class USBGroupClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_retval string, _err error) {
 	_method := "USB_group.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -300,7 +302,7 @@ func (_class USBGroupClass) GetNameLabel(sessionID SessionRef, self USBGroupRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -309,7 +311,7 @@ func (_class USBGroupClass) GetNameLabel(sessionID SessionRef, self USBGroupRef)
 }
 
 // GetUUID Get the uuid field of the given USB_group.
-func (_class USBGroupClass) GetUUID(sessionID SessionRef, self USBGroupRef) (_retval string, _err error) {
+func (_class USBGroupClass) GetUUID(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_retval string, _err error) {
 	_method := "USB_group.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -319,7 +321,7 @@ func (_class USBGroupClass) GetUUID(sessionID SessionRef, self USBGroupRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -328,7 +330,7 @@ func (_class USBGroupClass) GetUUID(sessionID SessionRef, self USBGroupRef) (_re
 }
 
 // GetByNameLabel Get all the USB_group instances with the given label.
-func (_class USBGroupClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []USBGroupRef, _err error) {
+func (_class USBGroupClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []USBGroupRef, _err error) {
 	_method := "USB_group.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -338,7 +340,7 @@ func (_class USBGroupClass) GetByNameLabel(sessionID SessionRef, label string) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -347,7 +349,7 @@ func (_class USBGroupClass) GetByNameLabel(sessionID SessionRef, label string) (
 }
 
 // GetByUUID Get a reference to the USB_group instance with the specified UUID.
-func (_class USBGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retval USBGroupRef, _err error) {
+func (_class USBGroupClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval USBGroupRef, _err error) {
 	_method := "USB_group.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -357,7 +359,7 @@ func (_class USBGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -366,7 +368,7 @@ func (_class USBGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 }
 
 // GetRecord Get a record containing the current state of the given USB_group.
-func (_class USBGroupClass) GetRecord(sessionID SessionRef, self USBGroupRef) (_retval USBGroupRecord, _err error) {
+func (_class USBGroupClass) GetRecord(ctx context.Context, sessionID SessionRef, self USBGroupRef) (_retval USBGroupRecord, _err error) {
 	_method := "USB_group.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -376,7 +378,7 @@ func (_class USBGroupClass) GetRecord(sessionID SessionRef, self USBGroupRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

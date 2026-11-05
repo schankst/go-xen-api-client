@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -45,13 +47,13 @@ type BlobClass struct {
 }
 
 // GetAllRecords Return a map of blob references to blob records for all blobs known to the system.
-func (_class BlobClass) GetAllRecords(sessionID SessionRef) (_retval map[BlobRef]BlobRecord, _err error) {
+func (_class BlobClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[BlobRef]BlobRecord, _err error) {
 	_method := "blob.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -60,13 +62,13 @@ func (_class BlobClass) GetAllRecords(sessionID SessionRef) (_retval map[BlobRef
 }
 
 // GetAll Return a list of all the blobs known to the system.
-func (_class BlobClass) GetAll(sessionID SessionRef) (_retval []BlobRef, _err error) {
+func (_class BlobClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []BlobRef, _err error) {
 	_method := "blob.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -75,7 +77,7 @@ func (_class BlobClass) GetAll(sessionID SessionRef) (_retval []BlobRef, _err er
 }
 
 // Destroy
-func (_class BlobClass) Destroy(sessionID SessionRef, self BlobRef) (_err error) {
+func (_class BlobClass) Destroy(ctx context.Context, sessionID SessionRef, self BlobRef) (_err error) {
 	_method := "blob.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -85,12 +87,12 @@ func (_class BlobClass) Destroy(sessionID SessionRef, self BlobRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a placeholder for a binary blob
-func (_class BlobClass) Create(sessionID SessionRef, mimeType string, public bool) (_retval BlobRef, _err error) {
+func (_class BlobClass) Create(ctx context.Context, sessionID SessionRef, mimeType string, public bool) (_retval BlobRef, _err error) {
 	_method := "blob.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -104,7 +106,7 @@ func (_class BlobClass) Create(sessionID SessionRef, mimeType string, public boo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _mimeTypeArg, _publicArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _mimeTypeArg, _publicArg)
 	if _err != nil {
 		return
 	}
@@ -113,7 +115,7 @@ func (_class BlobClass) Create(sessionID SessionRef, mimeType string, public boo
 }
 
 // SetPublic Set the public field of the given blob.
-func (_class BlobClass) SetPublic(sessionID SessionRef, self BlobRef, value bool) (_err error) {
+func (_class BlobClass) SetPublic(ctx context.Context, sessionID SessionRef, self BlobRef, value bool) (_err error) {
 	_method := "blob.set_public"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -127,12 +129,12 @@ func (_class BlobClass) SetPublic(sessionID SessionRef, self BlobRef, value bool
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameDescription Set the name/description field of the given blob.
-func (_class BlobClass) SetNameDescription(sessionID SessionRef, self BlobRef, value string) (_err error) {
+func (_class BlobClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self BlobRef, value string) (_err error) {
 	_method := "blob.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -146,12 +148,12 @@ func (_class BlobClass) SetNameDescription(sessionID SessionRef, self BlobRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given blob.
-func (_class BlobClass) SetNameLabel(sessionID SessionRef, self BlobRef, value string) (_err error) {
+func (_class BlobClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self BlobRef, value string) (_err error) {
 	_method := "blob.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -165,12 +167,12 @@ func (_class BlobClass) SetNameLabel(sessionID SessionRef, self BlobRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetMimeType Get the mime_type field of the given blob.
-func (_class BlobClass) GetMimeType(sessionID SessionRef, self BlobRef) (_retval string, _err error) {
+func (_class BlobClass) GetMimeType(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval string, _err error) {
 	_method := "blob.get_mime_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -180,7 +182,7 @@ func (_class BlobClass) GetMimeType(sessionID SessionRef, self BlobRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -189,7 +191,7 @@ func (_class BlobClass) GetMimeType(sessionID SessionRef, self BlobRef) (_retval
 }
 
 // GetLastUpdated Get the last_updated field of the given blob.
-func (_class BlobClass) GetLastUpdated(sessionID SessionRef, self BlobRef) (_retval time.Time, _err error) {
+func (_class BlobClass) GetLastUpdated(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval time.Time, _err error) {
 	_method := "blob.get_last_updated"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -199,7 +201,7 @@ func (_class BlobClass) GetLastUpdated(sessionID SessionRef, self BlobRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -208,7 +210,7 @@ func (_class BlobClass) GetLastUpdated(sessionID SessionRef, self BlobRef) (_ret
 }
 
 // GetPublic Get the public field of the given blob.
-func (_class BlobClass) GetPublic(sessionID SessionRef, self BlobRef) (_retval bool, _err error) {
+func (_class BlobClass) GetPublic(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval bool, _err error) {
 	_method := "blob.get_public"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -218,7 +220,7 @@ func (_class BlobClass) GetPublic(sessionID SessionRef, self BlobRef) (_retval b
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -227,7 +229,7 @@ func (_class BlobClass) GetPublic(sessionID SessionRef, self BlobRef) (_retval b
 }
 
 // GetSize Get the size field of the given blob.
-func (_class BlobClass) GetSize(sessionID SessionRef, self BlobRef) (_retval int, _err error) {
+func (_class BlobClass) GetSize(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval int, _err error) {
 	_method := "blob.get_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -237,7 +239,7 @@ func (_class BlobClass) GetSize(sessionID SessionRef, self BlobRef) (_retval int
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -246,7 +248,7 @@ func (_class BlobClass) GetSize(sessionID SessionRef, self BlobRef) (_retval int
 }
 
 // GetNameDescription Get the name/description field of the given blob.
-func (_class BlobClass) GetNameDescription(sessionID SessionRef, self BlobRef) (_retval string, _err error) {
+func (_class BlobClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval string, _err error) {
 	_method := "blob.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -256,7 +258,7 @@ func (_class BlobClass) GetNameDescription(sessionID SessionRef, self BlobRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -265,7 +267,7 @@ func (_class BlobClass) GetNameDescription(sessionID SessionRef, self BlobRef) (
 }
 
 // GetNameLabel Get the name/label field of the given blob.
-func (_class BlobClass) GetNameLabel(sessionID SessionRef, self BlobRef) (_retval string, _err error) {
+func (_class BlobClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval string, _err error) {
 	_method := "blob.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -275,7 +277,7 @@ func (_class BlobClass) GetNameLabel(sessionID SessionRef, self BlobRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -284,7 +286,7 @@ func (_class BlobClass) GetNameLabel(sessionID SessionRef, self BlobRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given blob.
-func (_class BlobClass) GetUUID(sessionID SessionRef, self BlobRef) (_retval string, _err error) {
+func (_class BlobClass) GetUUID(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval string, _err error) {
 	_method := "blob.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -294,7 +296,7 @@ func (_class BlobClass) GetUUID(sessionID SessionRef, self BlobRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -303,7 +305,7 @@ func (_class BlobClass) GetUUID(sessionID SessionRef, self BlobRef) (_retval str
 }
 
 // GetByNameLabel Get all the blob instances with the given label.
-func (_class BlobClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []BlobRef, _err error) {
+func (_class BlobClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []BlobRef, _err error) {
 	_method := "blob.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -313,7 +315,7 @@ func (_class BlobClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -322,7 +324,7 @@ func (_class BlobClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 }
 
 // GetByUUID Get a reference to the blob instance with the specified UUID.
-func (_class BlobClass) GetByUUID(sessionID SessionRef, uuid string) (_retval BlobRef, _err error) {
+func (_class BlobClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval BlobRef, _err error) {
 	_method := "blob.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -332,7 +334,7 @@ func (_class BlobClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Bl
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -341,7 +343,7 @@ func (_class BlobClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Bl
 }
 
 // GetRecord Get a record containing the current state of the given blob.
-func (_class BlobClass) GetRecord(sessionID SessionRef, self BlobRef) (_retval BlobRecord, _err error) {
+func (_class BlobClass) GetRecord(ctx context.Context, sessionID SessionRef, self BlobRef) (_retval BlobRecord, _err error) {
 	_method := "blob.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -351,7 +353,7 @@ func (_class BlobClass) GetRecord(sessionID SessionRef, self BlobRef) (_retval B
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

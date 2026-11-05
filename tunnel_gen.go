@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -52,13 +54,13 @@ type TunnelClass struct {
 }
 
 // GetAllRecords Return a map of tunnel references to tunnel records for all tunnels known to the system.
-func (_class TunnelClass) GetAllRecords(sessionID SessionRef) (_retval map[TunnelRef]TunnelRecord, _err error) {
+func (_class TunnelClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[TunnelRef]TunnelRecord, _err error) {
 	_method := "tunnel.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -67,13 +69,13 @@ func (_class TunnelClass) GetAllRecords(sessionID SessionRef) (_retval map[Tunne
 }
 
 // GetAll Return a list of all the tunnels known to the system.
-func (_class TunnelClass) GetAll(sessionID SessionRef) (_retval []TunnelRef, _err error) {
+func (_class TunnelClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []TunnelRef, _err error) {
 	_method := "tunnel.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -82,7 +84,7 @@ func (_class TunnelClass) GetAll(sessionID SessionRef) (_retval []TunnelRef, _er
 }
 
 // Destroy Destroy a tunnel
-func (_class TunnelClass) Destroy(sessionID SessionRef, self TunnelRef) (_err error) {
+func (_class TunnelClass) Destroy(ctx context.Context, sessionID SessionRef, self TunnelRef) (_err error) {
 	_method := "tunnel.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -92,7 +94,7 @@ func (_class TunnelClass) Destroy(sessionID SessionRef, self TunnelRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -103,7 +105,7 @@ func (_class TunnelClass) Destroy(sessionID SessionRef, self TunnelRef) (_err er
 //	OPENVSWITCH_NOT_ACTIVE - This operation needs the OpenVSwitch networking backend to be enabled on all hosts in the pool.
 //	TRANSPORT_PIF_NOT_CONFIGURED - The tunnel transport PIF has no IP configuration set.
 //	IS_TUNNEL_ACCESS_PIF - Cannot create a VLAN or tunnel on top of a tunnel access PIF - use the underlying transport PIF instead.
-func (_class TunnelClass) Create(sessionID SessionRef, transportPIF PIFRef, network NetworkRef, protocol TunnelProtocol) (_retval TunnelRef, _err error) {
+func (_class TunnelClass) Create(ctx context.Context, sessionID SessionRef, transportPIF PIFRef, network NetworkRef, protocol TunnelProtocol) (_retval TunnelRef, _err error) {
 	_method := "tunnel.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -121,7 +123,7 @@ func (_class TunnelClass) Create(sessionID SessionRef, transportPIF PIFRef, netw
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _transportPIFArg, _networkArg, _protocolArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _transportPIFArg, _networkArg, _protocolArg)
 	if _err != nil {
 		return
 	}
@@ -130,7 +132,7 @@ func (_class TunnelClass) Create(sessionID SessionRef, transportPIF PIFRef, netw
 }
 
 // SetProtocol Set the protocol field of the given tunnel.
-func (_class TunnelClass) SetProtocol(sessionID SessionRef, self TunnelRef, value TunnelProtocol) (_err error) {
+func (_class TunnelClass) SetProtocol(ctx context.Context, sessionID SessionRef, self TunnelRef, value TunnelProtocol) (_err error) {
 	_method := "tunnel.set_protocol"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -144,12 +146,12 @@ func (_class TunnelClass) SetProtocol(sessionID SessionRef, self TunnelRef, valu
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given tunnel.  If the key is not in that Map, then do nothing.
-func (_class TunnelClass) RemoveFromOtherConfig(sessionID SessionRef, self TunnelRef, key string) (_err error) {
+func (_class TunnelClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self TunnelRef, key string) (_err error) {
 	_method := "tunnel.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -163,12 +165,12 @@ func (_class TunnelClass) RemoveFromOtherConfig(sessionID SessionRef, self Tunne
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given tunnel.
-func (_class TunnelClass) AddToOtherConfig(sessionID SessionRef, self TunnelRef, key string, value string) (_err error) {
+func (_class TunnelClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self TunnelRef, key string, value string) (_err error) {
 	_method := "tunnel.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -186,12 +188,12 @@ func (_class TunnelClass) AddToOtherConfig(sessionID SessionRef, self TunnelRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given tunnel.
-func (_class TunnelClass) SetOtherConfig(sessionID SessionRef, self TunnelRef, value map[string]string) (_err error) {
+func (_class TunnelClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self TunnelRef, value map[string]string) (_err error) {
 	_method := "tunnel.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -205,12 +207,12 @@ func (_class TunnelClass) SetOtherConfig(sessionID SessionRef, self TunnelRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromStatus Remove the given key and its corresponding value from the status field of the given tunnel.  If the key is not in that Map, then do nothing.
-func (_class TunnelClass) RemoveFromStatus(sessionID SessionRef, self TunnelRef, key string) (_err error) {
+func (_class TunnelClass) RemoveFromStatus(ctx context.Context, sessionID SessionRef, self TunnelRef, key string) (_err error) {
 	_method := "tunnel.remove_from_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -224,12 +226,12 @@ func (_class TunnelClass) RemoveFromStatus(sessionID SessionRef, self TunnelRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToStatus Add the given key-value pair to the status field of the given tunnel.
-func (_class TunnelClass) AddToStatus(sessionID SessionRef, self TunnelRef, key string, value string) (_err error) {
+func (_class TunnelClass) AddToStatus(ctx context.Context, sessionID SessionRef, self TunnelRef, key string, value string) (_err error) {
 	_method := "tunnel.add_to_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -247,12 +249,12 @@ func (_class TunnelClass) AddToStatus(sessionID SessionRef, self TunnelRef, key 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetStatus Set the status field of the given tunnel.
-func (_class TunnelClass) SetStatus(sessionID SessionRef, self TunnelRef, value map[string]string) (_err error) {
+func (_class TunnelClass) SetStatus(ctx context.Context, sessionID SessionRef, self TunnelRef, value map[string]string) (_err error) {
 	_method := "tunnel.set_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -266,12 +268,12 @@ func (_class TunnelClass) SetStatus(sessionID SessionRef, self TunnelRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetProtocol Get the protocol field of the given tunnel.
-func (_class TunnelClass) GetProtocol(sessionID SessionRef, self TunnelRef) (_retval TunnelProtocol, _err error) {
+func (_class TunnelClass) GetProtocol(ctx context.Context, sessionID SessionRef, self TunnelRef) (_retval TunnelProtocol, _err error) {
 	_method := "tunnel.get_protocol"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -281,7 +283,7 @@ func (_class TunnelClass) GetProtocol(sessionID SessionRef, self TunnelRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -290,7 +292,7 @@ func (_class TunnelClass) GetProtocol(sessionID SessionRef, self TunnelRef) (_re
 }
 
 // GetOtherConfig Get the other_config field of the given tunnel.
-func (_class TunnelClass) GetOtherConfig(sessionID SessionRef, self TunnelRef) (_retval map[string]string, _err error) {
+func (_class TunnelClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self TunnelRef) (_retval map[string]string, _err error) {
 	_method := "tunnel.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -300,7 +302,7 @@ func (_class TunnelClass) GetOtherConfig(sessionID SessionRef, self TunnelRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -309,7 +311,7 @@ func (_class TunnelClass) GetOtherConfig(sessionID SessionRef, self TunnelRef) (
 }
 
 // GetStatus Get the status field of the given tunnel.
-func (_class TunnelClass) GetStatus(sessionID SessionRef, self TunnelRef) (_retval map[string]string, _err error) {
+func (_class TunnelClass) GetStatus(ctx context.Context, sessionID SessionRef, self TunnelRef) (_retval map[string]string, _err error) {
 	_method := "tunnel.get_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -319,7 +321,7 @@ func (_class TunnelClass) GetStatus(sessionID SessionRef, self TunnelRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -328,7 +330,7 @@ func (_class TunnelClass) GetStatus(sessionID SessionRef, self TunnelRef) (_retv
 }
 
 // GetTransportPIF Get the transport_PIF field of the given tunnel.
-func (_class TunnelClass) GetTransportPIF(sessionID SessionRef, self TunnelRef) (_retval PIFRef, _err error) {
+func (_class TunnelClass) GetTransportPIF(ctx context.Context, sessionID SessionRef, self TunnelRef) (_retval PIFRef, _err error) {
 	_method := "tunnel.get_transport_PIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -338,7 +340,7 @@ func (_class TunnelClass) GetTransportPIF(sessionID SessionRef, self TunnelRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -347,7 +349,7 @@ func (_class TunnelClass) GetTransportPIF(sessionID SessionRef, self TunnelRef) 
 }
 
 // GetAccessPIF Get the access_PIF field of the given tunnel.
-func (_class TunnelClass) GetAccessPIF(sessionID SessionRef, self TunnelRef) (_retval PIFRef, _err error) {
+func (_class TunnelClass) GetAccessPIF(ctx context.Context, sessionID SessionRef, self TunnelRef) (_retval PIFRef, _err error) {
 	_method := "tunnel.get_access_PIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -357,7 +359,7 @@ func (_class TunnelClass) GetAccessPIF(sessionID SessionRef, self TunnelRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -366,7 +368,7 @@ func (_class TunnelClass) GetAccessPIF(sessionID SessionRef, self TunnelRef) (_r
 }
 
 // GetUUID Get the uuid field of the given tunnel.
-func (_class TunnelClass) GetUUID(sessionID SessionRef, self TunnelRef) (_retval string, _err error) {
+func (_class TunnelClass) GetUUID(ctx context.Context, sessionID SessionRef, self TunnelRef) (_retval string, _err error) {
 	_method := "tunnel.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -376,7 +378,7 @@ func (_class TunnelClass) GetUUID(sessionID SessionRef, self TunnelRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -385,7 +387,7 @@ func (_class TunnelClass) GetUUID(sessionID SessionRef, self TunnelRef) (_retval
 }
 
 // GetByUUID Get a reference to the tunnel instance with the specified UUID.
-func (_class TunnelClass) GetByUUID(sessionID SessionRef, uuid string) (_retval TunnelRef, _err error) {
+func (_class TunnelClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval TunnelRef, _err error) {
 	_method := "tunnel.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -395,7 +397,7 @@ func (_class TunnelClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -404,7 +406,7 @@ func (_class TunnelClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 }
 
 // GetRecord Get a record containing the current state of the given tunnel.
-func (_class TunnelClass) GetRecord(sessionID SessionRef, self TunnelRef) (_retval TunnelRecord, _err error) {
+func (_class TunnelClass) GetRecord(ctx context.Context, sessionID SessionRef, self TunnelRef) (_retval TunnelRecord, _err error) {
 	_method := "tunnel.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -414,7 +416,7 @@ func (_class TunnelClass) GetRecord(sessionID SessionRef, self TunnelRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

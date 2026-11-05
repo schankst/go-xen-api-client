@@ -432,6 +432,7 @@ const fileHeaderTemplate string = `//
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -439,6 +440,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -496,13 +498,13 @@ const messageFuncTemplate string = `
 //
 // Errors:{{ range .Message.Errors }}
 //  {{ .Name }} - {{ .Doc }}{{ end }}{{ end }}
-func (_class {{ .Class.Name|exported }}Class) {{ .Message.Name|exported }}({{ range $index, $param := .Message.Params }}{{ if gt $index 0 }}, {{ end }}{{ .Name|internal }} {{ .GoType }}{{ end }}) ({{ if not .Message.Result.IsVoid }}_retval {{ .Message.Result.GoType }}, {{ end }}_err error) {
+func (_class {{ .Class.Name|exported }}Class) {{ .Message.Name|exported }}(ctx context.Context{{ range .Message.Params }}, {{ .Name|internal }} {{ .GoType }}{{ end }}) ({{ if not .Message.Result.IsVoid }}_retval {{ .Message.Result.GoType }}, {{ end }}_err error) {
 	_method := "{{ .Class.Name }}.{{ .Message.Name }}"{{ range .Message.Params }}
 	_{{ .Name|internal }}Arg, _err := {{ .Type|convertToXen }}(fmt.Sprintf("%s(%s)", _method, {{ printf "%q" .Name }}), {{ .Name|internal }})
 	if _err != nil {
 		return
 	}{{ end }}
-	{{ if .Message.Result.IsVoid }}_, _err = {{ else }}_result, _err :={{ end }} _class.client.APICall(_method{{ range .Message.Params }}, _{{ .Name|internal }}Arg{{ end }}){{ if not .Message.Result.IsVoid }}
+	{{ if .Message.Result.IsVoid }}_, _err = {{ else }}_result, _err :={{ end }} _class.client.APICall(ctx, _method{{ range .Message.Params }}, _{{ .Name|internal }}Arg{{ end }}){{ if not .Message.Result.IsVoid }}
 	if _err != nil {
 		return
 	}
@@ -519,7 +521,8 @@ func (_class {{ .Class.Name|exported }}Class) {{ .Message.Name|exported }}({{ ra
 const clientStructTemplate string = `
 // Client is a XenAPI client. Create one with NewClient, then log in via
 // Client.Session.LoginWithPassword before calling any other method - every
-// generated method takes the resulting SessionRef as its first argument.
+// generated method takes a context.Context and then the resulting
+// SessionRef as its first arguments.
 // Each exported field (Client.VM, Client.Host, Client.SR, ...) corresponds
 // to one XenAPI class and exposes its Get*/Set*/etc. methods.
 type Client struct {

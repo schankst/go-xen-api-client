@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -56,13 +58,13 @@ type VUSBClass struct {
 }
 
 // GetAllRecords Return a map of VUSB references to VUSB records for all VUSBs known to the system.
-func (_class VUSBClass) GetAllRecords(sessionID SessionRef) (_retval map[VUSBRef]VUSBRecord, _err error) {
+func (_class VUSBClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[VUSBRef]VUSBRecord, _err error) {
 	_method := "VUSB.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -71,13 +73,13 @@ func (_class VUSBClass) GetAllRecords(sessionID SessionRef) (_retval map[VUSBRef
 }
 
 // GetAll Return a list of all the VUSBs known to the system.
-func (_class VUSBClass) GetAll(sessionID SessionRef) (_retval []VUSBRef, _err error) {
+func (_class VUSBClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []VUSBRef, _err error) {
 	_method := "VUSB.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -86,7 +88,7 @@ func (_class VUSBClass) GetAll(sessionID SessionRef) (_retval []VUSBRef, _err er
 }
 
 // Destroy Removes a VUSB record from the database
-func (_class VUSBClass) Destroy(sessionID SessionRef, self VUSBRef) (_err error) {
+func (_class VUSBClass) Destroy(ctx context.Context, sessionID SessionRef, self VUSBRef) (_err error) {
 	_method := "VUSB.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -96,12 +98,12 @@ func (_class VUSBClass) Destroy(sessionID SessionRef, self VUSBRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Unplug Unplug the vusb device from the vm.
-func (_class VUSBClass) Unplug(sessionID SessionRef, self VUSBRef) (_err error) {
+func (_class VUSBClass) Unplug(ctx context.Context, sessionID SessionRef, self VUSBRef) (_err error) {
 	_method := "VUSB.unplug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -111,12 +113,12 @@ func (_class VUSBClass) Unplug(sessionID SessionRef, self VUSBRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new VUSB record in the database only
-func (_class VUSBClass) Create(sessionID SessionRef, vm VMRef, usbGroup USBGroupRef, otherConfig map[string]string) (_retval VUSBRef, _err error) {
+func (_class VUSBClass) Create(ctx context.Context, sessionID SessionRef, vm VMRef, usbGroup USBGroupRef, otherConfig map[string]string) (_retval VUSBRef, _err error) {
 	_method := "VUSB.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -134,7 +136,7 @@ func (_class VUSBClass) Create(sessionID SessionRef, vm VMRef, usbGroup USBGroup
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vmArg, _usbGroupArg, _otherConfigArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vmArg, _usbGroupArg, _otherConfigArg)
 	if _err != nil {
 		return
 	}
@@ -143,7 +145,7 @@ func (_class VUSBClass) Create(sessionID SessionRef, vm VMRef, usbGroup USBGroup
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given VUSB.  If the key is not in that Map, then do nothing.
-func (_class VUSBClass) RemoveFromOtherConfig(sessionID SessionRef, self VUSBRef, key string) (_err error) {
+func (_class VUSBClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self VUSBRef, key string) (_err error) {
 	_method := "VUSB.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -157,12 +159,12 @@ func (_class VUSBClass) RemoveFromOtherConfig(sessionID SessionRef, self VUSBRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given VUSB.
-func (_class VUSBClass) AddToOtherConfig(sessionID SessionRef, self VUSBRef, key string, value string) (_err error) {
+func (_class VUSBClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self VUSBRef, key string, value string) (_err error) {
 	_method := "VUSB.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -180,12 +182,12 @@ func (_class VUSBClass) AddToOtherConfig(sessionID SessionRef, self VUSBRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given VUSB.
-func (_class VUSBClass) SetOtherConfig(sessionID SessionRef, self VUSBRef, value map[string]string) (_err error) {
+func (_class VUSBClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self VUSBRef, value map[string]string) (_err error) {
 	_method := "VUSB.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -199,12 +201,12 @@ func (_class VUSBClass) SetOtherConfig(sessionID SessionRef, self VUSBRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetCurrentlyAttached Get the currently_attached field of the given VUSB.
-func (_class VUSBClass) GetCurrentlyAttached(sessionID SessionRef, self VUSBRef) (_retval bool, _err error) {
+func (_class VUSBClass) GetCurrentlyAttached(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval bool, _err error) {
 	_method := "VUSB.get_currently_attached"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -214,7 +216,7 @@ func (_class VUSBClass) GetCurrentlyAttached(sessionID SessionRef, self VUSBRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -223,7 +225,7 @@ func (_class VUSBClass) GetCurrentlyAttached(sessionID SessionRef, self VUSBRef)
 }
 
 // GetOtherConfig Get the other_config field of the given VUSB.
-func (_class VUSBClass) GetOtherConfig(sessionID SessionRef, self VUSBRef) (_retval map[string]string, _err error) {
+func (_class VUSBClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval map[string]string, _err error) {
 	_method := "VUSB.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -233,7 +235,7 @@ func (_class VUSBClass) GetOtherConfig(sessionID SessionRef, self VUSBRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -242,7 +244,7 @@ func (_class VUSBClass) GetOtherConfig(sessionID SessionRef, self VUSBRef) (_ret
 }
 
 // GetUSBGroup Get the USB_group field of the given VUSB.
-func (_class VUSBClass) GetUSBGroup(sessionID SessionRef, self VUSBRef) (_retval USBGroupRef, _err error) {
+func (_class VUSBClass) GetUSBGroup(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval USBGroupRef, _err error) {
 	_method := "VUSB.get_USB_group"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -252,7 +254,7 @@ func (_class VUSBClass) GetUSBGroup(sessionID SessionRef, self VUSBRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -261,7 +263,7 @@ func (_class VUSBClass) GetUSBGroup(sessionID SessionRef, self VUSBRef) (_retval
 }
 
 // GetVM Get the VM field of the given VUSB.
-func (_class VUSBClass) GetVM(sessionID SessionRef, self VUSBRef) (_retval VMRef, _err error) {
+func (_class VUSBClass) GetVM(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval VMRef, _err error) {
 	_method := "VUSB.get_VM"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -271,7 +273,7 @@ func (_class VUSBClass) GetVM(sessionID SessionRef, self VUSBRef) (_retval VMRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -280,7 +282,7 @@ func (_class VUSBClass) GetVM(sessionID SessionRef, self VUSBRef) (_retval VMRef
 }
 
 // GetCurrentOperations Get the current_operations field of the given VUSB.
-func (_class VUSBClass) GetCurrentOperations(sessionID SessionRef, self VUSBRef) (_retval map[string]VusbOperations, _err error) {
+func (_class VUSBClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval map[string]VusbOperations, _err error) {
 	_method := "VUSB.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -290,7 +292,7 @@ func (_class VUSBClass) GetCurrentOperations(sessionID SessionRef, self VUSBRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -299,7 +301,7 @@ func (_class VUSBClass) GetCurrentOperations(sessionID SessionRef, self VUSBRef)
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given VUSB.
-func (_class VUSBClass) GetAllowedOperations(sessionID SessionRef, self VUSBRef) (_retval []VusbOperations, _err error) {
+func (_class VUSBClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval []VusbOperations, _err error) {
 	_method := "VUSB.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -309,7 +311,7 @@ func (_class VUSBClass) GetAllowedOperations(sessionID SessionRef, self VUSBRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -318,7 +320,7 @@ func (_class VUSBClass) GetAllowedOperations(sessionID SessionRef, self VUSBRef)
 }
 
 // GetUUID Get the uuid field of the given VUSB.
-func (_class VUSBClass) GetUUID(sessionID SessionRef, self VUSBRef) (_retval string, _err error) {
+func (_class VUSBClass) GetUUID(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval string, _err error) {
 	_method := "VUSB.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -328,7 +330,7 @@ func (_class VUSBClass) GetUUID(sessionID SessionRef, self VUSBRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -337,7 +339,7 @@ func (_class VUSBClass) GetUUID(sessionID SessionRef, self VUSBRef) (_retval str
 }
 
 // GetByUUID Get a reference to the VUSB instance with the specified UUID.
-func (_class VUSBClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VUSBRef, _err error) {
+func (_class VUSBClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval VUSBRef, _err error) {
 	_method := "VUSB.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -347,7 +349,7 @@ func (_class VUSBClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VU
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -356,7 +358,7 @@ func (_class VUSBClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VU
 }
 
 // GetRecord Get a record containing the current state of the given VUSB.
-func (_class VUSBClass) GetRecord(sessionID SessionRef, self VUSBRef) (_retval VUSBRecord, _err error) {
+func (_class VUSBClass) GetRecord(ctx context.Context, sessionID SessionRef, self VUSBRef) (_retval VUSBRecord, _err error) {
 	_method := "VUSB.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -366,7 +368,7 @@ func (_class VUSBClass) GetRecord(sessionID SessionRef, self VUSBRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

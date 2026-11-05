@@ -1,6 +1,8 @@
 package xenapi
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -71,7 +73,7 @@ func stringArray(values ...string) string {
 func TestLoginWithPasswordSuccess(t *testing.T) {
 	client := newTestClient(t, successResponse(`<string>OpaqueRef:session-1</string>`))
 
-	session, err := client.Session.LoginWithPassword("root", "secret", "1.0", "test")
+	session, err := client.Session.LoginWithPassword(t.Context(), "root", "secret", "1.0", "test")
 	if err != nil {
 		t.Fatalf("LoginWithPassword: %v", err)
 	}
@@ -83,7 +85,7 @@ func TestLoginWithPasswordSuccess(t *testing.T) {
 func TestAPICallSuccessExposesValue(t *testing.T) {
 	client := newTestClient(t, successResponse(`<int>7</int>`))
 
-	result, err := client.APICall("some.method")
+	result, err := client.APICall(t.Context(), "some.method")
 	if err != nil {
 		t.Fatalf("APICall: %v", err)
 	}
@@ -96,7 +98,7 @@ func TestAPICallErrorResponse(t *testing.T) {
 	client := newTestClient(t, failureResponse(
 		stringArray("HANDLE_INVALID", "VM", "OpaqueRef:dead-vm")))
 
-	_, err := client.APICall("VM.get_record", "OpaqueRef:dead-vm")
+	_, err := client.APICall(t.Context(), "VM.get_record", "OpaqueRef:dead-vm")
 	if err == nil {
 		t.Fatal("expected an error for a Failure response, got nil")
 	}
@@ -124,7 +126,7 @@ func TestAPICallErrorResponse(t *testing.T) {
 func TestAPICallErrorResponseWithoutTypeOrUUID(t *testing.T) {
 	client := newTestClient(t, failureResponse(stringArray("PERMISSION_DENIED")))
 
-	_, err := client.APICall("session.get_this_host")
+	_, err := client.APICall(t.Context(), "session.get_this_host")
 	apiErr, ok := err.(*Error)
 	if !ok {
 		t.Fatalf("got error of type %T, want *Error", err)
@@ -186,7 +188,7 @@ func TestAPICallMalformedResponseReturnsError(t *testing.T) {
 			}()
 
 			client := newTestClient(t, tc.response)
-			_, err := client.APICall("some.method")
+			_, err := client.APICall(t.Context(), "some.method")
 			if err == nil {
 				t.Fatal("expected an error for a malformed response, got nil")
 			}
@@ -206,7 +208,7 @@ func TestAPICallErrorResponseWithNilTypeAndUUID(t *testing.T) {
 		`</struct></value></param></params></methodResponse>`
 
 	client := newTestClient(t, response)
-	_, err := client.APICall("VM.get_record", "OpaqueRef:x")
+	_, err := client.APICall(t.Context(), "VM.get_record", "OpaqueRef:x")
 	apiErr, ok := err.(*Error)
 	if !ok {
 		t.Fatalf("got error of type %T (%v), want *Error", err, err)
@@ -219,5 +221,16 @@ func TestAPICallErrorResponseWithNilTypeAndUUID(t *testing.T) {
 	}
 	if strings.Contains(apiErr.Error(), "  ") {
 		t.Errorf("Error() has an empty field: %q", apiErr.Error())
+	}
+}
+
+func TestGeneratedMethodHonorsContext(t *testing.T) {
+	client := newTestClient(t, successResponse(`<string>OpaqueRef:session-1</string>`))
+	ctx, cancel := context.WithCancel(t.Context())
+	cancel()
+
+	_, err := client.Session.LoginWithPassword(ctx, "root", "secret", "1.0", "test")
+	if !errors.Is(err, context.Canceled) {
+		t.Fatalf("LoginWithPassword with a canceled context: error = %v, want context.Canceled", err)
 	}
 }

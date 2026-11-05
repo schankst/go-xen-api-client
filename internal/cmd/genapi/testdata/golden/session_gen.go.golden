@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -33,7 +35,7 @@ type SessionClass struct {
 }
 
 // LoginWithPassword login with password
-func (_class SessionClass) LoginWithPassword(uname string, pwd string) (_retval SessionRef, _err error) {
+func (_class SessionClass) LoginWithPassword(ctx context.Context, uname string, pwd string) (_retval SessionRef, _err error) {
 	_method := "session.login_with_password"
 	_unameArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "uname"), uname)
 	if _err != nil {
@@ -43,7 +45,7 @@ func (_class SessionClass) LoginWithPassword(uname string, pwd string) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _unameArg, _pwdArg)
+	_result, _err := _class.client.APICall(ctx, _method, _unameArg, _pwdArg)
 	if _err != nil {
 		return
 	}
@@ -52,12 +54,12 @@ func (_class SessionClass) LoginWithPassword(uname string, pwd string) (_retval 
 }
 
 // Logout logout
-func (_class SessionClass) Logout(sessionID SessionRef) (_err error) {
+func (_class SessionClass) Logout(ctx context.Context, sessionID SessionRef) (_err error) {
 	_method := "session.logout"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg)
 	return
 }

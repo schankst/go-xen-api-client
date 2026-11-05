@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -54,13 +56,13 @@ type NetworkSriovClass struct {
 }
 
 // GetAllRecords Return a map of network_sriov references to network_sriov records for all network_sriovs known to the system.
-func (_class NetworkSriovClass) GetAllRecords(sessionID SessionRef) (_retval map[NetworkSriovRef]NetworkSriovRecord, _err error) {
+func (_class NetworkSriovClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[NetworkSriovRef]NetworkSriovRecord, _err error) {
 	_method := "network_sriov.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -69,13 +71,13 @@ func (_class NetworkSriovClass) GetAllRecords(sessionID SessionRef) (_retval map
 }
 
 // GetAll Return a list of all the network_sriovs known to the system.
-func (_class NetworkSriovClass) GetAll(sessionID SessionRef) (_retval []NetworkSriovRef, _err error) {
+func (_class NetworkSriovClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []NetworkSriovRef, _err error) {
 	_method := "network_sriov.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -84,7 +86,7 @@ func (_class NetworkSriovClass) GetAll(sessionID SessionRef) (_retval []NetworkS
 }
 
 // GetRemainingCapacity Get the number of free SR-IOV VFs on the associated PIF
-func (_class NetworkSriovClass) GetRemainingCapacity(sessionID SessionRef, self NetworkSriovRef) (_retval int, _err error) {
+func (_class NetworkSriovClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_retval int, _err error) {
 	_method := "network_sriov.get_remaining_capacity"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -94,7 +96,7 @@ func (_class NetworkSriovClass) GetRemainingCapacity(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -103,7 +105,7 @@ func (_class NetworkSriovClass) GetRemainingCapacity(sessionID SessionRef, self 
 }
 
 // Destroy Disable SR-IOV on the specific PIF. It will destroy the network-sriov and the logical PIF accordingly.
-func (_class NetworkSriovClass) Destroy(sessionID SessionRef, self NetworkSriovRef) (_err error) {
+func (_class NetworkSriovClass) Destroy(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_err error) {
 	_method := "network_sriov.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -113,12 +115,12 @@ func (_class NetworkSriovClass) Destroy(sessionID SessionRef, self NetworkSriovR
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Enable SR-IOV on the specific PIF. It will create a network-sriov based on the specific PIF and automatically create a logical PIF to connect the specific network.
-func (_class NetworkSriovClass) Create(sessionID SessionRef, pif PIFRef, network NetworkRef) (_retval NetworkSriovRef, _err error) {
+func (_class NetworkSriovClass) Create(ctx context.Context, sessionID SessionRef, pif PIFRef, network NetworkRef) (_retval NetworkSriovRef, _err error) {
 	_method := "network_sriov.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -132,7 +134,7 @@ func (_class NetworkSriovClass) Create(sessionID SessionRef, pif PIFRef, network
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _pifArg, _networkArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _pifArg, _networkArg)
 	if _err != nil {
 		return
 	}
@@ -141,7 +143,7 @@ func (_class NetworkSriovClass) Create(sessionID SessionRef, pif PIFRef, network
 }
 
 // GetConfigurationMode Get the configuration_mode field of the given network_sriov.
-func (_class NetworkSriovClass) GetConfigurationMode(sessionID SessionRef, self NetworkSriovRef) (_retval SriovConfigurationMode, _err error) {
+func (_class NetworkSriovClass) GetConfigurationMode(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_retval SriovConfigurationMode, _err error) {
 	_method := "network_sriov.get_configuration_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -151,7 +153,7 @@ func (_class NetworkSriovClass) GetConfigurationMode(sessionID SessionRef, self 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -160,7 +162,7 @@ func (_class NetworkSriovClass) GetConfigurationMode(sessionID SessionRef, self 
 }
 
 // GetRequiresReboot Get the requires_reboot field of the given network_sriov.
-func (_class NetworkSriovClass) GetRequiresReboot(sessionID SessionRef, self NetworkSriovRef) (_retval bool, _err error) {
+func (_class NetworkSriovClass) GetRequiresReboot(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_retval bool, _err error) {
 	_method := "network_sriov.get_requires_reboot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -170,7 +172,7 @@ func (_class NetworkSriovClass) GetRequiresReboot(sessionID SessionRef, self Net
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -179,7 +181,7 @@ func (_class NetworkSriovClass) GetRequiresReboot(sessionID SessionRef, self Net
 }
 
 // GetLogicalPIF Get the logical_PIF field of the given network_sriov.
-func (_class NetworkSriovClass) GetLogicalPIF(sessionID SessionRef, self NetworkSriovRef) (_retval PIFRef, _err error) {
+func (_class NetworkSriovClass) GetLogicalPIF(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_retval PIFRef, _err error) {
 	_method := "network_sriov.get_logical_PIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -189,7 +191,7 @@ func (_class NetworkSriovClass) GetLogicalPIF(sessionID SessionRef, self Network
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -198,7 +200,7 @@ func (_class NetworkSriovClass) GetLogicalPIF(sessionID SessionRef, self Network
 }
 
 // GetPhysicalPIF Get the physical_PIF field of the given network_sriov.
-func (_class NetworkSriovClass) GetPhysicalPIF(sessionID SessionRef, self NetworkSriovRef) (_retval PIFRef, _err error) {
+func (_class NetworkSriovClass) GetPhysicalPIF(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_retval PIFRef, _err error) {
 	_method := "network_sriov.get_physical_PIF"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -208,7 +210,7 @@ func (_class NetworkSriovClass) GetPhysicalPIF(sessionID SessionRef, self Networ
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -217,7 +219,7 @@ func (_class NetworkSriovClass) GetPhysicalPIF(sessionID SessionRef, self Networ
 }
 
 // GetUUID Get the uuid field of the given network_sriov.
-func (_class NetworkSriovClass) GetUUID(sessionID SessionRef, self NetworkSriovRef) (_retval string, _err error) {
+func (_class NetworkSriovClass) GetUUID(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_retval string, _err error) {
 	_method := "network_sriov.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -227,7 +229,7 @@ func (_class NetworkSriovClass) GetUUID(sessionID SessionRef, self NetworkSriovR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -236,7 +238,7 @@ func (_class NetworkSriovClass) GetUUID(sessionID SessionRef, self NetworkSriovR
 }
 
 // GetByUUID Get a reference to the network_sriov instance with the specified UUID.
-func (_class NetworkSriovClass) GetByUUID(sessionID SessionRef, uuid string) (_retval NetworkSriovRef, _err error) {
+func (_class NetworkSriovClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval NetworkSriovRef, _err error) {
 	_method := "network_sriov.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -246,7 +248,7 @@ func (_class NetworkSriovClass) GetByUUID(sessionID SessionRef, uuid string) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -255,7 +257,7 @@ func (_class NetworkSriovClass) GetByUUID(sessionID SessionRef, uuid string) (_r
 }
 
 // GetRecord Get a record containing the current state of the given network_sriov.
-func (_class NetworkSriovClass) GetRecord(sessionID SessionRef, self NetworkSriovRef) (_retval NetworkSriovRecord, _err error) {
+func (_class NetworkSriovClass) GetRecord(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (_retval NetworkSriovRecord, _err error) {
 	_method := "network_sriov.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -265,7 +267,7 @@ func (_class NetworkSriovClass) GetRecord(sessionID SessionRef, self NetworkSrio
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

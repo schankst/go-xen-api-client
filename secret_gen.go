@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -37,13 +39,13 @@ type SecretClass struct {
 }
 
 // GetAllRecords Return a map of secret references to secret records for all secrets known to the system.
-func (_class SecretClass) GetAllRecords(sessionID SessionRef) (_retval map[SecretRef]SecretRecord, _err error) {
+func (_class SecretClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[SecretRef]SecretRecord, _err error) {
 	_method := "secret.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -52,13 +54,13 @@ func (_class SecretClass) GetAllRecords(sessionID SessionRef) (_retval map[Secre
 }
 
 // GetAll Return a list of all the secrets known to the system.
-func (_class SecretClass) GetAll(sessionID SessionRef) (_retval []SecretRef, _err error) {
+func (_class SecretClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []SecretRef, _err error) {
 	_method := "secret.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -67,7 +69,7 @@ func (_class SecretClass) GetAll(sessionID SessionRef) (_retval []SecretRef, _er
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given secret.  If the key is not in that Map, then do nothing.
-func (_class SecretClass) RemoveFromOtherConfig(sessionID SessionRef, self SecretRef, key string) (_err error) {
+func (_class SecretClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self SecretRef, key string) (_err error) {
 	_method := "secret.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -81,12 +83,12 @@ func (_class SecretClass) RemoveFromOtherConfig(sessionID SessionRef, self Secre
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given secret.
-func (_class SecretClass) AddToOtherConfig(sessionID SessionRef, self SecretRef, key string, value string) (_err error) {
+func (_class SecretClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self SecretRef, key string, value string) (_err error) {
 	_method := "secret.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -104,12 +106,12 @@ func (_class SecretClass) AddToOtherConfig(sessionID SessionRef, self SecretRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given secret.
-func (_class SecretClass) SetOtherConfig(sessionID SessionRef, self SecretRef, value map[string]string) (_err error) {
+func (_class SecretClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self SecretRef, value map[string]string) (_err error) {
 	_method := "secret.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -123,12 +125,12 @@ func (_class SecretClass) SetOtherConfig(sessionID SessionRef, self SecretRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetValue Set the value field of the given secret.
-func (_class SecretClass) SetValue(sessionID SessionRef, self SecretRef, value string) (_err error) {
+func (_class SecretClass) SetValue(ctx context.Context, sessionID SessionRef, self SecretRef, value string) (_err error) {
 	_method := "secret.set_value"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -142,12 +144,12 @@ func (_class SecretClass) SetValue(sessionID SessionRef, self SecretRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given secret.
-func (_class SecretClass) GetOtherConfig(sessionID SessionRef, self SecretRef) (_retval map[string]string, _err error) {
+func (_class SecretClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self SecretRef) (_retval map[string]string, _err error) {
 	_method := "secret.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -157,7 +159,7 @@ func (_class SecretClass) GetOtherConfig(sessionID SessionRef, self SecretRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -166,7 +168,7 @@ func (_class SecretClass) GetOtherConfig(sessionID SessionRef, self SecretRef) (
 }
 
 // GetValue Get the value field of the given secret.
-func (_class SecretClass) GetValue(sessionID SessionRef, self SecretRef) (_retval string, _err error) {
+func (_class SecretClass) GetValue(ctx context.Context, sessionID SessionRef, self SecretRef) (_retval string, _err error) {
 	_method := "secret.get_value"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -176,7 +178,7 @@ func (_class SecretClass) GetValue(sessionID SessionRef, self SecretRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -185,7 +187,7 @@ func (_class SecretClass) GetValue(sessionID SessionRef, self SecretRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given secret.
-func (_class SecretClass) GetUUID(sessionID SessionRef, self SecretRef) (_retval string, _err error) {
+func (_class SecretClass) GetUUID(ctx context.Context, sessionID SessionRef, self SecretRef) (_retval string, _err error) {
 	_method := "secret.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -195,7 +197,7 @@ func (_class SecretClass) GetUUID(sessionID SessionRef, self SecretRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -204,7 +206,7 @@ func (_class SecretClass) GetUUID(sessionID SessionRef, self SecretRef) (_retval
 }
 
 // Destroy Destroy the specified secret instance.
-func (_class SecretClass) Destroy(sessionID SessionRef, self SecretRef) (_err error) {
+func (_class SecretClass) Destroy(ctx context.Context, sessionID SessionRef, self SecretRef) (_err error) {
 	_method := "secret.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -214,12 +216,12 @@ func (_class SecretClass) Destroy(sessionID SessionRef, self SecretRef) (_err er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new secret instance, and return its handle. The constructor args are: value*, other_config (* = non-optional).
-func (_class SecretClass) Create(sessionID SessionRef, args SecretRecord) (_retval SecretRef, _err error) {
+func (_class SecretClass) Create(ctx context.Context, sessionID SessionRef, args SecretRecord) (_retval SecretRef, _err error) {
 	_method := "secret.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -229,7 +231,7 @@ func (_class SecretClass) Create(sessionID SessionRef, args SecretRecord) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -238,7 +240,7 @@ func (_class SecretClass) Create(sessionID SessionRef, args SecretRecord) (_retv
 }
 
 // GetByUUID Get a reference to the secret instance with the specified UUID.
-func (_class SecretClass) GetByUUID(sessionID SessionRef, uuid string) (_retval SecretRef, _err error) {
+func (_class SecretClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval SecretRef, _err error) {
 	_method := "secret.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -248,7 +250,7 @@ func (_class SecretClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -257,7 +259,7 @@ func (_class SecretClass) GetByUUID(sessionID SessionRef, uuid string) (_retval 
 }
 
 // GetRecord Get a record containing the current state of the given secret.
-func (_class SecretClass) GetRecord(sessionID SessionRef, self SecretRef) (_retval SecretRecord, _err error) {
+func (_class SecretClass) GetRecord(ctx context.Context, sessionID SessionRef, self SecretRef) (_retval SecretRecord, _err error) {
 	_method := "secret.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -267,7 +269,7 @@ func (_class SecretClass) GetRecord(sessionID SessionRef, self SecretRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

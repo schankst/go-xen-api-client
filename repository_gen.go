@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -64,13 +66,13 @@ type RepositoryClass struct {
 }
 
 // GetAllRecords Return a map of Repository references to Repository records for all Repositorys known to the system.
-func (_class RepositoryClass) GetAllRecords(sessionID SessionRef) (_retval map[RepositoryRef]RepositoryRecord, _err error) {
+func (_class RepositoryClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[RepositoryRef]RepositoryRecord, _err error) {
 	_method := "Repository.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -79,13 +81,13 @@ func (_class RepositoryClass) GetAllRecords(sessionID SessionRef) (_retval map[R
 }
 
 // GetAll Return a list of all the Repositorys known to the system.
-func (_class RepositoryClass) GetAll(sessionID SessionRef) (_retval []RepositoryRef, _err error) {
+func (_class RepositoryClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []RepositoryRef, _err error) {
 	_method := "Repository.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -94,7 +96,7 @@ func (_class RepositoryClass) GetAll(sessionID SessionRef) (_retval []Repository
 }
 
 // SetGpgkeyPath Set the file name of the GPG public key of the repository
-func (_class RepositoryClass) SetGpgkeyPath(sessionID SessionRef, self RepositoryRef, value string) (_err error) {
+func (_class RepositoryClass) SetGpgkeyPath(ctx context.Context, sessionID SessionRef, self RepositoryRef, value string) (_err error) {
 	_method := "Repository.set_gpgkey_path"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -108,12 +110,12 @@ func (_class RepositoryClass) SetGpgkeyPath(sessionID SessionRef, self Repositor
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // Forget Remove the repository record from the database
-func (_class RepositoryClass) Forget(sessionID SessionRef, self RepositoryRef) (_err error) {
+func (_class RepositoryClass) Forget(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_err error) {
 	_method := "Repository.forget"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -123,12 +125,12 @@ func (_class RepositoryClass) Forget(sessionID SessionRef, self RepositoryRef) (
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // IntroduceRemotePool Add the configuration for a new remote pool repository
-func (_class RepositoryClass) IntroduceRemotePool(sessionID SessionRef, nameLabel string, nameDescription string, binaryURL string, certificate string) (_retval RepositoryRef, _err error) {
+func (_class RepositoryClass) IntroduceRemotePool(ctx context.Context, sessionID SessionRef, nameLabel string, nameDescription string, binaryURL string, certificate string) (_retval RepositoryRef, _err error) {
 	_method := "Repository.introduce_remote_pool"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -150,7 +152,7 @@ func (_class RepositoryClass) IntroduceRemotePool(sessionID SessionRef, nameLabe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg, _binaryURLArg, _certificateArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg, _binaryURLArg, _certificateArg)
 	if _err != nil {
 		return
 	}
@@ -159,7 +161,7 @@ func (_class RepositoryClass) IntroduceRemotePool(sessionID SessionRef, nameLabe
 }
 
 // IntroduceBundle Add the configuration for a new bundle repository
-func (_class RepositoryClass) IntroduceBundle(sessionID SessionRef, nameLabel string, nameDescription string) (_retval RepositoryRef, _err error) {
+func (_class RepositoryClass) IntroduceBundle(ctx context.Context, sessionID SessionRef, nameLabel string, nameDescription string) (_retval RepositoryRef, _err error) {
 	_method := "Repository.introduce_bundle"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -173,7 +175,7 @@ func (_class RepositoryClass) IntroduceBundle(sessionID SessionRef, nameLabel st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg)
 	if _err != nil {
 		return
 	}
@@ -182,7 +184,7 @@ func (_class RepositoryClass) IntroduceBundle(sessionID SessionRef, nameLabel st
 }
 
 // Introduce Add the configuration for a new remote repository
-func (_class RepositoryClass) Introduce(sessionID SessionRef, nameLabel string, nameDescription string, binaryURL string, sourceURL string, update bool, gpgkeyPath string) (_retval RepositoryRef, _err error) {
+func (_class RepositoryClass) Introduce(ctx context.Context, sessionID SessionRef, nameLabel string, nameDescription string, binaryURL string, sourceURL string, update bool, gpgkeyPath string) (_retval RepositoryRef, _err error) {
 	_method := "Repository.introduce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -212,7 +214,7 @@ func (_class RepositoryClass) Introduce(sessionID SessionRef, nameLabel string, 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg, _binaryURLArg, _sourceURLArg, _updateArg, _gpgkeyPathArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _nameLabelArg, _nameDescriptionArg, _binaryURLArg, _sourceURLArg, _updateArg, _gpgkeyPathArg)
 	if _err != nil {
 		return
 	}
@@ -221,7 +223,7 @@ func (_class RepositoryClass) Introduce(sessionID SessionRef, nameLabel string, 
 }
 
 // SetNameDescription Set the name/description field of the given Repository.
-func (_class RepositoryClass) SetNameDescription(sessionID SessionRef, self RepositoryRef, value string) (_err error) {
+func (_class RepositoryClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self RepositoryRef, value string) (_err error) {
 	_method := "Repository.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -235,12 +237,12 @@ func (_class RepositoryClass) SetNameDescription(sessionID SessionRef, self Repo
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given Repository.
-func (_class RepositoryClass) SetNameLabel(sessionID SessionRef, self RepositoryRef, value string) (_err error) {
+func (_class RepositoryClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self RepositoryRef, value string) (_err error) {
 	_method := "Repository.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -254,12 +256,12 @@ func (_class RepositoryClass) SetNameLabel(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetCertificate Get the certificate field of the given Repository.
-func (_class RepositoryClass) GetCertificate(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetCertificate(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_certificate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -269,7 +271,7 @@ func (_class RepositoryClass) GetCertificate(sessionID SessionRef, self Reposito
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -278,7 +280,7 @@ func (_class RepositoryClass) GetCertificate(sessionID SessionRef, self Reposito
 }
 
 // GetOrigin Get the origin field of the given Repository.
-func (_class RepositoryClass) GetOrigin(sessionID SessionRef, self RepositoryRef) (_retval Origin, _err error) {
+func (_class RepositoryClass) GetOrigin(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval Origin, _err error) {
 	_method := "Repository.get_origin"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -288,7 +290,7 @@ func (_class RepositoryClass) GetOrigin(sessionID SessionRef, self RepositoryRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -297,7 +299,7 @@ func (_class RepositoryClass) GetOrigin(sessionID SessionRef, self RepositoryRef
 }
 
 // GetGpgkeyPath Get the gpgkey_path field of the given Repository.
-func (_class RepositoryClass) GetGpgkeyPath(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetGpgkeyPath(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_gpgkey_path"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -307,7 +309,7 @@ func (_class RepositoryClass) GetGpgkeyPath(sessionID SessionRef, self Repositor
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -316,7 +318,7 @@ func (_class RepositoryClass) GetGpgkeyPath(sessionID SessionRef, self Repositor
 }
 
 // GetUpToDate Get the up_to_date field of the given Repository.
-func (_class RepositoryClass) GetUpToDate(sessionID SessionRef, self RepositoryRef) (_retval bool, _err error) {
+func (_class RepositoryClass) GetUpToDate(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval bool, _err error) {
 	_method := "Repository.get_up_to_date"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -326,7 +328,7 @@ func (_class RepositoryClass) GetUpToDate(sessionID SessionRef, self RepositoryR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -335,7 +337,7 @@ func (_class RepositoryClass) GetUpToDate(sessionID SessionRef, self RepositoryR
 }
 
 // GetHash Get the hash field of the given Repository.
-func (_class RepositoryClass) GetHash(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetHash(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_hash"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -345,7 +347,7 @@ func (_class RepositoryClass) GetHash(sessionID SessionRef, self RepositoryRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -354,7 +356,7 @@ func (_class RepositoryClass) GetHash(sessionID SessionRef, self RepositoryRef) 
 }
 
 // GetUpdate Get the update field of the given Repository.
-func (_class RepositoryClass) GetUpdate(sessionID SessionRef, self RepositoryRef) (_retval bool, _err error) {
+func (_class RepositoryClass) GetUpdate(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval bool, _err error) {
 	_method := "Repository.get_update"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -364,7 +366,7 @@ func (_class RepositoryClass) GetUpdate(sessionID SessionRef, self RepositoryRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -373,7 +375,7 @@ func (_class RepositoryClass) GetUpdate(sessionID SessionRef, self RepositoryRef
 }
 
 // GetSourceURL Get the source_url field of the given Repository.
-func (_class RepositoryClass) GetSourceURL(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetSourceURL(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_source_url"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -383,7 +385,7 @@ func (_class RepositoryClass) GetSourceURL(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -392,7 +394,7 @@ func (_class RepositoryClass) GetSourceURL(sessionID SessionRef, self Repository
 }
 
 // GetBinaryURL Get the binary_url field of the given Repository.
-func (_class RepositoryClass) GetBinaryURL(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetBinaryURL(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_binary_url"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -402,7 +404,7 @@ func (_class RepositoryClass) GetBinaryURL(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -411,7 +413,7 @@ func (_class RepositoryClass) GetBinaryURL(sessionID SessionRef, self Repository
 }
 
 // GetNameDescription Get the name/description field of the given Repository.
-func (_class RepositoryClass) GetNameDescription(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -421,7 +423,7 @@ func (_class RepositoryClass) GetNameDescription(sessionID SessionRef, self Repo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -430,7 +432,7 @@ func (_class RepositoryClass) GetNameDescription(sessionID SessionRef, self Repo
 }
 
 // GetNameLabel Get the name/label field of the given Repository.
-func (_class RepositoryClass) GetNameLabel(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -440,7 +442,7 @@ func (_class RepositoryClass) GetNameLabel(sessionID SessionRef, self Repository
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -449,7 +451,7 @@ func (_class RepositoryClass) GetNameLabel(sessionID SessionRef, self Repository
 }
 
 // GetUUID Get the uuid field of the given Repository.
-func (_class RepositoryClass) GetUUID(sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
+func (_class RepositoryClass) GetUUID(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval string, _err error) {
 	_method := "Repository.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -459,7 +461,7 @@ func (_class RepositoryClass) GetUUID(sessionID SessionRef, self RepositoryRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -468,7 +470,7 @@ func (_class RepositoryClass) GetUUID(sessionID SessionRef, self RepositoryRef) 
 }
 
 // GetByNameLabel Get all the Repository instances with the given label.
-func (_class RepositoryClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []RepositoryRef, _err error) {
+func (_class RepositoryClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []RepositoryRef, _err error) {
 	_method := "Repository.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -478,7 +480,7 @@ func (_class RepositoryClass) GetByNameLabel(sessionID SessionRef, label string)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -487,7 +489,7 @@ func (_class RepositoryClass) GetByNameLabel(sessionID SessionRef, label string)
 }
 
 // GetByUUID Get a reference to the Repository instance with the specified UUID.
-func (_class RepositoryClass) GetByUUID(sessionID SessionRef, uuid string) (_retval RepositoryRef, _err error) {
+func (_class RepositoryClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval RepositoryRef, _err error) {
 	_method := "Repository.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -497,7 +499,7 @@ func (_class RepositoryClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -506,7 +508,7 @@ func (_class RepositoryClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 }
 
 // GetRecord Get a record containing the current state of the given Repository.
-func (_class RepositoryClass) GetRecord(sessionID SessionRef, self RepositoryRef) (_retval RepositoryRecord, _err error) {
+func (_class RepositoryClass) GetRecord(ctx context.Context, sessionID SessionRef, self RepositoryRef) (_retval RepositoryRecord, _err error) {
 	_method := "Repository.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -516,7 +518,7 @@ func (_class RepositoryClass) GetRecord(sessionID SessionRef, self RepositoryRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

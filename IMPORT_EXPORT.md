@@ -135,9 +135,9 @@ To actually observe the outcome, create your own task first and pass its ref as
 `task_id`:
 
 ```go
-task, err := xapi.Task.Create(session, "import my.vhd", "")
+task, err := xapi.Task.Create(ctx, session, "import my.vhd", "")
 // ... PUT .../import_raw_vdi?...&task_id=<task>
-status, err := xapi.Task.GetStatus(session, task) // poll until success/failure
+status, err := xapi.Task.GetStatus(ctx, session, task) // poll until success/failure
 ```
 
 The import handler completes that forwarded task, so polling it is the reliable
@@ -233,17 +233,18 @@ truncated or mis-routed uploads that still returned HTTP 200.
 The XML-RPC half comes from this package; the upload is a plain HTTP `PUT`:
 
 ```go
+ctx := context.Background()
 xapi, _ := xenapi.NewClient("https://10.0.0.10")
-session, _ := xapi.Session.LoginWithPassword(user, pass, "1.0", "myimport")
-defer xapi.Session.Logout(session)
+session, _ := xapi.Session.LoginWithPassword(ctx, user, pass, "1.0", "myimport")
+defer xapi.Session.Logout(ctx, session)
 
-vdi, _ := xapi.VDI.Create(session, xenapi.VDIRecord{
+vdi, _ := xapi.VDI.Create(ctx, session, xenapi.VDIRecord{
     NameLabel:   "imported",
     SR:          srRef,
     VirtualSize: 128 << 20,
     Type:        xenapi.VdiTypeUser,
 })
-task, _ := xapi.Task.Create(session, "import", "")
+task, _ := xapi.Task.Create(ctx, session, "import", "")
 
 f, _ := os.Open("disk.raw")
 defer f.Close()
@@ -258,7 +259,7 @@ resp, _ := (&http.Client{Transport: transport}).Do(req) // no timeout for large 
 resp.Body.Close()
 
 for {
-    st, _ := xapi.Task.GetStatus(session, task)
+    st, _ := xapi.Task.GetStatus(ctx, session, task)
     if st == xenapi.TaskStatusTypeSuccess { break }
     if st == xenapi.TaskStatusTypeFailure { panic("import failed") }
     time.Sleep(2 * time.Second)
@@ -425,24 +426,24 @@ Never export the live disk of a running VM. Snapshot first, export the
 snapshot, delete the snapshot:
 
 ```go
-task, _ := xapi.Task.Create(session, "backup "+name, "")
+task, _ := xapi.Task.Create(ctx, session, "backup "+name, "")
 
 // 1. point-in-time, preferably quiesced
-snap, err := xapi.VM.SnapshotWithQuiesce(session, vm, "bkp-"+name+"-"+ts)
+snap, err := xapi.VM.SnapshotWithQuiesce(ctx, session, vm, "bkp-"+name+"-"+ts)
 if err != nil {
     // guest tools missing / unsupported -> crash-consistent fallback
-    snap, err = xapi.VM.Snapshot(session, vm, "bkp-"+name+"-"+ts, nil)
+    snap, err = xapi.VM.Snapshot(ctx, session, vm, "bkp-"+name+"-"+ts, nil)
 }
 
 // 2. stream GET /export?session_id=...&uuid=<snap>&task_id=<task>
 //    straight to the backup target (no host-side staging)
 
 // 3. check the task, not just the HTTP status
-st, _ := xapi.Task.GetStatus(session, task)      // success / failure
-msg, _ := xapi.Task.GetErrorInfo(session, task)  // non-empty on failure
+st, _ := xapi.Task.GetStatus(ctx, session, task)      // success / failure
+msg, _ := xapi.Task.GetErrorInfo(ctx, session, task)  // non-empty on failure
 
 // 4. always clean up, also on failure
-xapi.VM.Destroy(session, snap)
+xapi.VM.Destroy(ctx, session, snap)
 ```
 
 Pool and host configuration are separate artifacts (`/pool/xmldbdump`,

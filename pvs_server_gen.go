@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -41,13 +43,13 @@ type PVSServerClass struct {
 }
 
 // GetAllRecords Return a map of PVS_server references to PVS_server records for all PVS_servers known to the system.
-func (_class PVSServerClass) GetAllRecords(sessionID SessionRef) (_retval map[PVSServerRef]PVSServerRecord, _err error) {
+func (_class PVSServerClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PVSServerRef]PVSServerRecord, _err error) {
 	_method := "PVS_server.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -56,13 +58,13 @@ func (_class PVSServerClass) GetAllRecords(sessionID SessionRef) (_retval map[PV
 }
 
 // GetAll Return a list of all the PVS_servers known to the system.
-func (_class PVSServerClass) GetAll(sessionID SessionRef) (_retval []PVSServerRef, _err error) {
+func (_class PVSServerClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PVSServerRef, _err error) {
 	_method := "PVS_server.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -71,7 +73,7 @@ func (_class PVSServerClass) GetAll(sessionID SessionRef) (_retval []PVSServerRe
 }
 
 // Forget forget a PVS server
-func (_class PVSServerClass) Forget(sessionID SessionRef, self PVSServerRef) (_err error) {
+func (_class PVSServerClass) Forget(ctx context.Context, sessionID SessionRef, self PVSServerRef) (_err error) {
 	_method := "PVS_server.forget"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -81,12 +83,12 @@ func (_class PVSServerClass) Forget(sessionID SessionRef, self PVSServerRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Introduce introduce new PVS server
-func (_class PVSServerClass) Introduce(sessionID SessionRef, addresses []string, firstPort int, lastPort int, site PVSSiteRef) (_retval PVSServerRef, _err error) {
+func (_class PVSServerClass) Introduce(ctx context.Context, sessionID SessionRef, addresses []string, firstPort int, lastPort int, site PVSSiteRef) (_retval PVSServerRef, _err error) {
 	_method := "PVS_server.introduce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -108,7 +110,7 @@ func (_class PVSServerClass) Introduce(sessionID SessionRef, addresses []string,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _addressesArg, _firstPortArg, _lastPortArg, _siteArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _addressesArg, _firstPortArg, _lastPortArg, _siteArg)
 	if _err != nil {
 		return
 	}
@@ -117,7 +119,7 @@ func (_class PVSServerClass) Introduce(sessionID SessionRef, addresses []string,
 }
 
 // GetSite Get the site field of the given PVS_server.
-func (_class PVSServerClass) GetSite(sessionID SessionRef, self PVSServerRef) (_retval PVSSiteRef, _err error) {
+func (_class PVSServerClass) GetSite(ctx context.Context, sessionID SessionRef, self PVSServerRef) (_retval PVSSiteRef, _err error) {
 	_method := "PVS_server.get_site"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -127,7 +129,7 @@ func (_class PVSServerClass) GetSite(sessionID SessionRef, self PVSServerRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -136,7 +138,7 @@ func (_class PVSServerClass) GetSite(sessionID SessionRef, self PVSServerRef) (_
 }
 
 // GetLastPort Get the last_port field of the given PVS_server.
-func (_class PVSServerClass) GetLastPort(sessionID SessionRef, self PVSServerRef) (_retval int, _err error) {
+func (_class PVSServerClass) GetLastPort(ctx context.Context, sessionID SessionRef, self PVSServerRef) (_retval int, _err error) {
 	_method := "PVS_server.get_last_port"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -146,7 +148,7 @@ func (_class PVSServerClass) GetLastPort(sessionID SessionRef, self PVSServerRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -155,7 +157,7 @@ func (_class PVSServerClass) GetLastPort(sessionID SessionRef, self PVSServerRef
 }
 
 // GetFirstPort Get the first_port field of the given PVS_server.
-func (_class PVSServerClass) GetFirstPort(sessionID SessionRef, self PVSServerRef) (_retval int, _err error) {
+func (_class PVSServerClass) GetFirstPort(ctx context.Context, sessionID SessionRef, self PVSServerRef) (_retval int, _err error) {
 	_method := "PVS_server.get_first_port"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -165,7 +167,7 @@ func (_class PVSServerClass) GetFirstPort(sessionID SessionRef, self PVSServerRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -174,7 +176,7 @@ func (_class PVSServerClass) GetFirstPort(sessionID SessionRef, self PVSServerRe
 }
 
 // GetAddresses Get the addresses field of the given PVS_server.
-func (_class PVSServerClass) GetAddresses(sessionID SessionRef, self PVSServerRef) (_retval []string, _err error) {
+func (_class PVSServerClass) GetAddresses(ctx context.Context, sessionID SessionRef, self PVSServerRef) (_retval []string, _err error) {
 	_method := "PVS_server.get_addresses"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -184,7 +186,7 @@ func (_class PVSServerClass) GetAddresses(sessionID SessionRef, self PVSServerRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -193,7 +195,7 @@ func (_class PVSServerClass) GetAddresses(sessionID SessionRef, self PVSServerRe
 }
 
 // GetUUID Get the uuid field of the given PVS_server.
-func (_class PVSServerClass) GetUUID(sessionID SessionRef, self PVSServerRef) (_retval string, _err error) {
+func (_class PVSServerClass) GetUUID(ctx context.Context, sessionID SessionRef, self PVSServerRef) (_retval string, _err error) {
 	_method := "PVS_server.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -203,7 +205,7 @@ func (_class PVSServerClass) GetUUID(sessionID SessionRef, self PVSServerRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -212,7 +214,7 @@ func (_class PVSServerClass) GetUUID(sessionID SessionRef, self PVSServerRef) (_
 }
 
 // GetByUUID Get a reference to the PVS_server instance with the specified UUID.
-func (_class PVSServerClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PVSServerRef, _err error) {
+func (_class PVSServerClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PVSServerRef, _err error) {
 	_method := "PVS_server.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -222,7 +224,7 @@ func (_class PVSServerClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -231,7 +233,7 @@ func (_class PVSServerClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 }
 
 // GetRecord Get a record containing the current state of the given PVS_server.
-func (_class PVSServerClass) GetRecord(sessionID SessionRef, self PVSServerRef) (_retval PVSServerRecord, _err error) {
+func (_class PVSServerClass) GetRecord(ctx context.Context, sessionID SessionRef, self PVSServerRef) (_retval PVSServerRecord, _err error) {
 	_method := "PVS_server.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -241,7 +243,7 @@ func (_class PVSServerClass) GetRecord(sessionID SessionRef, self PVSServerRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
