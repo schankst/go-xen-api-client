@@ -386,3 +386,20 @@ func TestClientCallAlreadyCanceledSendsNothing(t *testing.T) {
 		t.Errorf("server received %d requests, want 0", n)
 	}
 }
+
+func TestClientCallInvalidReplySendsNothing(t *testing.T) {
+	var requests atomic.Int32
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requests.Add(1)
+	}))
+	defer server.Close()
+
+	var notAPointer string
+	err := NewClient(server.URL, nil).Call(t.Context(), "VM.destroy", nil, notAPointer)
+	if err == nil {
+		t.Fatal("Call with a non-pointer reply succeeded, want an error")
+	}
+	if n := requests.Load(); n != 0 {
+		t.Errorf("server received %d requests, want 0", n)
+	}
+}

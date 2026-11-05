@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"time"
 )
 
 // wrapAsResponse embeds a <value> fragment (as produced by writeValue) into
@@ -163,5 +164,72 @@ func TestDecodeResponseFault(t *testing.T) {
 	}
 	if xerr.Message() != "boom" {
 		t.Errorf("Message() = %q, want %q", xerr.Message(), "boom")
+	}
+}
+
+func TestWriteValueTimeIsUTC(t *testing.T) {
+	cet := time.FixedZone("CET", 3600)
+	in := time.Date(2026, 1, 1, 12, 0, 0, 0, cet)
+	var sb strings.Builder
+	if err := writeValue(&sb, in); err != nil {
+		t.Fatal(err)
+	}
+	if want := "<value><dateTime.iso8601>20260101T11:00:00</dateTime.iso8601></value>"; sb.String() != want {
+		t.Errorf("writeValue(12:00 CET) = %s, want %s", sb.String(), want)
+	}
+	got, err := decodeResponse([]byte(wrapAsResponse(sb.String())))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !got.(time.Time).Equal(in) {
+		t.Errorf("round trip gave %v, want the same instant as %v", got, in)
+	}
+}
+
+func TestWriteValueNamedTypes(t *testing.T) {
+	type ref string
+	type level int
+	cases := []struct {
+		in   any
+		want string
+	}{
+		{ref("OpaqueRef:x"), "<value><string>OpaqueRef:x</string></value>"},
+		{level(3), "<value><int>3</int></value>"},
+		{[]ref{"a", "b"}, "<value><array><data><value><string>a</string></value><value><string>b</string></value></data></array></value>"},
+		{map[ref]string{"k": "v"}, "<value><struct><member><name>k</name><value><string>v</string></value></member></struct></value>"},
+	}
+	for _, tc := range cases {
+		var sb strings.Builder
+		if err := writeValue(&sb, tc.in); err != nil {
+			t.Errorf("writeValue(%#v): %v", tc.in, err)
+			continue
+		}
+		if sb.String() != tc.want {
+			t.Errorf("writeValue(%#v) = %s, want %s", tc.in, sb.String(), tc.want)
+		}
+	}
+	var sb strings.Builder
+	if err := writeValue(&sb, map[int]string{1: "x"}); err == nil {
+		t.Error("writeValue(map[int]string) succeeded, want an error (XML-RPC struct keys are strings)")
+	}
+}
+
+func TestWriteValueRejectsCharactersXMLCannotCarry(t *testing.T) {
+	for _, s := range []string{"a\x01b", "nul\x00", "bad\xffutf8", "\x1b[0m"} {
+		var sb strings.Builder
+		if err := writeValue(&sb, s); err == nil {
+			t.Errorf("writeValue(%q) = %s, want an error", s, sb.String())
+		}
+	}
+	for _, s := range []string{"tab\tnewline\ncr\r", "replacement \uFFFD", "emoji 🙂", "<&>"} {
+		var sb strings.Builder
+		if err := writeValue(&sb, s); err != nil {
+			t.Errorf("writeValue(%q): %v", s, err)
+			continue
+		}
+		got, err := decodeResponse([]byte(wrapAsResponse(sb.String())))
+		if err != nil || got != s {
+			t.Errorf("round trip of %q gave %q, %v", s, got, err)
+		}
 	}
 }

@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 // buildRequest renders method and params as a complete XML-RPC methodCall
@@ -71,19 +72,43 @@ func writeValueBody(b *strings.Builder, value any) error {
 		return writeDouble(b, v, 64)
 	case time.Time:
 		b.WriteString(`<dateTime.iso8601>`)
-		b.WriteString(v.Format("20060102T15:04:05"))
+		// The format has no zone; XML-RPC peers, XAPI included, read it as UTC.
+		b.WriteString(v.UTC().Format("20060102T15:04:05"))
 		b.WriteString(`</dateTime.iso8601>`)
 	case nil:
 		// XML-RPC has no nil; XenAPI never takes one.
 		return errors.New("xmlrpc: nil is not a supported XML-RPC value")
 	default:
-		rv := reflect.ValueOf(value)
-		if rv.Kind() != reflect.Slice && rv.Kind() != reflect.Array {
-			return fmt.Errorf("xmlrpc: unsupported value type %T", value)
-		}
-		return writeArray(b, rv)
+		return writeReflected(b, reflect.ValueOf(value))
 	}
 	return nil
+}
+
+// writeReflected encodes values of named types (e.g. type VMRef string),
+// maps with string keys, and slices by their kind.
+func writeReflected(b *strings.Builder, rv reflect.Value) error {
+	switch rv.Kind() {
+	case reflect.String:
+		return writeValueBody(b, rv.String())
+	case reflect.Bool:
+		return writeValueBody(b, rv.Bool())
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		return writeValueBody(b, rv.Int())
+	case reflect.Float32, reflect.Float64:
+		return writeValueBody(b, rv.Float())
+	case reflect.Slice, reflect.Array:
+		return writeArray(b, rv)
+	case reflect.Map:
+		if rv.Type().Key().Kind() != reflect.String {
+			break
+		}
+		s := make(Struct, rv.Len())
+		for it := rv.MapRange(); it.Next(); {
+			s[it.Key().String()] = it.Value().Interface()
+		}
+		return writeStruct(b, s)
+	}
+	return fmt.Errorf("xmlrpc: unsupported value type %s", rv.Type())
 }
 
 // writeDouble writes the shortest decimal that parses back to v. XML-RPC
@@ -126,6 +151,22 @@ func writeArray(b *strings.Builder, rv reflect.Value) error {
 	return nil
 }
 
+// writeEscaped writes s as XML text. Strings XML 1.0 can't carry (invalid
+// UTF-8, most control characters) are an error rather than being altered.
 func writeEscaped(b *strings.Builder, s string) error {
+	for i, r := range s {
+		if _, size := utf8.DecodeRuneInString(s[i:]); r == utf8.RuneError && size == 1 {
+			return fmt.Errorf("xmlrpc: string contains invalid UTF-8 at byte %d", i)
+		}
+		if !isXMLChar(r) {
+			return fmt.Errorf("xmlrpc: string contains %U, which XML cannot represent", r)
+		}
+	}
 	return xml.EscapeText(b, []byte(s))
+}
+
+// isXMLChar reports whether r is allowed in XML 1.0 text.
+func isXMLChar(r rune) bool {
+	return r == '\t' || r == '\n' || r == '\r' ||
+		r >= 0x20 && r <= 0xD7FF || r >= 0xE000 && r <= 0xFFFD || r >= 0x10000 && r <= 0x10FFFF
 }

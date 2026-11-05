@@ -59,6 +59,15 @@ func DefaultHTTPClient(tlsConfig *tls.Config) *http.Client {
 // or an untyped value to string. If *reply can't hold that type, Call
 // returns an error.
 func (c *Client) Call(ctx context.Context, method string, params []any, reply any) error {
+	var dst reflect.Value
+	if reply != nil {
+		rv := reflect.ValueOf(reply)
+		if rv.Kind() != reflect.Pointer || rv.IsNil() {
+			return fmt.Errorf("xmlrpc: reply must be a non-nil pointer, got %T", reply)
+		}
+		dst = rv.Elem()
+	}
+
 	body, err := buildRequest(method, params)
 	if err != nil {
 		return err
@@ -94,14 +103,8 @@ func (c *Client) Call(ctx context.Context, method string, params []any, reply an
 	if reply == nil {
 		return nil
 	}
-	rv := reflect.ValueOf(reply)
-	if rv.Kind() != reflect.Pointer || rv.IsNil() {
-		return fmt.Errorf("xmlrpc: reply must be a non-nil pointer, got %T", reply)
-	}
-
 	// Check assignability, since reflect.Value.Set would panic on a server
 	// answering with an unexpected type.
-	dst := rv.Elem()
 	if dst.Kind() == reflect.Interface && dst.NumMethod() == 0 {
 		dst.Set(reflect.ValueOf(value))
 		return nil
