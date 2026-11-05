@@ -105,3 +105,25 @@ func ExampleDecodeVMRecord() {
 		}
 	}
 }
+
+// Clone a VM as a task, so it can be cancelled on the host.
+func ExampleClient_AsyncCall() {
+	var (
+		xapi    *xenapi.Client
+		session xenapi.SessionRef
+		vm      xenapi.VMRef
+	)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+
+	task, err := xapi.AsyncCall(ctx, "VM.clone", session, vm, "web-copy")
+	if err != nil {
+		log.Fatal(err)
+	}
+	result, err := xapi.WaitTask(ctx, session, task) // cancels the task if ctx ends
+	if err != nil {
+		log.Fatal(err)
+	}
+	clone := xenapi.VMRef(result.(string))
+	log.Println("cloned:", clone)
+}

@@ -60,6 +60,9 @@ func main() {
   certificate, trust it with `xenapi.WithTLSConfig(&tls.Config{RootCAs: pool})`.
 - **Context:** every call takes a `context.Context`; use it for deadlines and
   cancellation. The default HTTP client has no overall timeout.
+- **Long operations:** `AsyncCall` starts a method as a XAPI task and
+  `WaitTask` waits for it, cancelling the task on the host if the context
+  ends.
 - **Errors:** XenAPI failures are `*xenapi.Error` values with a `Code` and all
   `Params`. Match them with `errors.Is(err, xenapi.ErrHandleInvalid)`.
 - **Versions:** `xenapi.SchemaXAPIRelease` names the XAPI release the bindings

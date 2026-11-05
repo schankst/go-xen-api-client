@@ -40,8 +40,8 @@ were verified on XCP-ng 8.3.0 (xapi 26.1.16).
 
 The handler returns a `task-id` header, but that task cannot be queried
 (`HANDLE_INVALID`). Create your own task with `Task.Create`, pass it as
-`task_id`, and poll `Task.GetStatus` until `success` or `failure`
-(details in `Task.GetErrorInfo`). HTTP 200 alone does not mean the data
+`task_id`, and wait for it with `client.WaitTask`, which returns the
+task's error as `*xenapi.Error`. HTTP 200 alone does not mean the data
 was written. To verify content, hash the `GET /export_raw_vdi` output and
 compare with the source's virtual content (without any VHD footer).
 

@@ -348,3 +348,16 @@ func decodeArray(dec *xml.Decoder, depth int) ([]any, error) {
 		}
 	}
 }
+
+// DecodeValue decodes a single XML-RPC <value> element, such as the result
+// a XenAPI task stores. An empty string decodes to nil.
+func DecodeValue(s string) (any, error) {
+	if strings.TrimSpace(s) == "" {
+		return nil, nil
+	}
+	dec := xml.NewDecoder(strings.NewReader(s))
+	if _, err := findStart(dec, "value"); err != nil {
+		return nil, fmt.Errorf("xmlrpc: %w", err)
+	}
+	return decodeValue(dec, 0)
+}

@@ -268,3 +268,21 @@ func TestDecodeResponseWhitespace(t *testing.T) {
 		t.Error("text before a typed element was accepted, want an error")
 	}
 }
+
+func TestDecodeValue(t *testing.T) {
+	cases := map[string]any{
+		"":                            nil,
+		"<value>OpaqueRef:x</value>":  "OpaqueRef:x",
+		"<value><int>3</int></value>": int64(3),
+		"<value><array><data><value>a</value></data></array></value>": []any{"a"},
+	}
+	for in, want := range cases {
+		got, err := DecodeValue(in)
+		if err != nil || !reflect.DeepEqual(got, want) {
+			t.Errorf("DecodeValue(%q) = %#v, %v; want %#v", in, got, err, want)
+		}
+	}
+	if _, err := DecodeValue("<value><int>x</int></value>"); err == nil {
+		t.Error("DecodeValue of an invalid int succeeded")
+	}
+}
