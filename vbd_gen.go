@@ -79,7 +79,7 @@ type VBDRecord struct {
 	// is the device currently attached (erased on reboot)
 	CurrentlyAttached bool
 	// error/success code associated with last attach-operation (erased on reboot)
-	StatusCode int
+	StatusCode int64
 	// error/success information associated with last attach-operation status (erased on reboot)
 	StatusDetail string
 	// Device runtime properties
@@ -269,7 +269,7 @@ func (c VBDClass) GetStatusDetail(ctx context.Context, sessionID SessionRef, sel
 }
 
 // GetStatusCode Get the status_code field of the given VBD.
-func (c VBDClass) GetStatusCode(ctx context.Context, sessionID SessionRef, self VBDRef) (int, error) {
+func (c VBDClass) GetStatusCode(ctx context.Context, sessionID SessionRef, self VBDRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VBD.get_status_code", toInt, string(sessionID), string(self))
 }
 

@@ -29,13 +29,13 @@ type VGPUTypeRecord struct {
 	// Model name associated with the VGPU type
 	ModelName string
 	// Framebuffer size of the VGPU type, in bytes
-	FramebufferSize int
+	FramebufferSize int64
 	// Maximum number of displays supported by the VGPU type
-	MaxHeads int
+	MaxHeads int64
 	// Maximum resolution (width) supported by the VGPU type
-	MaxResolutionX int
+	MaxResolutionX int64
 	// Maximum resolution (height) supported by the VGPU type
-	MaxResolutionY int
+	MaxResolutionY int64
 	// List of PGPUs that support this VGPU type
 	SupportedOnPGPUs []PGPURef
 	// List of PGPUs that have this VGPU type enabled
@@ -119,22 +119,22 @@ func (c VGPUTypeClass) GetSupportedOnPGPUs(ctx context.Context, sessionID Sessio
 }
 
 // GetMaxResolutionY Get the max_resolution_y field of the given VGPU_type.
-func (c VGPUTypeClass) GetMaxResolutionY(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int, error) {
+func (c VGPUTypeClass) GetMaxResolutionY(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VGPU_type.get_max_resolution_y", toInt, string(sessionID), string(self))
 }
 
 // GetMaxResolutionX Get the max_resolution_x field of the given VGPU_type.
-func (c VGPUTypeClass) GetMaxResolutionX(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int, error) {
+func (c VGPUTypeClass) GetMaxResolutionX(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VGPU_type.get_max_resolution_x", toInt, string(sessionID), string(self))
 }
 
 // GetMaxHeads Get the max_heads field of the given VGPU_type.
-func (c VGPUTypeClass) GetMaxHeads(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int, error) {
+func (c VGPUTypeClass) GetMaxHeads(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VGPU_type.get_max_heads", toInt, string(sessionID), string(self))
 }
 
 // GetFramebufferSize Get the framebuffer_size field of the given VGPU_type.
-func (c VGPUTypeClass) GetFramebufferSize(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int, error) {
+func (c VGPUTypeClass) GetFramebufferSize(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VGPU_type.get_framebuffer_size", toInt, string(sessionID), string(self))
 }
 

@@ -56,7 +56,7 @@ func (c GPUGroupClass) GetAll(ctx context.Context, sessionID SessionRef) ([]GPUG
 }
 
 // GetRemainingCapacity
-func (c GPUGroupClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self GPUGroupRef, vgpuType VGPUTypeRef) (int, error) {
+func (c GPUGroupClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self GPUGroupRef, vgpuType VGPUTypeRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "GPU_group.get_remaining_capacity", toInt, string(sessionID), string(self), string(vgpuType))
 }
 

@@ -40,7 +40,7 @@ type PoolUpdateRecord struct {
 	// Update version number
 	Version string
 	// Size of the update in bytes
-	InstallationSize int
+	InstallationSize int64
 	// GPG key of the update
 	Key string
 	// What the client should do after this update has been applied.
@@ -155,7 +155,7 @@ func (c PoolUpdateClass) GetKey(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetInstallationSize Get the installation_size field of the given pool_update.
-func (c PoolUpdateClass) GetInstallationSize(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (int, error) {
+func (c PoolUpdateClass) GetInstallationSize(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool_update.get_installation_size", toInt, string(sessionID), string(self))
 }
 

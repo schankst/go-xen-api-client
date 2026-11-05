@@ -41,7 +41,7 @@ type SMRecord struct {
 	// Deprecated: Deprecated in XAPI release clearwater. Use SM.features instead.
 	Capabilities []string
 	// capabilities of the SM plugin, with capability version numbers
-	Features map[string]int
+	Features map[string]int64
 	// additional configuration
 	OtherConfig map[string]string
 	// filename of the storage driver
@@ -112,7 +112,7 @@ func (c SMClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetFeatures Get the features field of the given SM.
-func (c SMClass) GetFeatures(ctx context.Context, sessionID SessionRef, self SMRef) (map[string]int, error) {
+func (c SMClass) GetFeatures(ctx context.Context, sessionID SessionRef, self SMRef) (map[string]int64, error) {
 	return callAndConvert(ctx, c.client, "SM.get_features", convertStringToIntMapToGo, string(sessionID), string(self))
 }
 

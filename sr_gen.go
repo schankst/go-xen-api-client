@@ -83,11 +83,11 @@ type SRRecord struct {
 	// describes how particular hosts can see this storage repository
 	PBDs []PBDRef
 	// sum of virtual_sizes of all VDIs in this storage repository (in bytes)
-	VirtualAllocation int
+	VirtualAllocation int64
 	// physical space currently utilised on this storage repository (in bytes). Note that for sparse disk formats, physical_utilisation may be less than virtual_allocation
-	PhysicalUtilisation int
+	PhysicalUtilisation int64
 	// total physical size of the repository (in bytes)
-	PhysicalSize int
+	PhysicalSize int64
 	// type of the storage repository
 	Type string
 	// the type of the SR's content, if required (for example, ISOs)
@@ -176,7 +176,7 @@ func (c SRClass) AssertCanHostHAStatefile(ctx context.Context, sessionID Session
 }
 
 // SetPhysicalSize Sets the SR's physical_size field
-func (c SRClass) SetPhysicalSize(ctx context.Context, sessionID SessionRef, self SRRef, value int) error {
+func (c SRClass) SetPhysicalSize(ctx context.Context, sessionID SessionRef, self SRRef, value int64) error {
 	_, err := c.client.APICall(ctx, "SR.set_physical_size", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -254,7 +254,7 @@ func (c SRClass) Destroy(ctx context.Context, sessionID SessionRef, sr SRRef) er
 // Make Create a new Storage Repository on disk. This call is deprecated: use SR.create instead.
 //
 // Deprecated: Deprecated in XAPI release miami. Use SR.create instead.
-func (c SRClass) Make(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int, nameLabel string, nameDescription string, atype string, contentType string, smConfig map[string]string) (string, error) {
+func (c SRClass) Make(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int64, nameLabel string, nameDescription string, atype string, contentType string, smConfig map[string]string) (string, error) {
 	return callAndConvert(ctx, c.client, "SR.make", toValue[string], string(sessionID), string(host), convertStringToStringMapToXen(deviceConfig), fromInt(physicalSize), nameLabel, nameDescription, atype, contentType, convertStringToStringMapToXen(smConfig))
 }
 
@@ -268,7 +268,7 @@ func (c SRClass) Introduce(ctx context.Context, sessionID SessionRef, uuid strin
 // Errors:
 //
 //	SR_UNKNOWN_DRIVER - The SR could not be connected because the driver was not recognised.
-func (c SRClass) Create(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int, nameLabel string, nameDescription string, atype string, contentType string, shared bool, smConfig map[string]string) (SRRef, error) {
+func (c SRClass) Create(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int64, nameLabel string, nameDescription string, atype string, contentType string, shared bool, smConfig map[string]string) (SRRef, error) {
 	return callAndConvert(ctx, c.client, "SR.create", toString[SRRef], string(sessionID), string(host), convertStringToStringMapToXen(deviceConfig), fromInt(physicalSize), nameLabel, nameDescription, atype, contentType, shared, convertStringToStringMapToXen(smConfig))
 }
 
@@ -382,17 +382,17 @@ func (c SRClass) GetType(ctx context.Context, sessionID SessionRef, self SRRef) 
 }
 
 // GetPhysicalSize Get the physical_size field of the given SR.
-func (c SRClass) GetPhysicalSize(ctx context.Context, sessionID SessionRef, self SRRef) (int, error) {
+func (c SRClass) GetPhysicalSize(ctx context.Context, sessionID SessionRef, self SRRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "SR.get_physical_size", toInt, string(sessionID), string(self))
 }
 
 // GetPhysicalUtilisation Get the physical_utilisation field of the given SR.
-func (c SRClass) GetPhysicalUtilisation(ctx context.Context, sessionID SessionRef, self SRRef) (int, error) {
+func (c SRClass) GetPhysicalUtilisation(ctx context.Context, sessionID SessionRef, self SRRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "SR.get_physical_utilisation", toInt, string(sessionID), string(self))
 }
 
 // GetVirtualAllocation Get the virtual_allocation field of the given SR.
-func (c SRClass) GetVirtualAllocation(ctx context.Context, sessionID SessionRef, self SRRef) (int, error) {
+func (c SRClass) GetVirtualAllocation(ctx context.Context, sessionID SessionRef, self SRRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "SR.get_virtual_allocation", toInt, string(sessionID), string(self))
 }
 

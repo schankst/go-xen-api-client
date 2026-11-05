@@ -23,7 +23,7 @@ type HostPatchRecord struct {
 	// Time the patch was applied
 	TimestampApplied time.Time
 	// Size of the patch
-	Size int
+	Size int64
 	// The patch applied
 	PoolPatch PoolPatchRef
 	// additional configuration
@@ -97,7 +97,7 @@ func (c HostPatchClass) GetPoolPatch(ctx context.Context, sessionID SessionRef, 
 }
 
 // GetSize Get the size field of the given host_patch.
-func (c HostPatchClass) GetSize(ctx context.Context, sessionID SessionRef, self HostPatchRef) (int, error) {
+func (c HostPatchClass) GetSize(ctx context.Context, sessionID SessionRef, self HostPatchRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_patch.get_size", toInt, string(sessionID), string(self))
 }
 

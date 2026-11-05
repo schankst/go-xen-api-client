@@ -12,7 +12,7 @@ type VMGuestOSRecord struct {
 	// mode
 	Mode SharedMode
 	// os id
-	OSID int
+	OSID int64
 }
 
 type VMGuestOSRef string

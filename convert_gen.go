@@ -148,7 +148,7 @@ func convertVGPUTypeRefToVGPUTypeRecordMapToGo(input any) (map[VGPUTypeRef]VGPUT
 	return toMap(input, toString[VGPUTypeRef], convertVGPUTypeRecordToGo)
 }
 
-func convertVGPUTypeRefToIntMapToGo(input any) (map[VGPUTypeRef]int, error) {
+func convertVGPUTypeRefToIntMapToGo(input any) (map[VGPUTypeRef]int64, error) {
 	return toMap(input, toString[VGPUTypeRef], toInt)
 }
 
@@ -268,15 +268,15 @@ func convertHostPatchRefToHostPatchRecordMapToGo(input any) (map[HostPatchRef]Ho
 	return toMap(input, toString[HostPatchRef], convertHostPatchRecordToGo)
 }
 
-func convertIntToFloatMapToGo(input any) (map[int]float64, error) {
+func convertIntToFloatMapToGo(input any) (map[int64]float64, error) {
 	return toMap(input, toInt, toValue[float64])
 }
 
-func convertIntToIntMapToGo(input any) (map[int]int, error) {
+func convertIntToIntMapToGo(input any) (map[int64]int64, error) {
 	return toMap(input, toInt, toInt)
 }
 
-func convertIntToStringSetMapToGo(input any) (map[int][]string, error) {
+func convertIntToStringSetMapToGo(input any) (map[int64][]string, error) {
 	return toMap(input, toInt, convertStringSetToGo)
 }
 
@@ -400,7 +400,7 @@ func convertStringToEnumVUSBOperationsMapToGo(input any) (map[string]VUSBOperati
 	return toMap(input, toValue[string], toString[VUSBOperations])
 }
 
-func convertStringToIntMapToGo(input any) (map[string]int, error) {
+func convertStringToIntMapToGo(input any) (map[string]int64, error) {
 	return toMap(input, toValue[string], toInt)
 }
 
@@ -2492,11 +2492,11 @@ func convertHostPatchRefSetToGo(input any) ([]HostPatchRef, error) {
 	return toSlice(input, toString[HostPatchRef])
 }
 
-func convertIntSetToGo(input any) ([]int, error) {
+func convertIntSetToGo(input any) ([]int64, error) {
 	return toSlice(input, toInt)
 }
 
-func convertIntSetToXen(v []int) []any {
+func convertIntSetToXen(v []int64) []any {
 	return fromSlice(v, fromInt)
 }
 

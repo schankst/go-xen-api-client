@@ -47,7 +47,7 @@ type NetworkRecord struct {
 	// list of connected pifs
 	PIFs []PIFRef
 	// MTU in octets
-	MTU int
+	MTU int64
 	// additional configuration
 	OtherConfig map[string]string
 	// name of the bridge corresponding to this network on the local host
@@ -147,7 +147,7 @@ func (c NetworkClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, 
 }
 
 // SetMTU Set the MTU field of the given network.
-func (c NetworkClass) SetMTU(ctx context.Context, sessionID SessionRef, self NetworkRef, value int) error {
+func (c NetworkClass) SetMTU(ctx context.Context, sessionID SessionRef, self NetworkRef, value int64) error {
 	_, err := c.client.APICall(ctx, "network.set_MTU", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -205,7 +205,7 @@ func (c NetworkClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, 
 }
 
 // GetMTU Get the MTU field of the given network.
-func (c NetworkClass) GetMTU(ctx context.Context, sessionID SessionRef, self NetworkRef) (int, error) {
+func (c NetworkClass) GetMTU(ctx context.Context, sessionID SessionRef, self NetworkRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "network.get_MTU", toInt, string(sessionID), string(self))
 }
 

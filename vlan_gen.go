@@ -14,7 +14,7 @@ type VLANRecord struct {
 	// interface on which traffic is untagged
 	UntaggedPIF PIFRef
 	// VLAN tag in use
-	Tag int
+	Tag int64
 	// additional configuration
 	OtherConfig map[string]string
 }
@@ -43,7 +43,7 @@ func (c VLANClass) Destroy(ctx context.Context, sessionID SessionRef, self VLANR
 }
 
 // Create Create a VLAN mux/demuxer
-func (c VLANClass) Create(ctx context.Context, sessionID SessionRef, taggedPIF PIFRef, tag int, network NetworkRef) (VLANRef, error) {
+func (c VLANClass) Create(ctx context.Context, sessionID SessionRef, taggedPIF PIFRef, tag int64, network NetworkRef) (VLANRef, error) {
 	return callAndConvert(ctx, c.client, "VLAN.create", toString[VLANRef], string(sessionID), string(taggedPIF), fromInt(tag), string(network))
 }
 
@@ -71,7 +71,7 @@ func (c VLANClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, sel
 }
 
 // GetTag Get the tag field of the given VLAN.
-func (c VLANClass) GetTag(ctx context.Context, sessionID SessionRef, self VLANRef) (int, error) {
+func (c VLANClass) GetTag(ctx context.Context, sessionID SessionRef, self VLANRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VLAN.get_tag", toInt, string(sessionID), string(self))
 }
 

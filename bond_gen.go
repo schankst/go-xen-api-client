@@ -33,7 +33,7 @@ type BondRecord struct {
 	// Additional configuration properties specific to the bond mode.
 	Properties map[string]string
 	// Number of links up in this bond
-	LinksUp int
+	LinksUp int64
 	// true if the MAC was taken from the primary member when the bond was created, and false if the client specified the MAC
 	AutoUpdateMAC bool
 }
@@ -102,7 +102,7 @@ func (c BondClass) GetAutoUpdateMAC(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetLinksUp Get the links_up field of the given Bond.
-func (c BondClass) GetLinksUp(ctx context.Context, sessionID SessionRef, self BondRef) (int, error) {
+func (c BondClass) GetLinksUp(ctx context.Context, sessionID SessionRef, self BondRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "Bond.get_links_up", toInt, string(sessionID), string(self))
 }
 

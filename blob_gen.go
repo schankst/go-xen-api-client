@@ -15,7 +15,7 @@ type BlobRecord struct {
 	// a notes field containing human-readable description
 	NameDescription string
 	// Size of the binary data, in bytes
-	Size int
+	Size int64
 	// True if the blob is publicly accessible
 	Public bool
 	// Time at which the data in the blob was last updated
@@ -86,7 +86,7 @@ func (c BlobClass) GetPublic(ctx context.Context, sessionID SessionRef, self Blo
 }
 
 // GetSize Get the size field of the given blob.
-func (c BlobClass) GetSize(ctx context.Context, sessionID SessionRef, self BlobRef) (int, error) {
+func (c BlobClass) GetSize(ctx context.Context, sessionID SessionRef, self BlobRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "blob.get_size", toInt, string(sessionID), string(self))
 }
 

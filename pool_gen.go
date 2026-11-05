@@ -119,9 +119,9 @@ type PoolRecord struct {
 	// HA statefile VDIs in use
 	HAStatefiles []string
 	// Number of host failures to tolerate before the Pool is declared to be overcommitted
-	HAHostFailuresToTolerate int
+	HAHostFailuresToTolerate int64
 	// Number of future host failures we have managed to find a plan for. Once this reaches zero any future host failures will cause the failure of protected VMs.
-	HAPlanExistsFor int
+	HAPlanExistsFor int64
 	// If set to false then operations which would cause the Pool to become overcommitted will be blocked.
 	HAAllowOvercommit bool
 	// True if the Pool is considered to be overcommitted i.e. if there exist insufficient physical resources to tolerate the configured number of host failures
@@ -205,11 +205,11 @@ type PoolRecord struct {
 	// Maximum number of threads to use for PAM authentication
 	//
 	// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
-	LocalAuthMaxThreads int
+	LocalAuthMaxThreads int64
 	// Maximum number of threads to use for external (AD) authentication
 	//
 	// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
-	ExtAuthMaxThreads int
+	ExtAuthMaxThreads int64
 	// Specifies whether external authentication caching is enabled for this pool or not
 	//
 	// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
@@ -217,11 +217,11 @@ type PoolRecord struct {
 	// Maximum capacity of external authentication cache
 	//
 	// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
-	ExtAuthCacheSize int
+	ExtAuthCacheSize int64
 	// Specifies how long external authentication entries should be cached for (seconds)
 	//
 	// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
-	ExtAuthCacheExpiry int
+	ExtAuthCacheExpiry int64
 	// The UUID of the pool for identification of telemetry data
 	//
 	// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
@@ -245,7 +245,7 @@ type PoolRecord struct {
 	// The day of the week the update synchronizations will be scheduled, based on pool's local timezone. Ignored when update_sync_frequency is daily
 	//
 	// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
-	UpdateSyncDay int
+	UpdateSyncDay int64
 	// Whether periodic update synchronization is enabled or not
 	//
 	// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
@@ -269,7 +269,7 @@ type PoolRecord struct {
 	// The maximum time (in seconds) that a VM's console can be idle before it is automatically disconnected. The default value 0 means never timeout. This setting applies only to VM consoles; for host consoles, use the separate parameter 'host.console_idle_timeout'.
 	//
 	// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
-	VMConsoleIdleTimeout int
+	VMConsoleIdleTimeout int64
 	// When true, at VM.create time the pool automatically marks a newly created VM whose Secure Boot certificates are due to expire by setting VM.secureboot_certificates_state to update_on_boot (the same effect as VM.update_secureboot_certificates_on_boot), so the certificates are updated on the VM's next boot. This applies to VMs created by VM.create, including those created by operations that internally call it: the HTTP(s) PUT /import and /import_metadata calls and disaster recovery (VM.recover and VM_appliance.recover); it does not apply to VM.clone or VM.copy, which inherit the source VM's state.
 	//
 	// Experimental: prototyped in XAPI release 26.16.1; it may change or be removed.
@@ -335,7 +335,7 @@ func (c PoolClass) SetSSHAutoMode(ctx context.Context, sessionID SessionRef, sel
 // SetConsoleIdleTimeout Set the console idle timeout for all hosts in the pool
 //
 // Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-func (c PoolClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_console_idle_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -343,7 +343,7 @@ func (c PoolClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionR
 // SetSSHEnabledTimeout Set the SSH enabled timeout for all hosts in the pool
 //
 // Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-func (c PoolClass) SetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_ssh_enabled_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -374,7 +374,7 @@ func (c PoolClass) GetGuestSecurebootReadiness(ctx context.Context, sessionID Se
 // SetExtAuthCacheExpiry
 //
 // Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
-func (c PoolClass) SetExtAuthCacheExpiry(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetExtAuthCacheExpiry(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_ext_auth_cache_expiry", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -382,7 +382,7 @@ func (c PoolClass) SetExtAuthCacheExpiry(ctx context.Context, sessionID SessionR
 // SetExtAuthCacheSize
 //
 // Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
-func (c PoolClass) SetExtAuthCacheSize(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetExtAuthCacheSize(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_ext_auth_cache_size", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -398,7 +398,7 @@ func (c PoolClass) SetExtAuthCacheEnabled(ctx context.Context, sessionID Session
 // SetExtAuthMaxThreads
 //
 // Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
-func (c PoolClass) SetExtAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetExtAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_ext_auth_max_threads", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -406,7 +406,7 @@ func (c PoolClass) SetExtAuthMaxThreads(ctx context.Context, sessionID SessionRe
 // SetLocalAuthMaxThreads
 //
 // Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
-func (c PoolClass) SetLocalAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetLocalAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_local_auth_max_threads", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -422,7 +422,7 @@ func (c PoolClass) SetUpdateSyncEnabled(ctx context.Context, sessionID SessionRe
 // ConfigureUpdateSync Configure periodic update synchronization to synchronize updates from a remote CDN
 //
 // Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
-func (c PoolClass) ConfigureUpdateSync(ctx context.Context, sessionID SessionRef, self PoolRef, updateSyncFrequency UpdateSyncFrequency, updateSyncDay int) error {
+func (c PoolClass) ConfigureUpdateSync(ctx context.Context, sessionID SessionRef, self PoolRef, updateSyncFrequency UpdateSyncFrequency, updateSyncDay int64) error {
 	_, err := c.client.APICall(ctx, "pool.configure_update_sync", string(sessionID), string(self), string(updateSyncFrequency), fromInt(updateSyncDay))
 	return err
 }
@@ -697,7 +697,7 @@ func (c PoolClass) CertificateInstall(ctx context.Context, sessionID SessionRef,
 }
 
 // SendTestPost Send the given body to the given host and port, using HTTPS, and print the response.  This is used for debugging the SSL layer.
-func (c PoolClass) SendTestPost(ctx context.Context, sessionID SessionRef, host string, port int, body string) (string, error) {
+func (c PoolClass) SendTestPost(ctx context.Context, sessionID SessionRef, host string, port int64, body string) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.send_test_post", toValue[string], string(sessionID), host, fromInt(port), body)
 }
 
@@ -759,7 +759,7 @@ func (c PoolClass) CreateNewBlob(ctx context.Context, sessionID SessionRef, pool
 }
 
 // SetHAHostFailuresToTolerate Set the maximum number of host failures to consider in the HA VM restart planner
-func (c PoolClass) SetHAHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetHAHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_ha_host_failures_to_tolerate", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -770,22 +770,22 @@ func (c PoolClass) HAComputeVMFailoverPlan(ctx context.Context, sessionID Sessio
 }
 
 // HAComputeHypotheticalMaxHostFailuresToTolerate Returns the maximum number of host failures we could tolerate before we would be unable to restart the provided VMs
-func (c PoolClass) HAComputeHypotheticalMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, configuration map[VMRef]string) (int, error) {
+func (c PoolClass) HAComputeHypotheticalMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, configuration map[VMRef]string) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.ha_compute_hypothetical_max_host_failures_to_tolerate", toInt, string(sessionID), convertVMRefToStringMapToXen(configuration))
 }
 
 // HAComputeMaxHostFailuresToTolerate Returns the maximum number of host failures we could tolerate before we would be unable to restart configured VMs
-func (c PoolClass) HAComputeMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef) (int, error) {
+func (c PoolClass) HAComputeMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.ha_compute_max_host_failures_to_tolerate", toInt, string(sessionID))
 }
 
 // HAFailoverPlanExists Returns true if a VM failover plan exists for up to 'n' host failures
-func (c PoolClass) HAFailoverPlanExists(ctx context.Context, sessionID SessionRef, n int) (bool, error) {
+func (c PoolClass) HAFailoverPlanExists(ctx context.Context, sessionID SessionRef, n int64) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.ha_failover_plan_exists", toValue[bool], string(sessionID), fromInt(n))
 }
 
 // HAPreventRestartsFor When this call returns the VM restart logic will not run for the requested number of seconds. If the argument is zero then the restart thread is immediately unblocked
-func (c PoolClass) HAPreventRestartsFor(ctx context.Context, sessionID SessionRef, seconds int) error {
+func (c PoolClass) HAPreventRestartsFor(ctx context.Context, sessionID SessionRef, seconds int64) error {
 	_, err := c.client.APICall(ctx, "pool.ha_prevent_restarts_for", string(sessionID), fromInt(seconds))
 	return err
 }
@@ -819,7 +819,7 @@ func (c PoolClass) EnableHA(ctx context.Context, sessionID SessionRef, heartbeat
 // Errors:
 //
 //	VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
-func (c PoolClass) CreateVLANFromPIF(ctx context.Context, sessionID SessionRef, pif PIFRef, network NetworkRef, vlan int) ([]PIFRef, error) {
+func (c PoolClass) CreateVLANFromPIF(ctx context.Context, sessionID SessionRef, pif PIFRef, network NetworkRef, vlan int64) ([]PIFRef, error) {
 	return callAndConvert(ctx, c.client, "pool.create_VLAN_from_PIF", convertPIFRefSetToGo, string(sessionID), string(pif), string(network), fromInt(vlan))
 }
 
@@ -843,7 +843,7 @@ func (c PoolClass) ManagementReconfigure(ctx context.Context, sessionID SessionR
 // Errors:
 //
 //	VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
-func (c PoolClass) CreateVLAN(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, vlan int) ([]PIFRef, error) {
+func (c PoolClass) CreateVLAN(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, vlan int64) ([]PIFRef, error) {
 	return callAndConvert(ctx, c.client, "pool.create_VLAN", convertPIFRefSetToGo, string(sessionID), device, string(network), fromInt(vlan))
 }
 
@@ -905,7 +905,7 @@ func (c PoolClass) SetAutoUpdateVMSecurebootCertificates(ctx context.Context, se
 // SetVMConsoleIdleTimeout Set the vm_console_idle_timeout field of the given pool.
 //
 // Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
-func (c PoolClass) SetVMConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+func (c PoolClass) SetVMConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int64) error {
 	_, err := c.client.APICall(ctx, "pool.set_vm_console_idle_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -1130,7 +1130,7 @@ func (c PoolClass) GetAutoUpdateVMSecurebootCertificates(ctx context.Context, se
 // GetVMConsoleIdleTimeout Get the vm_console_idle_timeout field of the given pool.
 //
 // Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
-func (c PoolClass) GetVMConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetVMConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_vm_console_idle_timeout", toInt, string(sessionID), string(self))
 }
 
@@ -1172,7 +1172,7 @@ func (c PoolClass) GetUpdateSyncEnabled(ctx context.Context, sessionID SessionRe
 // GetUpdateSyncDay Get the update_sync_day field of the given pool.
 //
 // Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
-func (c PoolClass) GetUpdateSyncDay(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetUpdateSyncDay(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_update_sync_day", toInt, string(sessionID), string(self))
 }
 
@@ -1214,14 +1214,14 @@ func (c PoolClass) GetTelemetryUUID(ctx context.Context, sessionID SessionRef, s
 // GetExtAuthCacheExpiry Get the ext_auth_cache_expiry field of the given pool.
 //
 // Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
-func (c PoolClass) GetExtAuthCacheExpiry(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetExtAuthCacheExpiry(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ext_auth_cache_expiry", toInt, string(sessionID), string(self))
 }
 
 // GetExtAuthCacheSize Get the ext_auth_cache_size field of the given pool.
 //
 // Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
-func (c PoolClass) GetExtAuthCacheSize(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetExtAuthCacheSize(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ext_auth_cache_size", toInt, string(sessionID), string(self))
 }
 
@@ -1235,14 +1235,14 @@ func (c PoolClass) GetExtAuthCacheEnabled(ctx context.Context, sessionID Session
 // GetExtAuthMaxThreads Get the ext_auth_max_threads field of the given pool.
 //
 // Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
-func (c PoolClass) GetExtAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetExtAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ext_auth_max_threads", toInt, string(sessionID), string(self))
 }
 
 // GetLocalAuthMaxThreads Get the local_auth_max_threads field of the given pool.
 //
 // Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
-func (c PoolClass) GetLocalAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetLocalAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_local_auth_max_threads", toInt, string(sessionID), string(self))
 }
 
@@ -1432,12 +1432,12 @@ func (c PoolClass) GetHAAllowOvercommit(ctx context.Context, sessionID SessionRe
 }
 
 // GetHAPlanExistsFor Get the ha_plan_exists_for field of the given pool.
-func (c PoolClass) GetHAPlanExistsFor(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetHAPlanExistsFor(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_plan_exists_for", toInt, string(sessionID), string(self))
 }
 
 // GetHAHostFailuresToTolerate Get the ha_host_failures_to_tolerate field of the given pool.
-func (c PoolClass) GetHAHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+func (c PoolClass) GetHAHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_host_failures_to_tolerate", toInt, string(sessionID), string(self))
 }
 

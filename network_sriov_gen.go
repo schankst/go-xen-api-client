@@ -50,7 +50,7 @@ func (c NetworkSRIOVClass) GetAll(ctx context.Context, sessionID SessionRef) ([]
 }
 
 // GetRemainingCapacity Get the number of free SR-IOV VFs on the associated PIF
-func (c NetworkSRIOVClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (int, error) {
+func (c NetworkSRIOVClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "network_sriov.get_remaining_capacity", toInt, string(sessionID), string(self))
 }
 

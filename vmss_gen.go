@@ -41,7 +41,7 @@ type VMSSRecord struct {
 	// type of the snapshot schedule
 	Type VMSSType
 	// maximum number of snapshots that should be stored at any time
-	RetainedSnapshots int
+	RetainedSnapshots int64
 	// frequency of taking snapshot from snapshot schedule
 	Frequency VMSSFrequency
 	// schedule of the snapshot containing 'hour', 'min', 'days'. Date/time-related information is in Local Timezone
@@ -106,7 +106,7 @@ func (c VMSSClass) SetFrequency(ctx context.Context, sessionID SessionRef, self 
 }
 
 // SetRetainedSnapshots
-func (c VMSSClass) SetRetainedSnapshots(ctx context.Context, sessionID SessionRef, self VMSSRef, value int) error {
+func (c VMSSClass) SetRetainedSnapshots(ctx context.Context, sessionID SessionRef, self VMSSRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VMSS.set_retained_snapshots", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -155,7 +155,7 @@ func (c VMSSClass) GetFrequency(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetRetainedSnapshots Get the retained_snapshots field of the given VMSS.
-func (c VMSSClass) GetRetainedSnapshots(ctx context.Context, sessionID SessionRef, self VMSSRef) (int, error) {
+func (c VMSSClass) GetRetainedSnapshots(ctx context.Context, sessionID SessionRef, self VMSSRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VMSS.get_retained_snapshots", toInt, string(sessionID), string(self))
 }
 

@@ -24,7 +24,7 @@ type PGPURecord struct {
 	// List of VGPUs running on this PGPU
 	ResidentVGPUs []VGPURef
 	// A map relating each VGPU type supported on this GPU to the maximum number of VGPUs of that type which can run simultaneously on this GPU
-	SupportedVGPUMaxCapacities map[VGPUTypeRef]int
+	SupportedVGPUMaxCapacities map[VGPUTypeRef]int64
 	// The accessibility of this device from dom0
 	//
 	// Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.get_dom0_access_status instead.
@@ -67,7 +67,7 @@ func (c PGPUClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetRemainingCapacity
-func (c PGPUClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self PGPURef, vgpuType VGPUTypeRef) (int, error) {
+func (c PGPUClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self PGPURef, vgpuType VGPUTypeRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "PGPU.get_remaining_capacity", toInt, string(sessionID), string(self), string(vgpuType))
 }
 
@@ -131,7 +131,7 @@ func (c PGPUClass) GetDom0Access(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetSupportedVGPUMaxCapacities Get the supported_VGPU_max_capacities field of the given PGPU.
-func (c PGPUClass) GetSupportedVGPUMaxCapacities(ctx context.Context, sessionID SessionRef, self PGPURef) (map[VGPUTypeRef]int, error) {
+func (c PGPUClass) GetSupportedVGPUMaxCapacities(ctx context.Context, sessionID SessionRef, self PGPURef) (map[VGPUTypeRef]int64, error) {
 	return callAndConvert(ctx, c.client, "PGPU.get_supported_VGPU_max_capacities", convertVGPUTypeRefToIntMapToGo, string(sessionID), string(self))
 }
 

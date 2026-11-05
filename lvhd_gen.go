@@ -19,7 +19,7 @@ type LVHDClass struct {
 }
 
 // EnableThinProvisioning Upgrades an LVHD SR to enable thin-provisioning. Future VDIs created in this SR will be thinly-provisioned, although existing VDIs will be left alone. Note that the SR must be attached to the SRmaster for upgrade to work.
-func (c LVHDClass) EnableThinProvisioning(ctx context.Context, sessionID SessionRef, host HostRef, sr SRRef, initialAllocation int, allocationQuantum int) (string, error) {
+func (c LVHDClass) EnableThinProvisioning(ctx context.Context, sessionID SessionRef, host HostRef, sr SRRef, initialAllocation int64, allocationQuantum int64) (string, error) {
 	return callAndConvert(ctx, c.client, "LVHD.enable_thin_provisioning", toValue[string], string(sessionID), string(host), string(sr), fromInt(initialAllocation), fromInt(allocationQuantum))
 }
 

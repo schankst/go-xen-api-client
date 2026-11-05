@@ -12,17 +12,17 @@ type HostCPURecord struct {
 	// the host the CPU is in
 	Host HostRef
 	// the number of the physical CPU within the host
-	Number int
+	Number int64
 	// the vendor of the physical CPU
 	Vendor string
 	// the speed of the physical CPU
-	Speed int
+	Speed int64
 	// the model name of the physical CPU
 	Modelname string
 	// the family (number) of the physical CPU
-	Family int
+	Family int64
 	// the model number of the physical CPU
-	Model int
+	Model int64
 	// the stepping of the physical CPU
 	Stepping string
 	// the flags of the physical CPU (a decoded version of the features field)
@@ -102,12 +102,12 @@ func (c HostCPUClass) GetStepping(ctx context.Context, sessionID SessionRef, sel
 }
 
 // GetModel Get the model field of the given host_cpu.
-func (c HostCPUClass) GetModel(ctx context.Context, sessionID SessionRef, self HostCPURef) (int, error) {
+func (c HostCPUClass) GetModel(ctx context.Context, sessionID SessionRef, self HostCPURef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_model", toInt, string(sessionID), string(self))
 }
 
 // GetFamily Get the family field of the given host_cpu.
-func (c HostCPUClass) GetFamily(ctx context.Context, sessionID SessionRef, self HostCPURef) (int, error) {
+func (c HostCPUClass) GetFamily(ctx context.Context, sessionID SessionRef, self HostCPURef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_family", toInt, string(sessionID), string(self))
 }
 
@@ -117,7 +117,7 @@ func (c HostCPUClass) GetModelname(ctx context.Context, sessionID SessionRef, se
 }
 
 // GetSpeed Get the speed field of the given host_cpu.
-func (c HostCPUClass) GetSpeed(ctx context.Context, sessionID SessionRef, self HostCPURef) (int, error) {
+func (c HostCPUClass) GetSpeed(ctx context.Context, sessionID SessionRef, self HostCPURef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_speed", toInt, string(sessionID), string(self))
 }
 
@@ -127,7 +127,7 @@ func (c HostCPUClass) GetVendor(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetNumber Get the number field of the given host_cpu.
-func (c HostCPUClass) GetNumber(ctx context.Context, sessionID SessionRef, self HostCPURef) (int, error) {
+func (c HostCPUClass) GetNumber(ctx context.Context, sessionID SessionRef, self HostCPURef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_number", toInt, string(sessionID), string(self))
 }
 

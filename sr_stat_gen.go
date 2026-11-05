@@ -23,9 +23,9 @@ type SRStatRecord struct {
 	// Longer, human-readable description of the SR. Descriptions are generally only displayed by clients when the user is examining SRs in detail.
 	NameDescription string
 	// Number of bytes free on the backing storage (in bytes)
-	FreeSpace int
+	FreeSpace int64
 	// Total physical size of the backing storage (in bytes)
-	TotalSpace int
+	TotalSpace int64
 	// Indicates whether the SR uses clustered local storage.
 	Clustered bool
 	// The health status of the SR.

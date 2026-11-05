@@ -15,7 +15,7 @@ type HostCrashdumpRecord struct {
 	// Time the crash happened
 	Timestamp time.Time
 	// Size of the crashdump
-	Size int
+	Size int64
 	// additional configuration
 	OtherConfig map[string]string
 }
@@ -73,7 +73,7 @@ func (c HostCrashdumpClass) GetOtherConfig(ctx context.Context, sessionID Sessio
 }
 
 // GetSize Get the size field of the given host_crashdump.
-func (c HostCrashdumpClass) GetSize(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (int, error) {
+func (c HostCrashdumpClass) GetSize(ctx context.Context, sessionID SessionRef, self HostCrashdumpRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host_crashdump.get_size", toInt, string(sessionID), string(self))
 }
 

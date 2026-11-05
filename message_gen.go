@@ -36,7 +36,7 @@ type MessageRecord struct {
 	// The name of the message
 	Name string
 	// The message priority, 0 being low priority
-	Priority int
+	Priority int64
 	// The class of the object this message is associated with
 	Cls Cls
 	// The uuid of the object this message is associated with
@@ -112,6 +112,6 @@ func (c MessageClass) Destroy(ctx context.Context, sessionID SessionRef, self Me
 }
 
 // Create
-func (c MessageClass) Create(ctx context.Context, sessionID SessionRef, name string, priority int, cls Cls, objUUID string, body string) (MessageRef, error) {
+func (c MessageClass) Create(ctx context.Context, sessionID SessionRef, name string, priority int64, cls Cls, objUUID string, body string) (MessageRef, error) {
 	return callAndConvert(ctx, c.client, "message.create", toString[MessageRef], string(sessionID), name, fromInt(priority), string(cls), objUUID, body)
 }

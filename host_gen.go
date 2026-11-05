@@ -99,15 +99,15 @@ type HostRecord struct {
 	// a notes field containing human-readable description
 	NameDescription string
 	// Virtualization memory overhead (bytes).
-	MemoryOverhead int
+	MemoryOverhead int64
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
 	AllowedOperations []HostAllowedOperations
 	// links each of the running tasks using this object (by reference) to a current_operation enum which describes the nature of the task.
 	CurrentOperations map[string]HostAllowedOperations
 	// major version number
-	APIVersionMajor int
+	APIVersionMajor int64
 	// minor version number
-	APIVersionMinor int
+	APIVersionMinor int64
 	// identification of vendor
 	APIVersionVendor string
 	// details of vendor implementation
@@ -201,7 +201,7 @@ type HostRecord struct {
 	// indicates whether the host is configured to output its console to a physical display device
 	Display HostDisplay
 	// The set of versions of the virtual hardware platform that the host can offer to its guests
-	VirtualHardwarePlatformVersions []int
+	VirtualHardwarePlatformVersions []int64
 	// The control domain (domain 0)
 	ControlDomain VMRef
 	// List of updates which require reboot
@@ -259,7 +259,7 @@ type HostRecord struct {
 	// The timeout in seconds after which SSH access will be automatically disabled (0 means never), this setting will be applied every time the SSH is enabled by XAPI
 	//
 	// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-	SSHEnabledTimeout int
+	SSHEnabledTimeout int64
 	// The time in UTC after which the SSH access will be automatically disabled
 	//
 	// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
@@ -267,7 +267,7 @@ type HostRecord struct {
 	// The timeout in seconds after which idle console will be automatically terminated (0 means never)
 	//
 	// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-	ConsoleIdleTimeout int
+	ConsoleIdleTimeout int64
 	// Reflects whether SSH auto mode is enabled for the host
 	//
 	// Experimental: prototyped in XAPI release 25.27.0; it may change or be removed.
@@ -390,7 +390,7 @@ func (c HostClass) SetSSHAutoMode(ctx context.Context, sessionID SessionRef, sel
 // SetConsoleIdleTimeout Set the console idle timeout for the host
 //
 // Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-func (c HostClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int) error {
+func (c HostClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int64) error {
 	_, err := c.client.APICall(ctx, "host.set_console_idle_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -398,7 +398,7 @@ func (c HostClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionR
 // SetSSHEnabledTimeout Set the SSH service enabled timeout for the host
 //
 // Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-func (c HostClass) SetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int) error {
+func (c HostClass) SetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int64) error {
 	_, err := c.client.APICall(ctx, "host.set_ssh_enabled_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -677,12 +677,12 @@ func (c HostClass) SyncData(ctx context.Context, sessionID SessionRef, host Host
 }
 
 // ComputeMemoryOverhead Computes the virtualization memory overhead of a host.
-func (c HostClass) ComputeMemoryOverhead(ctx context.Context, sessionID SessionRef, host HostRef) (int, error) {
+func (c HostClass) ComputeMemoryOverhead(ctx context.Context, sessionID SessionRef, host HostRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host.compute_memory_overhead", toInt, string(sessionID), string(host))
 }
 
 // ComputeFreeMemory Computes the amount of free memory on the host.
-func (c HostClass) ComputeFreeMemory(ctx context.Context, sessionID SessionRef, host HostRef) (int, error) {
+func (c HostClass) ComputeFreeMemory(ctx context.Context, sessionID SessionRef, host HostRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host.compute_free_memory", toInt, string(sessionID), string(host))
 }
 
@@ -743,7 +743,7 @@ func (c HostClass) SyslogReconfigure(ctx context.Context, sessionID SessionRef, 
 }
 
 // Evacuate Migrate all VMs off of this host, where possible.
-func (c HostClass) Evacuate(ctx context.Context, sessionID SessionRef, host HostRef, network NetworkRef, evacuateBatchSize int) error {
+func (c HostClass) Evacuate(ctx context.Context, sessionID SessionRef, host HostRef, network NetworkRef, evacuateBatchSize int64) error {
 	_, err := c.client.APICall(ctx, "host.evacuate", string(sessionID), string(host), string(network), fromInt(evacuateBatchSize))
 	return err
 }
@@ -1067,7 +1067,7 @@ func (c HostClass) GetSSHAutoMode(ctx context.Context, sessionID SessionRef, sel
 // GetConsoleIdleTimeout Get the console_idle_timeout field of the given host.
 //
 // Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-func (c HostClass) GetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (int, error) {
+func (c HostClass) GetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host.get_console_idle_timeout", toInt, string(sessionID), string(self))
 }
 
@@ -1081,7 +1081,7 @@ func (c HostClass) GetSSHExpiry(ctx context.Context, sessionID SessionRef, self 
 // GetSSHEnabledTimeout Get the ssh_enabled_timeout field of the given host.
 //
 // Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
-func (c HostClass) GetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (int, error) {
+func (c HostClass) GetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host.get_ssh_enabled_timeout", toInt, string(sessionID), string(self))
 }
 
@@ -1194,7 +1194,7 @@ func (c HostClass) GetControlDomain(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetVirtualHardwarePlatformVersions Get the virtual_hardware_platform_versions field of the given host.
-func (c HostClass) GetVirtualHardwarePlatformVersions(ctx context.Context, sessionID SessionRef, self HostRef) ([]int, error) {
+func (c HostClass) GetVirtualHardwarePlatformVersions(ctx context.Context, sessionID SessionRef, self HostRef) ([]int64, error) {
 	return callAndConvert(ctx, c.client, "host.get_virtual_hardware_platform_versions", convertIntSetToGo, string(sessionID), string(self))
 }
 
@@ -1423,12 +1423,12 @@ func (c HostClass) GetAPIVersionVendor(ctx context.Context, sessionID SessionRef
 }
 
 // GetAPIVersionMinor Get the API_version/minor field of the given host.
-func (c HostClass) GetAPIVersionMinor(ctx context.Context, sessionID SessionRef, self HostRef) (int, error) {
+func (c HostClass) GetAPIVersionMinor(ctx context.Context, sessionID SessionRef, self HostRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host.get_API_version_minor", toInt, string(sessionID), string(self))
 }
 
 // GetAPIVersionMajor Get the API_version/major field of the given host.
-func (c HostClass) GetAPIVersionMajor(ctx context.Context, sessionID SessionRef, self HostRef) (int, error) {
+func (c HostClass) GetAPIVersionMajor(ctx context.Context, sessionID SessionRef, self HostRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host.get_API_version_major", toInt, string(sessionID), string(self))
 }
 
@@ -1443,7 +1443,7 @@ func (c HostClass) GetAllowedOperations(ctx context.Context, sessionID SessionRe
 }
 
 // GetMemoryOverhead Get the memory/overhead field of the given host.
-func (c HostClass) GetMemoryOverhead(ctx context.Context, sessionID SessionRef, self HostRef) (int, error) {
+func (c HostClass) GetMemoryOverhead(ctx context.Context, sessionID SessionRef, self HostRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "host.get_memory_overhead", toInt, string(sessionID), string(self))
 }
 

@@ -29,7 +29,7 @@ type PIFMetricsRecord struct {
 	// Report device name
 	DeviceName string
 	// Speed of the link in Mbit/s (if available)
-	Speed int
+	Speed int64
 	// Full duplex capability of the link (if available)
 	Duplex bool
 	// PCI bus path of the pif (if available)
@@ -107,7 +107,7 @@ func (c PIFMetricsClass) GetDuplex(ctx context.Context, sessionID SessionRef, se
 }
 
 // GetSpeed Get the speed field of the given PIF_metrics.
-func (c PIFMetricsClass) GetSpeed(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (int, error) {
+func (c PIFMetricsClass) GetSpeed(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_speed", toInt, string(sessionID), string(self))
 }
 

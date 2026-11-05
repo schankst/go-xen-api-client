@@ -31,7 +31,7 @@ type ThingRecord struct {
 	// uuid
 	UUID string
 	// count
-	Count int
+	Count int64
 	// ratio
 	Ratio float64
 	// enabled
@@ -47,7 +47,7 @@ type ThingRecord struct {
 	// other config
 	OtherConfig map[string]string
 	// by state
-	ByState map[ThingState]int
+	ByState map[ThingState]int64
 	// parent
 	Parent ThingRef
 	// children

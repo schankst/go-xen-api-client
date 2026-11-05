@@ -251,7 +251,7 @@ type VMRecord struct {
 	// Current power state of the machine
 	PowerState VMPowerState
 	// Creators of VMs and templates may store version information here.
-	UserVersion int
+	UserVersion int64
 	// true if this is a template. Template VMs can never be started, they are used only for cloning other VMs
 	IsATemplate bool
 	// true if this is a default template. Default template VMs can never be started or migrated, they are used only for cloning other VMs
@@ -265,25 +265,25 @@ type VMRecord struct {
 	// A host which the VM has some affinity for (or NULL). This is used as a hint to the start call when it decides where to run the VM. Resource constraints may cause the VM to be started elsewhere.
 	Affinity HostRef
 	// Virtualization memory overhead (bytes).
-	MemoryOverhead int
+	MemoryOverhead int64
 	// Dynamically-set memory target (bytes). The value of this field indicates the current target for memory available to this VM.
 	//
 	// Deprecated: Deprecated in XAPI release midnight-ride.
-	MemoryTarget int
+	MemoryTarget int64
 	// Statically-set (i.e. absolute) maximum (bytes). The value of this field at VM start time acts as a hard limit of the amount of memory a guest can use. New values only take effect on reboot.
-	MemoryStaticMax int
+	MemoryStaticMax int64
 	// Dynamic maximum (bytes)
-	MemoryDynamicMax int
+	MemoryDynamicMax int64
 	// Dynamic minimum (bytes)
-	MemoryDynamicMin int
+	MemoryDynamicMin int64
 	// Statically-set (i.e. absolute) mininum (bytes). The value of this field indicates the least amount of memory this VM can boot with without crashing.
-	MemoryStaticMin int
+	MemoryStaticMin int64
 	// configuration parameters for the selected VCPU policy
 	VCPUsParams map[string]string
 	// Max number of VCPUs
-	VCPUsMax int
+	VCPUsMax int64
 	// Boot number of VCPUs
-	VCPUsAtStartup int
+	VCPUsAtStartup int64
 	// action to take after soft reboot
 	//
 	// Experimental: prototyped in XAPI release 23.1.0; it may change or be removed.
@@ -335,7 +335,7 @@ type VMRecord struct {
 	// additional configuration
 	OtherConfig map[string]string
 	// domain ID (if available, -1 otherwise)
-	Domid int
+	Domid int64
 	// Domain architecture (if available, null string otherwise)
 	Domarch string
 	// describes the CPU flags on which the VM was last booted
@@ -399,11 +399,11 @@ type VMRecord struct {
 	// the appliance to which this VM belongs
 	Appliance VMApplianceRef
 	// The delay to wait before proceeding to the next order in the startup sequence (seconds)
-	StartDelay int
+	StartDelay int64
 	// The delay to wait before proceeding to the next order in the shutdown sequence (seconds)
-	ShutdownDelay int
+	ShutdownDelay int64
 	// The point in the startup or shutdown sequence at which this VM will be started
-	Order int
+	Order int64
 	// Virtual GPUs
 	VGPUs []VGPURef
 	// Currently passed-through PCI devices
@@ -411,11 +411,11 @@ type VMRecord struct {
 	// The SR on which a suspend image is stored
 	SuspendSR SRRef
 	// The number of times this VM has been recovered
-	Version int
+	Version int64
 	// Generation ID of the VM
 	GenerationID string
 	// The host virtual hardware platform version the VM can run on
-	HardwarePlatformVersion int
+	HardwarePlatformVersion int64
 	// When an HVM guest starts, this controls the presence of the emulated C000 PCI device which triggers Windows Update to fetch or update PV drivers.
 	HasVendorDevice bool
 	// Indicates whether a VM requires a reboot in order to update its configuration, for example, its memory allocation.
@@ -664,19 +664,19 @@ func (c VMClass) SetSuspendVDI(ctx context.Context, sessionID SessionRef, self V
 }
 
 // SetOrder Set this VM's boot order
-func (c VMClass) SetOrder(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetOrder(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_order", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetShutdownDelay Set this VM's shutdown delay in seconds
-func (c VMClass) SetShutdownDelay(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetShutdownDelay(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_shutdown_delay", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetStartDelay Set this VM's start delay in seconds
-func (c VMClass) SetStartDelay(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetStartDelay(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_start_delay", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -833,7 +833,7 @@ func (c VMClass) MigrateSend(ctx context.Context, sessionID SessionRef, vm VMRef
 }
 
 // MaximiseMemory Returns the maximum amount of guest memory which will fit, together with overheads, in the supplied amount of physical memory. If 'exact' is true then an exact calculation is performed using the VM's current settings. If 'exact' is false then a more conservative approximation is used
-func (c VMClass) MaximiseMemory(ctx context.Context, sessionID SessionRef, self VMRef, total int, approximate bool) (int, error) {
+func (c VMClass) MaximiseMemory(ctx context.Context, sessionID SessionRef, self VMRef, total int64, approximate bool) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.maximise_memory", toInt, string(sessionID), string(self), fromInt(total), approximate)
 }
 
@@ -858,13 +858,13 @@ func (c VMClass) SendSysrq(ctx context.Context, sessionID SessionRef, vm VMRef, 
 }
 
 // SetVCPUsAtStartup Set the number of startup VCPUs for a halted VM
-func (c VMClass) SetVCPUsAtStartup(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetVCPUsAtStartup(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_VCPUs_at_startup", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetVCPUsMax Set the maximum number of VCPUs for a halted VM
-func (c VMClass) SetVCPUsMax(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetVCPUsMax(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_VCPUs_max", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -899,31 +899,31 @@ func (c VMClass) WaitMemoryTargetLive(ctx context.Context, sessionID SessionRef,
 // SetMemoryTargetLive Set the memory target for a running VM
 //
 // Deprecated: Deprecated in XAPI release midnight-ride.
-func (c VMClass) SetMemoryTargetLive(ctx context.Context, sessionID SessionRef, self VMRef, target int) error {
+func (c VMClass) SetMemoryTargetLive(ctx context.Context, sessionID SessionRef, self VMRef, target int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_target_live", string(sessionID), string(self), fromInt(target))
 	return err
 }
 
 // SetMemory Set the memory allocation of this VM. Sets all of memory_static_max, memory_dynamic_min, and memory_dynamic_max to the given value, and leaves memory_static_min untouched.
-func (c VMClass) SetMemory(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetMemory(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetMemoryLimits Set the memory limits of this VM.
-func (c VMClass) SetMemoryLimits(ctx context.Context, sessionID SessionRef, self VMRef, staticMin int, staticMax int, dynamicMin int, dynamicMax int) error {
+func (c VMClass) SetMemoryLimits(ctx context.Context, sessionID SessionRef, self VMRef, staticMin int64, staticMax int64, dynamicMin int64, dynamicMax int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_limits", string(sessionID), string(self), fromInt(staticMin), fromInt(staticMax), fromInt(dynamicMin), fromInt(dynamicMax))
 	return err
 }
 
 // SetMemoryStaticRange Set the static (ie boot-time) range of virtual memory that the VM is allowed to use.
-func (c VMClass) SetMemoryStaticRange(ctx context.Context, sessionID SessionRef, self VMRef, min int, max int) error {
+func (c VMClass) SetMemoryStaticRange(ctx context.Context, sessionID SessionRef, self VMRef, min int64, max int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_static_range", string(sessionID), string(self), fromInt(min), fromInt(max))
 	return err
 }
 
 // SetMemoryStaticMin Set the value of the memory_static_min field
-func (c VMClass) SetMemoryStaticMin(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetMemoryStaticMin(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_static_min", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -933,31 +933,31 @@ func (c VMClass) SetMemoryStaticMin(ctx context.Context, sessionID SessionRef, s
 // Errors:
 //
 //	HA_OPERATION_WOULD_BREAK_FAILOVER_PLAN - This operation cannot be performed because it would invalidate VM failover planning such that the system would be unable to guarantee to restart protected VMs after a Host failure.
-func (c VMClass) SetMemoryStaticMax(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetMemoryStaticMax(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_static_max", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetMemoryDynamicRange Set the minimum and maximum amounts of physical memory the VM is allowed to use.
-func (c VMClass) SetMemoryDynamicRange(ctx context.Context, sessionID SessionRef, self VMRef, min int, max int) error {
+func (c VMClass) SetMemoryDynamicRange(ctx context.Context, sessionID SessionRef, self VMRef, min int64, max int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_dynamic_range", string(sessionID), string(self), fromInt(min), fromInt(max))
 	return err
 }
 
 // SetMemoryDynamicMin Set the value of the memory_dynamic_min field
-func (c VMClass) SetMemoryDynamicMin(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetMemoryDynamicMin(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_dynamic_min", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetMemoryDynamicMax Set the value of the memory_dynamic_max field
-func (c VMClass) SetMemoryDynamicMax(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetMemoryDynamicMax(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_dynamic_max", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // ComputeMemoryOverhead Computes the virtualization memory overhead of a VM.
-func (c VMClass) ComputeMemoryOverhead(ctx context.Context, sessionID SessionRef, vm VMRef) (int, error) {
+func (c VMClass) ComputeMemoryOverhead(ctx context.Context, sessionID SessionRef, vm VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.compute_memory_overhead", toInt, string(sessionID), string(vm))
 }
 
@@ -1005,7 +1005,7 @@ func (c VMClass) AddToVCPUsParamsLive(ctx context.Context, sessionID SessionRef,
 //
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	LICENCE_RESTRICTION - This operation is not allowed because your license lacks a needed feature. Please contact your support representative.
-func (c VMClass) SetVCPUsNumberLive(ctx context.Context, sessionID SessionRef, self VMRef, nvcpu int) error {
+func (c VMClass) SetVCPUsNumberLive(ctx context.Context, sessionID SessionRef, self VMRef, nvcpu int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_VCPUs_number_live", string(sessionID), string(self), fromInt(nvcpu))
 	return err
 }
@@ -1283,7 +1283,7 @@ func (c VMClass) Snapshot(ctx context.Context, sessionID SessionRef, vm VMRef, n
 }
 
 // SetHardwarePlatformVersion Set the hardware_platform_version field of the given VM.
-func (c VMClass) SetHardwarePlatformVersion(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetHardwarePlatformVersion(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_hardware_platform_version", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -1449,7 +1449,7 @@ func (c VMClass) SetIsATemplate(ctx context.Context, sessionID SessionRef, self 
 }
 
 // SetUserVersion Set the user_version field of the given VM.
-func (c VMClass) SetUserVersion(ctx context.Context, sessionID SessionRef, self VMRef, value int) error {
+func (c VMClass) SetUserVersion(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_user_version", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -1525,7 +1525,7 @@ func (c VMClass) GetHasVendorDevice(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetHardwarePlatformVersion Get the hardware_platform_version field of the given VM.
-func (c VMClass) GetHardwarePlatformVersion(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetHardwarePlatformVersion(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_hardware_platform_version", toInt, string(sessionID), string(self))
 }
 
@@ -1535,7 +1535,7 @@ func (c VMClass) GetGenerationID(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetVersion Get the version field of the given VM.
-func (c VMClass) GetVersion(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetVersion(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_version", toInt, string(sessionID), string(self))
 }
 
@@ -1555,17 +1555,17 @@ func (c VMClass) GetVGPUs(ctx context.Context, sessionID SessionRef, self VMRef)
 }
 
 // GetOrder Get the order field of the given VM.
-func (c VMClass) GetOrder(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetOrder(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_order", toInt, string(sessionID), string(self))
 }
 
 // GetShutdownDelay Get the shutdown_delay field of the given VM.
-func (c VMClass) GetShutdownDelay(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetShutdownDelay(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_shutdown_delay", toInt, string(sessionID), string(self))
 }
 
 // GetStartDelay Get the start_delay field of the given VM.
-func (c VMClass) GetStartDelay(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetStartDelay(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_start_delay", toInt, string(sessionID), string(self))
 }
 
@@ -1716,7 +1716,7 @@ func (c VMClass) GetDomarch(ctx context.Context, sessionID SessionRef, self VMRe
 }
 
 // GetDomid Get the domid field of the given VM.
-func (c VMClass) GetDomid(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetDomid(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_domid", toInt, string(sessionID), string(self))
 }
 
@@ -1837,12 +1837,12 @@ func (c VMClass) GetActionsAfterSoftreboot(ctx context.Context, sessionID Sessio
 }
 
 // GetVCPUsAtStartup Get the VCPUs/at_startup field of the given VM.
-func (c VMClass) GetVCPUsAtStartup(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetVCPUsAtStartup(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_VCPUs_at_startup", toInt, string(sessionID), string(self))
 }
 
 // GetVCPUsMax Get the VCPUs/max field of the given VM.
-func (c VMClass) GetVCPUsMax(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetVCPUsMax(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_VCPUs_max", toInt, string(sessionID), string(self))
 }
 
@@ -1852,34 +1852,34 @@ func (c VMClass) GetVCPUsParams(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetMemoryStaticMin Get the memory/static_min field of the given VM.
-func (c VMClass) GetMemoryStaticMin(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetMemoryStaticMin(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_memory_static_min", toInt, string(sessionID), string(self))
 }
 
 // GetMemoryDynamicMin Get the memory/dynamic_min field of the given VM.
-func (c VMClass) GetMemoryDynamicMin(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetMemoryDynamicMin(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_memory_dynamic_min", toInt, string(sessionID), string(self))
 }
 
 // GetMemoryDynamicMax Get the memory/dynamic_max field of the given VM.
-func (c VMClass) GetMemoryDynamicMax(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetMemoryDynamicMax(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_memory_dynamic_max", toInt, string(sessionID), string(self))
 }
 
 // GetMemoryStaticMax Get the memory/static_max field of the given VM.
-func (c VMClass) GetMemoryStaticMax(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetMemoryStaticMax(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_memory_static_max", toInt, string(sessionID), string(self))
 }
 
 // GetMemoryTarget Get the memory/target field of the given VM.
 //
 // Deprecated: Deprecated in XAPI release midnight-ride.
-func (c VMClass) GetMemoryTarget(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetMemoryTarget(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_memory_target", toInt, string(sessionID), string(self))
 }
 
 // GetMemoryOverhead Get the memory/overhead field of the given VM.
-func (c VMClass) GetMemoryOverhead(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetMemoryOverhead(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_memory_overhead", toInt, string(sessionID), string(self))
 }
 
@@ -1914,7 +1914,7 @@ func (c VMClass) GetIsATemplate(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetUserVersion Get the user_version field of the given VM.
-func (c VMClass) GetUserVersion(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
+func (c VMClass) GetUserVersion(ctx context.Context, sessionID SessionRef, self VMRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VM.get_user_version", toInt, string(sessionID), string(self))
 }
 

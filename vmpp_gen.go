@@ -75,7 +75,7 @@ type VMPPRecord struct {
 	// maximum number of backups that should be stored at any time
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-	BackupRetentionValue int
+	BackupRetentionValue int64
 	// frequency of the backup schedule
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
@@ -304,7 +304,7 @@ func (c VMPPClass) SetBackupFrequency(ctx context.Context, sessionID SessionRef,
 // SetBackupRetentionValue
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) SetBackupRetentionValue(ctx context.Context, sessionID SessionRef, self VMPPRef, value int) error {
+func (c VMPPClass) SetBackupRetentionValue(ctx context.Context, sessionID SessionRef, self VMPPRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_retention_value", string(sessionID), string(self), fromInt(value))
 	return err
 }
@@ -312,7 +312,7 @@ func (c VMPPClass) SetBackupRetentionValue(ctx context.Context, sessionID Sessio
 // GetAlerts This call fetches a history of alerts for a given protection policy
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) GetAlerts(ctx context.Context, sessionID SessionRef, vmpp VMPPRef, hoursFromNow int) ([]string, error) {
+func (c VMPPClass) GetAlerts(ctx context.Context, sessionID SessionRef, vmpp VMPPRef, hoursFromNow int64) ([]string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_alerts", convertStringSetToGo, string(sessionID), string(vmpp), fromInt(hoursFromNow))
 }
 
@@ -463,7 +463,7 @@ func (c VMPPClass) GetBackupFrequency(ctx context.Context, sessionID SessionRef,
 // GetBackupRetentionValue Get the backup_retention_value field of the given VMPP.
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) GetBackupRetentionValue(ctx context.Context, sessionID SessionRef, self VMPPRef) (int, error) {
+func (c VMPPClass) GetBackupRetentionValue(ctx context.Context, sessionID SessionRef, self VMPPRef) (int64, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_backup_retention_value", toInt, string(sessionID), string(self))
 }
 
