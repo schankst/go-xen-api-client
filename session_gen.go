@@ -27,11 +27,11 @@ type SessionRecord struct {
 	// time when session was last validated
 	ValidationTime time.Time
 	// the subject identifier of the user that was externally authenticated. If a session instance has is_local_superuser set, then the value of this field is undefined.
-	AuthUserSid string
+	AuthUserSID string
 	// the subject name of the user that was externally authenticated. If a session instance has is_local_superuser set, then the value of this field is undefined.
 	AuthUserName string
 	// list with all RBAC permissions for this session
-	RbacPermissions []string
+	RBACPermissions []string
 	// list of tasks created using the current session
 	Tasks []TaskRef
 	// references the parent session that created this session
@@ -136,8 +136,8 @@ func (c SessionClass) GetTasks(ctx context.Context, sessionID SessionRef, self S
 	return callAndConvert(ctx, c.client, "session.get_tasks", convertTaskRefSetToGo, string(sessionID), string(self))
 }
 
-// GetRbacPermissions Get the rbac_permissions field of the given session.
-func (c SessionClass) GetRbacPermissions(ctx context.Context, sessionID SessionRef, self SessionRef) ([]string, error) {
+// GetRBACPermissions Get the rbac_permissions field of the given session.
+func (c SessionClass) GetRBACPermissions(ctx context.Context, sessionID SessionRef, self SessionRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "session.get_rbac_permissions", convertStringSetToGo, string(sessionID), string(self))
 }
 
@@ -146,8 +146,8 @@ func (c SessionClass) GetAuthUserName(ctx context.Context, sessionID SessionRef,
 	return callAndConvert(ctx, c.client, "session.get_auth_user_name", toValue[string], string(sessionID), string(self))
 }
 
-// GetAuthUserSid Get the auth_user_sid field of the given session.
-func (c SessionClass) GetAuthUserSid(ctx context.Context, sessionID SessionRef, self SessionRef) (string, error) {
+// GetAuthUserSID Get the auth_user_sid field of the given session.
+func (c SessionClass) GetAuthUserSID(ctx context.Context, sessionID SessionRef, self SessionRef) (string, error) {
 	return callAndConvert(ctx, c.client, "session.get_auth_user_sid", toValue[string], string(sessionID), string(self))
 }
 

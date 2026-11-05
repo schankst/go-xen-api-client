@@ -52,9 +52,9 @@ type VMGuestMetricsRecord struct {
 	// True if the guest is sending heartbeat messages via the guest agent
 	Live bool
 	// The guest's statement of whether it supports VBD hotplug, i.e. whether it is capable of responding immediately to instantiation of a new VBD by bringing online a new PV block device. If the guest states that it is not capable, then the VBD plug and unplug operations will not be allowed while the guest is running.
-	CanUseHotplugVbd TristateType
+	CanUseHotplugVBD TristateType
 	// The guest's statement of whether it supports VIF hotplug, i.e. whether it is capable of responding immediately to instantiation of a new VIF by bringing online a new PV network device. If the guest states that it is not capable, then the VIF plug and unplug operations will not be allowed while the guest is running.
-	CanUseHotplugVif TristateType
+	CanUseHotplugVIF TristateType
 	// At least one of the guest's devices has successfully connected to the backend.
 	PVDriversDetected bool
 	// The guest's services data.
@@ -110,13 +110,13 @@ func (c VMGuestMetricsClass) GetPVDriversDetected(ctx context.Context, sessionID
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_PV_drivers_detected", toValue[bool], string(sessionID), string(self))
 }
 
-// GetCanUseHotplugVif Get the can_use_hotplug_vif field of the given VM_guest_metrics.
-func (c VMGuestMetricsClass) GetCanUseHotplugVif(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (TristateType, error) {
+// GetCanUseHotplugVIF Get the can_use_hotplug_vif field of the given VM_guest_metrics.
+func (c VMGuestMetricsClass) GetCanUseHotplugVIF(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (TristateType, error) {
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_can_use_hotplug_vif", toString[TristateType], string(sessionID), string(self))
 }
 
-// GetCanUseHotplugVbd Get the can_use_hotplug_vbd field of the given VM_guest_metrics.
-func (c VMGuestMetricsClass) GetCanUseHotplugVbd(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (TristateType, error) {
+// GetCanUseHotplugVBD Get the can_use_hotplug_vbd field of the given VM_guest_metrics.
+func (c VMGuestMetricsClass) GetCanUseHotplugVBD(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (TristateType, error) {
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_can_use_hotplug_vbd", toString[TristateType], string(sessionID), string(self))
 }
 

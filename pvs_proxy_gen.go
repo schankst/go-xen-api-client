@@ -6,19 +6,19 @@ import (
 	"context"
 )
 
-type PvsProxyStatus string
+type PVSProxyStatus string
 
 const (
 	// The proxy is not currently running
-	PvsProxyStatusStopped PvsProxyStatus = "stopped"
+	PVSProxyStatusStopped PVSProxyStatus = "stopped"
 	// The proxy is setup but has not yet cached anything
-	PvsProxyStatusInitialised PvsProxyStatus = "initialised"
+	PVSProxyStatusInitialised PVSProxyStatus = "initialised"
 	// The proxy is currently caching data
-	PvsProxyStatusCaching PvsProxyStatus = "caching"
+	PVSProxyStatusCaching PVSProxyStatus = "caching"
 	// The PVS device is configured to use an incompatible write-cache mode
-	PvsProxyStatusIncompatibleWriteCacheMode PvsProxyStatus = "incompatible_write_cache_mode"
+	PVSProxyStatusIncompatibleWriteCacheMode PVSProxyStatus = "incompatible_write_cache_mode"
 	// The PVS protocol in use is not compatible with the PVS proxy
-	PvsProxyStatusIncompatibleProtocolVersion PvsProxyStatus = "incompatible_protocol_version"
+	PVSProxyStatusIncompatibleProtocolVersion PVSProxyStatus = "incompatible_protocol_version"
 )
 
 type PVSProxyRecord struct {
@@ -31,7 +31,7 @@ type PVSProxyRecord struct {
 	// true = VM is currently proxied
 	CurrentlyAttached bool
 	// The run-time status of the proxy
-	Status PvsProxyStatus
+	Status PVSProxyStatus
 }
 
 type PVSProxyRef string
@@ -63,8 +63,8 @@ func (c PVSProxyClass) Create(ctx context.Context, sessionID SessionRef, site PV
 }
 
 // GetStatus Get the status field of the given PVS_proxy.
-func (c PVSProxyClass) GetStatus(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (PvsProxyStatus, error) {
-	return callAndConvert(ctx, c.client, "PVS_proxy.get_status", toString[PvsProxyStatus], string(sessionID), string(self))
+func (c PVSProxyClass) GetStatus(ctx context.Context, sessionID SessionRef, self PVSProxyRef) (PVSProxyStatus, error) {
+	return callAndConvert(ctx, c.client, "PVS_proxy.get_status", toString[PVSProxyStatus], string(sessionID), string(self))
 }
 
 // GetCurrentlyAttached Get the currently_attached field of the given PVS_proxy.

@@ -2,7 +2,7 @@
 
 package xenapi
 
-type VdiNbdServerInfoRecord struct {
+type VDINBDServerInfoRecord struct {
 	// The exportname to request over NBD. This holds details including an authentication token, so it must be protected appropriately. Clients should regard the exportname as an opaque string or token.
 	Exportname string
 	// An address on which the server can be reached; this can be IPv4, IPv6, or a DNS name.
@@ -15,9 +15,9 @@ type VdiNbdServerInfoRecord struct {
 	Subject string
 }
 
-type VdiNbdServerInfoRef string
+type VDINBDServerInfoRef string
 
 // Details for connecting to a VDI using the Network Block Device protocol
-type VdiNbdServerInfoClass struct {
+type VDINBDServerInfoClass struct {
 	client *Client
 }

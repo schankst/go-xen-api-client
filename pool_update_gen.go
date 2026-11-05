@@ -46,7 +46,7 @@ type PoolUpdateRecord struct {
 	// What the client should do after this update has been applied.
 	AfterApplyGuidance []UpdateAfterApplyGuidance
 	// VDI the update was uploaded to
-	Vdi VDIRef
+	VDI VDIRef
 	// The hosts that have applied this update.
 	Hosts []HostRef
 	// additional configuration
@@ -139,8 +139,8 @@ func (c PoolUpdateClass) GetHosts(ctx context.Context, sessionID SessionRef, sel
 	return callAndConvert(ctx, c.client, "pool_update.get_hosts", convertHostRefSetToGo, string(sessionID), string(self))
 }
 
-// GetVdi Get the vdi field of the given pool_update.
-func (c PoolUpdateClass) GetVdi(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (VDIRef, error) {
+// GetVDI Get the vdi field of the given pool_update.
+func (c PoolUpdateClass) GetVDI(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (VDIRef, error) {
 	return callAndConvert(ctx, c.client, "pool_update.get_vdi", toString[VDIRef], string(sessionID), string(self))
 }
 

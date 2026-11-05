@@ -13,11 +13,11 @@ type PIFMetricsRecord struct {
 	// Read bandwidth (KiB/s)
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-	IoReadKbs float64
+	IOReadKbs float64
 	// Write bandwidth (KiB/s)
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-	IoWriteKbs float64
+	IOWriteKbs float64
 	// Report if the PIF got a carrier or not
 	Carrier bool
 	// Report vendor ID
@@ -33,7 +33,7 @@ type PIFMetricsRecord struct {
 	// Full duplex capability of the link (if available)
 	Duplex bool
 	// PCI bus path of the pif (if available)
-	PciBusPath string
+	PCIBusPath string
 	// Time at which this information was last updated
 	LastUpdated time.Time
 	// additional configuration
@@ -41,7 +41,7 @@ type PIFMetricsRecord struct {
 	// The LLDP information for the physical NIC of the corresponding PIF: the effective LLDP state (key 'state', one of enabled, disabled or blocked) and, when a neighbour is seen, the received TLVs (keys 'system_name', 'port_id' and 'port_description'). Empty for PIFs that are not managed physical NICs.
 	//
 	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-	LldpNeighbor map[string]string
+	LLDPNeighbor map[string]string
 }
 
 type PIFMetricsRef string
@@ -79,10 +79,10 @@ func (c PIFMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRe
 	return err
 }
 
-// GetLldpNeighbor Get the lldp_neighbor field of the given PIF_metrics.
+// GetLLDPNeighbor Get the lldp_neighbor field of the given PIF_metrics.
 //
 // Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-func (c PIFMetricsClass) GetLldpNeighbor(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (map[string]string, error) {
+func (c PIFMetricsClass) GetLLDPNeighbor(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_lldp_neighbor", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
@@ -96,8 +96,8 @@ func (c PIFMetricsClass) GetLastUpdated(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_last_updated", toTime, string(sessionID), string(self))
 }
 
-// GetPciBusPath Get the pci_bus_path field of the given PIF_metrics.
-func (c PIFMetricsClass) GetPciBusPath(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (string, error) {
+// GetPCIBusPath Get the pci_bus_path field of the given PIF_metrics.
+func (c PIFMetricsClass) GetPCIBusPath(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (string, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_pci_bus_path", toValue[string], string(sessionID), string(self))
 }
 
@@ -136,17 +136,17 @@ func (c PIFMetricsClass) GetCarrier(ctx context.Context, sessionID SessionRef, s
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_carrier", toValue[bool], string(sessionID), string(self))
 }
 
-// GetIoWriteKbs Get the io/write_kbs field of the given PIF_metrics.
+// GetIOWriteKbs Get the io/write_kbs field of the given PIF_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-func (c PIFMetricsClass) GetIoWriteKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (float64, error) {
+func (c PIFMetricsClass) GetIOWriteKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_io_write_kbs", toValue[float64], string(sessionID), string(self))
 }
 
-// GetIoReadKbs Get the io/read_kbs field of the given PIF_metrics.
+// GetIOReadKbs Get the io/read_kbs field of the given PIF_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-func (c PIFMetricsClass) GetIoReadKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (float64, error) {
+func (c PIFMetricsClass) GetIOReadKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_io_read_kbs", toValue[float64], string(sessionID), string(self))
 }
 

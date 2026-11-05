@@ -7,74 +7,74 @@ import (
 	"time"
 )
 
-type VdiOperations string
+type VDIOperations string
 
 const (
 	// Cloning the VDI
-	VdiOperationsClone VdiOperations = "clone"
+	VDIOperationsClone VDIOperations = "clone"
 	// Copying the VDI
-	VdiOperationsCopy VdiOperations = "copy"
+	VDIOperationsCopy VDIOperations = "copy"
 	// Resizing the VDI
-	VdiOperationsResize VdiOperations = "resize"
+	VDIOperationsResize VDIOperations = "resize"
 	// Resizing the VDI which may or may not be online
-	VdiOperationsResizeOnline VdiOperations = "resize_online"
+	VDIOperationsResizeOnline VDIOperations = "resize_online"
 	// Snapshotting the VDI
-	VdiOperationsSnapshot VdiOperations = "snapshot"
+	VDIOperationsSnapshot VDIOperations = "snapshot"
 	// Mirroring the VDI
-	VdiOperationsMirror VdiOperations = "mirror"
+	VDIOperationsMirror VDIOperations = "mirror"
 	// Destroying the VDI
-	VdiOperationsDestroy VdiOperations = "destroy"
+	VDIOperationsDestroy VDIOperations = "destroy"
 	// Forget about the VDI
-	VdiOperationsForget VdiOperations = "forget"
+	VDIOperationsForget VDIOperations = "forget"
 	// Refreshing the fields of the VDI
-	VdiOperationsUpdate VdiOperations = "update"
+	VDIOperationsUpdate VDIOperations = "update"
 	// Forcibly unlocking the VDI
-	VdiOperationsForceUnlock VdiOperations = "force_unlock"
+	VDIOperationsForceUnlock VDIOperations = "force_unlock"
 	// Generating static configuration
-	VdiOperationsGenerateConfig VdiOperations = "generate_config"
+	VDIOperationsGenerateConfig VDIOperations = "generate_config"
 	// Enabling changed block tracking for a VDI
-	VdiOperationsEnableCbt VdiOperations = "enable_cbt"
+	VDIOperationsEnableCBT VDIOperations = "enable_cbt"
 	// Disabling changed block tracking for a VDI
-	VdiOperationsDisableCbt VdiOperations = "disable_cbt"
+	VDIOperationsDisableCBT VDIOperations = "disable_cbt"
 	// Deleting the data of the VDI
-	VdiOperationsDataDestroy VdiOperations = "data_destroy"
+	VDIOperationsDataDestroy VDIOperations = "data_destroy"
 	// Exporting a bitmap that shows the changed blocks between two VDIs
-	VdiOperationsListChangedBlocks VdiOperations = "list_changed_blocks"
+	VDIOperationsListChangedBlocks VDIOperations = "list_changed_blocks"
 	// Setting the on_boot field of the VDI
-	VdiOperationsSetOnBoot VdiOperations = "set_on_boot"
+	VDIOperationsSetOnBoot VDIOperations = "set_on_boot"
 	// Operations on this VDI are temporarily blocked
-	VdiOperationsBlocked VdiOperations = "blocked"
+	VDIOperationsBlocked VDIOperations = "blocked"
 	// Reverting a VDI to a clone of this snapshot
-	VdiOperationsRevertTo VdiOperations = "revert_to"
+	VDIOperationsRevertTo VDIOperations = "revert_to"
 	// Reverting this VDI to a clone of a snapshot
-	VdiOperationsRevertFrom VdiOperations = "revert_from"
+	VDIOperationsRevertFrom VDIOperations = "revert_from"
 )
 
-type VdiType string
+type VDIType string
 
 const (
 	// a disk that may be replaced on upgrade
-	VdiTypeSystem VdiType = "system"
+	VDITypeSystem VDIType = "system"
 	// a disk that is always preserved on upgrade
-	VdiTypeUser VdiType = "user"
+	VDITypeUser VDIType = "user"
 	// a disk that may be reformatted on upgrade
-	VdiTypeEphemeral VdiType = "ephemeral"
+	VDITypeEphemeral VDIType = "ephemeral"
 	// a disk that stores a suspend image
-	VdiTypeSuspend VdiType = "suspend"
+	VDITypeSuspend VDIType = "suspend"
 	// a disk that stores VM crashdump information
-	VdiTypeCrashdump VdiType = "crashdump"
+	VDITypeCrashdump VDIType = "crashdump"
 	// a disk used for HA storage heartbeating
-	VdiTypeHaStatefile VdiType = "ha_statefile"
+	VDITypeHAStatefile VDIType = "ha_statefile"
 	// a disk used for HA Pool metadata
-	VdiTypeMetadata VdiType = "metadata"
+	VDITypeMetadata VDIType = "metadata"
 	// a disk used for a general metadata redo-log
-	VdiTypeRedoLog VdiType = "redo_log"
+	VDITypeRedoLog VDIType = "redo_log"
 	// a disk that stores SR-level RRDs
-	VdiTypeRrd VdiType = "rrd"
+	VDITypeRRD VDIType = "rrd"
 	// a disk that stores PVS cache data
-	VdiTypePvsCache VdiType = "pvs_cache"
+	VDITypePVSCache VDIType = "pvs_cache"
 	// Metadata about a snapshot VDI that has been deleted: the set of blocks that changed between some previous version of the disk and the version tracked by the snapshot.
-	VdiTypeCbtMetadata VdiType = "cbt_metadata"
+	VDITypeCBTMetadata VDIType = "cbt_metadata"
 )
 
 type OnBoot string
@@ -94,9 +94,9 @@ type VDIRecord struct {
 	// a notes field containing human-readable description
 	NameDescription string
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
-	AllowedOperations []VdiOperations
+	AllowedOperations []VDIOperations
 	// links each of the running tasks using this object (by reference) to a current_operation enum which describes the nature of the task.
-	CurrentOperations map[string]VdiOperations
+	CurrentOperations map[string]VDIOperations
 	// storage repository in which the VDI resides
 	SR SRRef
 	// list of vbds that refer to this disk
@@ -108,7 +108,7 @@ type VDIRecord struct {
 	// amount of physical space that the disk image is currently taking up on the storage repository (in bytes)
 	PhysicalUtilisation int
 	// type of the VDI
-	Type VdiType
+	Type VDIType
 	// true if this disk may be shared
 	Sharable bool
 	// true if this disk may ONLY be mounted read-only
@@ -130,7 +130,7 @@ type VDIRecord struct {
 	// data to be inserted into the xenstore tree (/local/domain/0/backend/vbd/<domid>/<device-id>/sm-data) after the VDI is attached. This is generally set by the SM backends on vdi_attach.
 	XenstoreData map[string]string
 	// SM dependent data
-	SmConfig map[string]string
+	SMConfig map[string]string
 	// true if this is a snapshot.
 	IsASnapshot bool
 	// Ref pointing to the VDI this snapshot is of.
@@ -150,9 +150,9 @@ type VDIRecord struct {
 	// Whether this VDI contains the latest known accessible metadata for the pool
 	MetadataLatest bool
 	// Whether this VDI is a Tools ISO
-	IsToolsIso bool
+	IsToolsISO bool
 	// True if changed blocks are tracked for this VDI
-	CbtEnabled bool
+	CBTEnabled bool
 }
 
 type VDIRef string
@@ -184,13 +184,13 @@ func (c VDIClass) Revert(ctx context.Context, sessionID SessionRef, snapshot VDI
 	return err
 }
 
-// GetNbdInfo Get details specifying how to access this VDI via a Network Block Device server. For each of a set of NBD server addresses on which the VDI is available, the return value set contains a vdi_nbd_server_info object that contains an exportname to request once the NBD connection is established, and connection details for the address. An empty list is returned if there is no network that has a PIF on a host with access to the relevant SR, or if no such network has been assigned an NBD-related purpose in its purpose field. To access the given VDI, any of the vdi_nbd_server_info objects can be used to make a connection to a server, and then the VDI will be available by requesting the exportname.
+// GetNBDInfo Get details specifying how to access this VDI via a Network Block Device server. For each of a set of NBD server addresses on which the VDI is available, the return value set contains a vdi_nbd_server_info object that contains an exportname to request once the NBD connection is established, and connection details for the address. An empty list is returned if there is no network that has a PIF on a host with access to the relevant SR, or if no such network has been assigned an NBD-related purpose in its purpose field. To access the given VDI, any of the vdi_nbd_server_info objects can be used to make a connection to a server, and then the VDI will be available by requesting the exportname.
 //
 // Errors:
 //
 //	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
-func (c VDIClass) GetNbdInfo(ctx context.Context, sessionID SessionRef, self VDIRef) ([]VdiNbdServerInfoRecord, error) {
-	return callAndConvert(ctx, c.client, "VDI.get_nbd_info", convertVdiNbdServerInfoRecordSetToGo, string(sessionID), string(self))
+func (c VDIClass) GetNBDInfo(ctx context.Context, sessionID SessionRef, self VDIRef) ([]VDINBDServerInfoRecord, error) {
+	return callAndConvert(ctx, c.client, "VDI.get_nbd_info", convertVDINBDServerInfoRecordSetToGo, string(sessionID), string(self))
 }
 
 // ListChangedBlocks Compare two VDIs in 64k block increments and report which blocks differ. This operation is not allowed when vdi_to is attached to a VM.
@@ -224,7 +224,7 @@ func (c VDIClass) DataDestroy(ctx context.Context, sessionID SessionRef, self VD
 	return err
 }
 
-// DisableCbt Disable changed block tracking for the VDI. This call is only allowed on VDIs that support enabling CBT. It is an idempotent operation - disabling CBT for a VDI for which CBT is not enabled results in a no-op, and no error will be thrown.
+// DisableCBT Disable changed block tracking for the VDI. This call is only allowed on VDIs that support enabling CBT. It is an idempotent operation - disabling CBT for a VDI for which CBT is not enabled results in a no-op, and no error will be thrown.
 //
 // Errors:
 //
@@ -235,12 +235,12 @@ func (c VDIClass) DataDestroy(ctx context.Context, sessionID SessionRef, self VD
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 //	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
-func (c VDIClass) DisableCbt(ctx context.Context, sessionID SessionRef, self VDIRef) error {
+func (c VDIClass) DisableCBT(ctx context.Context, sessionID SessionRef, self VDIRef) error {
 	_, err := c.client.APICall(ctx, "VDI.disable_cbt", string(sessionID), string(self))
 	return err
 }
 
-// EnableCbt Enable changed block tracking for the VDI. This call is idempotent - enabling CBT for a VDI for which CBT is already enabled results in a no-op, and no error will be thrown.
+// EnableCBT Enable changed block tracking for the VDI. This call is idempotent - enabling CBT for a VDI for which CBT is already enabled results in a no-op, and no error will be thrown.
 //
 // Errors:
 //
@@ -251,7 +251,7 @@ func (c VDIClass) DisableCbt(ctx context.Context, sessionID SessionRef, self VDI
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 //	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
-func (c VDIClass) EnableCbt(ctx context.Context, sessionID SessionRef, self VDIRef) error {
+func (c VDIClass) EnableCBT(ctx context.Context, sessionID SessionRef, self VDIRef) error {
 	_, err := c.client.APICall(ctx, "VDI.enable_cbt", string(sessionID), string(self))
 	return err
 }
@@ -320,8 +320,8 @@ func (c VDIClass) Forget(ctx context.Context, sessionID SessionRef, vdi VDIRef) 
 //	VDI_READONLY - The operation required write access but this VDI is read-only
 //	VDI_TOO_SMALL - The VDI is too small. Please resize it to at least the minimum size.
 //	VDI_NOT_SPARSE - The VDI is not stored using a sparse format. It is not possible to query and manipulate only the changed blocks (or 'block differences' or 'disk deltas') between two VDIs. Please select a VDI which uses a sparse-aware technology such as VHD.
-func (c VDIClass) Copy(ctx context.Context, sessionID SessionRef, vdi VDIRef, sr SRRef, baseVdi VDIRef, intoVdi VDIRef) (VDIRef, error) {
-	return callAndConvert(ctx, c.client, "VDI.copy", toString[VDIRef], string(sessionID), string(vdi), string(sr), string(baseVdi), string(intoVdi))
+func (c VDIClass) Copy(ctx context.Context, sessionID SessionRef, vdi VDIRef, sr SRRef, baseVDI VDIRef, intoVDI VDIRef) (VDIRef, error) {
+	return callAndConvert(ctx, c.client, "VDI.copy", toString[VDIRef], string(sessionID), string(vdi), string(sr), string(baseVDI), string(intoVDI))
 }
 
 // Update Ask the storage backend to refresh the fields in the VDI object
@@ -339,7 +339,7 @@ func (c VDIClass) Update(ctx context.Context, sessionID SessionRef, vdi VDIRef) 
 // Errors:
 //
 //	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-func (c VDIClass) Introduce(ctx context.Context, sessionID SessionRef, uuid string, nameLabel string, nameDescription string, sr SRRef, atype VdiType, sharable bool, readOnly bool, otherConfig map[string]string, location string, xenstoreData map[string]string, smConfig map[string]string, managed bool, virtualSize int, physicalUtilisation int, metadataOfPool PoolRef, isASnapshot bool, snapshotTime time.Time, snapshotOf VDIRef) (VDIRef, error) {
+func (c VDIClass) Introduce(ctx context.Context, sessionID SessionRef, uuid string, nameLabel string, nameDescription string, sr SRRef, atype VDIType, sharable bool, readOnly bool, otherConfig map[string]string, location string, xenstoreData map[string]string, smConfig map[string]string, managed bool, virtualSize int, physicalUtilisation int, metadataOfPool PoolRef, isASnapshot bool, snapshotTime time.Time, snapshotOf VDIRef) (VDIRef, error) {
 	return callAndConvert(ctx, c.client, "VDI.introduce", toString[VDIRef], string(sessionID), uuid, nameLabel, nameDescription, string(sr), string(atype), sharable, readOnly, convertStringToStringMapToXen(otherConfig), location, convertStringToStringMapToXen(xenstoreData), convertStringToStringMapToXen(smConfig), managed, fromInt(virtualSize), fromInt(physicalUtilisation), string(metadataOfPool), isASnapshot, snapshotTime, string(snapshotOf))
 }
 
@@ -385,20 +385,20 @@ func (c VDIClass) SetTags(ctx context.Context, sessionID SessionRef, self VDIRef
 	return err
 }
 
-// RemoveFromSmConfig Remove the given key and its corresponding value from the sm_config field of the given VDI.  If the key is not in that Map, then do nothing.
-func (c VDIClass) RemoveFromSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string) error {
+// RemoveFromSMConfig Remove the given key and its corresponding value from the sm_config field of the given VDI.  If the key is not in that Map, then do nothing.
+func (c VDIClass) RemoveFromSMConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string) error {
 	_, err := c.client.APICall(ctx, "VDI.remove_from_sm_config", string(sessionID), string(self), key)
 	return err
 }
 
-// AddToSmConfig Add the given key-value pair to the sm_config field of the given VDI.
-func (c VDIClass) AddToSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string, value string) error {
+// AddToSMConfig Add the given key-value pair to the sm_config field of the given VDI.
+func (c VDIClass) AddToSMConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "VDI.add_to_sm_config", string(sessionID), string(self), key, value)
 	return err
 }
 
-// SetSmConfig Set the sm_config field of the given VDI.
-func (c VDIClass) SetSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef, value map[string]string) error {
+// SetSMConfig Set the sm_config field of the given VDI.
+func (c VDIClass) SetSMConfig(ctx context.Context, sessionID SessionRef, self VDIRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VDI.set_sm_config", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
@@ -439,13 +439,13 @@ func (c VDIClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self
 	return err
 }
 
-// GetCbtEnabled Get the cbt_enabled field of the given VDI.
-func (c VDIClass) GetCbtEnabled(ctx context.Context, sessionID SessionRef, self VDIRef) (bool, error) {
+// GetCBTEnabled Get the cbt_enabled field of the given VDI.
+func (c VDIClass) GetCBTEnabled(ctx context.Context, sessionID SessionRef, self VDIRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VDI.get_cbt_enabled", toValue[bool], string(sessionID), string(self))
 }
 
-// GetIsToolsIso Get the is_tools_iso field of the given VDI.
-func (c VDIClass) GetIsToolsIso(ctx context.Context, sessionID SessionRef, self VDIRef) (bool, error) {
+// GetIsToolsISO Get the is_tools_iso field of the given VDI.
+func (c VDIClass) GetIsToolsISO(ctx context.Context, sessionID SessionRef, self VDIRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VDI.get_is_tools_iso", toValue[bool], string(sessionID), string(self))
 }
 
@@ -494,8 +494,8 @@ func (c VDIClass) GetIsASnapshot(ctx context.Context, sessionID SessionRef, self
 	return callAndConvert(ctx, c.client, "VDI.get_is_a_snapshot", toValue[bool], string(sessionID), string(self))
 }
 
-// GetSmConfig Get the sm_config field of the given VDI.
-func (c VDIClass) GetSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef) (map[string]string, error) {
+// GetSMConfig Get the sm_config field of the given VDI.
+func (c VDIClass) GetSMConfig(ctx context.Context, sessionID SessionRef, self VDIRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VDI.get_sm_config", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
@@ -547,8 +547,8 @@ func (c VDIClass) GetSharable(ctx context.Context, sessionID SessionRef, self VD
 }
 
 // GetType Get the type field of the given VDI.
-func (c VDIClass) GetType(ctx context.Context, sessionID SessionRef, self VDIRef) (VdiType, error) {
-	return callAndConvert(ctx, c.client, "VDI.get_type", toString[VdiType], string(sessionID), string(self))
+func (c VDIClass) GetType(ctx context.Context, sessionID SessionRef, self VDIRef) (VDIType, error) {
+	return callAndConvert(ctx, c.client, "VDI.get_type", toString[VDIType], string(sessionID), string(self))
 }
 
 // GetPhysicalUtilisation Get the physical_utilisation field of the given VDI.
@@ -577,13 +577,13 @@ func (c VDIClass) GetSR(ctx context.Context, sessionID SessionRef, self VDIRef) 
 }
 
 // GetCurrentOperations Get the current_operations field of the given VDI.
-func (c VDIClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VDIRef) (map[string]VdiOperations, error) {
-	return callAndConvert(ctx, c.client, "VDI.get_current_operations", convertStringToEnumVdiOperationsMapToGo, string(sessionID), string(self))
+func (c VDIClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VDIRef) (map[string]VDIOperations, error) {
+	return callAndConvert(ctx, c.client, "VDI.get_current_operations", convertStringToEnumVDIOperationsMapToGo, string(sessionID), string(self))
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given VDI.
-func (c VDIClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VDIRef) ([]VdiOperations, error) {
-	return callAndConvert(ctx, c.client, "VDI.get_allowed_operations", convertEnumVdiOperationsSetToGo, string(sessionID), string(self))
+func (c VDIClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VDIRef) ([]VDIOperations, error) {
+	return callAndConvert(ctx, c.client, "VDI.get_allowed_operations", convertEnumVDIOperationsSetToGo, string(sessionID), string(self))
 }
 
 // GetNameDescription Get the name/description field of the given VDI.

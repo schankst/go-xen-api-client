@@ -6,17 +6,17 @@ import (
 	"context"
 )
 
-type PciDom0Access string
+type PCIDom0Access string
 
 const (
 	// dom0 can access this device as normal
-	PciDom0AccessEnabled PciDom0Access = "enabled"
+	PCIDom0AccessEnabled PCIDom0Access = "enabled"
 	// On host reboot dom0 will be blocked from accessing this device
-	PciDom0AccessDisableOnReboot PciDom0Access = "disable_on_reboot"
+	PCIDom0AccessDisableOnReboot PCIDom0Access = "disable_on_reboot"
 	// dom0 cannot access this device
-	PciDom0AccessDisabled PciDom0Access = "disabled"
+	PCIDom0AccessDisabled PCIDom0Access = "disabled"
 	// On host reboot dom0 will be allowed to access this device
-	PciDom0AccessEnableOnReboot PciDom0Access = "enable_on_reboot"
+	PCIDom0AccessEnableOnReboot PCIDom0Access = "enable_on_reboot"
 )
 
 type PCIRecord struct {
@@ -37,7 +37,7 @@ type PCIRecord struct {
 	// Physical machine that owns the PCI device
 	Host HostRef
 	// PCI ID of the physical device
-	PciID string
+	PCIID string
 	// List of dependent PCI devices
 	Dependencies []PCIRef
 	// Additional configuration
@@ -74,22 +74,22 @@ func (c PCIClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PCIRef, e
 // GetDom0AccessStatus Return a PCI device dom0 access status.
 //
 // Experimental: prototyped in XAPI release 24.14.0; it may change or be removed.
-func (c PCIClass) GetDom0AccessStatus(ctx context.Context, sessionID SessionRef, self PCIRef) (PciDom0Access, error) {
-	return callAndConvert(ctx, c.client, "PCI.get_dom0_access_status", toString[PciDom0Access], string(sessionID), string(self))
+func (c PCIClass) GetDom0AccessStatus(ctx context.Context, sessionID SessionRef, self PCIRef) (PCIDom0Access, error) {
+	return callAndConvert(ctx, c.client, "PCI.get_dom0_access_status", toString[PCIDom0Access], string(sessionID), string(self))
 }
 
 // EnableDom0Access Unhide a PCI device from the dom0 kernel. (Takes affect after next boot.)
 //
 // Experimental: prototyped in XAPI release 24.14.0; it may change or be removed.
-func (c PCIClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (PciDom0Access, error) {
-	return callAndConvert(ctx, c.client, "PCI.enable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
+func (c PCIClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (PCIDom0Access, error) {
+	return callAndConvert(ctx, c.client, "PCI.enable_dom0_access", toString[PCIDom0Access], string(sessionID), string(self))
 }
 
 // DisableDom0Access Hide a PCI device from the dom0 kernel. (Takes affect after next boot.)
 //
 // Experimental: prototyped in XAPI release 24.14.0; it may change or be removed.
-func (c PCIClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (PciDom0Access, error) {
-	return callAndConvert(ctx, c.client, "PCI.disable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
+func (c PCIClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (PCIDom0Access, error) {
+	return callAndConvert(ctx, c.client, "PCI.disable_dom0_access", toString[PCIDom0Access], string(sessionID), string(self))
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given PCI.  If the key is not in that Map, then do nothing.
@@ -145,8 +145,8 @@ func (c PCIClass) GetDependencies(ctx context.Context, sessionID SessionRef, sel
 	return callAndConvert(ctx, c.client, "PCI.get_dependencies", convertPCIRefSetToGo, string(sessionID), string(self))
 }
 
-// GetPciID Get the pci_id field of the given PCI.
-func (c PCIClass) GetPciID(ctx context.Context, sessionID SessionRef, self PCIRef) (string, error) {
+// GetPCIID Get the pci_id field of the given PCI.
+func (c PCIClass) GetPCIID(ctx context.Context, sessionID SessionRef, self PCIRef) (string, error) {
 	return callAndConvert(ctx, c.client, "PCI.get_pci_id", toValue[string], string(sessionID), string(self))
 }
 

@@ -10,9 +10,9 @@ type TunnelProtocol string
 
 const (
 	// GRE protocol
-	TunnelProtocolGre TunnelProtocol = "gre"
+	TunnelProtocolGRE TunnelProtocol = "gre"
 	// VxLAN Protocol
-	TunnelProtocolVxlan TunnelProtocol = "vxlan"
+	TunnelProtocolVXLAN TunnelProtocol = "vxlan"
 )
 
 type TunnelRecord struct {

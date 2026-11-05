@@ -6,24 +6,24 @@ import (
 	"context"
 )
 
-type VusbOperations string
+type VUSBOperations string
 
 const (
 	// Attempting to attach this VUSB to a VM
-	VusbOperationsAttach VusbOperations = "attach"
+	VUSBOperationsAttach VUSBOperations = "attach"
 	// Attempting to plug this VUSB into a VM
-	VusbOperationsPlug VusbOperations = "plug"
+	VUSBOperationsPlug VUSBOperations = "plug"
 	// Attempting to hot unplug this VUSB
-	VusbOperationsUnplug VusbOperations = "unplug"
+	VUSBOperationsUnplug VUSBOperations = "unplug"
 )
 
 type VUSBRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
-	AllowedOperations []VusbOperations
+	AllowedOperations []VUSBOperations
 	// links each of the running tasks using this object (by reference) to a current_operation enum which describes the nature of the task.
-	CurrentOperations map[string]VusbOperations
+	CurrentOperations map[string]VUSBOperations
 	// VM that owns the VUSB
 	VM VMRef
 	// USB group used by the VUSB
@@ -107,13 +107,13 @@ func (c VUSBClass) GetVM(ctx context.Context, sessionID SessionRef, self VUSBRef
 }
 
 // GetCurrentOperations Get the current_operations field of the given VUSB.
-func (c VUSBClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VUSBRef) (map[string]VusbOperations, error) {
-	return callAndConvert(ctx, c.client, "VUSB.get_current_operations", convertStringToEnumVusbOperationsMapToGo, string(sessionID), string(self))
+func (c VUSBClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VUSBRef) (map[string]VUSBOperations, error) {
+	return callAndConvert(ctx, c.client, "VUSB.get_current_operations", convertStringToEnumVUSBOperationsMapToGo, string(sessionID), string(self))
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given VUSB.
-func (c VUSBClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VUSBRef) ([]VusbOperations, error) {
-	return callAndConvert(ctx, c.client, "VUSB.get_allowed_operations", convertEnumVusbOperationsSetToGo, string(sessionID), string(self))
+func (c VUSBClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VUSBRef) ([]VUSBOperations, error) {
+	return callAndConvert(ctx, c.client, "VUSB.get_allowed_operations", convertEnumVUSBOperationsSetToGo, string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given VUSB.

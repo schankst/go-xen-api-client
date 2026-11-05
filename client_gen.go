@@ -44,7 +44,7 @@ type Client struct {
 	VLAN             VLANClass
 	SM               SMClass
 	SR               SRClass
-	SrStat           SrStatClass
+	SRStat           SRStatClass
 	ProbeResult      ProbeResultClass
 	LVHD             LVHDClass
 	VDI              VDIClass
@@ -60,7 +60,7 @@ type Client struct {
 	Message          MessageClass
 	Secret           SecretClass
 	Tunnel           TunnelClass
-	NetworkSriov     NetworkSriovClass
+	NetworkSRIOV     NetworkSRIOVClass
 	PCI              PCIClass
 	PGPU             PGPUClass
 	GPUGroup         GPUGroupClass
@@ -72,7 +72,7 @@ type Client struct {
 	PVSCacheStorage  PVSCacheStorageClass
 	Feature          FeatureClass
 	SDNController    SDNControllerClass
-	VdiNbdServerInfo VdiNbdServerInfoClass
+	VDINBDServerInfo VDINBDServerInfoClass
 	PUSB             PUSBClass
 	USBGroup         USBGroupClass
 	VUSB             VUSBClass
@@ -121,7 +121,7 @@ func prepClient(rpc *xmlrpc.Client) *Client {
 	client.VLAN = VLANClass{&client}
 	client.SM = SMClass{&client}
 	client.SR = SRClass{&client}
-	client.SrStat = SrStatClass{&client}
+	client.SRStat = SRStatClass{&client}
 	client.ProbeResult = ProbeResultClass{&client}
 	client.LVHD = LVHDClass{&client}
 	client.VDI = VDIClass{&client}
@@ -137,7 +137,7 @@ func prepClient(rpc *xmlrpc.Client) *Client {
 	client.Message = MessageClass{&client}
 	client.Secret = SecretClass{&client}
 	client.Tunnel = TunnelClass{&client}
-	client.NetworkSriov = NetworkSriovClass{&client}
+	client.NetworkSRIOV = NetworkSRIOVClass{&client}
 	client.PCI = PCIClass{&client}
 	client.PGPU = PGPUClass{&client}
 	client.GPUGroup = GPUGroupClass{&client}
@@ -149,7 +149,7 @@ func prepClient(rpc *xmlrpc.Client) *Client {
 	client.PVSCacheStorage = PVSCacheStorageClass{&client}
 	client.Feature = FeatureClass{&client}
 	client.SDNController = SDNControllerClass{&client}
-	client.VdiNbdServerInfo = VdiNbdServerInfoClass{&client}
+	client.VDINBDServerInfo = VDINBDServerInfoClass{&client}
 	client.PUSB = PUSBClass{&client}
 	client.USBGroup = USBGroupClass{&client}
 	client.VUSB = VUSBClass{&client}

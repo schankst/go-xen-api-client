@@ -8,7 +8,7 @@ type ProbeResultRecord struct {
 	// True if this configuration is complete and can be used to call SR.create. False if it requires further iterative calls to SR.probe, to potentially narrow down on a configuration that can be used.
 	Complete bool
 	// Existing SR found for this configuration
-	Sr SrStatRecord
+	SR SRStatRecord
 	// Additional plugin-specific information about this configuration, that might be of use for an API user. This can, for example, include the LUN or the WWPN.
 	ExtraInfo map[string]string
 }

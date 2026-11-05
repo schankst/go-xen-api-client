@@ -35,7 +35,7 @@ type VMMetricsRecord struct {
 	// additional configuration
 	OtherConfig map[string]string
 	// hardware virtual machine
-	Hvm bool
+	HVM bool
 	// VM supports nested virtualisation
 	NestedVirt bool
 	// VM is immobile and can't migrate between hosts
@@ -45,15 +45,15 @@ type VMMetricsRecord struct {
 	// If the VM is optimised for NUMA
 	//
 	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-	NumaOptimised bool
+	NUMAOptimised bool
 	// number of NUMA nodes of the host the VM is using
 	//
 	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-	NumaNodes int
+	NUMANodes int
 	// mapping a NUMA node (int) to an amount of memory (bytes) in that node.
 	//
 	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-	NumaNodeMemory map[int]int
+	NUMANodeMemory map[int]int
 }
 
 type VMMetricsRef string
@@ -91,24 +91,24 @@ func (c VMMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRef
 	return err
 }
 
-// GetNumaNodeMemory Get the numa_node_memory field of the given VM_metrics.
+// GetNUMANodeMemory Get the numa_node_memory field of the given VM_metrics.
 //
 // Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-func (c VMMetricsClass) GetNumaNodeMemory(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int]int, error) {
+func (c VMMetricsClass) GetNUMANodeMemory(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int]int, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_node_memory", convertIntToIntMapToGo, string(sessionID), string(self))
 }
 
-// GetNumaNodes Get the numa_nodes field of the given VM_metrics.
+// GetNUMANodes Get the numa_nodes field of the given VM_metrics.
 //
 // Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-func (c VMMetricsClass) GetNumaNodes(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int, error) {
+func (c VMMetricsClass) GetNUMANodes(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_nodes", toInt, string(sessionID), string(self))
 }
 
-// GetNumaOptimised Get the numa_optimised field of the given VM_metrics.
+// GetNUMAOptimised Get the numa_optimised field of the given VM_metrics.
 //
 // Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
-func (c VMMetricsClass) GetNumaOptimised(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (bool, error) {
+func (c VMMetricsClass) GetNUMAOptimised(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_optimised", toValue[bool], string(sessionID), string(self))
 }
 
@@ -127,8 +127,8 @@ func (c VMMetricsClass) GetNestedVirt(ctx context.Context, sessionID SessionRef,
 	return callAndConvert(ctx, c.client, "VM_metrics.get_nested_virt", toValue[bool], string(sessionID), string(self))
 }
 
-// GetHvm Get the hvm field of the given VM_metrics.
-func (c VMMetricsClass) GetHvm(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (bool, error) {
+// GetHVM Get the hvm field of the given VM_metrics.
+func (c VMMetricsClass) GetHVM(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_hvm", toValue[bool], string(sessionID), string(self))
 }
 

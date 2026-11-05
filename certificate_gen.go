@@ -11,7 +11,7 @@ type CertificateType string
 
 const (
 	// Certificate that is trusted by the whole pool
-	CertificateTypeCa CertificateType = "ca"
+	CertificateTypeCA CertificateType = "ca"
 	// Certificate that identifies a single host to entities outside the pool
 	CertificateTypeHost CertificateType = "host"
 	// Certificate that identifies a single host to other pool members
@@ -44,7 +44,7 @@ type CertificateRecord struct {
 	// The certificate's SHA1 fingerprint / hash
 	//
 	// Experimental: prototyped in XAPI release 24.20.0; it may change or be removed.
-	FingerprintSha1 string
+	FingerprintSHA1 string
 	// The purposes of the certificate
 	//
 	// Experimental: prototyped in XAPI release 26.13.0; it may change or be removed.
@@ -75,10 +75,10 @@ func (c CertificateClass) GetPurpose(ctx context.Context, sessionID SessionRef, 
 	return callAndConvert(ctx, c.client, "Certificate.get_purpose", convertEnumCertificatePurposeSetToGo, string(sessionID), string(self))
 }
 
-// GetFingerprintSha1 Get the fingerprint_sha1 field of the given Certificate.
+// GetFingerprintSHA1 Get the fingerprint_sha1 field of the given Certificate.
 //
 // Experimental: prototyped in XAPI release 24.20.0; it may change or be removed.
-func (c CertificateClass) GetFingerprintSha1(ctx context.Context, sessionID SessionRef, self CertificateRef) (string, error) {
+func (c CertificateClass) GetFingerprintSHA1(ctx context.Context, sessionID SessionRef, self CertificateRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Certificate.get_fingerprint_sha1", toValue[string], string(sessionID), string(self))
 }
 

@@ -67,28 +67,28 @@ const (
 	HostSchedGranSocket HostSchedGran = "socket"
 )
 
-type HostNumaAffinityPolicy string
+type HostNUMAAffinityPolicy string
 
 const (
 	// VMs are spread across all available NUMA nodes
-	HostNumaAffinityPolicyAny HostNumaAffinityPolicy = "any"
+	HostNUMAAffinityPolicyAny HostNUMAAffinityPolicy = "any"
 	// VMs are placed on the smallest number of NUMA nodes that they fit using soft-pinning, but the policy doesn't guarantee a balanced placement, falling back to the 'any' policy.
-	HostNumaAffinityPolicyBestEffort HostNumaAffinityPolicy = "best_effort"
+	HostNUMAAffinityPolicyBestEffort HostNUMAAffinityPolicy = "best_effort"
 	// Use the NUMA affinity policy that is the default for the current version
-	HostNumaAffinityPolicyDefaultPolicy HostNumaAffinityPolicy = "default_policy"
+	HostNUMAAffinityPolicyDefaultPolicy HostNUMAAffinityPolicy = "default_policy"
 )
 
-type HostNtpMode string
+type HostNTPMode string
 
 const (
 	// Using NTP servers assigned by DHCP to sync time
-	HostNtpModeDHCP HostNtpMode = "DHCP"
+	HostNTPModeDHCP HostNTPMode = "DHCP"
 	// Using custom NTP servers configured by user to sync time
-	HostNtpModeCustom HostNtpMode = "Custom"
+	HostNTPModeCustom HostNTPMode = "Custom"
 	// Using built-in NTP servers to sync time
-	HostNtpModeFactory HostNtpMode = "Factory"
+	HostNTPModeFactory HostNTPMode = "Factory"
 	// NTP is disabled on the host
-	HostNtpModeDisabled HostNtpMode = "Disabled"
+	HostNTPModeDisabled HostNTPMode = "Disabled"
 )
 
 type HostRecord struct {
@@ -133,9 +133,9 @@ type HostRecord struct {
 	// physical network interfaces
 	PIFs []PIFRef
 	// The SR in which VDIs for suspend images are created
-	SuspendImageSr SRRef
+	SuspendImageSR SRRef
 	// The SR in which VDIs for crash dumps are created
-	CrashDumpSr SRRef
+	CrashDumpSR SRRef
 	// Set of host crash dumps
 	Crashdumps []HostCrashdumpRef
 	// Set of host patches
@@ -159,9 +159,9 @@ type HostRecord struct {
 	// State of the current license
 	LicenseParams map[string]string
 	// The set of statefiles accessible from this host
-	HaStatefiles []string
+	HAStatefiles []string
 	// The set of hosts visible via the network from this host
-	HaNetworkPeers []string
+	HANetworkPeers []string
 	// Binary blobs associated with this host
 	Blobs map[string]BlobRef
 	// user-specified tags for categorization purposes
@@ -177,13 +177,13 @@ type HostRecord struct {
 	// Contact information of the license server
 	LicenseServer map[string]string
 	// BIOS strings
-	BiosStrings map[string]string
+	BIOSStrings map[string]string
 	// The power on mode
 	PowerOnMode string
 	// The power on config
 	PowerOnConfig map[string]string
 	// The SR that is used as a local cache
-	LocalCacheSr SRRef
+	LocalCacheSR SRRef
 	// Information about chipset features
 	ChipsetInfo map[string]string
 	// List of PCI devices in the host
@@ -195,7 +195,7 @@ type HostRecord struct {
 	// Allow SSLv3 protocol and ciphersuites as used by older server versions. This controls both incoming and outgoing connections. When this is set to a different value, the host immediately restarts its SSL/TLS listening service; typically this takes less than a second but existing connections to it will be broken. API login sessions will remain valid.
 	//
 	// Deprecated: Deprecated in XAPI release stockholm. Legacy SSL no longer supported.
-	SslLegacy bool
+	SSLLegacy bool
 	// VCPUs params to apply to all resident guests
 	GuestVCPUsParams map[string]string
 	// indicates whether the host is configured to output its console to a physical display device
@@ -209,13 +209,13 @@ type HostRecord struct {
 	// List of features available on this host
 	Features []FeatureRef
 	// The initiator IQN for the host
-	IscsiIqn string
+	ISCSIIQN string
 	// Specifies whether multipathing is enabled
 	Multipathing bool
 	// The UEFI certificates allowing Secure Boot
 	//
 	// Deprecated: Deprecated in XAPI release 22.16.0. Use Pool.uefi_certificates instead.
-	UefiCertificates string
+	UEFICertificates string
 	// List of certificates installed in the host
 	Certificates []CertificateRef
 	// List of all available product editions
@@ -239,7 +239,7 @@ type HostRecord struct {
 	// NUMA-aware VM memory and vCPU placement policy
 	//
 	// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
-	NumaAffinityPolicy HostNumaAffinityPolicy
+	NUMAAffinityPolicy HostNUMAAffinityPolicy
 	// The set of pending recommended guidances after applying updates, which most users should follow to make the updates effective, but if not followed, will not cause a failure
 	//
 	// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
@@ -283,11 +283,11 @@ type HostRecord struct {
 	// Indicates NTP servers are assigned by DHCP, or configured by user, or the factory servers, or NTP is disabled
 	//
 	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-	NtpMode HostNtpMode
+	NTPMode HostNTPMode
 	// Custom NTP servers configured by users, used in Custom NTP mode
 	//
 	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-	NtpCustomServers []string
+	NTPCustomServers []string
 	// The time zone identifier as defined in the IANA Time Zone Database
 	//
 	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
@@ -319,10 +319,10 @@ func (c HostClass) SetServertime(ctx context.Context, sessionID SessionRef, self
 	return err
 }
 
-// GetNtpSynchronized Returns true if the system clock on the host is synchronized with the NTP servers.
+// GetNTPSynchronized Returns true if the system clock on the host is synchronized with the NTP servers.
 //
 // Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-func (c HostClass) GetNtpSynchronized(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
+func (c HostClass) GetNTPSynchronized(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_ntp_synchronized", toValue[bool], string(sessionID), string(self))
 }
 
@@ -341,25 +341,25 @@ func (c HostClass) SetTimezone(ctx context.Context, sessionID SessionRef, self H
 	return err
 }
 
-// GetNtpServersStatus Get the NTP servers status on the host
+// GetNTPServersStatus Get the NTP servers status on the host
 //
 // Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-func (c HostClass) GetNtpServersStatus(ctx context.Context, sessionID SessionRef, self HostRef) (map[string]string, error) {
+func (c HostClass) GetNTPServersStatus(ctx context.Context, sessionID SessionRef, self HostRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_ntp_servers_status", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
-// SetNtpCustomServers Set the custom NTP servers for the host
+// SetNTPCustomServers Set the custom NTP servers for the host
 //
 // Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-func (c HostClass) SetNtpCustomServers(ctx context.Context, sessionID SessionRef, self HostRef, value []string) error {
+func (c HostClass) SetNTPCustomServers(ctx context.Context, sessionID SessionRef, self HostRef, value []string) error {
 	_, err := c.client.APICall(ctx, "host.set_ntp_custom_servers", string(sessionID), string(self), convertStringSetToXen(value))
 	return err
 }
 
-// SetNtpMode Set the NTP mode for the host
+// SetNTPMode Set the NTP mode for the host
 //
 // Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-func (c HostClass) SetNtpMode(ctx context.Context, sessionID SessionRef, self HostRef, value HostNtpMode) error {
+func (c HostClass) SetNTPMode(ctx context.Context, sessionID SessionRef, self HostRef, value HostNTPMode) error {
 	_, err := c.client.APICall(ctx, "host.set_ntp_mode", string(sessionID), string(self), string(value))
 	return err
 }
@@ -468,10 +468,10 @@ func (c HostClass) EmergencyDisableTLSVerification(ctx context.Context, sessionI
 	return err
 }
 
-// SetNumaAffinityPolicy Set VM placement NUMA affinity policy
+// SetNUMAAffinityPolicy Set VM placement NUMA affinity policy
 //
 // Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
-func (c HostClass) SetNumaAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef, value HostNumaAffinityPolicy) error {
+func (c HostClass) SetNUMAAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef, value HostNUMAAffinityPolicy) error {
 	_, err := c.client.APICall(ctx, "host.set_numa_affinity_policy", string(sessionID), string(self), string(value))
 	return err
 }
@@ -487,10 +487,10 @@ func (c HostClass) SetSchedGran(ctx context.Context, sessionID SessionRef, self 
 	return err
 }
 
-// SetUefiCertificates Sets the UEFI certificates on a host
+// SetUEFICertificates Sets the UEFI certificates on a host
 //
 // Deprecated: Deprecated in XAPI release 22.16.0. Use Pool.set_uefi_certificates instead.
-func (c HostClass) SetUefiCertificates(ctx context.Context, sessionID SessionRef, host HostRef, value string) error {
+func (c HostClass) SetUEFICertificates(ctx context.Context, sessionID SessionRef, host HostRef, value string) error {
 	_, err := c.client.APICall(ctx, "host.set_uefi_certificates", string(sessionID), string(host), value)
 	return err
 }
@@ -501,14 +501,14 @@ func (c HostClass) SetMultipathing(ctx context.Context, sessionID SessionRef, ho
 	return err
 }
 
-// SetIscsiIqn Sets the initiator IQN for the host
-func (c HostClass) SetIscsiIqn(ctx context.Context, sessionID SessionRef, host HostRef, value string) error {
+// SetISCSIIQN Sets the initiator IQN for the host
+func (c HostClass) SetISCSIIQN(ctx context.Context, sessionID SessionRef, host HostRef, value string) error {
 	_, err := c.client.APICall(ctx, "host.set_iscsi_iqn", string(sessionID), string(host), value)
 	return err
 }
 
-// SetSslLegacy Enable/disable SSLv3 for interoperability with older server versions. When this is set to a different value, the host immediately restarts its SSL/TLS listening service; typically this takes less than a second but existing connections to it will be broken. API login sessions will remain valid.
-func (c HostClass) SetSslLegacy(ctx context.Context, sessionID SessionRef, self HostRef, value bool) error {
+// SetSSLLegacy Enable/disable SSLv3 for interoperability with older server versions. When this is set to a different value, the host immediately restarts its SSL/TLS listening service; typically this takes less than a second but existing connections to it will be broken. API login sessions will remain valid.
+func (c HostClass) SetSSLLegacy(ctx context.Context, sessionID SessionRef, self HostRef, value bool) error {
 	_, err := c.client.APICall(ctx, "host.set_ssl_legacy", string(sessionID), string(self), value)
 	return err
 }
@@ -611,13 +611,13 @@ func (c HostClass) GetServerCertificate(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "host.get_server_certificate", toValue[string], string(sessionID), string(host))
 }
 
-// RetrieveWlbEvacuateRecommendations Retrieves recommended host migrations to perform when evacuating the host from the wlb server. If a VM cannot be migrated from the host the reason is listed instead of a recommendation.
-func (c HostClass) RetrieveWlbEvacuateRecommendations(ctx context.Context, sessionID SessionRef, self HostRef) (map[VMRef][]string, error) {
+// RetrieveWLBEvacuateRecommendations Retrieves recommended host migrations to perform when evacuating the host from the wlb server. If a VM cannot be migrated from the host the reason is listed instead of a recommendation.
+func (c HostClass) RetrieveWLBEvacuateRecommendations(ctx context.Context, sessionID SessionRef, self HostRef) (map[VMRef][]string, error) {
 	return callAndConvert(ctx, c.client, "host.retrieve_wlb_evacuate_recommendations", convertVMRefToStringSetMapToGo, string(sessionID), string(self))
 }
 
-// ExternalAuthSetLdaps This call enables or disables LDAPS for external authentication on the host
-func (c HostClass) ExternalAuthSetLdaps(ctx context.Context, sessionID SessionRef, host HostRef, ldaps bool, force bool) error {
+// ExternalAuthSetLDAPS This call enables or disables LDAPS for external authentication on the host
+func (c HostClass) ExternalAuthSetLDAPS(ctx context.Context, sessionID SessionRef, host HostRef, ldaps bool, force bool) error {
 	_, err := c.client.APICall(ctx, "host.external_auth_set_ldaps", string(sessionID), string(host), ldaps, force)
 	return err
 }
@@ -664,8 +664,8 @@ func (c HostClass) CreateNewBlob(ctx context.Context, sessionID SessionRef, host
 	return callAndConvert(ctx, c.client, "host.create_new_blob", toString[BlobRef], string(sessionID), string(host), name, mimeType, public)
 }
 
-// BackupRrds This causes the RRDs to be backed up to the coordinator
-func (c HostClass) BackupRrds(ctx context.Context, sessionID SessionRef, host HostRef, delay float64) error {
+// BackupRRDs This causes the RRDs to be backed up to the coordinator
+func (c HostClass) BackupRRDs(ctx context.Context, sessionID SessionRef, host HostRef, delay float64) error {
 	_, err := c.client.APICall(ctx, "host.backup_rrds", string(sessionID), string(host), delay)
 	return err
 }
@@ -755,8 +755,8 @@ func (c HostClass) GetUncooperativeResidentVMs(ctx context.Context, sessionID Se
 	return callAndConvert(ctx, c.client, "host.get_uncooperative_resident_VMs", convertVMRefSetToGo, string(sessionID), string(self))
 }
 
-// GetVmsWhichPreventEvacuation Return a set of VMs which prevent the host being evacuated, with per-VM error codes
-func (c HostClass) GetVmsWhichPreventEvacuation(ctx context.Context, sessionID SessionRef, self HostRef) (map[VMRef][]string, error) {
+// GetVMsWhichPreventEvacuation Return a set of VMs which prevent the host being evacuated, with per-VM error codes
+func (c HostClass) GetVMsWhichPreventEvacuation(ctx context.Context, sessionID SessionRef, self HostRef) (map[VMRef][]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_vms_which_prevent_evacuation", convertVMRefToStringSetMapToGo, string(sessionID), string(self))
 }
 
@@ -788,8 +788,8 @@ func (c HostClass) GetDataSources(ctx context.Context, sessionID SessionRef, hos
 	return callAndConvert(ctx, c.client, "host.get_data_sources", convertDataSourceRecordSetToGo, string(sessionID), string(host))
 }
 
-// EmergencyHaDisable This call disables HA on the local host. This should only be used with extreme care.
-func (c HostClass) EmergencyHaDisable(ctx context.Context, sessionID SessionRef, soft bool) error {
+// EmergencyHADisable This call disables HA on the local host. This should only be used with extreme care.
+func (c HostClass) EmergencyHADisable(ctx context.Context, sessionID SessionRef, soft bool) error {
 	_, err := c.client.APICall(ctx, "host.emergency_ha_disable", string(sessionID), soft)
 	return err
 }
@@ -962,14 +962,14 @@ func (c HostClass) SetHostname(ctx context.Context, sessionID SessionRef, self H
 	return err
 }
 
-// SetCrashDumpSr Set the crash_dump_sr field of the given host.
-func (c HostClass) SetCrashDumpSr(ctx context.Context, sessionID SessionRef, self HostRef, value SRRef) error {
+// SetCrashDumpSR Set the crash_dump_sr field of the given host.
+func (c HostClass) SetCrashDumpSR(ctx context.Context, sessionID SessionRef, self HostRef, value SRRef) error {
 	_, err := c.client.APICall(ctx, "host.set_crash_dump_sr", string(sessionID), string(self), string(value))
 	return err
 }
 
-// SetSuspendImageSr Set the suspend_image_sr field of the given host.
-func (c HostClass) SetSuspendImageSr(ctx context.Context, sessionID SessionRef, self HostRef, value SRRef) error {
+// SetSuspendImageSR Set the suspend_image_sr field of the given host.
+func (c HostClass) SetSuspendImageSR(ctx context.Context, sessionID SessionRef, self HostRef, value SRRef) error {
 	_, err := c.client.APICall(ctx, "host.set_suspend_image_sr", string(sessionID), string(self), string(value))
 	return err
 }
@@ -1029,18 +1029,18 @@ func (c HostClass) GetTimezone(ctx context.Context, sessionID SessionRef, self H
 	return callAndConvert(ctx, c.client, "host.get_timezone", toValue[string], string(sessionID), string(self))
 }
 
-// GetNtpCustomServers Get the ntp_custom_servers field of the given host.
+// GetNTPCustomServers Get the ntp_custom_servers field of the given host.
 //
 // Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-func (c HostClass) GetNtpCustomServers(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
+func (c HostClass) GetNTPCustomServers(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_ntp_custom_servers", convertStringSetToGo, string(sessionID), string(self))
 }
 
-// GetNtpMode Get the ntp_mode field of the given host.
+// GetNTPMode Get the ntp_mode field of the given host.
 //
 // Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
-func (c HostClass) GetNtpMode(ctx context.Context, sessionID SessionRef, self HostRef) (HostNtpMode, error) {
-	return callAndConvert(ctx, c.client, "host.get_ntp_mode", toString[HostNtpMode], string(sessionID), string(self))
+func (c HostClass) GetNTPMode(ctx context.Context, sessionID SessionRef, self HostRef) (HostNTPMode, error) {
+	return callAndConvert(ctx, c.client, "host.get_ntp_mode", toString[HostNTPMode], string(sessionID), string(self))
 }
 
 // GetSecureBoot Get the secure_boot field of the given host.
@@ -1113,11 +1113,11 @@ func (c HostClass) GetPendingGuidancesRecommended(ctx context.Context, sessionID
 	return callAndConvert(ctx, c.client, "host.get_pending_guidances_recommended", convertEnumUpdateGuidancesSetToGo, string(sessionID), string(self))
 }
 
-// GetNumaAffinityPolicy Get the numa_affinity_policy field of the given host.
+// GetNUMAAffinityPolicy Get the numa_affinity_policy field of the given host.
 //
 // Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
-func (c HostClass) GetNumaAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef) (HostNumaAffinityPolicy, error) {
-	return callAndConvert(ctx, c.client, "host.get_numa_affinity_policy", toString[HostNumaAffinityPolicy], string(sessionID), string(self))
+func (c HostClass) GetNUMAAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef) (HostNUMAAffinityPolicy, error) {
+	return callAndConvert(ctx, c.client, "host.get_numa_affinity_policy", toString[HostNUMAAffinityPolicy], string(sessionID), string(self))
 }
 
 // GetLatestSyncedUpdatesApplied Get the latest_synced_updates_applied field of the given host.
@@ -1161,10 +1161,10 @@ func (c HostClass) GetCertificates(ctx context.Context, sessionID SessionRef, se
 	return callAndConvert(ctx, c.client, "host.get_certificates", convertCertificateRefSetToGo, string(sessionID), string(self))
 }
 
-// GetUefiCertificates Get the uefi_certificates field of the given host.
+// GetUEFICertificates Get the uefi_certificates field of the given host.
 //
 // Deprecated: Deprecated in XAPI release 22.16.0. Use Pool.uefi_certificates instead.
-func (c HostClass) GetUefiCertificates(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
+func (c HostClass) GetUEFICertificates(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "host.get_uefi_certificates", toValue[string], string(sessionID), string(self))
 }
 
@@ -1173,8 +1173,8 @@ func (c HostClass) GetMultipathing(ctx context.Context, sessionID SessionRef, se
 	return callAndConvert(ctx, c.client, "host.get_multipathing", toValue[bool], string(sessionID), string(self))
 }
 
-// GetIscsiIqn Get the iscsi_iqn field of the given host.
-func (c HostClass) GetIscsiIqn(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
+// GetISCSIIQN Get the iscsi_iqn field of the given host.
+func (c HostClass) GetISCSIIQN(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "host.get_iscsi_iqn", toValue[string], string(sessionID), string(self))
 }
 
@@ -1208,10 +1208,10 @@ func (c HostClass) GetGuestVCPUsParams(ctx context.Context, sessionID SessionRef
 	return callAndConvert(ctx, c.client, "host.get_guest_VCPUs_params", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
-// GetSslLegacy Get the ssl_legacy field of the given host.
+// GetSSLLegacy Get the ssl_legacy field of the given host.
 //
 // Deprecated: Deprecated in XAPI release stockholm. Legacy SSL no longer supported.
-func (c HostClass) GetSslLegacy(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
+func (c HostClass) GetSSLLegacy(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_ssl_legacy", toValue[bool], string(sessionID), string(self))
 }
 
@@ -1235,8 +1235,8 @@ func (c HostClass) GetChipsetInfo(ctx context.Context, sessionID SessionRef, sel
 	return callAndConvert(ctx, c.client, "host.get_chipset_info", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
-// GetLocalCacheSr Get the local_cache_sr field of the given host.
-func (c HostClass) GetLocalCacheSr(ctx context.Context, sessionID SessionRef, self HostRef) (SRRef, error) {
+// GetLocalCacheSR Get the local_cache_sr field of the given host.
+func (c HostClass) GetLocalCacheSR(ctx context.Context, sessionID SessionRef, self HostRef) (SRRef, error) {
 	return callAndConvert(ctx, c.client, "host.get_local_cache_sr", toString[SRRef], string(sessionID), string(self))
 }
 
@@ -1250,8 +1250,8 @@ func (c HostClass) GetPowerOnMode(ctx context.Context, sessionID SessionRef, sel
 	return callAndConvert(ctx, c.client, "host.get_power_on_mode", toValue[string], string(sessionID), string(self))
 }
 
-// GetBiosStrings Get the bios_strings field of the given host.
-func (c HostClass) GetBiosStrings(ctx context.Context, sessionID SessionRef, self HostRef) (map[string]string, error) {
+// GetBIOSStrings Get the bios_strings field of the given host.
+func (c HostClass) GetBIOSStrings(ctx context.Context, sessionID SessionRef, self HostRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_bios_strings", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
@@ -1290,13 +1290,13 @@ func (c HostClass) GetBlobs(ctx context.Context, sessionID SessionRef, self Host
 	return callAndConvert(ctx, c.client, "host.get_blobs", convertStringToBlobRefMapToGo, string(sessionID), string(self))
 }
 
-// GetHaNetworkPeers Get the ha_network_peers field of the given host.
-func (c HostClass) GetHaNetworkPeers(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
+// GetHANetworkPeers Get the ha_network_peers field of the given host.
+func (c HostClass) GetHANetworkPeers(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_ha_network_peers", convertStringSetToGo, string(sessionID), string(self))
 }
 
-// GetHaStatefiles Get the ha_statefiles field of the given host.
-func (c HostClass) GetHaStatefiles(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
+// GetHAStatefiles Get the ha_statefiles field of the given host.
+func (c HostClass) GetHAStatefiles(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_ha_statefiles", convertStringSetToGo, string(sessionID), string(self))
 }
 
@@ -1352,13 +1352,13 @@ func (c HostClass) GetCrashdumps(ctx context.Context, sessionID SessionRef, self
 	return callAndConvert(ctx, c.client, "host.get_crashdumps", convertHostCrashdumpRefSetToGo, string(sessionID), string(self))
 }
 
-// GetCrashDumpSr Get the crash_dump_sr field of the given host.
-func (c HostClass) GetCrashDumpSr(ctx context.Context, sessionID SessionRef, self HostRef) (SRRef, error) {
+// GetCrashDumpSR Get the crash_dump_sr field of the given host.
+func (c HostClass) GetCrashDumpSR(ctx context.Context, sessionID SessionRef, self HostRef) (SRRef, error) {
 	return callAndConvert(ctx, c.client, "host.get_crash_dump_sr", toString[SRRef], string(sessionID), string(self))
 }
 
-// GetSuspendImageSr Get the suspend_image_sr field of the given host.
-func (c HostClass) GetSuspendImageSr(ctx context.Context, sessionID SessionRef, self HostRef) (SRRef, error) {
+// GetSuspendImageSR Get the suspend_image_sr field of the given host.
+func (c HostClass) GetSuspendImageSR(ctx context.Context, sessionID SessionRef, self HostRef) (SRRef, error) {
 	return callAndConvert(ctx, c.client, "host.get_suspend_image_sr", toString[SRRef], string(sessionID), string(self))
 }
 

@@ -22,49 +22,49 @@ const (
 	// Refresh the fields on the SR
 	StorageOperationsUpdate StorageOperations = "update"
 	// Creating a new VDI
-	StorageOperationsVdiCreate StorageOperations = "vdi_create"
+	StorageOperationsVDICreate StorageOperations = "vdi_create"
 	// Introducing a new VDI
-	StorageOperationsVdiIntroduce StorageOperations = "vdi_introduce"
+	StorageOperationsVDIIntroduce StorageOperations = "vdi_introduce"
 	// Destroying a VDI
-	StorageOperationsVdiDestroy StorageOperations = "vdi_destroy"
+	StorageOperationsVDIDestroy StorageOperations = "vdi_destroy"
 	// Resizing a VDI
-	StorageOperationsVdiResize StorageOperations = "vdi_resize"
+	StorageOperationsVDIResize StorageOperations = "vdi_resize"
 	// Cloneing a VDI
-	StorageOperationsVdiClone StorageOperations = "vdi_clone"
+	StorageOperationsVDIClone StorageOperations = "vdi_clone"
 	// Snapshotting a VDI
-	StorageOperationsVdiSnapshot StorageOperations = "vdi_snapshot"
+	StorageOperationsVDISnapshot StorageOperations = "vdi_snapshot"
 	// Mirroring a VDI
-	StorageOperationsVdiMirror StorageOperations = "vdi_mirror"
+	StorageOperationsVDIMirror StorageOperations = "vdi_mirror"
 	// Enabling changed block tracking for a VDI
-	StorageOperationsVdiEnableCbt StorageOperations = "vdi_enable_cbt"
+	StorageOperationsVDIEnableCBT StorageOperations = "vdi_enable_cbt"
 	// Disabling changed block tracking for a VDI
-	StorageOperationsVdiDisableCbt StorageOperations = "vdi_disable_cbt"
+	StorageOperationsVDIDisableCBT StorageOperations = "vdi_disable_cbt"
 	// Deleting the data of the VDI
-	StorageOperationsVdiDataDestroy StorageOperations = "vdi_data_destroy"
+	StorageOperationsVDIDataDestroy StorageOperations = "vdi_data_destroy"
 	// Exporting a bitmap that shows the changed blocks between two VDIs
-	StorageOperationsVdiListChangedBlocks StorageOperations = "vdi_list_changed_blocks"
+	StorageOperationsVDIListChangedBlocks StorageOperations = "vdi_list_changed_blocks"
 	// Setting the on_boot field of the VDI
-	StorageOperationsVdiSetOnBoot StorageOperations = "vdi_set_on_boot"
+	StorageOperationsVDISetOnBoot StorageOperations = "vdi_set_on_boot"
 	// Blocking other operations for a VDI
-	StorageOperationsVdiBlocked StorageOperations = "vdi_blocked"
+	StorageOperationsVDIBlocked StorageOperations = "vdi_blocked"
 	// Copying the VDI
-	StorageOperationsVdiCopy StorageOperations = "vdi_copy"
+	StorageOperationsVDICopy StorageOperations = "vdi_copy"
 	// Forcefully unlocking the VDI
-	StorageOperationsVdiForceUnlock StorageOperations = "vdi_force_unlock"
+	StorageOperationsVDIForceUnlock StorageOperations = "vdi_force_unlock"
 	// Forgetting about the VDI
-	StorageOperationsVdiForget StorageOperations = "vdi_forget"
+	StorageOperationsVDIForget StorageOperations = "vdi_forget"
 	// Generating the configuration of the VDI
-	StorageOperationsVdiGenerateConfig StorageOperations = "vdi_generate_config"
+	StorageOperationsVDIGenerateConfig StorageOperations = "vdi_generate_config"
 	// Resizing the VDI online
-	StorageOperationsVdiResizeOnline StorageOperations = "vdi_resize_online"
+	StorageOperationsVDIResizeOnline StorageOperations = "vdi_resize_online"
 	// Refreshing the fields on the VDI
-	StorageOperationsVdiUpdate StorageOperations = "vdi_update"
+	StorageOperationsVDIUpdate StorageOperations = "vdi_update"
 	// Reverting a VDI to the snapshot
-	StorageOperationsVdiRevert StorageOperations = "vdi_revert"
+	StorageOperationsVDIRevert StorageOperations = "vdi_revert"
 	// Creating a PBD for this SR
-	StorageOperationsPbdCreate StorageOperations = "pbd_create"
+	StorageOperationsPBDCreate StorageOperations = "pbd_create"
 	// Destroying one of this SR's PBDs
-	StorageOperationsPbdDestroy StorageOperations = "pbd_destroy"
+	StorageOperationsPBDDestroy StorageOperations = "pbd_destroy"
 )
 
 type SRRecord struct {
@@ -99,7 +99,7 @@ type SRRecord struct {
 	// user-specified tags for categorization purposes
 	Tags []string
 	// SM dependent data
-	SmConfig map[string]string
+	SMConfig map[string]string
 	// Binary blobs associated with this SR
 	Blobs map[string]BlobRef
 	// True if this SR is assigned to be the local cache for its host
@@ -109,7 +109,7 @@ type SRRecord struct {
 	// True if the SR is using aggregated local storage
 	Clustered bool
 	// True if this is the SR that contains the Tools ISO VDIs
-	IsToolsSr bool
+	IsToolsSR bool
 }
 
 type SRRef string
@@ -169,8 +169,8 @@ func (c SRClass) AssertSupportsDatabaseReplication(ctx context.Context, sessionI
 	return err
 }
 
-// AssertCanHostHaStatefile Returns successfully if the given SR can host an HA statefile. Otherwise returns an error to explain why not
-func (c SRClass) AssertCanHostHaStatefile(ctx context.Context, sessionID SessionRef, sr SRRef) error {
+// AssertCanHostHAStatefile Returns successfully if the given SR can host an HA statefile. Otherwise returns an error to explain why not
+func (c SRClass) AssertCanHostHAStatefile(ctx context.Context, sessionID SessionRef, sr SRRef) error {
 	_, err := c.client.APICall(ctx, "SR.assert_can_host_ha_statefile", string(sessionID), string(sr))
 	return err
 }
@@ -272,20 +272,20 @@ func (c SRClass) Create(ctx context.Context, sessionID SessionRef, host HostRef,
 	return callAndConvert(ctx, c.client, "SR.create", toString[SRRef], string(sessionID), string(host), convertStringToStringMapToXen(deviceConfig), fromInt(physicalSize), nameLabel, nameDescription, atype, contentType, shared, convertStringToStringMapToXen(smConfig))
 }
 
-// RemoveFromSmConfig Remove the given key and its corresponding value from the sm_config field of the given SR.  If the key is not in that Map, then do nothing.
-func (c SRClass) RemoveFromSmConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string) error {
+// RemoveFromSMConfig Remove the given key and its corresponding value from the sm_config field of the given SR.  If the key is not in that Map, then do nothing.
+func (c SRClass) RemoveFromSMConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string) error {
 	_, err := c.client.APICall(ctx, "SR.remove_from_sm_config", string(sessionID), string(self), key)
 	return err
 }
 
-// AddToSmConfig Add the given key-value pair to the sm_config field of the given SR.
-func (c SRClass) AddToSmConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string, value string) error {
+// AddToSMConfig Add the given key-value pair to the sm_config field of the given SR.
+func (c SRClass) AddToSMConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "SR.add_to_sm_config", string(sessionID), string(self), key, value)
 	return err
 }
 
-// SetSmConfig Set the sm_config field of the given SR.
-func (c SRClass) SetSmConfig(ctx context.Context, sessionID SessionRef, self SRRef, value map[string]string) error {
+// SetSMConfig Set the sm_config field of the given SR.
+func (c SRClass) SetSMConfig(ctx context.Context, sessionID SessionRef, self SRRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "SR.set_sm_config", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
@@ -326,8 +326,8 @@ func (c SRClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self 
 	return err
 }
 
-// GetIsToolsSr Get the is_tools_sr field of the given SR.
-func (c SRClass) GetIsToolsSr(ctx context.Context, sessionID SessionRef, self SRRef) (bool, error) {
+// GetIsToolsSR Get the is_tools_sr field of the given SR.
+func (c SRClass) GetIsToolsSR(ctx context.Context, sessionID SessionRef, self SRRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "SR.get_is_tools_sr", toValue[bool], string(sessionID), string(self))
 }
 
@@ -351,8 +351,8 @@ func (c SRClass) GetBlobs(ctx context.Context, sessionID SessionRef, self SRRef)
 	return callAndConvert(ctx, c.client, "SR.get_blobs", convertStringToBlobRefMapToGo, string(sessionID), string(self))
 }
 
-// GetSmConfig Get the sm_config field of the given SR.
-func (c SRClass) GetSmConfig(ctx context.Context, sessionID SessionRef, self SRRef) (map[string]string, error) {
+// GetSMConfig Get the sm_config field of the given SR.
+func (c SRClass) GetSMConfig(ctx context.Context, sessionID SessionRef, self SRRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "SR.get_sm_config", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 

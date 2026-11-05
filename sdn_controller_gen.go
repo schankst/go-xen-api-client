@@ -6,20 +6,20 @@ import (
 	"context"
 )
 
-type SdnControllerProtocol string
+type SDNControllerProtocol string
 
 const (
 	// Active ssl connection
-	SdnControllerProtocolSsl SdnControllerProtocol = "ssl"
+	SDNControllerProtocolSSL SDNControllerProtocol = "ssl"
 	// Passive ssl connection
-	SdnControllerProtocolPssl SdnControllerProtocol = "pssl"
+	SDNControllerProtocolPssl SDNControllerProtocol = "pssl"
 )
 
 type SDNControllerRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// Protocol to connect with SDN controller
-	Protocol SdnControllerProtocol
+	Protocol SDNControllerProtocol
 	// IP address of the controller
 	Address string
 	// TCP port of the controller
@@ -50,7 +50,7 @@ func (c SDNControllerClass) Forget(ctx context.Context, sessionID SessionRef, se
 }
 
 // Introduce Introduce an SDN controller to the pool.
-func (c SDNControllerClass) Introduce(ctx context.Context, sessionID SessionRef, protocol SdnControllerProtocol, address string, port int) (SDNControllerRef, error) {
+func (c SDNControllerClass) Introduce(ctx context.Context, sessionID SessionRef, protocol SDNControllerProtocol, address string, port int) (SDNControllerRef, error) {
 	return callAndConvert(ctx, c.client, "SDN_controller.introduce", toString[SDNControllerRef], string(sessionID), string(protocol), address, fromInt(port))
 }
 
@@ -65,8 +65,8 @@ func (c SDNControllerClass) GetAddress(ctx context.Context, sessionID SessionRef
 }
 
 // GetProtocol Get the protocol field of the given SDN_controller.
-func (c SDNControllerClass) GetProtocol(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (SdnControllerProtocol, error) {
-	return callAndConvert(ctx, c.client, "SDN_controller.get_protocol", toString[SdnControllerProtocol], string(sessionID), string(self))
+func (c SDNControllerClass) GetProtocol(ctx context.Context, sessionID SessionRef, self SDNControllerRef) (SDNControllerProtocol, error) {
+	return callAndConvert(ctx, c.client, "SDN_controller.get_protocol", toString[SDNControllerProtocol], string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given SDN_controller.
