@@ -20,7 +20,7 @@ var _ = reflect.TypeOf
 var _ = strconv.Atoi
 var _ = time.UTC
 
-func convertBondRefToBondRecordMapToGo(context string, input interface{}) (goMap map[BondRef]BondRecord, err error) {
+func convertBondRefToBondRecordMapToGo(context string, input any) (goMap map[BondRef]BondRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -42,7 +42,7 @@ func convertBondRefToBondRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertCallerRefToCallerRecordMapToGo(context string, input interface{}) (goMap map[CallerRef]CallerRecord, err error) {
+func convertCallerRefToCallerRecordMapToGo(context string, input any) (goMap map[CallerRef]CallerRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -64,7 +64,7 @@ func convertCallerRefToCallerRecordMapToGo(context string, input interface{}) (g
 	return
 }
 
-func convertCertificateRefToCertificateRecordMapToGo(context string, input interface{}) (goMap map[CertificateRef]CertificateRecord, err error) {
+func convertCertificateRefToCertificateRecordMapToGo(context string, input any) (goMap map[CertificateRef]CertificateRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -86,7 +86,7 @@ func convertCertificateRefToCertificateRecordMapToGo(context string, input inter
 	return
 }
 
-func convertClusterRefToClusterRecordMapToGo(context string, input interface{}) (goMap map[ClusterRef]ClusterRecord, err error) {
+func convertClusterRefToClusterRecordMapToGo(context string, input any) (goMap map[ClusterRef]ClusterRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -108,7 +108,7 @@ func convertClusterRefToClusterRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertClusterHostRefToClusterHostRecordMapToGo(context string, input interface{}) (goMap map[ClusterHostRef]ClusterHostRecord, err error) {
+func convertClusterHostRefToClusterHostRecordMapToGo(context string, input any) (goMap map[ClusterHostRef]ClusterHostRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -130,7 +130,7 @@ func convertClusterHostRefToClusterHostRecordMapToGo(context string, input inter
 	return
 }
 
-func convertDRTaskRefToDRTaskRecordMapToGo(context string, input interface{}) (goMap map[DRTaskRef]DRTaskRecord, err error) {
+func convertDRTaskRefToDRTaskRecordMapToGo(context string, input any) (goMap map[DRTaskRef]DRTaskRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -152,7 +152,7 @@ func convertDRTaskRefToDRTaskRecordMapToGo(context string, input interface{}) (g
 	return
 }
 
-func convertDriverVariantRefToDriverVariantRecordMapToGo(context string, input interface{}) (goMap map[DriverVariantRef]DriverVariantRecord, err error) {
+func convertDriverVariantRefToDriverVariantRecordMapToGo(context string, input any) (goMap map[DriverVariantRef]DriverVariantRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -174,7 +174,7 @@ func convertDriverVariantRefToDriverVariantRecordMapToGo(context string, input i
 	return
 }
 
-func convertFeatureRefToFeatureRecordMapToGo(context string, input interface{}) (goMap map[FeatureRef]FeatureRecord, err error) {
+func convertFeatureRefToFeatureRecordMapToGo(context string, input any) (goMap map[FeatureRef]FeatureRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -196,7 +196,7 @@ func convertFeatureRefToFeatureRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertGPUGroupRefToGPUGroupRecordMapToGo(context string, input interface{}) (goMap map[GPUGroupRef]GPUGroupRecord, err error) {
+func convertGPUGroupRefToGPUGroupRecordMapToGo(context string, input any) (goMap map[GPUGroupRef]GPUGroupRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -218,7 +218,7 @@ func convertGPUGroupRefToGPUGroupRecordMapToGo(context string, input interface{}
 	return
 }
 
-func convertHostDriverRefToHostDriverRecordMapToGo(context string, input interface{}) (goMap map[HostDriverRef]HostDriverRecord, err error) {
+func convertHostDriverRefToHostDriverRecordMapToGo(context string, input any) (goMap map[HostDriverRef]HostDriverRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -240,7 +240,7 @@ func convertHostDriverRefToHostDriverRecordMapToGo(context string, input interfa
 	return
 }
 
-func convertObserverRefToObserverRecordMapToGo(context string, input interface{}) (goMap map[ObserverRef]ObserverRecord, err error) {
+func convertObserverRefToObserverRecordMapToGo(context string, input any) (goMap map[ObserverRef]ObserverRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -262,7 +262,7 @@ func convertObserverRefToObserverRecordMapToGo(context string, input interface{}
 	return
 }
 
-func convertPBDRefToPBDRecordMapToGo(context string, input interface{}) (goMap map[PBDRef]PBDRecord, err error) {
+func convertPBDRefToPBDRecordMapToGo(context string, input any) (goMap map[PBDRef]PBDRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -284,7 +284,7 @@ func convertPBDRefToPBDRecordMapToGo(context string, input interface{}) (goMap m
 	return
 }
 
-func convertPCIRefToPCIRecordMapToGo(context string, input interface{}) (goMap map[PCIRef]PCIRecord, err error) {
+func convertPCIRefToPCIRecordMapToGo(context string, input any) (goMap map[PCIRef]PCIRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -306,7 +306,7 @@ func convertPCIRefToPCIRecordMapToGo(context string, input interface{}) (goMap m
 	return
 }
 
-func convertPGPURefToPGPURecordMapToGo(context string, input interface{}) (goMap map[PGPURef]PGPURecord, err error) {
+func convertPGPURefToPGPURecordMapToGo(context string, input any) (goMap map[PGPURef]PGPURecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -328,7 +328,7 @@ func convertPGPURefToPGPURecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertPIFRefToPIFRecordMapToGo(context string, input interface{}) (goMap map[PIFRef]PIFRecord, err error) {
+func convertPIFRefToPIFRecordMapToGo(context string, input any) (goMap map[PIFRef]PIFRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -350,7 +350,7 @@ func convertPIFRefToPIFRecordMapToGo(context string, input interface{}) (goMap m
 	return
 }
 
-func convertPIFMetricsRefToPIFMetricsRecordMapToGo(context string, input interface{}) (goMap map[PIFMetricsRef]PIFMetricsRecord, err error) {
+func convertPIFMetricsRefToPIFMetricsRecordMapToGo(context string, input any) (goMap map[PIFMetricsRef]PIFMetricsRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -372,7 +372,7 @@ func convertPIFMetricsRefToPIFMetricsRecordMapToGo(context string, input interfa
 	return
 }
 
-func convertPUSBRefToPUSBRecordMapToGo(context string, input interface{}) (goMap map[PUSBRef]PUSBRecord, err error) {
+func convertPUSBRefToPUSBRecordMapToGo(context string, input any) (goMap map[PUSBRef]PUSBRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -394,7 +394,7 @@ func convertPUSBRefToPUSBRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertPVSCacheStorageRefToPVSCacheStorageRecordMapToGo(context string, input interface{}) (goMap map[PVSCacheStorageRef]PVSCacheStorageRecord, err error) {
+func convertPVSCacheStorageRefToPVSCacheStorageRecordMapToGo(context string, input any) (goMap map[PVSCacheStorageRef]PVSCacheStorageRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -416,7 +416,7 @@ func convertPVSCacheStorageRefToPVSCacheStorageRecordMapToGo(context string, inp
 	return
 }
 
-func convertPVSProxyRefToPVSProxyRecordMapToGo(context string, input interface{}) (goMap map[PVSProxyRef]PVSProxyRecord, err error) {
+func convertPVSProxyRefToPVSProxyRecordMapToGo(context string, input any) (goMap map[PVSProxyRef]PVSProxyRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -438,7 +438,7 @@ func convertPVSProxyRefToPVSProxyRecordMapToGo(context string, input interface{}
 	return
 }
 
-func convertPVSServerRefToPVSServerRecordMapToGo(context string, input interface{}) (goMap map[PVSServerRef]PVSServerRecord, err error) {
+func convertPVSServerRefToPVSServerRecordMapToGo(context string, input any) (goMap map[PVSServerRef]PVSServerRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -460,7 +460,7 @@ func convertPVSServerRefToPVSServerRecordMapToGo(context string, input interface
 	return
 }
 
-func convertPVSSiteRefToPVSSiteRecordMapToGo(context string, input interface{}) (goMap map[PVSSiteRef]PVSSiteRecord, err error) {
+func convertPVSSiteRefToPVSSiteRecordMapToGo(context string, input any) (goMap map[PVSSiteRef]PVSSiteRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -482,7 +482,7 @@ func convertPVSSiteRefToPVSSiteRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertRateLimitRefToRateLimitRecordMapToGo(context string, input interface{}) (goMap map[RateLimitRef]RateLimitRecord, err error) {
+func convertRateLimitRefToRateLimitRecordMapToGo(context string, input any) (goMap map[RateLimitRef]RateLimitRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -504,7 +504,7 @@ func convertRateLimitRefToRateLimitRecordMapToGo(context string, input interface
 	return
 }
 
-func convertRepositoryRefToRepositoryRecordMapToGo(context string, input interface{}) (goMap map[RepositoryRef]RepositoryRecord, err error) {
+func convertRepositoryRefToRepositoryRecordMapToGo(context string, input any) (goMap map[RepositoryRef]RepositoryRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -526,7 +526,7 @@ func convertRepositoryRefToRepositoryRecordMapToGo(context string, input interfa
 	return
 }
 
-func convertSDNControllerRefToSDNControllerRecordMapToGo(context string, input interface{}) (goMap map[SDNControllerRef]SDNControllerRecord, err error) {
+func convertSDNControllerRefToSDNControllerRecordMapToGo(context string, input any) (goMap map[SDNControllerRef]SDNControllerRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -548,7 +548,7 @@ func convertSDNControllerRefToSDNControllerRecordMapToGo(context string, input i
 	return
 }
 
-func convertSMRefToSMRecordMapToGo(context string, input interface{}) (goMap map[SMRef]SMRecord, err error) {
+func convertSMRefToSMRecordMapToGo(context string, input any) (goMap map[SMRef]SMRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -570,7 +570,7 @@ func convertSMRefToSMRecordMapToGo(context string, input interface{}) (goMap map
 	return
 }
 
-func convertSRRefToSRRecordMapToGo(context string, input interface{}) (goMap map[SRRef]SRRecord, err error) {
+func convertSRRefToSRRecordMapToGo(context string, input any) (goMap map[SRRef]SRRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -592,7 +592,7 @@ func convertSRRefToSRRecordMapToGo(context string, input interface{}) (goMap map
 	return
 }
 
-func convertUSBGroupRefToUSBGroupRecordMapToGo(context string, input interface{}) (goMap map[USBGroupRef]USBGroupRecord, err error) {
+func convertUSBGroupRefToUSBGroupRecordMapToGo(context string, input any) (goMap map[USBGroupRef]USBGroupRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -614,7 +614,7 @@ func convertUSBGroupRefToUSBGroupRecordMapToGo(context string, input interface{}
 	return
 }
 
-func convertVBDRefToVBDRecordMapToGo(context string, input interface{}) (goMap map[VBDRef]VBDRecord, err error) {
+func convertVBDRefToVBDRecordMapToGo(context string, input any) (goMap map[VBDRef]VBDRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -636,7 +636,7 @@ func convertVBDRefToVBDRecordMapToGo(context string, input interface{}) (goMap m
 	return
 }
 
-func convertVBDMetricsRefToVBDMetricsRecordMapToGo(context string, input interface{}) (goMap map[VBDMetricsRef]VBDMetricsRecord, err error) {
+func convertVBDMetricsRefToVBDMetricsRecordMapToGo(context string, input any) (goMap map[VBDMetricsRef]VBDMetricsRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -675,7 +675,7 @@ func convertVDIRefToSRRefMapToXen(context string, goMap map[VDIRef]SRRef) (xenMa
 	return
 }
 
-func convertVDIRefToVDIRecordMapToGo(context string, input interface{}) (goMap map[VDIRef]VDIRecord, err error) {
+func convertVDIRefToVDIRecordMapToGo(context string, input any) (goMap map[VDIRef]VDIRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -731,7 +731,7 @@ func convertVGPURefToGPUGroupRefMapToXen(context string, goMap map[VGPURef]GPUGr
 	return
 }
 
-func convertVGPURefToVGPURecordMapToGo(context string, input interface{}) (goMap map[VGPURef]VGPURecord, err error) {
+func convertVGPURefToVGPURecordMapToGo(context string, input any) (goMap map[VGPURef]VGPURecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -753,7 +753,7 @@ func convertVGPURefToVGPURecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertVGPUTypeRefToVGPUTypeRecordMapToGo(context string, input interface{}) (goMap map[VGPUTypeRef]VGPUTypeRecord, err error) {
+func convertVGPUTypeRefToVGPUTypeRecordMapToGo(context string, input any) (goMap map[VGPUTypeRef]VGPUTypeRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -775,7 +775,7 @@ func convertVGPUTypeRefToVGPUTypeRecordMapToGo(context string, input interface{}
 	return
 }
 
-func convertVGPUTypeRefToIntMapToGo(context string, input interface{}) (goMap map[VGPUTypeRef]int, err error) {
+func convertVGPUTypeRefToIntMapToGo(context string, input any) (goMap map[VGPUTypeRef]int, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -797,7 +797,7 @@ func convertVGPUTypeRefToIntMapToGo(context string, input interface{}) (goMap ma
 	return
 }
 
-func convertVIFRefToVIFRecordMapToGo(context string, input interface{}) (goMap map[VIFRef]VIFRecord, err error) {
+func convertVIFRefToVIFRecordMapToGo(context string, input any) (goMap map[VIFRef]VIFRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -836,7 +836,7 @@ func convertVIFRefToNetworkRefMapToXen(context string, goMap map[VIFRef]NetworkR
 	return
 }
 
-func convertVIFRefToStringMapToGo(context string, input interface{}) (goMap map[VIFRef]string, err error) {
+func convertVIFRefToStringMapToGo(context string, input any) (goMap map[VIFRef]string, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -875,7 +875,7 @@ func convertVIFRefToStringMapToXen(context string, goMap map[VIFRef]string) (xen
 	return
 }
 
-func convertVIFMetricsRefToVIFMetricsRecordMapToGo(context string, input interface{}) (goMap map[VIFMetricsRef]VIFMetricsRecord, err error) {
+func convertVIFMetricsRefToVIFMetricsRecordMapToGo(context string, input any) (goMap map[VIFMetricsRef]VIFMetricsRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -897,7 +897,7 @@ func convertVIFMetricsRefToVIFMetricsRecordMapToGo(context string, input interfa
 	return
 }
 
-func convertVLANRefToVLANRecordMapToGo(context string, input interface{}) (goMap map[VLANRef]VLANRecord, err error) {
+func convertVLANRefToVLANRecordMapToGo(context string, input any) (goMap map[VLANRef]VLANRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -919,7 +919,7 @@ func convertVLANRefToVLANRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertVMRefToStringToStringMapMapToGo(context string, input interface{}) (goMap map[VMRef]map[string]string, err error) {
+func convertVMRefToStringToStringMapMapToGo(context string, input any) (goMap map[VMRef]map[string]string, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -941,7 +941,7 @@ func convertVMRefToStringToStringMapMapToGo(context string, input interface{}) (
 	return
 }
 
-func convertVMRefToVMRecordMapToGo(context string, input interface{}) (goMap map[VMRef]VMRecord, err error) {
+func convertVMRefToVMRecordMapToGo(context string, input any) (goMap map[VMRef]VMRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -963,7 +963,7 @@ func convertVMRefToVMRecordMapToGo(context string, input interface{}) (goMap map
 	return
 }
 
-func convertVMRefToStringSetMapToGo(context string, input interface{}) (goMap map[VMRef][]string, err error) {
+func convertVMRefToStringSetMapToGo(context string, input any) (goMap map[VMRef][]string, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1002,7 +1002,7 @@ func convertVMRefToStringMapToXen(context string, goMap map[VMRef]string) (xenMa
 	return
 }
 
-func convertVMPPRefToVMPPRecordMapToGo(context string, input interface{}) (goMap map[VMPPRef]VMPPRecord, err error) {
+func convertVMPPRefToVMPPRecordMapToGo(context string, input any) (goMap map[VMPPRef]VMPPRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1024,7 +1024,7 @@ func convertVMPPRefToVMPPRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertVMSSRefToVMSSRecordMapToGo(context string, input interface{}) (goMap map[VMSSRef]VMSSRecord, err error) {
+func convertVMSSRefToVMSSRecordMapToGo(context string, input any) (goMap map[VMSSRef]VMSSRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1046,7 +1046,7 @@ func convertVMSSRefToVMSSRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertVMApplianceRefToVMApplianceRecordMapToGo(context string, input interface{}) (goMap map[VMApplianceRef]VMApplianceRecord, err error) {
+func convertVMApplianceRefToVMApplianceRecordMapToGo(context string, input any) (goMap map[VMApplianceRef]VMApplianceRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1068,7 +1068,7 @@ func convertVMApplianceRefToVMApplianceRecordMapToGo(context string, input inter
 	return
 }
 
-func convertVMGroupRefToVMGroupRecordMapToGo(context string, input interface{}) (goMap map[VMGroupRef]VMGroupRecord, err error) {
+func convertVMGroupRefToVMGroupRecordMapToGo(context string, input any) (goMap map[VMGroupRef]VMGroupRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1090,7 +1090,7 @@ func convertVMGroupRefToVMGroupRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertVMGuestMetricsRefToVMGuestMetricsRecordMapToGo(context string, input interface{}) (goMap map[VMGuestMetricsRef]VMGuestMetricsRecord, err error) {
+func convertVMGuestMetricsRefToVMGuestMetricsRecordMapToGo(context string, input any) (goMap map[VMGuestMetricsRef]VMGuestMetricsRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1112,7 +1112,7 @@ func convertVMGuestMetricsRefToVMGuestMetricsRecordMapToGo(context string, input
 	return
 }
 
-func convertVMMetricsRefToVMMetricsRecordMapToGo(context string, input interface{}) (goMap map[VMMetricsRef]VMMetricsRecord, err error) {
+func convertVMMetricsRefToVMMetricsRecordMapToGo(context string, input any) (goMap map[VMMetricsRef]VMMetricsRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1134,7 +1134,7 @@ func convertVMMetricsRefToVMMetricsRecordMapToGo(context string, input interface
 	return
 }
 
-func convertVTPMRefToVTPMRecordMapToGo(context string, input interface{}) (goMap map[VTPMRef]VTPMRecord, err error) {
+func convertVTPMRefToVTPMRecordMapToGo(context string, input any) (goMap map[VTPMRef]VTPMRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1156,7 +1156,7 @@ func convertVTPMRefToVTPMRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertVUSBRefToVUSBRecordMapToGo(context string, input interface{}) (goMap map[VUSBRef]VUSBRecord, err error) {
+func convertVUSBRefToVUSBRecordMapToGo(context string, input any) (goMap map[VUSBRef]VUSBRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1178,7 +1178,7 @@ func convertVUSBRefToVUSBRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertBlobRefToBlobRecordMapToGo(context string, input interface{}) (goMap map[BlobRef]BlobRecord, err error) {
+func convertBlobRefToBlobRecordMapToGo(context string, input any) (goMap map[BlobRef]BlobRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1200,7 +1200,7 @@ func convertBlobRefToBlobRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertConsoleRefToConsoleRecordMapToGo(context string, input interface{}) (goMap map[ConsoleRef]ConsoleRecord, err error) {
+func convertConsoleRefToConsoleRecordMapToGo(context string, input any) (goMap map[ConsoleRef]ConsoleRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1222,7 +1222,7 @@ func convertConsoleRefToConsoleRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertCrashdumpRefToCrashdumpRecordMapToGo(context string, input interface{}) (goMap map[CrashdumpRef]CrashdumpRecord, err error) {
+func convertCrashdumpRefToCrashdumpRecordMapToGo(context string, input any) (goMap map[CrashdumpRef]CrashdumpRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1244,7 +1244,7 @@ func convertCrashdumpRefToCrashdumpRecordMapToGo(context string, input interface
 	return
 }
 
-func convertEnumVMOperationsToStringMapToGo(context string, input interface{}) (goMap map[VMOperations]string, err error) {
+func convertEnumVMOperationsToStringMapToGo(context string, input any) (goMap map[VMOperations]string, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1283,7 +1283,7 @@ func convertEnumVMOperationsToStringMapToXen(context string, goMap map[VMOperati
 	return
 }
 
-func convertHostRefToHostRecordMapToGo(context string, input interface{}) (goMap map[HostRef]HostRecord, err error) {
+func convertHostRefToHostRecordMapToGo(context string, input any) (goMap map[HostRef]HostRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1305,7 +1305,7 @@ func convertHostRefToHostRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertHostRefToStringSetMapToGo(context string, input interface{}) (goMap map[HostRef][]string, err error) {
+func convertHostRefToStringSetMapToGo(context string, input any) (goMap map[HostRef][]string, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1327,7 +1327,7 @@ func convertHostRefToStringSetMapToGo(context string, input interface{}) (goMap 
 	return
 }
 
-func convertHostCPURefToHostCPURecordMapToGo(context string, input interface{}) (goMap map[HostCPURef]HostCPURecord, err error) {
+func convertHostCPURefToHostCPURecordMapToGo(context string, input any) (goMap map[HostCPURef]HostCPURecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1349,7 +1349,7 @@ func convertHostCPURefToHostCPURecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertHostCrashdumpRefToHostCrashdumpRecordMapToGo(context string, input interface{}) (goMap map[HostCrashdumpRef]HostCrashdumpRecord, err error) {
+func convertHostCrashdumpRefToHostCrashdumpRecordMapToGo(context string, input any) (goMap map[HostCrashdumpRef]HostCrashdumpRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1371,7 +1371,7 @@ func convertHostCrashdumpRefToHostCrashdumpRecordMapToGo(context string, input i
 	return
 }
 
-func convertHostMetricsRefToHostMetricsRecordMapToGo(context string, input interface{}) (goMap map[HostMetricsRef]HostMetricsRecord, err error) {
+func convertHostMetricsRefToHostMetricsRecordMapToGo(context string, input any) (goMap map[HostMetricsRef]HostMetricsRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1393,7 +1393,7 @@ func convertHostMetricsRefToHostMetricsRecordMapToGo(context string, input inter
 	return
 }
 
-func convertHostPatchRefToHostPatchRecordMapToGo(context string, input interface{}) (goMap map[HostPatchRef]HostPatchRecord, err error) {
+func convertHostPatchRefToHostPatchRecordMapToGo(context string, input any) (goMap map[HostPatchRef]HostPatchRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1415,7 +1415,7 @@ func convertHostPatchRefToHostPatchRecordMapToGo(context string, input interface
 	return
 }
 
-func convertIntToFloatMapToGo(context string, input interface{}) (goMap map[int]float64, err error) {
+func convertIntToFloatMapToGo(context string, input any) (goMap map[int]float64, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1437,7 +1437,7 @@ func convertIntToFloatMapToGo(context string, input interface{}) (goMap map[int]
 	return
 }
 
-func convertIntToIntMapToGo(context string, input interface{}) (goMap map[int]int, err error) {
+func convertIntToIntMapToGo(context string, input any) (goMap map[int]int, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1459,7 +1459,7 @@ func convertIntToIntMapToGo(context string, input interface{}) (goMap map[int]in
 	return
 }
 
-func convertIntToStringSetMapToGo(context string, input interface{}) (goMap map[int][]string, err error) {
+func convertIntToStringSetMapToGo(context string, input any) (goMap map[int][]string, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1481,7 +1481,7 @@ func convertIntToStringSetMapToGo(context string, input interface{}) (goMap map[
 	return
 }
 
-func convertMessageRefToMessageRecordMapToGo(context string, input interface{}) (goMap map[MessageRef]MessageRecord, err error) {
+func convertMessageRefToMessageRecordMapToGo(context string, input any) (goMap map[MessageRef]MessageRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1503,7 +1503,7 @@ func convertMessageRefToMessageRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertNetworkRefToNetworkRecordMapToGo(context string, input interface{}) (goMap map[NetworkRef]NetworkRecord, err error) {
+func convertNetworkRefToNetworkRecordMapToGo(context string, input any) (goMap map[NetworkRef]NetworkRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1525,7 +1525,7 @@ func convertNetworkRefToNetworkRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertNetworkSriovRefToNetworkSriovRecordMapToGo(context string, input interface{}) (goMap map[NetworkSriovRef]NetworkSriovRecord, err error) {
+func convertNetworkSriovRefToNetworkSriovRecordMapToGo(context string, input any) (goMap map[NetworkSriovRef]NetworkSriovRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1547,7 +1547,7 @@ func convertNetworkSriovRefToNetworkSriovRecordMapToGo(context string, input int
 	return
 }
 
-func convertPoolRefToPoolRecordMapToGo(context string, input interface{}) (goMap map[PoolRef]PoolRecord, err error) {
+func convertPoolRefToPoolRecordMapToGo(context string, input any) (goMap map[PoolRef]PoolRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1569,7 +1569,7 @@ func convertPoolRefToPoolRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertPoolPatchRefToPoolPatchRecordMapToGo(context string, input interface{}) (goMap map[PoolPatchRef]PoolPatchRecord, err error) {
+func convertPoolPatchRefToPoolPatchRecordMapToGo(context string, input any) (goMap map[PoolPatchRef]PoolPatchRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1591,7 +1591,7 @@ func convertPoolPatchRefToPoolPatchRecordMapToGo(context string, input interface
 	return
 }
 
-func convertPoolUpdateRefToPoolUpdateRecordMapToGo(context string, input interface{}) (goMap map[PoolUpdateRef]PoolUpdateRecord, err error) {
+func convertPoolUpdateRefToPoolUpdateRecordMapToGo(context string, input any) (goMap map[PoolUpdateRef]PoolUpdateRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1613,7 +1613,7 @@ func convertPoolUpdateRefToPoolUpdateRecordMapToGo(context string, input interfa
 	return
 }
 
-func convertRoleRefToRoleRecordMapToGo(context string, input interface{}) (goMap map[RoleRef]RoleRecord, err error) {
+func convertRoleRefToRoleRecordMapToGo(context string, input any) (goMap map[RoleRef]RoleRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1635,7 +1635,7 @@ func convertRoleRefToRoleRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertSecretRefToSecretRecordMapToGo(context string, input interface{}) (goMap map[SecretRef]SecretRecord, err error) {
+func convertSecretRefToSecretRecordMapToGo(context string, input any) (goMap map[SecretRef]SecretRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1657,7 +1657,7 @@ func convertSecretRefToSecretRecordMapToGo(context string, input interface{}) (g
 	return
 }
 
-func convertStringToBlobRefMapToGo(context string, input interface{}) (goMap map[string]BlobRef, err error) {
+func convertStringToBlobRefMapToGo(context string, input any) (goMap map[string]BlobRef, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1696,7 +1696,7 @@ func convertStringToBlobRefMapToXen(context string, goMap map[string]BlobRef) (x
 	return
 }
 
-func convertStringToEnumClusterHostOperationMapToGo(context string, input interface{}) (goMap map[string]ClusterHostOperation, err error) {
+func convertStringToEnumClusterHostOperationMapToGo(context string, input any) (goMap map[string]ClusterHostOperation, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1718,7 +1718,7 @@ func convertStringToEnumClusterHostOperationMapToGo(context string, input interf
 	return
 }
 
-func convertStringToEnumClusterOperationMapToGo(context string, input interface{}) (goMap map[string]ClusterOperation, err error) {
+func convertStringToEnumClusterOperationMapToGo(context string, input any) (goMap map[string]ClusterOperation, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1740,7 +1740,7 @@ func convertStringToEnumClusterOperationMapToGo(context string, input interface{
 	return
 }
 
-func convertStringToEnumHostAllowedOperationsMapToGo(context string, input interface{}) (goMap map[string]HostAllowedOperations, err error) {
+func convertStringToEnumHostAllowedOperationsMapToGo(context string, input any) (goMap map[string]HostAllowedOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1762,7 +1762,7 @@ func convertStringToEnumHostAllowedOperationsMapToGo(context string, input inter
 	return
 }
 
-func convertStringToEnumNetworkOperationsMapToGo(context string, input interface{}) (goMap map[string]NetworkOperations, err error) {
+func convertStringToEnumNetworkOperationsMapToGo(context string, input any) (goMap map[string]NetworkOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1801,7 +1801,7 @@ func convertStringToEnumNetworkOperationsMapToXen(context string, goMap map[stri
 	return
 }
 
-func convertStringToEnumPoolAllowedOperationsMapToGo(context string, input interface{}) (goMap map[string]PoolAllowedOperations, err error) {
+func convertStringToEnumPoolAllowedOperationsMapToGo(context string, input any) (goMap map[string]PoolAllowedOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1823,7 +1823,7 @@ func convertStringToEnumPoolAllowedOperationsMapToGo(context string, input inter
 	return
 }
 
-func convertStringToEnumStorageOperationsMapToGo(context string, input interface{}) (goMap map[string]StorageOperations, err error) {
+func convertStringToEnumStorageOperationsMapToGo(context string, input any) (goMap map[string]StorageOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1845,7 +1845,7 @@ func convertStringToEnumStorageOperationsMapToGo(context string, input interface
 	return
 }
 
-func convertStringToEnumTaskAllowedOperationsMapToGo(context string, input interface{}) (goMap map[string]TaskAllowedOperations, err error) {
+func convertStringToEnumTaskAllowedOperationsMapToGo(context string, input any) (goMap map[string]TaskAllowedOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1867,7 +1867,7 @@ func convertStringToEnumTaskAllowedOperationsMapToGo(context string, input inter
 	return
 }
 
-func convertStringToEnumVbdOperationsMapToGo(context string, input interface{}) (goMap map[string]VbdOperations, err error) {
+func convertStringToEnumVbdOperationsMapToGo(context string, input any) (goMap map[string]VbdOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1906,7 +1906,7 @@ func convertStringToEnumVbdOperationsMapToXen(context string, goMap map[string]V
 	return
 }
 
-func convertStringToEnumVdiOperationsMapToGo(context string, input interface{}) (goMap map[string]VdiOperations, err error) {
+func convertStringToEnumVdiOperationsMapToGo(context string, input any) (goMap map[string]VdiOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1945,7 +1945,7 @@ func convertStringToEnumVdiOperationsMapToXen(context string, goMap map[string]V
 	return
 }
 
-func convertStringToEnumVifOperationsMapToGo(context string, input interface{}) (goMap map[string]VifOperations, err error) {
+func convertStringToEnumVifOperationsMapToGo(context string, input any) (goMap map[string]VifOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -1984,7 +1984,7 @@ func convertStringToEnumVifOperationsMapToXen(context string, goMap map[string]V
 	return
 }
 
-func convertStringToEnumVMApplianceOperationMapToGo(context string, input interface{}) (goMap map[string]VMApplianceOperation, err error) {
+func convertStringToEnumVMApplianceOperationMapToGo(context string, input any) (goMap map[string]VMApplianceOperation, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2023,7 +2023,7 @@ func convertStringToEnumVMApplianceOperationMapToXen(context string, goMap map[s
 	return
 }
 
-func convertStringToEnumVMOperationsMapToGo(context string, input interface{}) (goMap map[string]VMOperations, err error) {
+func convertStringToEnumVMOperationsMapToGo(context string, input any) (goMap map[string]VMOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2062,7 +2062,7 @@ func convertStringToEnumVMOperationsMapToXen(context string, goMap map[string]VM
 	return
 }
 
-func convertStringToEnumVtpmOperationsMapToGo(context string, input interface{}) (goMap map[string]VtpmOperations, err error) {
+func convertStringToEnumVtpmOperationsMapToGo(context string, input any) (goMap map[string]VtpmOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2084,7 +2084,7 @@ func convertStringToEnumVtpmOperationsMapToGo(context string, input interface{})
 	return
 }
 
-func convertStringToEnumVusbOperationsMapToGo(context string, input interface{}) (goMap map[string]VusbOperations, err error) {
+func convertStringToEnumVusbOperationsMapToGo(context string, input any) (goMap map[string]VusbOperations, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2106,7 +2106,7 @@ func convertStringToEnumVusbOperationsMapToGo(context string, input interface{})
 	return
 }
 
-func convertStringToIntMapToGo(context string, input interface{}) (goMap map[string]int, err error) {
+func convertStringToIntMapToGo(context string, input any) (goMap map[string]int, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2128,7 +2128,7 @@ func convertStringToIntMapToGo(context string, input interface{}) (goMap map[str
 	return
 }
 
-func convertStringToStringMapToGo(context string, input interface{}) (goMap map[string]string, err error) {
+func convertStringToStringMapToGo(context string, input any) (goMap map[string]string, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2167,7 +2167,7 @@ func convertStringToStringMapToXen(context string, goMap map[string]string) (xen
 	return
 }
 
-func convertSubjectRefToSubjectRecordMapToGo(context string, input interface{}) (goMap map[SubjectRef]SubjectRecord, err error) {
+func convertSubjectRefToSubjectRecordMapToGo(context string, input any) (goMap map[SubjectRef]SubjectRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2189,7 +2189,7 @@ func convertSubjectRefToSubjectRecordMapToGo(context string, input interface{}) 
 	return
 }
 
-func convertTaskRefToTaskRecordMapToGo(context string, input interface{}) (goMap map[TaskRef]TaskRecord, err error) {
+func convertTaskRefToTaskRecordMapToGo(context string, input any) (goMap map[TaskRef]TaskRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2211,7 +2211,7 @@ func convertTaskRefToTaskRecordMapToGo(context string, input interface{}) (goMap
 	return
 }
 
-func convertTunnelRefToTunnelRecordMapToGo(context string, input interface{}) (goMap map[TunnelRef]TunnelRecord, err error) {
+func convertTunnelRefToTunnelRecordMapToGo(context string, input any) (goMap map[TunnelRef]TunnelRecord, err error) {
 	xenMap, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2233,7 +2233,7 @@ func convertTunnelRefToTunnelRecordMapToGo(context string, input interface{}) (g
 	return
 }
 
-func convertPolymorphicRecordToGo(context string, input interface{}) (value xmlrpc.Struct, err error) {
+func convertPolymorphicRecordToGo(context string, input any) (value xmlrpc.Struct, err error) {
 	if input == nil {
 		return
 	}
@@ -2244,7 +2244,7 @@ func convertPolymorphicRecordToGo(context string, input interface{}) (value xmlr
 	return
 }
 
-func convertBondRecordToGo(context string, input interface{}) (record BondRecord, err error) {
+func convertBondRecordToGo(context string, input any) (record BondRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2316,10 +2316,10 @@ func convertBondRecordToGo(context string, input interface{}) (record BondRecord
 	return
 }
 
-func convertBondRefSetToGo(context string, input interface{}) (slice []BondRef, err error) {
-	set, ok := input.([]interface{})
+func convertBondRefSetToGo(context string, input any) (slice []BondRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]BondRef, len(set))
@@ -2334,7 +2334,7 @@ func convertBondRefSetToGo(context string, input interface{}) (slice []BondRef, 
 	return
 }
 
-func convertBondRefToGo(context string, input interface{}) (ref BondRef, err error) {
+func convertBondRefToGo(context string, input any) (ref BondRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -2348,7 +2348,7 @@ func convertBondRefToXen(context string, ref BondRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertCallerRecordToGo(context string, input interface{}) (record CallerRecord, err error) {
+func convertCallerRecordToGo(context string, input any) (record CallerRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2461,10 +2461,10 @@ func convertCallerRecordToXen(context string, record CallerRecord) (rpcStruct xm
 	return
 }
 
-func convertCallerRefSetToGo(context string, input interface{}) (slice []CallerRef, err error) {
-	set, ok := input.([]interface{})
+func convertCallerRefSetToGo(context string, input any) (slice []CallerRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]CallerRef, len(set))
@@ -2479,8 +2479,8 @@ func convertCallerRefSetToGo(context string, input interface{}) (slice []CallerR
 	return
 }
 
-func convertCallerRefSetToXen(context string, slice []CallerRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertCallerRefSetToXen(context string, slice []CallerRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertCallerRefToXen(itemContext, item)
@@ -2492,7 +2492,7 @@ func convertCallerRefSetToXen(context string, slice []CallerRef) (set []interfac
 	return
 }
 
-func convertCallerRefToGo(context string, input interface{}) (ref CallerRef, err error) {
+func convertCallerRefToGo(context string, input any) (ref CallerRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -2506,7 +2506,7 @@ func convertCallerRefToXen(context string, ref CallerRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertCertificateRecordToGo(context string, input interface{}) (record CertificateRecord, err error) {
+func convertCertificateRecordToGo(context string, input any) (record CertificateRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2585,10 +2585,10 @@ func convertCertificateRecordToGo(context string, input interface{}) (record Cer
 	return
 }
 
-func convertCertificateRefSetToGo(context string, input interface{}) (slice []CertificateRef, err error) {
-	set, ok := input.([]interface{})
+func convertCertificateRefSetToGo(context string, input any) (slice []CertificateRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]CertificateRef, len(set))
@@ -2603,7 +2603,7 @@ func convertCertificateRefSetToGo(context string, input interface{}) (slice []Ce
 	return
 }
 
-func convertCertificateRefToGo(context string, input interface{}) (ref CertificateRef, err error) {
+func convertCertificateRefToGo(context string, input any) (ref CertificateRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -2617,7 +2617,7 @@ func convertCertificateRefToXen(context string, ref CertificateRef) (string, err
 	return string(ref), nil
 }
 
-func convertClusterRecordToGo(context string, input interface{}) (record ClusterRecord, err error) {
+func convertClusterRecordToGo(context string, input any) (record ClusterRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2745,10 +2745,10 @@ func convertClusterRecordToGo(context string, input interface{}) (record Cluster
 	return
 }
 
-func convertClusterRefSetToGo(context string, input interface{}) (slice []ClusterRef, err error) {
-	set, ok := input.([]interface{})
+func convertClusterRefSetToGo(context string, input any) (slice []ClusterRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ClusterRef, len(set))
@@ -2763,7 +2763,7 @@ func convertClusterRefSetToGo(context string, input interface{}) (slice []Cluste
 	return
 }
 
-func convertClusterRefToGo(context string, input interface{}) (ref ClusterRef, err error) {
+func convertClusterRefToGo(context string, input any) (ref ClusterRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -2777,7 +2777,7 @@ func convertClusterRefToXen(context string, ref ClusterRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertClusterHostRecordToGo(context string, input interface{}) (record ClusterHostRecord, err error) {
+func convertClusterHostRecordToGo(context string, input any) (record ClusterHostRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2863,10 +2863,10 @@ func convertClusterHostRecordToGo(context string, input interface{}) (record Clu
 	return
 }
 
-func convertClusterHostRefSetToGo(context string, input interface{}) (slice []ClusterHostRef, err error) {
-	set, ok := input.([]interface{})
+func convertClusterHostRefSetToGo(context string, input any) (slice []ClusterHostRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ClusterHostRef, len(set))
@@ -2881,7 +2881,7 @@ func convertClusterHostRefSetToGo(context string, input interface{}) (slice []Cl
 	return
 }
 
-func convertClusterHostRefToGo(context string, input interface{}) (ref ClusterHostRef, err error) {
+func convertClusterHostRefToGo(context string, input any) (ref ClusterHostRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -2895,7 +2895,7 @@ func convertClusterHostRefToXen(context string, ref ClusterHostRef) (string, err
 	return string(ref), nil
 }
 
-func convertDRTaskRecordToGo(context string, input interface{}) (record DRTaskRecord, err error) {
+func convertDRTaskRecordToGo(context string, input any) (record DRTaskRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -2918,10 +2918,10 @@ func convertDRTaskRecordToGo(context string, input interface{}) (record DRTaskRe
 	return
 }
 
-func convertDRTaskRefSetToGo(context string, input interface{}) (slice []DRTaskRef, err error) {
-	set, ok := input.([]interface{})
+func convertDRTaskRefSetToGo(context string, input any) (slice []DRTaskRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]DRTaskRef, len(set))
@@ -2936,7 +2936,7 @@ func convertDRTaskRefSetToGo(context string, input interface{}) (slice []DRTaskR
 	return
 }
 
-func convertDRTaskRefToGo(context string, input interface{}) (ref DRTaskRef, err error) {
+func convertDRTaskRefToGo(context string, input any) (ref DRTaskRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -2950,7 +2950,7 @@ func convertDRTaskRefToXen(context string, ref DRTaskRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertDriverVariantRecordToGo(context string, input interface{}) (record DriverVariantRecord, err error) {
+func convertDriverVariantRecordToGo(context string, input any) (record DriverVariantRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3008,10 +3008,10 @@ func convertDriverVariantRecordToGo(context string, input interface{}) (record D
 	return
 }
 
-func convertDriverVariantRefSetToGo(context string, input interface{}) (slice []DriverVariantRef, err error) {
-	set, ok := input.([]interface{})
+func convertDriverVariantRefSetToGo(context string, input any) (slice []DriverVariantRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]DriverVariantRef, len(set))
@@ -3026,7 +3026,7 @@ func convertDriverVariantRefSetToGo(context string, input interface{}) (slice []
 	return
 }
 
-func convertDriverVariantRefToGo(context string, input interface{}) (ref DriverVariantRef, err error) {
+func convertDriverVariantRefToGo(context string, input any) (ref DriverVariantRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3040,7 +3040,7 @@ func convertDriverVariantRefToXen(context string, ref DriverVariantRef) (string,
 	return string(ref), nil
 }
 
-func convertFeatureRecordToGo(context string, input interface{}) (record FeatureRecord, err error) {
+func convertFeatureRecordToGo(context string, input any) (record FeatureRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3098,10 +3098,10 @@ func convertFeatureRecordToGo(context string, input interface{}) (record Feature
 	return
 }
 
-func convertFeatureRefSetToGo(context string, input interface{}) (slice []FeatureRef, err error) {
-	set, ok := input.([]interface{})
+func convertFeatureRefSetToGo(context string, input any) (slice []FeatureRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]FeatureRef, len(set))
@@ -3116,7 +3116,7 @@ func convertFeatureRefSetToGo(context string, input interface{}) (slice []Featur
 	return
 }
 
-func convertFeatureRefToGo(context string, input interface{}) (ref FeatureRef, err error) {
+func convertFeatureRefToGo(context string, input any) (ref FeatureRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3130,7 +3130,7 @@ func convertFeatureRefToXen(context string, ref FeatureRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertGPUGroupRecordToGo(context string, input interface{}) (record GPUGroupRecord, err error) {
+func convertGPUGroupRecordToGo(context string, input any) (record GPUGroupRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3209,10 +3209,10 @@ func convertGPUGroupRecordToGo(context string, input interface{}) (record GPUGro
 	return
 }
 
-func convertGPUGroupRefSetToGo(context string, input interface{}) (slice []GPUGroupRef, err error) {
-	set, ok := input.([]interface{})
+func convertGPUGroupRefSetToGo(context string, input any) (slice []GPUGroupRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]GPUGroupRef, len(set))
@@ -3227,7 +3227,7 @@ func convertGPUGroupRefSetToGo(context string, input interface{}) (slice []GPUGr
 	return
 }
 
-func convertGPUGroupRefToGo(context string, input interface{}) (ref GPUGroupRef, err error) {
+func convertGPUGroupRefToGo(context string, input any) (ref GPUGroupRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3241,7 +3241,7 @@ func convertGPUGroupRefToXen(context string, ref GPUGroupRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertHostDriverRecordToGo(context string, input interface{}) (record HostDriverRecord, err error) {
+func convertHostDriverRecordToGo(context string, input any) (record HostDriverRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3320,10 +3320,10 @@ func convertHostDriverRecordToGo(context string, input interface{}) (record Host
 	return
 }
 
-func convertHostDriverRefSetToGo(context string, input interface{}) (slice []HostDriverRef, err error) {
-	set, ok := input.([]interface{})
+func convertHostDriverRefSetToGo(context string, input any) (slice []HostDriverRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]HostDriverRef, len(set))
@@ -3338,7 +3338,7 @@ func convertHostDriverRefSetToGo(context string, input interface{}) (slice []Hos
 	return
 }
 
-func convertHostDriverRefToGo(context string, input interface{}) (ref HostDriverRef, err error) {
+func convertHostDriverRefToGo(context string, input any) (ref HostDriverRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3352,7 +3352,7 @@ func convertHostDriverRefToXen(context string, ref HostDriverRef) (string, error
 	return string(ref), nil
 }
 
-func convertLVHDRecordToGo(context string, input interface{}) (record LVHDRecord, err error) {
+func convertLVHDRecordToGo(context string, input any) (record LVHDRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3368,7 +3368,7 @@ func convertLVHDRecordToGo(context string, input interface{}) (record LVHDRecord
 	return
 }
 
-func convertLVHDRefToGo(context string, input interface{}) (ref LVHDRef, err error) {
+func convertLVHDRefToGo(context string, input any) (ref LVHDRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3382,7 +3382,7 @@ func convertLVHDRefToXen(context string, ref LVHDRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertObserverRecordToGo(context string, input interface{}) (record ObserverRecord, err error) {
+func convertObserverRecordToGo(context string, input any) (record ObserverRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3484,10 +3484,10 @@ func convertObserverRecordToXen(context string, record ObserverRecord) (rpcStruc
 	return
 }
 
-func convertObserverRefSetToGo(context string, input interface{}) (slice []ObserverRef, err error) {
-	set, ok := input.([]interface{})
+func convertObserverRefSetToGo(context string, input any) (slice []ObserverRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ObserverRef, len(set))
@@ -3502,7 +3502,7 @@ func convertObserverRefSetToGo(context string, input interface{}) (slice []Obser
 	return
 }
 
-func convertObserverRefToGo(context string, input interface{}) (ref ObserverRef, err error) {
+func convertObserverRefToGo(context string, input any) (ref ObserverRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3516,7 +3516,7 @@ func convertObserverRefToXen(context string, ref ObserverRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPBDRecordToGo(context string, input interface{}) (record PBDRecord, err error) {
+func convertPBDRecordToGo(context string, input any) (record PBDRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3596,10 +3596,10 @@ func convertPBDRecordToXen(context string, record PBDRecord) (rpcStruct xmlrpc.S
 	return
 }
 
-func convertPBDRefSetToGo(context string, input interface{}) (slice []PBDRef, err error) {
-	set, ok := input.([]interface{})
+func convertPBDRefSetToGo(context string, input any) (slice []PBDRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PBDRef, len(set))
@@ -3614,7 +3614,7 @@ func convertPBDRefSetToGo(context string, input interface{}) (slice []PBDRef, er
 	return
 }
 
-func convertPBDRefToGo(context string, input interface{}) (ref PBDRef, err error) {
+func convertPBDRefToGo(context string, input any) (ref PBDRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3628,7 +3628,7 @@ func convertPBDRefToXen(context string, ref PBDRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPCIRecordToGo(context string, input interface{}) (record PCIRecord, err error) {
+func convertPCIRecordToGo(context string, input any) (record PCIRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3749,10 +3749,10 @@ func convertPCIRecordToGo(context string, input interface{}) (record PCIRecord, 
 	return
 }
 
-func convertPCIRefSetToGo(context string, input interface{}) (slice []PCIRef, err error) {
-	set, ok := input.([]interface{})
+func convertPCIRefSetToGo(context string, input any) (slice []PCIRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PCIRef, len(set))
@@ -3767,8 +3767,8 @@ func convertPCIRefSetToGo(context string, input interface{}) (slice []PCIRef, er
 	return
 }
 
-func convertPCIRefSetToXen(context string, slice []PCIRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertPCIRefSetToXen(context string, slice []PCIRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertPCIRefToXen(itemContext, item)
@@ -3780,7 +3780,7 @@ func convertPCIRefSetToXen(context string, slice []PCIRef) (set []interface{}, e
 	return
 }
 
-func convertPCIRefToGo(context string, input interface{}) (ref PCIRef, err error) {
+func convertPCIRefToGo(context string, input any) (ref PCIRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3794,7 +3794,7 @@ func convertPCIRefToXen(context string, ref PCIRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPGPURecordToGo(context string, input interface{}) (record PGPURecord, err error) {
+func convertPGPURecordToGo(context string, input any) (record PGPURecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -3887,10 +3887,10 @@ func convertPGPURecordToGo(context string, input interface{}) (record PGPURecord
 	return
 }
 
-func convertPGPURefSetToGo(context string, input interface{}) (slice []PGPURef, err error) {
-	set, ok := input.([]interface{})
+func convertPGPURefSetToGo(context string, input any) (slice []PGPURef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PGPURef, len(set))
@@ -3905,7 +3905,7 @@ func convertPGPURefSetToGo(context string, input interface{}) (slice []PGPURef, 
 	return
 }
 
-func convertPGPURefToGo(context string, input interface{}) (ref PGPURef, err error) {
+func convertPGPURefToGo(context string, input any) (ref PGPURef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -3919,7 +3919,7 @@ func convertPGPURefToXen(context string, ref PGPURef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPIFRecordToGo(context string, input interface{}) (record PIFRecord, err error) {
+func convertPIFRecordToGo(context string, input any) (record PIFRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4180,10 +4180,10 @@ func convertPIFRecordToGo(context string, input interface{}) (record PIFRecord, 
 	return
 }
 
-func convertPIFRefSetToGo(context string, input interface{}) (slice []PIFRef, err error) {
-	set, ok := input.([]interface{})
+func convertPIFRefSetToGo(context string, input any) (slice []PIFRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PIFRef, len(set))
@@ -4198,8 +4198,8 @@ func convertPIFRefSetToGo(context string, input interface{}) (slice []PIFRef, er
 	return
 }
 
-func convertPIFRefSetToXen(context string, slice []PIFRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertPIFRefSetToXen(context string, slice []PIFRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertPIFRefToXen(itemContext, item)
@@ -4211,7 +4211,7 @@ func convertPIFRefSetToXen(context string, slice []PIFRef) (set []interface{}, e
 	return
 }
 
-func convertPIFRefToGo(context string, input interface{}) (ref PIFRef, err error) {
+func convertPIFRefToGo(context string, input any) (ref PIFRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4225,7 +4225,7 @@ func convertPIFRefToXen(context string, ref PIFRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPIFMetricsRecordToGo(context string, input interface{}) (record PIFMetricsRecord, err error) {
+func convertPIFMetricsRecordToGo(context string, input any) (record PIFMetricsRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4332,10 +4332,10 @@ func convertPIFMetricsRecordToGo(context string, input interface{}) (record PIFM
 	return
 }
 
-func convertPIFMetricsRefSetToGo(context string, input interface{}) (slice []PIFMetricsRef, err error) {
-	set, ok := input.([]interface{})
+func convertPIFMetricsRefSetToGo(context string, input any) (slice []PIFMetricsRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PIFMetricsRef, len(set))
@@ -4350,7 +4350,7 @@ func convertPIFMetricsRefSetToGo(context string, input interface{}) (slice []PIF
 	return
 }
 
-func convertPIFMetricsRefToGo(context string, input interface{}) (ref PIFMetricsRef, err error) {
+func convertPIFMetricsRefToGo(context string, input any) (ref PIFMetricsRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4364,7 +4364,7 @@ func convertPIFMetricsRefToXen(context string, ref PIFMetricsRef) (string, error
 	return string(ref), nil
 }
 
-func convertPUSBRecordToGo(context string, input interface{}) (record PUSBRecord, err error) {
+func convertPUSBRecordToGo(context string, input any) (record PUSBRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4471,10 +4471,10 @@ func convertPUSBRecordToGo(context string, input interface{}) (record PUSBRecord
 	return
 }
 
-func convertPUSBRefSetToGo(context string, input interface{}) (slice []PUSBRef, err error) {
-	set, ok := input.([]interface{})
+func convertPUSBRefSetToGo(context string, input any) (slice []PUSBRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PUSBRef, len(set))
@@ -4489,7 +4489,7 @@ func convertPUSBRefSetToGo(context string, input interface{}) (slice []PUSBRef, 
 	return
 }
 
-func convertPUSBRefToGo(context string, input interface{}) (ref PUSBRef, err error) {
+func convertPUSBRefToGo(context string, input any) (ref PUSBRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4503,7 +4503,7 @@ func convertPUSBRefToXen(context string, ref PUSBRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPVSCacheStorageRecordToGo(context string, input interface{}) (record PVSCacheStorageRecord, err error) {
+func convertPVSCacheStorageRecordToGo(context string, input any) (record PVSCacheStorageRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4583,10 +4583,10 @@ func convertPVSCacheStorageRecordToXen(context string, record PVSCacheStorageRec
 	return
 }
 
-func convertPVSCacheStorageRefSetToGo(context string, input interface{}) (slice []PVSCacheStorageRef, err error) {
-	set, ok := input.([]interface{})
+func convertPVSCacheStorageRefSetToGo(context string, input any) (slice []PVSCacheStorageRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PVSCacheStorageRef, len(set))
@@ -4601,7 +4601,7 @@ func convertPVSCacheStorageRefSetToGo(context string, input interface{}) (slice 
 	return
 }
 
-func convertPVSCacheStorageRefToGo(context string, input interface{}) (ref PVSCacheStorageRef, err error) {
+func convertPVSCacheStorageRefToGo(context string, input any) (ref PVSCacheStorageRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4615,7 +4615,7 @@ func convertPVSCacheStorageRefToXen(context string, ref PVSCacheStorageRef) (str
 	return string(ref), nil
 }
 
-func convertPVSProxyRecordToGo(context string, input interface{}) (record PVSProxyRecord, err error) {
+func convertPVSProxyRecordToGo(context string, input any) (record PVSProxyRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4659,10 +4659,10 @@ func convertPVSProxyRecordToGo(context string, input interface{}) (record PVSPro
 	return
 }
 
-func convertPVSProxyRefSetToGo(context string, input interface{}) (slice []PVSProxyRef, err error) {
-	set, ok := input.([]interface{})
+func convertPVSProxyRefSetToGo(context string, input any) (slice []PVSProxyRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PVSProxyRef, len(set))
@@ -4677,7 +4677,7 @@ func convertPVSProxyRefSetToGo(context string, input interface{}) (slice []PVSPr
 	return
 }
 
-func convertPVSProxyRefToGo(context string, input interface{}) (ref PVSProxyRef, err error) {
+func convertPVSProxyRefToGo(context string, input any) (ref PVSProxyRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4691,7 +4691,7 @@ func convertPVSProxyRefToXen(context string, ref PVSProxyRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPVSServerRecordToGo(context string, input interface{}) (record PVSServerRecord, err error) {
+func convertPVSServerRecordToGo(context string, input any) (record PVSServerRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4735,10 +4735,10 @@ func convertPVSServerRecordToGo(context string, input interface{}) (record PVSSe
 	return
 }
 
-func convertPVSServerRefSetToGo(context string, input interface{}) (slice []PVSServerRef, err error) {
-	set, ok := input.([]interface{})
+func convertPVSServerRefSetToGo(context string, input any) (slice []PVSServerRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PVSServerRef, len(set))
@@ -4753,7 +4753,7 @@ func convertPVSServerRefSetToGo(context string, input interface{}) (slice []PVSS
 	return
 }
 
-func convertPVSServerRefToGo(context string, input interface{}) (ref PVSServerRef, err error) {
+func convertPVSServerRefToGo(context string, input any) (ref PVSServerRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4767,7 +4767,7 @@ func convertPVSServerRefToXen(context string, ref PVSServerRef) (string, error) 
 	return string(ref), nil
 }
 
-func convertPVSSiteRecordToGo(context string, input interface{}) (record PVSSiteRecord, err error) {
+func convertPVSSiteRecordToGo(context string, input any) (record PVSSiteRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4825,10 +4825,10 @@ func convertPVSSiteRecordToGo(context string, input interface{}) (record PVSSite
 	return
 }
 
-func convertPVSSiteRefSetToGo(context string, input interface{}) (slice []PVSSiteRef, err error) {
-	set, ok := input.([]interface{})
+func convertPVSSiteRefSetToGo(context string, input any) (slice []PVSSiteRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PVSSiteRef, len(set))
@@ -4843,7 +4843,7 @@ func convertPVSSiteRefSetToGo(context string, input interface{}) (slice []PVSSit
 	return
 }
 
-func convertPVSSiteRefToGo(context string, input interface{}) (ref PVSSiteRef, err error) {
+func convertPVSSiteRefToGo(context string, input any) (ref PVSSiteRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4857,7 +4857,7 @@ func convertPVSSiteRefToXen(context string, ref PVSSiteRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertRateLimitRecordToGo(context string, input interface{}) (record RateLimitRecord, err error) {
+func convertRateLimitRecordToGo(context string, input any) (record RateLimitRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -4937,10 +4937,10 @@ func convertRateLimitRecordToXen(context string, record RateLimitRecord) (rpcStr
 	return
 }
 
-func convertRateLimitRefSetToGo(context string, input interface{}) (slice []RateLimitRef, err error) {
-	set, ok := input.([]interface{})
+func convertRateLimitRefSetToGo(context string, input any) (slice []RateLimitRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]RateLimitRef, len(set))
@@ -4955,7 +4955,7 @@ func convertRateLimitRefSetToGo(context string, input interface{}) (slice []Rate
 	return
 }
 
-func convertRateLimitRefToGo(context string, input interface{}) (ref RateLimitRef, err error) {
+func convertRateLimitRefToGo(context string, input any) (ref RateLimitRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -4969,7 +4969,7 @@ func convertRateLimitRefToXen(context string, ref RateLimitRef) (string, error) 
 	return string(ref), nil
 }
 
-func convertRepositoryRecordToGo(context string, input interface{}) (record RepositoryRecord, err error) {
+func convertRepositoryRecordToGo(context string, input any) (record RepositoryRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -5055,10 +5055,10 @@ func convertRepositoryRecordToGo(context string, input interface{}) (record Repo
 	return
 }
 
-func convertRepositoryRefSetToGo(context string, input interface{}) (slice []RepositoryRef, err error) {
-	set, ok := input.([]interface{})
+func convertRepositoryRefSetToGo(context string, input any) (slice []RepositoryRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]RepositoryRef, len(set))
@@ -5073,8 +5073,8 @@ func convertRepositoryRefSetToGo(context string, input interface{}) (slice []Rep
 	return
 }
 
-func convertRepositoryRefSetToXen(context string, slice []RepositoryRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertRepositoryRefSetToXen(context string, slice []RepositoryRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertRepositoryRefToXen(itemContext, item)
@@ -5086,7 +5086,7 @@ func convertRepositoryRefSetToXen(context string, slice []RepositoryRef) (set []
 	return
 }
 
-func convertRepositoryRefToGo(context string, input interface{}) (ref RepositoryRef, err error) {
+func convertRepositoryRefToGo(context string, input any) (ref RepositoryRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -5100,7 +5100,7 @@ func convertRepositoryRefToXen(context string, ref RepositoryRef) (string, error
 	return string(ref), nil
 }
 
-func convertSDNControllerRecordToGo(context string, input interface{}) (record SDNControllerRecord, err error) {
+func convertSDNControllerRecordToGo(context string, input any) (record SDNControllerRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -5137,10 +5137,10 @@ func convertSDNControllerRecordToGo(context string, input interface{}) (record S
 	return
 }
 
-func convertSDNControllerRefSetToGo(context string, input interface{}) (slice []SDNControllerRef, err error) {
-	set, ok := input.([]interface{})
+func convertSDNControllerRefSetToGo(context string, input any) (slice []SDNControllerRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]SDNControllerRef, len(set))
@@ -5155,7 +5155,7 @@ func convertSDNControllerRefSetToGo(context string, input interface{}) (slice []
 	return
 }
 
-func convertSDNControllerRefToGo(context string, input interface{}) (ref SDNControllerRef, err error) {
+func convertSDNControllerRefToGo(context string, input any) (ref SDNControllerRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -5169,7 +5169,7 @@ func convertSDNControllerRefToXen(context string, ref SDNControllerRef) (string,
 	return string(ref), nil
 }
 
-func convertSMRecordToGo(context string, input interface{}) (record SMRecord, err error) {
+func convertSMRecordToGo(context string, input any) (record SMRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -5283,10 +5283,10 @@ func convertSMRecordToGo(context string, input interface{}) (record SMRecord, er
 	return
 }
 
-func convertSMRefSetToGo(context string, input interface{}) (slice []SMRef, err error) {
-	set, ok := input.([]interface{})
+func convertSMRefSetToGo(context string, input any) (slice []SMRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]SMRef, len(set))
@@ -5301,7 +5301,7 @@ func convertSMRefSetToGo(context string, input interface{}) (slice []SMRef, err 
 	return
 }
 
-func convertSMRefToGo(context string, input interface{}) (ref SMRef, err error) {
+func convertSMRefToGo(context string, input any) (ref SMRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -5315,7 +5315,7 @@ func convertSMRefToXen(context string, ref SMRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertSRRecordToGo(context string, input interface{}) (record SRRecord, err error) {
+func convertSRRecordToGo(context string, input any) (record SRRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -5471,10 +5471,10 @@ func convertSRRecordToGo(context string, input interface{}) (record SRRecord, er
 	return
 }
 
-func convertSRRefSetToGo(context string, input interface{}) (slice []SRRef, err error) {
-	set, ok := input.([]interface{})
+func convertSRRefSetToGo(context string, input any) (slice []SRRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]SRRef, len(set))
@@ -5489,8 +5489,8 @@ func convertSRRefSetToGo(context string, input interface{}) (slice []SRRef, err 
 	return
 }
 
-func convertSRRefSetToXen(context string, slice []SRRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertSRRefSetToXen(context string, slice []SRRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertSRRefToXen(itemContext, item)
@@ -5502,7 +5502,7 @@ func convertSRRefSetToXen(context string, slice []SRRef) (set []interface{}, err
 	return
 }
 
-func convertSRRefToGo(context string, input interface{}) (ref SRRef, err error) {
+func convertSRRefToGo(context string, input any) (ref SRRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -5516,7 +5516,7 @@ func convertSRRefToXen(context string, ref SRRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertUSBGroupRecordToGo(context string, input interface{}) (record USBGroupRecord, err error) {
+func convertUSBGroupRecordToGo(context string, input any) (record USBGroupRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -5567,10 +5567,10 @@ func convertUSBGroupRecordToGo(context string, input interface{}) (record USBGro
 	return
 }
 
-func convertUSBGroupRefSetToGo(context string, input interface{}) (slice []USBGroupRef, err error) {
-	set, ok := input.([]interface{})
+func convertUSBGroupRefSetToGo(context string, input any) (slice []USBGroupRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]USBGroupRef, len(set))
@@ -5585,7 +5585,7 @@ func convertUSBGroupRefSetToGo(context string, input interface{}) (slice []USBGr
 	return
 }
 
-func convertUSBGroupRefToGo(context string, input interface{}) (ref USBGroupRef, err error) {
+func convertUSBGroupRefToGo(context string, input any) (ref USBGroupRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -5599,7 +5599,7 @@ func convertUSBGroupRefToXen(context string, ref USBGroupRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVBDRecordToGo(context string, input interface{}) (record VBDRecord, err error) {
+func convertVBDRecordToGo(context string, input any) (record VBDRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -5855,10 +5855,10 @@ func convertVBDRecordToXen(context string, record VBDRecord) (rpcStruct xmlrpc.S
 	return
 }
 
-func convertVBDRefSetToGo(context string, input interface{}) (slice []VBDRef, err error) {
-	set, ok := input.([]interface{})
+func convertVBDRefSetToGo(context string, input any) (slice []VBDRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VBDRef, len(set))
@@ -5873,8 +5873,8 @@ func convertVBDRefSetToGo(context string, input interface{}) (slice []VBDRef, er
 	return
 }
 
-func convertVBDRefSetToXen(context string, slice []VBDRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVBDRefSetToXen(context string, slice []VBDRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVBDRefToXen(itemContext, item)
@@ -5886,7 +5886,7 @@ func convertVBDRefSetToXen(context string, slice []VBDRef) (set []interface{}, e
 	return
 }
 
-func convertVBDRefToGo(context string, input interface{}) (ref VBDRef, err error) {
+func convertVBDRefToGo(context string, input any) (ref VBDRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -5900,7 +5900,7 @@ func convertVBDRefToXen(context string, ref VBDRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVBDMetricsRecordToGo(context string, input interface{}) (record VBDMetricsRecord, err error) {
+func convertVBDMetricsRecordToGo(context string, input any) (record VBDMetricsRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -5944,10 +5944,10 @@ func convertVBDMetricsRecordToGo(context string, input interface{}) (record VBDM
 	return
 }
 
-func convertVBDMetricsRefSetToGo(context string, input interface{}) (slice []VBDMetricsRef, err error) {
-	set, ok := input.([]interface{})
+func convertVBDMetricsRefSetToGo(context string, input any) (slice []VBDMetricsRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VBDMetricsRef, len(set))
@@ -5962,7 +5962,7 @@ func convertVBDMetricsRefSetToGo(context string, input interface{}) (slice []VBD
 	return
 }
 
-func convertVBDMetricsRefToGo(context string, input interface{}) (ref VBDMetricsRef, err error) {
+func convertVBDMetricsRefToGo(context string, input any) (ref VBDMetricsRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -5976,7 +5976,7 @@ func convertVBDMetricsRefToXen(context string, ref VBDMetricsRef) (string, error
 	return string(ref), nil
 }
 
-func convertVDIRecordToGo(context string, input interface{}) (record VDIRecord, err error) {
+func convertVDIRecordToGo(context string, input any) (record VDIRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -6342,10 +6342,10 @@ func convertVDIRecordToXen(context string, record VDIRecord) (rpcStruct xmlrpc.S
 	return
 }
 
-func convertVDIRefSetToGo(context string, input interface{}) (slice []VDIRef, err error) {
-	set, ok := input.([]interface{})
+func convertVDIRefSetToGo(context string, input any) (slice []VDIRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VDIRef, len(set))
@@ -6360,8 +6360,8 @@ func convertVDIRefSetToGo(context string, input interface{}) (slice []VDIRef, er
 	return
 }
 
-func convertVDIRefSetToXen(context string, slice []VDIRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVDIRefSetToXen(context string, slice []VDIRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVDIRefToXen(itemContext, item)
@@ -6373,7 +6373,7 @@ func convertVDIRefSetToXen(context string, slice []VDIRef) (set []interface{}, e
 	return
 }
 
-func convertVDIRefToGo(context string, input interface{}) (ref VDIRef, err error) {
+func convertVDIRefToGo(context string, input any) (ref VDIRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -6387,7 +6387,7 @@ func convertVDIRefToXen(context string, ref VDIRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVGPURecordToGo(context string, input interface{}) (record VGPURecord, err error) {
+func convertVGPURecordToGo(context string, input any) (record VGPURecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -6480,10 +6480,10 @@ func convertVGPURecordToGo(context string, input interface{}) (record VGPURecord
 	return
 }
 
-func convertVGPURefSetToGo(context string, input interface{}) (slice []VGPURef, err error) {
-	set, ok := input.([]interface{})
+func convertVGPURefSetToGo(context string, input any) (slice []VGPURef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VGPURef, len(set))
@@ -6498,8 +6498,8 @@ func convertVGPURefSetToGo(context string, input interface{}) (slice []VGPURef, 
 	return
 }
 
-func convertVGPURefSetToXen(context string, slice []VGPURef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVGPURefSetToXen(context string, slice []VGPURef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVGPURefToXen(itemContext, item)
@@ -6511,7 +6511,7 @@ func convertVGPURefSetToXen(context string, slice []VGPURef) (set []interface{},
 	return
 }
 
-func convertVGPURefToGo(context string, input interface{}) (ref VGPURef, err error) {
+func convertVGPURefToGo(context string, input any) (ref VGPURef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -6525,7 +6525,7 @@ func convertVGPURefToXen(context string, ref VGPURef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVGPUTypeRecordToGo(context string, input interface{}) (record VGPUTypeRecord, err error) {
+func convertVGPUTypeRecordToGo(context string, input any) (record VGPUTypeRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -6646,10 +6646,10 @@ func convertVGPUTypeRecordToGo(context string, input interface{}) (record VGPUTy
 	return
 }
 
-func convertVGPUTypeRefSetToGo(context string, input interface{}) (slice []VGPUTypeRef, err error) {
-	set, ok := input.([]interface{})
+func convertVGPUTypeRefSetToGo(context string, input any) (slice []VGPUTypeRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VGPUTypeRef, len(set))
@@ -6664,8 +6664,8 @@ func convertVGPUTypeRefSetToGo(context string, input interface{}) (slice []VGPUT
 	return
 }
 
-func convertVGPUTypeRefSetToXen(context string, slice []VGPUTypeRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVGPUTypeRefSetToXen(context string, slice []VGPUTypeRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVGPUTypeRefToXen(itemContext, item)
@@ -6677,7 +6677,7 @@ func convertVGPUTypeRefSetToXen(context string, slice []VGPUTypeRef) (set []inte
 	return
 }
 
-func convertVGPUTypeRefToGo(context string, input interface{}) (ref VGPUTypeRef, err error) {
+func convertVGPUTypeRefToGo(context string, input any) (ref VGPUTypeRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -6691,7 +6691,7 @@ func convertVGPUTypeRefToXen(context string, ref VGPUTypeRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVIFRecordToGo(context string, input interface{}) (record VIFRecord, err error) {
+func convertVIFRecordToGo(context string, input any) (record VIFRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -7013,10 +7013,10 @@ func convertVIFRecordToXen(context string, record VIFRecord) (rpcStruct xmlrpc.S
 	return
 }
 
-func convertVIFRefSetToGo(context string, input interface{}) (slice []VIFRef, err error) {
-	set, ok := input.([]interface{})
+func convertVIFRefSetToGo(context string, input any) (slice []VIFRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VIFRef, len(set))
@@ -7031,8 +7031,8 @@ func convertVIFRefSetToGo(context string, input interface{}) (slice []VIFRef, er
 	return
 }
 
-func convertVIFRefSetToXen(context string, slice []VIFRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVIFRefSetToXen(context string, slice []VIFRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVIFRefToXen(itemContext, item)
@@ -7044,7 +7044,7 @@ func convertVIFRefSetToXen(context string, slice []VIFRef) (set []interface{}, e
 	return
 }
 
-func convertVIFRefToGo(context string, input interface{}) (ref VIFRef, err error) {
+func convertVIFRefToGo(context string, input any) (ref VIFRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -7058,7 +7058,7 @@ func convertVIFRefToXen(context string, ref VIFRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVIFMetricsRecordToGo(context string, input interface{}) (record VIFMetricsRecord, err error) {
+func convertVIFMetricsRecordToGo(context string, input any) (record VIFMetricsRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -7102,10 +7102,10 @@ func convertVIFMetricsRecordToGo(context string, input interface{}) (record VIFM
 	return
 }
 
-func convertVIFMetricsRefSetToGo(context string, input interface{}) (slice []VIFMetricsRef, err error) {
-	set, ok := input.([]interface{})
+func convertVIFMetricsRefSetToGo(context string, input any) (slice []VIFMetricsRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VIFMetricsRef, len(set))
@@ -7120,7 +7120,7 @@ func convertVIFMetricsRefSetToGo(context string, input interface{}) (slice []VIF
 	return
 }
 
-func convertVIFMetricsRefToGo(context string, input interface{}) (ref VIFMetricsRef, err error) {
+func convertVIFMetricsRefToGo(context string, input any) (ref VIFMetricsRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -7134,7 +7134,7 @@ func convertVIFMetricsRefToXen(context string, ref VIFMetricsRef) (string, error
 	return string(ref), nil
 }
 
-func convertVLANRecordToGo(context string, input interface{}) (record VLANRecord, err error) {
+func convertVLANRecordToGo(context string, input any) (record VLANRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -7178,10 +7178,10 @@ func convertVLANRecordToGo(context string, input interface{}) (record VLANRecord
 	return
 }
 
-func convertVLANRefSetToGo(context string, input interface{}) (slice []VLANRef, err error) {
-	set, ok := input.([]interface{})
+func convertVLANRefSetToGo(context string, input any) (slice []VLANRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VLANRef, len(set))
@@ -7196,7 +7196,7 @@ func convertVLANRefSetToGo(context string, input interface{}) (slice []VLANRef, 
 	return
 }
 
-func convertVLANRefToGo(context string, input interface{}) (ref VLANRef, err error) {
+func convertVLANRefToGo(context string, input any) (ref VLANRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -7210,7 +7210,7 @@ func convertVLANRefToXen(context string, ref VLANRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVMRecordToGo(context string, input interface{}) (record VMRecord, err error) {
+func convertVMRecordToGo(context string, input any) (record VMRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -8236,10 +8236,10 @@ func convertVMRecordToXen(context string, record VMRecord) (rpcStruct xmlrpc.Str
 	return
 }
 
-func convertVMRefSetToGo(context string, input interface{}) (slice []VMRef, err error) {
-	set, ok := input.([]interface{})
+func convertVMRefSetToGo(context string, input any) (slice []VMRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMRef, len(set))
@@ -8254,8 +8254,8 @@ func convertVMRefSetToGo(context string, input interface{}) (slice []VMRef, err 
 	return
 }
 
-func convertVMRefSetToXen(context string, slice []VMRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVMRefSetToXen(context string, slice []VMRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVMRefToXen(itemContext, item)
@@ -8267,7 +8267,7 @@ func convertVMRefSetToXen(context string, slice []VMRef) (set []interface{}, err
 	return
 }
 
-func convertVMRefToGo(context string, input interface{}) (ref VMRef, err error) {
+func convertVMRefToGo(context string, input any) (ref VMRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -8281,7 +8281,7 @@ func convertVMRefToXen(context string, ref VMRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVMPPRecordToGo(context string, input interface{}) (record VMPPRecord, err error) {
+func convertVMPPRecordToGo(context string, input any) (record VMPPRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -8515,10 +8515,10 @@ func convertVMPPRecordToXen(context string, record VMPPRecord) (rpcStruct xmlrpc
 	return
 }
 
-func convertVMPPRefSetToGo(context string, input interface{}) (slice []VMPPRef, err error) {
-	set, ok := input.([]interface{})
+func convertVMPPRefSetToGo(context string, input any) (slice []VMPPRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMPPRef, len(set))
@@ -8533,7 +8533,7 @@ func convertVMPPRefSetToGo(context string, input interface{}) (slice []VMPPRef, 
 	return
 }
 
-func convertVMPPRefToGo(context string, input interface{}) (ref VMPPRef, err error) {
+func convertVMPPRefToGo(context string, input any) (ref VMPPRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -8547,7 +8547,7 @@ func convertVMPPRefToXen(context string, ref VMPPRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVMSSRecordToGo(context string, input interface{}) (record VMSSRecord, err error) {
+func convertVMSSRecordToGo(context string, input any) (record VMSSRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -8671,10 +8671,10 @@ func convertVMSSRecordToXen(context string, record VMSSRecord) (rpcStruct xmlrpc
 	return
 }
 
-func convertVMSSRefSetToGo(context string, input interface{}) (slice []VMSSRef, err error) {
-	set, ok := input.([]interface{})
+func convertVMSSRefSetToGo(context string, input any) (slice []VMSSRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMSSRef, len(set))
@@ -8689,7 +8689,7 @@ func convertVMSSRefSetToGo(context string, input interface{}) (slice []VMSSRef, 
 	return
 }
 
-func convertVMSSRefToGo(context string, input interface{}) (ref VMSSRef, err error) {
+func convertVMSSRefToGo(context string, input any) (ref VMSSRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -8703,7 +8703,7 @@ func convertVMSSRefToXen(context string, ref VMSSRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVMApplianceRecordToGo(context string, input interface{}) (record VMApplianceRecord, err error) {
+func convertVMApplianceRecordToGo(context string, input any) (record VMApplianceRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -8783,10 +8783,10 @@ func convertVMApplianceRecordToXen(context string, record VMApplianceRecord) (rp
 	return
 }
 
-func convertVMApplianceRefSetToGo(context string, input interface{}) (slice []VMApplianceRef, err error) {
-	set, ok := input.([]interface{})
+func convertVMApplianceRefSetToGo(context string, input any) (slice []VMApplianceRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMApplianceRef, len(set))
@@ -8801,7 +8801,7 @@ func convertVMApplianceRefSetToGo(context string, input interface{}) (slice []VM
 	return
 }
 
-func convertVMApplianceRefToGo(context string, input interface{}) (ref VMApplianceRef, err error) {
+func convertVMApplianceRefToGo(context string, input any) (ref VMApplianceRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -8815,7 +8815,7 @@ func convertVMApplianceRefToXen(context string, ref VMApplianceRef) (string, err
 	return string(ref), nil
 }
 
-func convertVMGroupRecordToGo(context string, input interface{}) (record VMGroupRecord, err error) {
+func convertVMGroupRecordToGo(context string, input any) (record VMGroupRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -8884,10 +8884,10 @@ func convertVMGroupRecordToXen(context string, record VMGroupRecord) (rpcStruct 
 	return
 }
 
-func convertVMGroupRefSetToGo(context string, input interface{}) (slice []VMGroupRef, err error) {
-	set, ok := input.([]interface{})
+func convertVMGroupRefSetToGo(context string, input any) (slice []VMGroupRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMGroupRef, len(set))
@@ -8902,8 +8902,8 @@ func convertVMGroupRefSetToGo(context string, input interface{}) (slice []VMGrou
 	return
 }
 
-func convertVMGroupRefSetToXen(context string, slice []VMGroupRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVMGroupRefSetToXen(context string, slice []VMGroupRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVMGroupRefToXen(itemContext, item)
@@ -8915,7 +8915,7 @@ func convertVMGroupRefSetToXen(context string, slice []VMGroupRef) (set []interf
 	return
 }
 
-func convertVMGroupRefToGo(context string, input interface{}) (ref VMGroupRef, err error) {
+func convertVMGroupRefToGo(context string, input any) (ref VMGroupRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -8929,7 +8929,7 @@ func convertVMGroupRefToXen(context string, ref VMGroupRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVMGuestMetricsRecordToGo(context string, input interface{}) (record VMGuestMetricsRecord, err error) {
+func convertVMGuestMetricsRecordToGo(context string, input any) (record VMGuestMetricsRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9050,10 +9050,10 @@ func convertVMGuestMetricsRecordToGo(context string, input interface{}) (record 
 	return
 }
 
-func convertVMGuestMetricsRefSetToGo(context string, input interface{}) (slice []VMGuestMetricsRef, err error) {
-	set, ok := input.([]interface{})
+func convertVMGuestMetricsRefSetToGo(context string, input any) (slice []VMGuestMetricsRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMGuestMetricsRef, len(set))
@@ -9068,7 +9068,7 @@ func convertVMGuestMetricsRefSetToGo(context string, input interface{}) (slice [
 	return
 }
 
-func convertVMGuestMetricsRefToGo(context string, input interface{}) (ref VMGuestMetricsRef, err error) {
+func convertVMGuestMetricsRefToGo(context string, input any) (ref VMGuestMetricsRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -9082,7 +9082,7 @@ func convertVMGuestMetricsRefToXen(context string, ref VMGuestMetricsRef) (strin
 	return string(ref), nil
 }
 
-func convertVMMetricsRecordToGo(context string, input interface{}) (record VMMetricsRecord, err error) {
+func convertVMMetricsRecordToGo(context string, input any) (record VMMetricsRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9224,10 +9224,10 @@ func convertVMMetricsRecordToGo(context string, input interface{}) (record VMMet
 	return
 }
 
-func convertVMMetricsRefSetToGo(context string, input interface{}) (slice []VMMetricsRef, err error) {
-	set, ok := input.([]interface{})
+func convertVMMetricsRefSetToGo(context string, input any) (slice []VMMetricsRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMMetricsRef, len(set))
@@ -9242,7 +9242,7 @@ func convertVMMetricsRefSetToGo(context string, input interface{}) (slice []VMMe
 	return
 }
 
-func convertVMMetricsRefToGo(context string, input interface{}) (ref VMMetricsRef, err error) {
+func convertVMMetricsRefToGo(context string, input any) (ref VMMetricsRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -9256,7 +9256,7 @@ func convertVMMetricsRefToXen(context string, ref VMMetricsRef) (string, error) 
 	return string(ref), nil
 }
 
-func convertVTPMRecordToGo(context string, input interface{}) (record VTPMRecord, err error) {
+func convertVTPMRecordToGo(context string, input any) (record VTPMRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9321,10 +9321,10 @@ func convertVTPMRecordToGo(context string, input interface{}) (record VTPMRecord
 	return
 }
 
-func convertVTPMRefSetToGo(context string, input interface{}) (slice []VTPMRef, err error) {
-	set, ok := input.([]interface{})
+func convertVTPMRefSetToGo(context string, input any) (slice []VTPMRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VTPMRef, len(set))
@@ -9339,8 +9339,8 @@ func convertVTPMRefSetToGo(context string, input interface{}) (slice []VTPMRef, 
 	return
 }
 
-func convertVTPMRefSetToXen(context string, slice []VTPMRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVTPMRefSetToXen(context string, slice []VTPMRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVTPMRefToXen(itemContext, item)
@@ -9352,7 +9352,7 @@ func convertVTPMRefSetToXen(context string, slice []VTPMRef) (set []interface{},
 	return
 }
 
-func convertVTPMRefToGo(context string, input interface{}) (ref VTPMRef, err error) {
+func convertVTPMRefToGo(context string, input any) (ref VTPMRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -9366,7 +9366,7 @@ func convertVTPMRefToXen(context string, ref VTPMRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVUSBRecordToGo(context string, input interface{}) (record VUSBRecord, err error) {
+func convertVUSBRecordToGo(context string, input any) (record VUSBRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9424,10 +9424,10 @@ func convertVUSBRecordToGo(context string, input interface{}) (record VUSBRecord
 	return
 }
 
-func convertVUSBRefSetToGo(context string, input interface{}) (slice []VUSBRef, err error) {
-	set, ok := input.([]interface{})
+func convertVUSBRefSetToGo(context string, input any) (slice []VUSBRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VUSBRef, len(set))
@@ -9442,8 +9442,8 @@ func convertVUSBRefSetToGo(context string, input interface{}) (slice []VUSBRef, 
 	return
 }
 
-func convertVUSBRefSetToXen(context string, slice []VUSBRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertVUSBRefSetToXen(context string, slice []VUSBRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertVUSBRefToXen(itemContext, item)
@@ -9455,7 +9455,7 @@ func convertVUSBRefSetToXen(context string, slice []VUSBRef) (set []interface{},
 	return
 }
 
-func convertVUSBRefToGo(context string, input interface{}) (ref VUSBRef, err error) {
+func convertVUSBRefToGo(context string, input any) (ref VUSBRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -9469,7 +9469,7 @@ func convertVUSBRefToXen(context string, ref VUSBRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertEventBatchToGo(context string, input interface{}) (value xmlrpc.Struct, err error) {
+func convertEventBatchToGo(context string, input any) (value xmlrpc.Struct, err error) {
 	if input == nil {
 		return
 	}
@@ -9480,7 +9480,7 @@ func convertEventBatchToGo(context string, input interface{}) (value xmlrpc.Stru
 	return
 }
 
-func convertBlobRecordToGo(context string, input interface{}) (record BlobRecord, err error) {
+func convertBlobRecordToGo(context string, input any) (record BlobRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9538,10 +9538,10 @@ func convertBlobRecordToGo(context string, input interface{}) (record BlobRecord
 	return
 }
 
-func convertBlobRefSetToGo(context string, input interface{}) (slice []BlobRef, err error) {
-	set, ok := input.([]interface{})
+func convertBlobRefSetToGo(context string, input any) (slice []BlobRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]BlobRef, len(set))
@@ -9556,7 +9556,7 @@ func convertBlobRefSetToGo(context string, input interface{}) (slice []BlobRef, 
 	return
 }
 
-func convertBlobRefToGo(context string, input interface{}) (ref BlobRef, err error) {
+func convertBlobRefToGo(context string, input any) (ref BlobRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -9570,7 +9570,7 @@ func convertBlobRefToXen(context string, ref BlobRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertBoolToGo(context string, input interface{}) (value bool, err error) {
+func convertBoolToGo(context string, input any) (value bool, err error) {
 	if input == nil {
 		return
 	}
@@ -9585,7 +9585,7 @@ func convertBoolToXen(context string, value bool) (bool, error) {
 	return value, nil
 }
 
-func convertConsoleRecordToGo(context string, input interface{}) (record ConsoleRecord, err error) {
+func convertConsoleRecordToGo(context string, input any) (record ConsoleRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9654,10 +9654,10 @@ func convertConsoleRecordToXen(context string, record ConsoleRecord) (rpcStruct 
 	return
 }
 
-func convertConsoleRefSetToGo(context string, input interface{}) (slice []ConsoleRef, err error) {
-	set, ok := input.([]interface{})
+func convertConsoleRefSetToGo(context string, input any) (slice []ConsoleRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ConsoleRef, len(set))
@@ -9672,8 +9672,8 @@ func convertConsoleRefSetToGo(context string, input interface{}) (slice []Consol
 	return
 }
 
-func convertConsoleRefSetToXen(context string, slice []ConsoleRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertConsoleRefSetToXen(context string, slice []ConsoleRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertConsoleRefToXen(itemContext, item)
@@ -9685,7 +9685,7 @@ func convertConsoleRefSetToXen(context string, slice []ConsoleRef) (set []interf
 	return
 }
 
-func convertConsoleRefToGo(context string, input interface{}) (ref ConsoleRef, err error) {
+func convertConsoleRefToGo(context string, input any) (ref ConsoleRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -9699,7 +9699,7 @@ func convertConsoleRefToXen(context string, ref ConsoleRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertCrashdumpRecordToGo(context string, input interface{}) (record CrashdumpRecord, err error) {
+func convertCrashdumpRecordToGo(context string, input any) (record CrashdumpRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9736,10 +9736,10 @@ func convertCrashdumpRecordToGo(context string, input interface{}) (record Crash
 	return
 }
 
-func convertCrashdumpRefSetToGo(context string, input interface{}) (slice []CrashdumpRef, err error) {
-	set, ok := input.([]interface{})
+func convertCrashdumpRefSetToGo(context string, input any) (slice []CrashdumpRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]CrashdumpRef, len(set))
@@ -9754,8 +9754,8 @@ func convertCrashdumpRefSetToGo(context string, input interface{}) (slice []Cras
 	return
 }
 
-func convertCrashdumpRefSetToXen(context string, slice []CrashdumpRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertCrashdumpRefSetToXen(context string, slice []CrashdumpRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertCrashdumpRefToXen(itemContext, item)
@@ -9767,7 +9767,7 @@ func convertCrashdumpRefSetToXen(context string, slice []CrashdumpRef) (set []in
 	return
 }
 
-func convertCrashdumpRefToGo(context string, input interface{}) (ref CrashdumpRef, err error) {
+func convertCrashdumpRefToGo(context string, input any) (ref CrashdumpRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -9781,10 +9781,10 @@ func convertCrashdumpRefToXen(context string, ref CrashdumpRef) (string, error) 
 	return string(ref), nil
 }
 
-func convertDataSourceRecordSetToGo(context string, input interface{}) (slice []DataSourceRecord, err error) {
-	set, ok := input.([]interface{})
+func convertDataSourceRecordSetToGo(context string, input any) (slice []DataSourceRecord, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]DataSourceRecord, len(set))
@@ -9799,7 +9799,7 @@ func convertDataSourceRecordSetToGo(context string, input interface{}) (slice []
 	return
 }
 
-func convertDataSourceRecordToGo(context string, input interface{}) (record DataSourceRecord, err error) {
+func convertDataSourceRecordToGo(context string, input any) (record DataSourceRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -9864,7 +9864,7 @@ func convertDataSourceRecordToGo(context string, input interface{}) (record Data
 	return
 }
 
-func convertTimeToGo(context string, input interface{}) (value time.Time, err error) {
+func convertTimeToGo(context string, input any) (value time.Time, err error) {
 	if input == nil {
 		return
 	}
@@ -9888,10 +9888,10 @@ func convertTimeToXen(context string, value time.Time) (time.Time, error) {
 	return value, nil
 }
 
-func convertEnumAfterApplyGuidanceSetToGo(context string, input interface{}) (slice []AfterApplyGuidance, err error) {
-	set, ok := input.([]interface{})
+func convertEnumAfterApplyGuidanceSetToGo(context string, input any) (slice []AfterApplyGuidance, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]AfterApplyGuidance, len(set))
@@ -9906,7 +9906,7 @@ func convertEnumAfterApplyGuidanceSetToGo(context string, input interface{}) (sl
 	return
 }
 
-func convertEnumAfterApplyGuidanceToGo(context string, input interface{}) (value AfterApplyGuidance, err error) {
+func convertEnumAfterApplyGuidanceToGo(context string, input any) (value AfterApplyGuidance, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -9929,7 +9929,7 @@ func convertEnumAfterApplyGuidanceToGo(context string, input interface{}) (value
 	return
 }
 
-func convertEnumAllocationAlgorithmToGo(context string, input interface{}) (value AllocationAlgorithm, err error) {
+func convertEnumAllocationAlgorithmToGo(context string, input any) (value AllocationAlgorithm, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -9952,7 +9952,7 @@ func convertEnumAllocationAlgorithmToXen(context string, value AllocationAlgorit
 	return string(value), nil
 }
 
-func convertEnumBondModeToGo(context string, input interface{}) (value BondMode, err error) {
+func convertEnumBondModeToGo(context string, input any) (value BondMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -9977,10 +9977,10 @@ func convertEnumBondModeToXen(context string, value BondMode) (string, error) {
 	return string(value), nil
 }
 
-func convertEnumCertificatePurposeSetToGo(context string, input interface{}) (slice []CertificatePurpose, err error) {
-	set, ok := input.([]interface{})
+func convertEnumCertificatePurposeSetToGo(context string, input any) (slice []CertificatePurpose, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]CertificatePurpose, len(set))
@@ -9995,8 +9995,8 @@ func convertEnumCertificatePurposeSetToGo(context string, input interface{}) (sl
 	return
 }
 
-func convertEnumCertificatePurposeSetToXen(context string, slice []CertificatePurpose) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumCertificatePurposeSetToXen(context string, slice []CertificatePurpose) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumCertificatePurposeToXen(itemContext, item)
@@ -10008,7 +10008,7 @@ func convertEnumCertificatePurposeSetToXen(context string, slice []CertificatePu
 	return
 }
 
-func convertEnumCertificatePurposeToGo(context string, input interface{}) (value CertificatePurpose, err error) {
+func convertEnumCertificatePurposeToGo(context string, input any) (value CertificatePurpose, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10031,7 +10031,7 @@ func convertEnumCertificatePurposeToXen(context string, value CertificatePurpose
 	return string(value), nil
 }
 
-func convertEnumCertificateTypeToGo(context string, input interface{}) (value CertificateType, err error) {
+func convertEnumCertificateTypeToGo(context string, input any) (value CertificateType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10054,7 +10054,7 @@ func convertEnumCertificateTypeToGo(context string, input interface{}) (value Ce
 	return
 }
 
-func convertEnumClsToGo(context string, input interface{}) (value Cls, err error) {
+func convertEnumClsToGo(context string, input any) (value Cls, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10091,10 +10091,10 @@ func convertEnumClsToXen(context string, value Cls) (string, error) {
 	return string(value), nil
 }
 
-func convertEnumClusterHostOperationSetToGo(context string, input interface{}) (slice []ClusterHostOperation, err error) {
-	set, ok := input.([]interface{})
+func convertEnumClusterHostOperationSetToGo(context string, input any) (slice []ClusterHostOperation, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ClusterHostOperation, len(set))
@@ -10109,7 +10109,7 @@ func convertEnumClusterHostOperationSetToGo(context string, input interface{}) (
 	return
 }
 
-func convertEnumClusterHostOperationToGo(context string, input interface{}) (value ClusterHostOperation, err error) {
+func convertEnumClusterHostOperationToGo(context string, input any) (value ClusterHostOperation, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10130,10 +10130,10 @@ func convertEnumClusterHostOperationToGo(context string, input interface{}) (val
 	return
 }
 
-func convertEnumClusterOperationSetToGo(context string, input interface{}) (slice []ClusterOperation, err error) {
-	set, ok := input.([]interface{})
+func convertEnumClusterOperationSetToGo(context string, input any) (slice []ClusterOperation, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ClusterOperation, len(set))
@@ -10148,7 +10148,7 @@ func convertEnumClusterOperationSetToGo(context string, input interface{}) (slic
 	return
 }
 
-func convertEnumClusterOperationToGo(context string, input interface{}) (value ClusterOperation, err error) {
+func convertEnumClusterOperationToGo(context string, input any) (value ClusterOperation, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10173,7 +10173,7 @@ func convertEnumClusterOperationToGo(context string, input interface{}) (value C
 	return
 }
 
-func convertEnumConsoleProtocolToGo(context string, input interface{}) (value ConsoleProtocol, err error) {
+func convertEnumConsoleProtocolToGo(context string, input any) (value ConsoleProtocol, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10198,7 +10198,7 @@ func convertEnumConsoleProtocolToXen(context string, value ConsoleProtocol) (str
 	return string(value), nil
 }
 
-func convertEnumDomainTypeToGo(context string, input interface{}) (value DomainType, err error) {
+func convertEnumDomainTypeToGo(context string, input any) (value DomainType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10227,7 +10227,7 @@ func convertEnumDomainTypeToXen(context string, value DomainType) (string, error
 	return string(value), nil
 }
 
-func convertEnumEventOperationToGo(context string, input interface{}) (value EventOperation, err error) {
+func convertEnumEventOperationToGo(context string, input any) (value EventOperation, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10248,10 +10248,10 @@ func convertEnumEventOperationToGo(context string, input interface{}) (value Eve
 	return
 }
 
-func convertEnumHostAllowedOperationsSetToGo(context string, input interface{}) (slice []HostAllowedOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumHostAllowedOperationsSetToGo(context string, input any) (slice []HostAllowedOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]HostAllowedOperations, len(set))
@@ -10266,7 +10266,7 @@ func convertEnumHostAllowedOperationsSetToGo(context string, input interface{}) 
 	return
 }
 
-func convertEnumHostAllowedOperationsToGo(context string, input interface{}) (value HostAllowedOperations, err error) {
+func convertEnumHostAllowedOperationsToGo(context string, input any) (value HostAllowedOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10301,7 +10301,7 @@ func convertEnumHostAllowedOperationsToGo(context string, input interface{}) (va
 	return
 }
 
-func convertEnumHostDisplayToGo(context string, input interface{}) (value HostDisplay, err error) {
+func convertEnumHostDisplayToGo(context string, input any) (value HostDisplay, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10328,7 +10328,7 @@ func convertEnumHostDisplayToXen(context string, value HostDisplay) (string, err
 	return string(value), nil
 }
 
-func convertEnumHostNtpModeToGo(context string, input interface{}) (value HostNtpMode, err error) {
+func convertEnumHostNtpModeToGo(context string, input any) (value HostNtpMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10355,7 +10355,7 @@ func convertEnumHostNtpModeToXen(context string, value HostNtpMode) (string, err
 	return string(value), nil
 }
 
-func convertEnumHostNumaAffinityPolicyToGo(context string, input interface{}) (value HostNumaAffinityPolicy, err error) {
+func convertEnumHostNumaAffinityPolicyToGo(context string, input any) (value HostNumaAffinityPolicy, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10380,7 +10380,7 @@ func convertEnumHostNumaAffinityPolicyToXen(context string, value HostNumaAffini
 	return string(value), nil
 }
 
-func convertEnumHostSchedGranToGo(context string, input interface{}) (value HostSchedGran, err error) {
+func convertEnumHostSchedGranToGo(context string, input any) (value HostSchedGran, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10405,10 +10405,10 @@ func convertEnumHostSchedGranToXen(context string, value HostSchedGran) (string,
 	return string(value), nil
 }
 
-func convertEnumImageFormatTypeSetToGo(context string, input interface{}) (slice []ImageFormatType, err error) {
-	set, ok := input.([]interface{})
+func convertEnumImageFormatTypeSetToGo(context string, input any) (slice []ImageFormatType, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ImageFormatType, len(set))
@@ -10423,7 +10423,7 @@ func convertEnumImageFormatTypeSetToGo(context string, input interface{}) (slice
 	return
 }
 
-func convertEnumImageFormatTypeToGo(context string, input interface{}) (value ImageFormatType, err error) {
+func convertEnumImageFormatTypeToGo(context string, input any) (value ImageFormatType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10444,7 +10444,7 @@ func convertEnumImageFormatTypeToGo(context string, input interface{}) (value Im
 	return
 }
 
-func convertEnumIPConfigurationModeToGo(context string, input interface{}) (value IPConfigurationMode, err error) {
+func convertEnumIPConfigurationModeToGo(context string, input any) (value IPConfigurationMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10469,7 +10469,7 @@ func convertEnumIPConfigurationModeToXen(context string, value IPConfigurationMo
 	return string(value), nil
 }
 
-func convertEnumIpv6ConfigurationModeToGo(context string, input interface{}) (value Ipv6ConfigurationMode, err error) {
+func convertEnumIpv6ConfigurationModeToGo(context string, input any) (value Ipv6ConfigurationMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10496,7 +10496,7 @@ func convertEnumIpv6ConfigurationModeToXen(context string, value Ipv6Configurati
 	return string(value), nil
 }
 
-func convertEnumLatestSyncedUpdatesAppliedStateToGo(context string, input interface{}) (value LatestSyncedUpdatesAppliedState, err error) {
+func convertEnumLatestSyncedUpdatesAppliedStateToGo(context string, input any) (value LatestSyncedUpdatesAppliedState, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10517,7 +10517,7 @@ func convertEnumLatestSyncedUpdatesAppliedStateToGo(context string, input interf
 	return
 }
 
-func convertEnumLivepatchStatusToGo(context string, input interface{}) (value LivepatchStatus, err error) {
+func convertEnumLivepatchStatusToGo(context string, input any) (value LivepatchStatus, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10538,7 +10538,7 @@ func convertEnumLivepatchStatusToGo(context string, input interface{}) (value Li
 	return
 }
 
-func convertEnumLldpMulticastAddressToGo(context string, input interface{}) (value LldpMulticastAddress, err error) {
+func convertEnumLldpMulticastAddressToGo(context string, input any) (value LldpMulticastAddress, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10563,7 +10563,7 @@ func convertEnumLldpMulticastAddressToXen(context string, value LldpMulticastAdd
 	return string(value), nil
 }
 
-func convertEnumNetworkDefaultLockingModeToGo(context string, input interface{}) (value NetworkDefaultLockingMode, err error) {
+func convertEnumNetworkDefaultLockingModeToGo(context string, input any) (value NetworkDefaultLockingMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10586,10 +10586,10 @@ func convertEnumNetworkDefaultLockingModeToXen(context string, value NetworkDefa
 	return string(value), nil
 }
 
-func convertEnumNetworkOperationsSetToGo(context string, input interface{}) (slice []NetworkOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumNetworkOperationsSetToGo(context string, input any) (slice []NetworkOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]NetworkOperations, len(set))
@@ -10604,8 +10604,8 @@ func convertEnumNetworkOperationsSetToGo(context string, input interface{}) (sli
 	return
 }
 
-func convertEnumNetworkOperationsSetToXen(context string, slice []NetworkOperations) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumNetworkOperationsSetToXen(context string, slice []NetworkOperations) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumNetworkOperationsToXen(itemContext, item)
@@ -10617,7 +10617,7 @@ func convertEnumNetworkOperationsSetToXen(context string, slice []NetworkOperati
 	return
 }
 
-func convertEnumNetworkOperationsToGo(context string, input interface{}) (value NetworkOperations, err error) {
+func convertEnumNetworkOperationsToGo(context string, input any) (value NetworkOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10638,10 +10638,10 @@ func convertEnumNetworkOperationsToXen(context string, value NetworkOperations) 
 	return string(value), nil
 }
 
-func convertEnumNetworkPurposeSetToGo(context string, input interface{}) (slice []NetworkPurpose, err error) {
-	set, ok := input.([]interface{})
+func convertEnumNetworkPurposeSetToGo(context string, input any) (slice []NetworkPurpose, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]NetworkPurpose, len(set))
@@ -10656,8 +10656,8 @@ func convertEnumNetworkPurposeSetToGo(context string, input interface{}) (slice 
 	return
 }
 
-func convertEnumNetworkPurposeSetToXen(context string, slice []NetworkPurpose) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumNetworkPurposeSetToXen(context string, slice []NetworkPurpose) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumNetworkPurposeToXen(itemContext, item)
@@ -10669,7 +10669,7 @@ func convertEnumNetworkPurposeSetToXen(context string, slice []NetworkPurpose) (
 	return
 }
 
-func convertEnumNetworkPurposeToGo(context string, input interface{}) (value NetworkPurpose, err error) {
+func convertEnumNetworkPurposeToGo(context string, input any) (value NetworkPurpose, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10692,7 +10692,7 @@ func convertEnumNetworkPurposeToXen(context string, value NetworkPurpose) (strin
 	return string(value), nil
 }
 
-func convertEnumOnBootToGo(context string, input interface{}) (value OnBoot, err error) {
+func convertEnumOnBootToGo(context string, input any) (value OnBoot, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10715,7 +10715,7 @@ func convertEnumOnBootToXen(context string, value OnBoot) (string, error) {
 	return string(value), nil
 }
 
-func convertEnumOnCrashBehaviourToGo(context string, input interface{}) (value OnCrashBehaviour, err error) {
+func convertEnumOnCrashBehaviourToGo(context string, input any) (value OnCrashBehaviour, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10746,7 +10746,7 @@ func convertEnumOnCrashBehaviourToXen(context string, value OnCrashBehaviour) (s
 	return string(value), nil
 }
 
-func convertEnumOnNormalExitToGo(context string, input interface{}) (value OnNormalExit, err error) {
+func convertEnumOnNormalExitToGo(context string, input any) (value OnNormalExit, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10769,7 +10769,7 @@ func convertEnumOnNormalExitToXen(context string, value OnNormalExit) (string, e
 	return string(value), nil
 }
 
-func convertEnumOnSoftrebootBehaviorToGo(context string, input interface{}) (value OnSoftrebootBehavior, err error) {
+func convertEnumOnSoftrebootBehaviorToGo(context string, input any) (value OnSoftrebootBehavior, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10796,7 +10796,7 @@ func convertEnumOnSoftrebootBehaviorToXen(context string, value OnSoftrebootBeha
 	return string(value), nil
 }
 
-func convertEnumOriginToGo(context string, input interface{}) (value Origin, err error) {
+func convertEnumOriginToGo(context string, input any) (value Origin, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10817,7 +10817,7 @@ func convertEnumOriginToGo(context string, input interface{}) (value Origin, err
 	return
 }
 
-func convertEnumPciDom0AccessToGo(context string, input interface{}) (value PciDom0Access, err error) {
+func convertEnumPciDom0AccessToGo(context string, input any) (value PciDom0Access, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10840,7 +10840,7 @@ func convertEnumPciDom0AccessToGo(context string, input interface{}) (value PciD
 	return
 }
 
-func convertEnumPersistenceBackendToGo(context string, input interface{}) (value PersistenceBackend, err error) {
+func convertEnumPersistenceBackendToGo(context string, input any) (value PersistenceBackend, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10857,7 +10857,7 @@ func convertEnumPersistenceBackendToGo(context string, input interface{}) (value
 	return
 }
 
-func convertEnumPifIgmpStatusToGo(context string, input interface{}) (value PifIgmpStatus, err error) {
+func convertEnumPifIgmpStatusToGo(context string, input any) (value PifIgmpStatus, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10878,7 +10878,7 @@ func convertEnumPifIgmpStatusToGo(context string, input interface{}) (value PifI
 	return
 }
 
-func convertEnumPifLldpModeToGo(context string, input interface{}) (value PifLldpMode, err error) {
+func convertEnumPifLldpModeToGo(context string, input any) (value PifLldpMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10903,7 +10903,7 @@ func convertEnumPifLldpModeToXen(context string, value PifLldpMode) (string, err
 	return string(value), nil
 }
 
-func convertEnumPlacementPolicyToGo(context string, input interface{}) (value PlacementPolicy, err error) {
+func convertEnumPlacementPolicyToGo(context string, input any) (value PlacementPolicy, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10926,10 +10926,10 @@ func convertEnumPlacementPolicyToXen(context string, value PlacementPolicy) (str
 	return string(value), nil
 }
 
-func convertEnumPoolAllowedOperationsSetToGo(context string, input interface{}) (slice []PoolAllowedOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumPoolAllowedOperationsSetToGo(context string, input any) (slice []PoolAllowedOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PoolAllowedOperations, len(set))
@@ -10944,7 +10944,7 @@ func convertEnumPoolAllowedOperationsSetToGo(context string, input interface{}) 
 	return
 }
 
-func convertEnumPoolAllowedOperationsToGo(context string, input interface{}) (value PoolAllowedOperations, err error) {
+func convertEnumPoolAllowedOperationsToGo(context string, input any) (value PoolAllowedOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -10991,7 +10991,7 @@ func convertEnumPoolAllowedOperationsToGo(context string, input interface{}) (va
 	return
 }
 
-func convertEnumPoolGuestSecurebootReadinessToGo(context string, input interface{}) (value PoolGuestSecurebootReadiness, err error) {
+func convertEnumPoolGuestSecurebootReadinessToGo(context string, input any) (value PoolGuestSecurebootReadiness, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11012,7 +11012,7 @@ func convertEnumPoolGuestSecurebootReadinessToGo(context string, input interface
 	return
 }
 
-func convertEnumPrimaryAddressTypeToGo(context string, input interface{}) (value PrimaryAddressType, err error) {
+func convertEnumPrimaryAddressTypeToGo(context string, input any) (value PrimaryAddressType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11035,7 +11035,7 @@ func convertEnumPrimaryAddressTypeToXen(context string, value PrimaryAddressType
 	return string(value), nil
 }
 
-func convertEnumPvsProxyStatusToGo(context string, input interface{}) (value PvsProxyStatus, err error) {
+func convertEnumPvsProxyStatusToGo(context string, input any) (value PvsProxyStatus, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11060,7 +11060,7 @@ func convertEnumPvsProxyStatusToGo(context string, input interface{}) (value Pvs
 	return
 }
 
-func convertEnumSdnControllerProtocolToGo(context string, input interface{}) (value SdnControllerProtocol, err error) {
+func convertEnumSdnControllerProtocolToGo(context string, input any) (value SdnControllerProtocol, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11083,7 +11083,7 @@ func convertEnumSdnControllerProtocolToXen(context string, value SdnControllerPr
 	return string(value), nil
 }
 
-func convertEnumSrHealthToGo(context string, input interface{}) (value SrHealth, err error) {
+func convertEnumSrHealthToGo(context string, input any) (value SrHealth, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11106,7 +11106,7 @@ func convertEnumSrHealthToGo(context string, input interface{}) (value SrHealth,
 	return
 }
 
-func convertEnumSriovConfigurationModeToGo(context string, input interface{}) (value SriovConfigurationMode, err error) {
+func convertEnumSriovConfigurationModeToGo(context string, input any) (value SriovConfigurationMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11129,10 +11129,10 @@ func convertEnumSriovConfigurationModeToGo(context string, input interface{}) (v
 	return
 }
 
-func convertEnumStorageOperationsSetToGo(context string, input interface{}) (slice []StorageOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumStorageOperationsSetToGo(context string, input any) (slice []StorageOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]StorageOperations, len(set))
@@ -11147,7 +11147,7 @@ func convertEnumStorageOperationsSetToGo(context string, input interface{}) (sli
 	return
 }
 
-func convertEnumStorageOperationsToGo(context string, input interface{}) (value StorageOperations, err error) {
+func convertEnumStorageOperationsToGo(context string, input any) (value StorageOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11218,10 +11218,10 @@ func convertEnumStorageOperationsToGo(context string, input interface{}) (value 
 	return
 }
 
-func convertEnumTaskAllowedOperationsSetToGo(context string, input interface{}) (slice []TaskAllowedOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumTaskAllowedOperationsSetToGo(context string, input any) (slice []TaskAllowedOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]TaskAllowedOperations, len(set))
@@ -11236,7 +11236,7 @@ func convertEnumTaskAllowedOperationsSetToGo(context string, input interface{}) 
 	return
 }
 
-func convertEnumTaskAllowedOperationsToGo(context string, input interface{}) (value TaskAllowedOperations, err error) {
+func convertEnumTaskAllowedOperationsToGo(context string, input any) (value TaskAllowedOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11255,7 +11255,7 @@ func convertEnumTaskAllowedOperationsToGo(context string, input interface{}) (va
 	return
 }
 
-func convertEnumTaskStatusTypeToGo(context string, input interface{}) (value TaskStatusType, err error) {
+func convertEnumTaskStatusTypeToGo(context string, input any) (value TaskStatusType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11284,7 +11284,7 @@ func convertEnumTaskStatusTypeToXen(context string, value TaskStatusType) (strin
 	return string(value), nil
 }
 
-func convertEnumTelemetryFrequencyToGo(context string, input interface{}) (value TelemetryFrequency, err error) {
+func convertEnumTelemetryFrequencyToGo(context string, input any) (value TelemetryFrequency, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11305,7 +11305,7 @@ func convertEnumTelemetryFrequencyToGo(context string, input interface{}) (value
 	return
 }
 
-func convertEnumTristateTypeToGo(context string, input interface{}) (value TristateType, err error) {
+func convertEnumTristateTypeToGo(context string, input any) (value TristateType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11326,7 +11326,7 @@ func convertEnumTristateTypeToGo(context string, input interface{}) (value Trist
 	return
 }
 
-func convertEnumTunnelProtocolToGo(context string, input interface{}) (value TunnelProtocol, err error) {
+func convertEnumTunnelProtocolToGo(context string, input any) (value TunnelProtocol, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11349,10 +11349,10 @@ func convertEnumTunnelProtocolToXen(context string, value TunnelProtocol) (strin
 	return string(value), nil
 }
 
-func convertEnumUpdateAfterApplyGuidanceSetToGo(context string, input interface{}) (slice []UpdateAfterApplyGuidance, err error) {
-	set, ok := input.([]interface{})
+func convertEnumUpdateAfterApplyGuidanceSetToGo(context string, input any) (slice []UpdateAfterApplyGuidance, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]UpdateAfterApplyGuidance, len(set))
@@ -11367,7 +11367,7 @@ func convertEnumUpdateAfterApplyGuidanceSetToGo(context string, input interface{
 	return
 }
 
-func convertEnumUpdateAfterApplyGuidanceToGo(context string, input interface{}) (value UpdateAfterApplyGuidance, err error) {
+func convertEnumUpdateAfterApplyGuidanceToGo(context string, input any) (value UpdateAfterApplyGuidance, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11390,10 +11390,10 @@ func convertEnumUpdateAfterApplyGuidanceToGo(context string, input interface{}) 
 	return
 }
 
-func convertEnumUpdateGuidancesSetToGo(context string, input interface{}) (slice []UpdateGuidances, err error) {
-	set, ok := input.([]interface{})
+func convertEnumUpdateGuidancesSetToGo(context string, input any) (slice []UpdateGuidances, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]UpdateGuidances, len(set))
@@ -11408,8 +11408,8 @@ func convertEnumUpdateGuidancesSetToGo(context string, input interface{}) (slice
 	return
 }
 
-func convertEnumUpdateGuidancesSetToXen(context string, slice []UpdateGuidances) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumUpdateGuidancesSetToXen(context string, slice []UpdateGuidances) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumUpdateGuidancesToXen(itemContext, item)
@@ -11421,7 +11421,7 @@ func convertEnumUpdateGuidancesSetToXen(context string, slice []UpdateGuidances)
 	return
 }
 
-func convertEnumUpdateGuidancesToGo(context string, input interface{}) (value UpdateGuidances, err error) {
+func convertEnumUpdateGuidancesToGo(context string, input any) (value UpdateGuidances, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11454,7 +11454,7 @@ func convertEnumUpdateGuidancesToXen(context string, value UpdateGuidances) (str
 	return string(value), nil
 }
 
-func convertEnumUpdateSyncFrequencyToGo(context string, input interface{}) (value UpdateSyncFrequency, err error) {
+func convertEnumUpdateSyncFrequencyToGo(context string, input any) (value UpdateSyncFrequency, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11477,7 +11477,7 @@ func convertEnumUpdateSyncFrequencyToXen(context string, value UpdateSyncFrequen
 	return string(value), nil
 }
 
-func convertEnumVbdModeToGo(context string, input interface{}) (value VbdMode, err error) {
+func convertEnumVbdModeToGo(context string, input any) (value VbdMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11500,10 +11500,10 @@ func convertEnumVbdModeToXen(context string, value VbdMode) (string, error) {
 	return string(value), nil
 }
 
-func convertEnumVbdOperationsSetToGo(context string, input interface{}) (slice []VbdOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumVbdOperationsSetToGo(context string, input any) (slice []VbdOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VbdOperations, len(set))
@@ -11518,8 +11518,8 @@ func convertEnumVbdOperationsSetToGo(context string, input interface{}) (slice [
 	return
 }
 
-func convertEnumVbdOperationsSetToXen(context string, slice []VbdOperations) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumVbdOperationsSetToXen(context string, slice []VbdOperations) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumVbdOperationsToXen(itemContext, item)
@@ -11531,7 +11531,7 @@ func convertEnumVbdOperationsSetToXen(context string, slice []VbdOperations) (se
 	return
 }
 
-func convertEnumVbdOperationsToGo(context string, input interface{}) (value VbdOperations, err error) {
+func convertEnumVbdOperationsToGo(context string, input any) (value VbdOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11566,7 +11566,7 @@ func convertEnumVbdOperationsToXen(context string, value VbdOperations) (string,
 	return string(value), nil
 }
 
-func convertEnumVbdTypeToGo(context string, input interface{}) (value VbdType, err error) {
+func convertEnumVbdTypeToGo(context string, input any) (value VbdType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11591,10 +11591,10 @@ func convertEnumVbdTypeToXen(context string, value VbdType) (string, error) {
 	return string(value), nil
 }
 
-func convertEnumVdiOperationsSetToGo(context string, input interface{}) (slice []VdiOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumVdiOperationsSetToGo(context string, input any) (slice []VdiOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VdiOperations, len(set))
@@ -11609,8 +11609,8 @@ func convertEnumVdiOperationsSetToGo(context string, input interface{}) (slice [
 	return
 }
 
-func convertEnumVdiOperationsSetToXen(context string, slice []VdiOperations) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumVdiOperationsSetToXen(context string, slice []VdiOperations) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumVdiOperationsToXen(itemContext, item)
@@ -11622,7 +11622,7 @@ func convertEnumVdiOperationsSetToXen(context string, slice []VdiOperations) (se
 	return
 }
 
-func convertEnumVdiOperationsToGo(context string, input interface{}) (value VdiOperations, err error) {
+func convertEnumVdiOperationsToGo(context string, input any) (value VdiOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11679,7 +11679,7 @@ func convertEnumVdiOperationsToXen(context string, value VdiOperations) (string,
 	return string(value), nil
 }
 
-func convertEnumVdiTypeToGo(context string, input interface{}) (value VdiType, err error) {
+func convertEnumVdiTypeToGo(context string, input any) (value VdiType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11720,7 +11720,7 @@ func convertEnumVdiTypeToXen(context string, value VdiType) (string, error) {
 	return string(value), nil
 }
 
-func convertEnumVgpuTypeImplementationToGo(context string, input interface{}) (value VgpuTypeImplementation, err error) {
+func convertEnumVgpuTypeImplementationToGo(context string, input any) (value VgpuTypeImplementation, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11745,7 +11745,7 @@ func convertEnumVgpuTypeImplementationToGo(context string, input interface{}) (v
 	return
 }
 
-func convertEnumVifIpv4ConfigurationModeToGo(context string, input interface{}) (value VifIpv4ConfigurationMode, err error) {
+func convertEnumVifIpv4ConfigurationModeToGo(context string, input any) (value VifIpv4ConfigurationMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11770,7 +11770,7 @@ func convertEnumVifIpv4ConfigurationModeToXen(context string, value VifIpv4Confi
 	return string(value), nil
 }
 
-func convertEnumVifIpv6ConfigurationModeToGo(context string, input interface{}) (value VifIpv6ConfigurationMode, err error) {
+func convertEnumVifIpv6ConfigurationModeToGo(context string, input any) (value VifIpv6ConfigurationMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11795,7 +11795,7 @@ func convertEnumVifIpv6ConfigurationModeToXen(context string, value VifIpv6Confi
 	return string(value), nil
 }
 
-func convertEnumVifLockingModeToGo(context string, input interface{}) (value VifLockingMode, err error) {
+func convertEnumVifLockingModeToGo(context string, input any) (value VifLockingMode, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11822,10 +11822,10 @@ func convertEnumVifLockingModeToXen(context string, value VifLockingMode) (strin
 	return string(value), nil
 }
 
-func convertEnumVifOperationsSetToGo(context string, input interface{}) (slice []VifOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumVifOperationsSetToGo(context string, input any) (slice []VifOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VifOperations, len(set))
@@ -11840,8 +11840,8 @@ func convertEnumVifOperationsSetToGo(context string, input interface{}) (slice [
 	return
 }
 
-func convertEnumVifOperationsSetToXen(context string, slice []VifOperations) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumVifOperationsSetToXen(context string, slice []VifOperations) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumVifOperationsToXen(itemContext, item)
@@ -11853,7 +11853,7 @@ func convertEnumVifOperationsSetToXen(context string, slice []VifOperations) (se
 	return
 }
 
-func convertEnumVifOperationsToGo(context string, input interface{}) (value VifOperations, err error) {
+func convertEnumVifOperationsToGo(context string, input any) (value VifOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11878,10 +11878,10 @@ func convertEnumVifOperationsToXen(context string, value VifOperations) (string,
 	return string(value), nil
 }
 
-func convertEnumVMApplianceOperationSetToGo(context string, input interface{}) (slice []VMApplianceOperation, err error) {
-	set, ok := input.([]interface{})
+func convertEnumVMApplianceOperationSetToGo(context string, input any) (slice []VMApplianceOperation, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMApplianceOperation, len(set))
@@ -11896,8 +11896,8 @@ func convertEnumVMApplianceOperationSetToGo(context string, input interface{}) (
 	return
 }
 
-func convertEnumVMApplianceOperationSetToXen(context string, slice []VMApplianceOperation) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumVMApplianceOperationSetToXen(context string, slice []VMApplianceOperation) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumVMApplianceOperationToXen(itemContext, item)
@@ -11909,7 +11909,7 @@ func convertEnumVMApplianceOperationSetToXen(context string, slice []VMAppliance
 	return
 }
 
-func convertEnumVMApplianceOperationToGo(context string, input interface{}) (value VMApplianceOperation, err error) {
+func convertEnumVMApplianceOperationToGo(context string, input any) (value VMApplianceOperation, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -11936,10 +11936,10 @@ func convertEnumVMApplianceOperationToXen(context string, value VMApplianceOpera
 	return string(value), nil
 }
 
-func convertEnumVMOperationsSetToGo(context string, input interface{}) (slice []VMOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumVMOperationsSetToGo(context string, input any) (slice []VMOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VMOperations, len(set))
@@ -11954,8 +11954,8 @@ func convertEnumVMOperationsSetToGo(context string, input interface{}) (slice []
 	return
 }
 
-func convertEnumVMOperationsSetToXen(context string, slice []VMOperations) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertEnumVMOperationsSetToXen(context string, slice []VMOperations) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertEnumVMOperationsToXen(itemContext, item)
@@ -11967,7 +11967,7 @@ func convertEnumVMOperationsSetToXen(context string, slice []VMOperations) (set 
 	return
 }
 
-func convertEnumVMOperationsToGo(context string, input interface{}) (value VMOperations, err error) {
+func convertEnumVMOperationsToGo(context string, input any) (value VMOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12086,7 +12086,7 @@ func convertEnumVMOperationsToXen(context string, value VMOperations) (string, e
 	return string(value), nil
 }
 
-func convertEnumVMPowerStateToGo(context string, input interface{}) (value VMPowerState, err error) {
+func convertEnumVMPowerStateToGo(context string, input any) (value VMPowerState, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12113,7 +12113,7 @@ func convertEnumVMPowerStateToXen(context string, value VMPowerState) (string, e
 	return string(value), nil
 }
 
-func convertEnumVMSecurebootCertificatesStateToGo(context string, input interface{}) (value VMSecurebootCertificatesState, err error) {
+func convertEnumVMSecurebootCertificatesStateToGo(context string, input any) (value VMSecurebootCertificatesState, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12138,7 +12138,7 @@ func convertEnumVMSecurebootCertificatesStateToXen(context string, value VMSecur
 	return string(value), nil
 }
 
-func convertEnumVMSecurebootReadinessToGo(context string, input interface{}) (value VMSecurebootReadiness, err error) {
+func convertEnumVMSecurebootReadinessToGo(context string, input any) (value VMSecurebootReadiness, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12171,7 +12171,7 @@ func convertEnumVMUefiModeToXen(context string, value VMUefiMode) (string, error
 	return string(value), nil
 }
 
-func convertEnumVmppArchiveFrequencyToGo(context string, input interface{}) (value VmppArchiveFrequency, err error) {
+func convertEnumVmppArchiveFrequencyToGo(context string, input any) (value VmppArchiveFrequency, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12198,7 +12198,7 @@ func convertEnumVmppArchiveFrequencyToXen(context string, value VmppArchiveFrequ
 	return string(value), nil
 }
 
-func convertEnumVmppArchiveTargetTypeToGo(context string, input interface{}) (value VmppArchiveTargetType, err error) {
+func convertEnumVmppArchiveTargetTypeToGo(context string, input any) (value VmppArchiveTargetType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12223,7 +12223,7 @@ func convertEnumVmppArchiveTargetTypeToXen(context string, value VmppArchiveTarg
 	return string(value), nil
 }
 
-func convertEnumVmppBackupFrequencyToGo(context string, input interface{}) (value VmppBackupFrequency, err error) {
+func convertEnumVmppBackupFrequencyToGo(context string, input any) (value VmppBackupFrequency, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12248,7 +12248,7 @@ func convertEnumVmppBackupFrequencyToXen(context string, value VmppBackupFrequen
 	return string(value), nil
 }
 
-func convertEnumVmppBackupTypeToGo(context string, input interface{}) (value VmppBackupType, err error) {
+func convertEnumVmppBackupTypeToGo(context string, input any) (value VmppBackupType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12271,7 +12271,7 @@ func convertEnumVmppBackupTypeToXen(context string, value VmppBackupType) (strin
 	return string(value), nil
 }
 
-func convertEnumVmssFrequencyToGo(context string, input interface{}) (value VmssFrequency, err error) {
+func convertEnumVmssFrequencyToGo(context string, input any) (value VmssFrequency, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12296,7 +12296,7 @@ func convertEnumVmssFrequencyToXen(context string, value VmssFrequency) (string,
 	return string(value), nil
 }
 
-func convertEnumVmssTypeToGo(context string, input interface{}) (value VmssType, err error) {
+func convertEnumVmssTypeToGo(context string, input any) (value VmssType, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12321,10 +12321,10 @@ func convertEnumVmssTypeToXen(context string, value VmssType) (string, error) {
 	return string(value), nil
 }
 
-func convertEnumVtpmOperationsSetToGo(context string, input interface{}) (slice []VtpmOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumVtpmOperationsSetToGo(context string, input any) (slice []VtpmOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VtpmOperations, len(set))
@@ -12339,7 +12339,7 @@ func convertEnumVtpmOperationsSetToGo(context string, input interface{}) (slice 
 	return
 }
 
-func convertEnumVtpmOperationsToGo(context string, input interface{}) (value VtpmOperations, err error) {
+func convertEnumVtpmOperationsToGo(context string, input any) (value VtpmOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12356,10 +12356,10 @@ func convertEnumVtpmOperationsToGo(context string, input interface{}) (value Vtp
 	return
 }
 
-func convertEnumVusbOperationsSetToGo(context string, input interface{}) (slice []VusbOperations, err error) {
-	set, ok := input.([]interface{})
+func convertEnumVusbOperationsSetToGo(context string, input any) (slice []VusbOperations, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VusbOperations, len(set))
@@ -12374,7 +12374,7 @@ func convertEnumVusbOperationsSetToGo(context string, input interface{}) (slice 
 	return
 }
 
-func convertEnumVusbOperationsToGo(context string, input interface{}) (value VusbOperations, err error) {
+func convertEnumVusbOperationsToGo(context string, input any) (value VusbOperations, err error) {
 	strValue, err := convertStringToGo(context, input)
 	if err != nil {
 		return
@@ -12395,10 +12395,10 @@ func convertEnumVusbOperationsToGo(context string, input interface{}) (value Vus
 	return
 }
 
-func convertEventRecordSetToGo(context string, input interface{}) (slice []EventRecord, err error) {
-	set, ok := input.([]interface{})
+func convertEventRecordSetToGo(context string, input any) (slice []EventRecord, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]EventRecord, len(set))
@@ -12413,7 +12413,7 @@ func convertEventRecordSetToGo(context string, input interface{}) (slice []Event
 	return
 }
 
-func convertEventRecordToGo(context string, input interface{}) (record EventRecord, err error) {
+func convertEventRecordToGo(context string, input any) (record EventRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -12471,7 +12471,7 @@ func convertEventRecordToGo(context string, input interface{}) (record EventReco
 	return
 }
 
-func convertFloatToGo(context string, input interface{}) (value float64, err error) {
+func convertFloatToGo(context string, input any) (value float64, err error) {
 	if input == nil {
 		return
 	}
@@ -12486,7 +12486,7 @@ func convertFloatToXen(context string, value float64) (float64, error) {
 	return value, nil
 }
 
-func convertHostRecordToGo(context string, input interface{}) (record HostRecord, err error) {
+func convertHostRecordToGo(context string, input any) (record HostRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13055,10 +13055,10 @@ func convertHostRecordToGo(context string, input interface{}) (record HostRecord
 	return
 }
 
-func convertHostRefSetToGo(context string, input interface{}) (slice []HostRef, err error) {
-	set, ok := input.([]interface{})
+func convertHostRefSetToGo(context string, input any) (slice []HostRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]HostRef, len(set))
@@ -13073,8 +13073,8 @@ func convertHostRefSetToGo(context string, input interface{}) (slice []HostRef, 
 	return
 }
 
-func convertHostRefSetToXen(context string, slice []HostRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertHostRefSetToXen(context string, slice []HostRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertHostRefToXen(itemContext, item)
@@ -13086,7 +13086,7 @@ func convertHostRefSetToXen(context string, slice []HostRef) (set []interface{},
 	return
 }
 
-func convertHostRefToGo(context string, input interface{}) (ref HostRef, err error) {
+func convertHostRefToGo(context string, input any) (ref HostRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13100,7 +13100,7 @@ func convertHostRefToXen(context string, ref HostRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertHostCPURecordToGo(context string, input interface{}) (record HostCPURecord, err error) {
+func convertHostCPURecordToGo(context string, input any) (record HostCPURecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13200,10 +13200,10 @@ func convertHostCPURecordToGo(context string, input interface{}) (record HostCPU
 	return
 }
 
-func convertHostCPURefSetToGo(context string, input interface{}) (slice []HostCPURef, err error) {
-	set, ok := input.([]interface{})
+func convertHostCPURefSetToGo(context string, input any) (slice []HostCPURef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]HostCPURef, len(set))
@@ -13218,7 +13218,7 @@ func convertHostCPURefSetToGo(context string, input interface{}) (slice []HostCP
 	return
 }
 
-func convertHostCPURefToGo(context string, input interface{}) (ref HostCPURef, err error) {
+func convertHostCPURefToGo(context string, input any) (ref HostCPURef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13232,7 +13232,7 @@ func convertHostCPURefToXen(context string, ref HostCPURef) (string, error) {
 	return string(ref), nil
 }
 
-func convertHostCrashdumpRecordToGo(context string, input interface{}) (record HostCrashdumpRecord, err error) {
+func convertHostCrashdumpRecordToGo(context string, input any) (record HostCrashdumpRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13276,10 +13276,10 @@ func convertHostCrashdumpRecordToGo(context string, input interface{}) (record H
 	return
 }
 
-func convertHostCrashdumpRefSetToGo(context string, input interface{}) (slice []HostCrashdumpRef, err error) {
-	set, ok := input.([]interface{})
+func convertHostCrashdumpRefSetToGo(context string, input any) (slice []HostCrashdumpRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]HostCrashdumpRef, len(set))
@@ -13294,7 +13294,7 @@ func convertHostCrashdumpRefSetToGo(context string, input interface{}) (slice []
 	return
 }
 
-func convertHostCrashdumpRefToGo(context string, input interface{}) (ref HostCrashdumpRef, err error) {
+func convertHostCrashdumpRefToGo(context string, input any) (ref HostCrashdumpRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13308,7 +13308,7 @@ func convertHostCrashdumpRefToXen(context string, ref HostCrashdumpRef) (string,
 	return string(ref), nil
 }
 
-func convertHostMetricsRecordToGo(context string, input interface{}) (record HostMetricsRecord, err error) {
+func convertHostMetricsRecordToGo(context string, input any) (record HostMetricsRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13359,10 +13359,10 @@ func convertHostMetricsRecordToGo(context string, input interface{}) (record Hos
 	return
 }
 
-func convertHostMetricsRefSetToGo(context string, input interface{}) (slice []HostMetricsRef, err error) {
-	set, ok := input.([]interface{})
+func convertHostMetricsRefSetToGo(context string, input any) (slice []HostMetricsRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]HostMetricsRef, len(set))
@@ -13377,7 +13377,7 @@ func convertHostMetricsRefSetToGo(context string, input interface{}) (slice []Ho
 	return
 }
 
-func convertHostMetricsRefToGo(context string, input interface{}) (ref HostMetricsRef, err error) {
+func convertHostMetricsRefToGo(context string, input any) (ref HostMetricsRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13391,7 +13391,7 @@ func convertHostMetricsRefToXen(context string, ref HostMetricsRef) (string, err
 	return string(ref), nil
 }
 
-func convertHostPatchRecordToGo(context string, input interface{}) (record HostPatchRecord, err error) {
+func convertHostPatchRecordToGo(context string, input any) (record HostPatchRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13470,10 +13470,10 @@ func convertHostPatchRecordToGo(context string, input interface{}) (record HostP
 	return
 }
 
-func convertHostPatchRefSetToGo(context string, input interface{}) (slice []HostPatchRef, err error) {
-	set, ok := input.([]interface{})
+func convertHostPatchRefSetToGo(context string, input any) (slice []HostPatchRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]HostPatchRef, len(set))
@@ -13488,7 +13488,7 @@ func convertHostPatchRefSetToGo(context string, input interface{}) (slice []Host
 	return
 }
 
-func convertHostPatchRefToGo(context string, input interface{}) (ref HostPatchRef, err error) {
+func convertHostPatchRefToGo(context string, input any) (ref HostPatchRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13502,10 +13502,10 @@ func convertHostPatchRefToXen(context string, ref HostPatchRef) (string, error) 
 	return string(ref), nil
 }
 
-func convertIntSetToGo(context string, input interface{}) (slice []int, err error) {
-	set, ok := input.([]interface{})
+func convertIntSetToGo(context string, input any) (slice []int, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]int, len(set))
@@ -13520,8 +13520,8 @@ func convertIntSetToGo(context string, input interface{}) (slice []int, err erro
 	return
 }
 
-func convertIntSetToXen(context string, slice []int) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertIntSetToXen(context string, slice []int) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertIntToXen(itemContext, item)
@@ -13533,7 +13533,7 @@ func convertIntSetToXen(context string, slice []int) (set []interface{}, err err
 	return
 }
 
-func convertIntToGo(context string, input interface{}) (value int, err error) {
+func convertIntToGo(context string, input any) (value int, err error) {
 	strValue, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13547,7 +13547,7 @@ func convertIntToXen(context string, value int) (string, error) {
 	return strconv.Itoa(value), nil
 }
 
-func convertMessageRecordToGo(context string, input interface{}) (record MessageRecord, err error) {
+func convertMessageRecordToGo(context string, input any) (record MessageRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13605,10 +13605,10 @@ func convertMessageRecordToGo(context string, input interface{}) (record Message
 	return
 }
 
-func convertMessageRefSetToGo(context string, input interface{}) (slice []MessageRef, err error) {
-	set, ok := input.([]interface{})
+func convertMessageRefSetToGo(context string, input any) (slice []MessageRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]MessageRef, len(set))
@@ -13623,8 +13623,8 @@ func convertMessageRefSetToGo(context string, input interface{}) (slice []Messag
 	return
 }
 
-func convertMessageRefSetToXen(context string, slice []MessageRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertMessageRefSetToXen(context string, slice []MessageRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertMessageRefToXen(itemContext, item)
@@ -13636,7 +13636,7 @@ func convertMessageRefSetToXen(context string, slice []MessageRef) (set []interf
 	return
 }
 
-func convertMessageRefToGo(context string, input interface{}) (ref MessageRef, err error) {
+func convertMessageRefToGo(context string, input any) (ref MessageRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13650,7 +13650,7 @@ func convertMessageRefToXen(context string, ref MessageRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertNetworkRecordToGo(context string, input interface{}) (record NetworkRecord, err error) {
+func convertNetworkRecordToGo(context string, input any) (record NetworkRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13840,10 +13840,10 @@ func convertNetworkRecordToXen(context string, record NetworkRecord) (rpcStruct 
 	return
 }
 
-func convertNetworkRefSetToGo(context string, input interface{}) (slice []NetworkRef, err error) {
-	set, ok := input.([]interface{})
+func convertNetworkRefSetToGo(context string, input any) (slice []NetworkRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]NetworkRef, len(set))
@@ -13858,7 +13858,7 @@ func convertNetworkRefSetToGo(context string, input interface{}) (slice []Networ
 	return
 }
 
-func convertNetworkRefToGo(context string, input interface{}) (ref NetworkRef, err error) {
+func convertNetworkRefToGo(context string, input any) (ref NetworkRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13872,7 +13872,7 @@ func convertNetworkRefToXen(context string, ref NetworkRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertNetworkSriovRecordToGo(context string, input interface{}) (record NetworkSriovRecord, err error) {
+func convertNetworkSriovRecordToGo(context string, input any) (record NetworkSriovRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -13916,10 +13916,10 @@ func convertNetworkSriovRecordToGo(context string, input interface{}) (record Ne
 	return
 }
 
-func convertNetworkSriovRefSetToGo(context string, input interface{}) (slice []NetworkSriovRef, err error) {
-	set, ok := input.([]interface{})
+func convertNetworkSriovRefSetToGo(context string, input any) (slice []NetworkSriovRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]NetworkSriovRef, len(set))
@@ -13934,7 +13934,7 @@ func convertNetworkSriovRefSetToGo(context string, input interface{}) (slice []N
 	return
 }
 
-func convertNetworkSriovRefToGo(context string, input interface{}) (ref NetworkSriovRef, err error) {
+func convertNetworkSriovRefToGo(context string, input any) (ref NetworkSriovRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -13948,7 +13948,7 @@ func convertNetworkSriovRefToXen(context string, ref NetworkSriovRef) (string, e
 	return string(ref), nil
 }
 
-func convertPoolRecordToGo(context string, input interface{}) (record PoolRecord, err error) {
+func convertPoolRecordToGo(context string, input any) (record PoolRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -14433,10 +14433,10 @@ func convertPoolRecordToGo(context string, input interface{}) (record PoolRecord
 	return
 }
 
-func convertPoolRefSetToGo(context string, input interface{}) (slice []PoolRef, err error) {
-	set, ok := input.([]interface{})
+func convertPoolRefSetToGo(context string, input any) (slice []PoolRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PoolRef, len(set))
@@ -14451,7 +14451,7 @@ func convertPoolRefSetToGo(context string, input interface{}) (slice []PoolRef, 
 	return
 }
 
-func convertPoolRefToGo(context string, input interface{}) (ref PoolRef, err error) {
+func convertPoolRefToGo(context string, input any) (ref PoolRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -14465,7 +14465,7 @@ func convertPoolRefToXen(context string, ref PoolRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertPoolPatchRecordToGo(context string, input interface{}) (record PoolPatchRecord, err error) {
+func convertPoolPatchRecordToGo(context string, input any) (record PoolPatchRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -14544,10 +14544,10 @@ func convertPoolPatchRecordToGo(context string, input interface{}) (record PoolP
 	return
 }
 
-func convertPoolPatchRefSetToGo(context string, input interface{}) (slice []PoolPatchRef, err error) {
-	set, ok := input.([]interface{})
+func convertPoolPatchRefSetToGo(context string, input any) (slice []PoolPatchRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PoolPatchRef, len(set))
@@ -14562,7 +14562,7 @@ func convertPoolPatchRefSetToGo(context string, input interface{}) (slice []Pool
 	return
 }
 
-func convertPoolPatchRefToGo(context string, input interface{}) (ref PoolPatchRef, err error) {
+func convertPoolPatchRefToGo(context string, input any) (ref PoolPatchRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -14576,7 +14576,7 @@ func convertPoolPatchRefToXen(context string, ref PoolPatchRef) (string, error) 
 	return string(ref), nil
 }
 
-func convertPoolUpdateRecordToGo(context string, input interface{}) (record PoolUpdateRecord, err error) {
+func convertPoolUpdateRecordToGo(context string, input any) (record PoolUpdateRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -14662,10 +14662,10 @@ func convertPoolUpdateRecordToGo(context string, input interface{}) (record Pool
 	return
 }
 
-func convertPoolUpdateRefSetToGo(context string, input interface{}) (slice []PoolUpdateRef, err error) {
-	set, ok := input.([]interface{})
+func convertPoolUpdateRefSetToGo(context string, input any) (slice []PoolUpdateRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]PoolUpdateRef, len(set))
@@ -14680,7 +14680,7 @@ func convertPoolUpdateRefSetToGo(context string, input interface{}) (slice []Poo
 	return
 }
 
-func convertPoolUpdateRefToGo(context string, input interface{}) (ref PoolUpdateRef, err error) {
+func convertPoolUpdateRefToGo(context string, input any) (ref PoolUpdateRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -14694,10 +14694,10 @@ func convertPoolUpdateRefToXen(context string, ref PoolUpdateRef) (string, error
 	return string(ref), nil
 }
 
-func convertProbeResultRecordSetToGo(context string, input interface{}) (slice []ProbeResultRecord, err error) {
-	set, ok := input.([]interface{})
+func convertProbeResultRecordSetToGo(context string, input any) (slice []ProbeResultRecord, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]ProbeResultRecord, len(set))
@@ -14712,7 +14712,7 @@ func convertProbeResultRecordSetToGo(context string, input interface{}) (slice [
 	return
 }
 
-func convertProbeResultRecordToGo(context string, input interface{}) (record ProbeResultRecord, err error) {
+func convertProbeResultRecordToGo(context string, input any) (record ProbeResultRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -14749,7 +14749,7 @@ func convertProbeResultRecordToGo(context string, input interface{}) (record Pro
 	return
 }
 
-func convertRoleRecordToGo(context string, input interface{}) (record RoleRecord, err error) {
+func convertRoleRecordToGo(context string, input any) (record RoleRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -14793,10 +14793,10 @@ func convertRoleRecordToGo(context string, input interface{}) (record RoleRecord
 	return
 }
 
-func convertRoleRefSetToGo(context string, input interface{}) (slice []RoleRef, err error) {
-	set, ok := input.([]interface{})
+func convertRoleRefSetToGo(context string, input any) (slice []RoleRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]RoleRef, len(set))
@@ -14811,8 +14811,8 @@ func convertRoleRefSetToGo(context string, input interface{}) (slice []RoleRef, 
 	return
 }
 
-func convertRoleRefSetToXen(context string, slice []RoleRef) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertRoleRefSetToXen(context string, slice []RoleRef) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertRoleRefToXen(itemContext, item)
@@ -14824,7 +14824,7 @@ func convertRoleRefSetToXen(context string, slice []RoleRef) (set []interface{},
 	return
 }
 
-func convertRoleRefToGo(context string, input interface{}) (ref RoleRef, err error) {
+func convertRoleRefToGo(context string, input any) (ref RoleRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -14838,7 +14838,7 @@ func convertRoleRefToXen(context string, ref RoleRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertSecretRecordToGo(context string, input interface{}) (record SecretRecord, err error) {
+func convertSecretRecordToGo(context string, input any) (record SecretRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -14885,10 +14885,10 @@ func convertSecretRecordToXen(context string, record SecretRecord) (rpcStruct xm
 	return
 }
 
-func convertSecretRefSetToGo(context string, input interface{}) (slice []SecretRef, err error) {
-	set, ok := input.([]interface{})
+func convertSecretRefSetToGo(context string, input any) (slice []SecretRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]SecretRef, len(set))
@@ -14903,7 +14903,7 @@ func convertSecretRefSetToGo(context string, input interface{}) (slice []SecretR
 	return
 }
 
-func convertSecretRefToGo(context string, input interface{}) (ref SecretRef, err error) {
+func convertSecretRefToGo(context string, input any) (ref SecretRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -14917,7 +14917,7 @@ func convertSecretRefToXen(context string, ref SecretRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertSessionRecordToGo(context string, input interface{}) (record SessionRecord, err error) {
+func convertSessionRecordToGo(context string, input any) (record SessionRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -15038,7 +15038,7 @@ func convertSessionRecordToGo(context string, input interface{}) (record Session
 	return
 }
 
-func convertSessionRefToGo(context string, input interface{}) (ref SessionRef, err error) {
+func convertSessionRefToGo(context string, input any) (ref SessionRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -15052,7 +15052,7 @@ func convertSessionRefToXen(context string, ref SessionRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertSrStatRecordOptionToGo(context string, input interface{}) (value SrStatRecord, err error) {
+func convertSrStatRecordOptionToGo(context string, input any) (value SrStatRecord, err error) {
 	if input == nil {
 		return
 	}
@@ -15060,7 +15060,7 @@ func convertSrStatRecordOptionToGo(context string, input interface{}) (value SrS
 	return
 }
 
-func convertSrStatRecordToGo(context string, input interface{}) (record SrStatRecord, err error) {
+func convertSrStatRecordToGo(context string, input any) (record SrStatRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -15118,7 +15118,7 @@ func convertSrStatRecordToGo(context string, input interface{}) (record SrStatRe
 	return
 }
 
-func convertStringOptionToGo(context string, input interface{}) (value string, err error) {
+func convertStringOptionToGo(context string, input any) (value string, err error) {
 	if input == nil {
 		return
 	}
@@ -15126,10 +15126,10 @@ func convertStringOptionToGo(context string, input interface{}) (value string, e
 	return
 }
 
-func convertStringSetSetToGo(context string, input interface{}) (slice [][]string, err error) {
-	set, ok := input.([]interface{})
+func convertStringSetSetToGo(context string, input any) (slice [][]string, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([][]string, len(set))
@@ -15144,10 +15144,10 @@ func convertStringSetSetToGo(context string, input interface{}) (slice [][]strin
 	return
 }
 
-func convertStringSetToGo(context string, input interface{}) (slice []string, err error) {
-	set, ok := input.([]interface{})
+func convertStringSetToGo(context string, input any) (slice []string, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]string, len(set))
@@ -15162,8 +15162,8 @@ func convertStringSetToGo(context string, input interface{}) (slice []string, er
 	return
 }
 
-func convertStringSetToXen(context string, slice []string) (set []interface{}, err error) {
-	set = make([]interface{}, len(slice))
+func convertStringSetToXen(context string, slice []string) (set []any, err error) {
+	set = make([]any, len(slice))
 	for index, item := range slice {
 		itemContext := fmt.Sprintf("%s[%d]", context, index)
 		itemValue, err := convertStringToXen(itemContext, item)
@@ -15175,7 +15175,7 @@ func convertStringSetToXen(context string, slice []string) (set []interface{}, e
 	return
 }
 
-func convertStringToGo(context string, input interface{}) (value string, err error) {
+func convertStringToGo(context string, input any) (value string, err error) {
 	if input == nil {
 		return
 	}
@@ -15190,7 +15190,7 @@ func convertStringToXen(context string, value string) (string, error) {
 	return value, nil
 }
 
-func convertSubjectRecordToGo(context string, input interface{}) (record SubjectRecord, err error) {
+func convertSubjectRecordToGo(context string, input any) (record SubjectRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -15248,10 +15248,10 @@ func convertSubjectRecordToXen(context string, record SubjectRecord) (rpcStruct 
 	return
 }
 
-func convertSubjectRefSetToGo(context string, input interface{}) (slice []SubjectRef, err error) {
-	set, ok := input.([]interface{})
+func convertSubjectRefSetToGo(context string, input any) (slice []SubjectRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]SubjectRef, len(set))
@@ -15266,7 +15266,7 @@ func convertSubjectRefSetToGo(context string, input interface{}) (slice []Subjec
 	return
 }
 
-func convertSubjectRefToGo(context string, input interface{}) (ref SubjectRef, err error) {
+func convertSubjectRefToGo(context string, input any) (ref SubjectRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -15280,7 +15280,7 @@ func convertSubjectRefToXen(context string, ref SubjectRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertTaskRecordToGo(context string, input interface{}) (record TaskRecord, err error) {
+func convertTaskRecordToGo(context string, input any) (record TaskRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -15408,10 +15408,10 @@ func convertTaskRecordToGo(context string, input interface{}) (record TaskRecord
 	return
 }
 
-func convertTaskRefSetToGo(context string, input interface{}) (slice []TaskRef, err error) {
-	set, ok := input.([]interface{})
+func convertTaskRefSetToGo(context string, input any) (slice []TaskRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]TaskRef, len(set))
@@ -15426,7 +15426,7 @@ func convertTaskRefSetToGo(context string, input interface{}) (slice []TaskRef, 
 	return
 }
 
-func convertTaskRefToGo(context string, input interface{}) (ref TaskRef, err error) {
+func convertTaskRefToGo(context string, input any) (ref TaskRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -15440,7 +15440,7 @@ func convertTaskRefToXen(context string, ref TaskRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertTunnelRecordToGo(context string, input interface{}) (record TunnelRecord, err error) {
+func convertTunnelRecordToGo(context string, input any) (record TunnelRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -15491,10 +15491,10 @@ func convertTunnelRecordToGo(context string, input interface{}) (record TunnelRe
 	return
 }
 
-func convertTunnelRefSetToGo(context string, input interface{}) (slice []TunnelRef, err error) {
-	set, ok := input.([]interface{})
+func convertTunnelRefSetToGo(context string, input any) (slice []TunnelRef, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]TunnelRef, len(set))
@@ -15509,7 +15509,7 @@ func convertTunnelRefSetToGo(context string, input interface{}) (slice []TunnelR
 	return
 }
 
-func convertTunnelRefToGo(context string, input interface{}) (ref TunnelRef, err error) {
+func convertTunnelRefToGo(context string, input any) (ref TunnelRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -15523,7 +15523,7 @@ func convertTunnelRefToXen(context string, ref TunnelRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertUserRecordToGo(context string, input interface{}) (record UserRecord, err error) {
+func convertUserRecordToGo(context string, input any) (record UserRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)
@@ -15581,7 +15581,7 @@ func convertUserRecordToXen(context string, record UserRecord) (rpcStruct xmlrpc
 	return
 }
 
-func convertUserRefToGo(context string, input interface{}) (ref UserRef, err error) {
+func convertUserRefToGo(context string, input any) (ref UserRef, err error) {
 	value, ok := input.(string)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "string", context, reflect.TypeOf(input), input)
@@ -15595,10 +15595,10 @@ func convertUserRefToXen(context string, ref UserRef) (string, error) {
 	return string(ref), nil
 }
 
-func convertVdiNbdServerInfoRecordSetToGo(context string, input interface{}) (slice []VdiNbdServerInfoRecord, err error) {
-	set, ok := input.([]interface{})
+func convertVdiNbdServerInfoRecordSetToGo(context string, input any) (slice []VdiNbdServerInfoRecord, err error) {
+	set, ok := input.([]any)
 	if !ok {
-		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]interface{}", context, reflect.TypeOf(input), input)
+		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "[]any", context, reflect.TypeOf(input), input)
 		return
 	}
 	slice = make([]VdiNbdServerInfoRecord, len(set))
@@ -15613,7 +15613,7 @@ func convertVdiNbdServerInfoRecordSetToGo(context string, input interface{}) (sl
 	return
 }
 
-func convertVdiNbdServerInfoRecordToGo(context string, input interface{}) (record VdiNbdServerInfoRecord, err error) {
+func convertVdiNbdServerInfoRecordToGo(context string, input any) (record VdiNbdServerInfoRecord, err error) {
 	rpcStruct, ok := input.(xmlrpc.Struct)
 	if !ok {
 		err = fmt.Errorf("Failed to parse XenAPI response: expected Go type %s at %s but got Go type %s with value %v", "xmlrpc.Struct", context, reflect.TypeOf(input), input)

@@ -106,9 +106,8 @@ If XenAPI was updated, it is required to regenerate all of files with a new API 
   `go get github.com/serenize/snaker@v0.0.0-20201027110005-a7ad2135616e`
   before generating, and run `go mod tidy` afterwards to drop it again
   (matches upstream's own `go.mod`). The version is pinned deliberately and
-  matches the one `regenerate.yml` uses — on Go 1.17+ an unpinned `go get`
-  resolves to whatever the module proxy serves that day, so a local run and
-  CI could otherwise produce different output. Bump the pin in both places
+  matches the one `regenerate.yml` uses, so local and CI runs produce the
+  same output. Bump the pin in both places
   together.
 - Generate new API with `go generate` (or `go run xenapi.go` directly) -
   enum tolerance is baked into `convertEnumTypeToGoFuncTemplate`, so
@@ -125,11 +124,8 @@ before writing it, so `*_gen.go` and `error.go` are gofmt-clean by
 construction and never need hand-formatting — `test.yml` enforces that with
 a `gofmt -l .` check over the whole repository.
 
-The consequence is that the toolchain you generate with decides what the
-committed files look like, because gofmt's rules change between Go releases
-(Go 1.19's doc-comment reformatting, for one). Regenerate with a current Go,
-not with the `go 1.16` from `go.mod` — that's the library's minimum for
-*consumers*, verified separately by `test.yml`'s version matrix, and both CI
-workflows pin the generators to `stable` for the same reason. Generating with
-an older toolchain would reformat every generated file and show up as a large
-whitespace-only diff.
+gofmt's rules change between Go releases, so the toolchain you generate with
+decides what the committed files look like. Regenerate with the current stable
+Go, as both CI workflows do; an older toolchain shows up as a large
+whitespace-only diff. The `go` line in `go.mod` is only the minimum for
+consumers, verified by `test.yml`'s version matrix.

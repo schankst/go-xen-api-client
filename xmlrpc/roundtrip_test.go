@@ -25,7 +25,7 @@ func wrapAsResponse(value string) string {
 func TestValueRoundTrip(t *testing.T) {
 	cases := []struct {
 		name  string
-		value interface{}
+		value any
 	}{
 		{"string", "hello"},
 		{"string with special chars", `<tag> & "quoted" 'text'`},
@@ -35,10 +35,10 @@ func TestValueRoundTrip(t *testing.T) {
 		{"bool true", true},
 		{"bool false", false},
 		{"struct", Struct{"name": "vm1", "count": int64(3)}}, // ints always come back as int64
-		{"array", []interface{}{"a", "b", "c"}},
-		{"nested struct in array", []interface{}{Struct{"k": "v"}}},
+		{"array", []any{"a", "b", "c"}},
+		{"nested struct in array", []any{Struct{"k": "v"}}},
 		{"empty struct", Struct{}},
-		{"empty array", []interface{}{}},
+		{"empty array", []any{}},
 	}
 
 	for _, tc := range cases {

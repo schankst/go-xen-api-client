@@ -20,11 +20,11 @@ import (
 const SchemaXAPIRelease = "26.21.1"
 
 // APIResult is the raw, untyped result of an APICall - Value holds whatever
-// the XML-RPC response decoded to (a string, xmlrpc.Struct, []interface{},
+// the XML-RPC response decoded to (a string, xmlrpc.Struct, []any,
 // etc., depending on the call). Generated methods decode this into a typed
 // result themselves; most callers should use those instead of APICall.
 type APIResult struct {
-	Value interface{}
+	Value any
 }
 
 // APICall issues a raw XenAPI XML-RPC call (method is the wire-level name,
@@ -33,7 +33,7 @@ type APIResult struct {
 // is a thin, typed wrapper around this; call it directly only for
 // functionality this fork doesn't expose a typed wrapper for. Returns an
 // *Error if XenAPI reports a protocol-level failure.
-func (client *Client) APICall(method string, params ...interface{}) (result APIResult, err error) {
+func (client *Client) APICall(method string, params ...any) (result APIResult, err error) {
 	rpcResult := xmlrpc.Struct{}
 
 	err = client.rpc.Call(method, params, &rpcResult)
@@ -54,7 +54,7 @@ func (client *Client) APICall(method string, params ...interface{}) (result APIR
 		// can leave the field missing, the wrong kind, or empty. A caller
 		// handling an API failure must not be crashed by the shape of the
 		// failure, so every step here is checked rather than asserted.
-		details, ok := rpcResult["ErrorDescription"].([]interface{})
+		details, ok := rpcResult["ErrorDescription"].([]any)
 		if !ok {
 			err = fmt.Errorf("xenapi: %s failed with status %q but the response has no ErrorDescription array", method, status)
 			return
@@ -87,7 +87,7 @@ func (client *Client) APICall(method string, params ...interface{}) (result APIR
 // The type and uuid slots of ErrorDescription are nullable by design
 // (XenAPI sends null for codes that don't carry them), so a missing, nil,
 // or non-string value means "absent" here rather than a malformed response.
-func detailString(details []interface{}, index int) (string, bool) {
+func detailString(details []any, index int) (string, bool) {
 	if index >= len(details) {
 		return "", false
 	}

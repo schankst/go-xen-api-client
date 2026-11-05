@@ -110,7 +110,7 @@ func TestConvertVMRecordToGo(t *testing.T) {
 		"uuid":        "abc-123",
 		"name_label":  "my-vm",
 		"power_state": "Running",
-		"tags":        []interface{}{"prod", "web"},
+		"tags":        []any{"prod", "web"},
 	})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)

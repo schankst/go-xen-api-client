@@ -54,13 +54,15 @@ func failureResponse(errorDescription string) string {
 		`</struct></value></param></params></methodResponse>`
 }
 
-// stringArray renders a []interface{} of XML-RPC strings as an <array>.
+// stringArray renders a []any of XML-RPC strings as an <array>.
 func stringArray(values ...string) string {
-	body := `<array><data>`
+	var b strings.Builder
+	b.WriteString(`<array><data>`)
 	for _, v := range values {
-		body += `<value><string>` + v + `</string></value>`
+		b.WriteString(`<value><string>` + v + `</string></value>`)
 	}
-	return body + `</data></array>`
+	b.WriteString(`</data></array>`)
+	return b.String()
 }
 
 func TestLoginWithPasswordSuccess(t *testing.T) {

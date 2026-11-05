@@ -35,7 +35,7 @@ func TestClientCallSuccess(t *testing.T) {
 	client := NewClient(server.URL, nil)
 
 	var reply string
-	err := client.Call("session.login_with_password", []interface{}{"root", "pw"}, &reply)
+	err := client.Call("session.login_with_password", []any{"root", "pw"}, &reply)
 	if err != nil {
 		t.Fatalf("Call: %v", err)
 	}
@@ -56,7 +56,7 @@ func TestClientCallFault(t *testing.T) {
 
 	client := NewClient(server.URL, nil)
 
-	var reply interface{}
+	var reply any
 	err := client.Call("some.method", nil, &reply)
 	if err == nil {
 		t.Fatal("expected an error for a fault response, got nil")
@@ -68,7 +68,7 @@ func TestClientCallFault(t *testing.T) {
 
 // callAgainstResponse runs one Call against a server that always returns
 // the given methodResponse body, and returns whatever Call returned.
-func callAgainstResponse(t *testing.T, responseBody string, reply interface{}) error {
+func callAgainstResponse(t *testing.T, responseBody string, reply any) error {
 	t.Helper()
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -90,7 +90,7 @@ func TestClientCallReplyTypeMismatchReturnsError(t *testing.T) {
 	cases := []struct {
 		name     string
 		response string
-		reply    interface{}
+		reply    any
 	}{
 		{
 			// Legal on the wire: an empty <value/> decodes as "" (string).
@@ -193,8 +193,8 @@ func TestClientCallReplyTypeMatchStillWorks(t *testing.T) {
 		}
 	})
 
-	t.Run("interface{}", func(t *testing.T) {
-		var reply interface{}
+	t.Run("any", func(t *testing.T) {
+		var reply any
 		err := callAgainstResponse(t,
 			`<methodResponse><params><param><value><int>7</int></value></param></params></methodResponse>`,
 			&reply)
@@ -233,7 +233,7 @@ func TestClientCallReplaysCookies(t *testing.T) {
 
 	client := NewClient(server.URL, nil)
 
-	for i := 0; i < 3; i++ {
+	for i := range 3 {
 		var reply string
 		if err := client.Call("noop", nil, &reply); err != nil {
 			t.Fatalf("Call #%d: %v", i+1, err)
@@ -263,13 +263,11 @@ func TestClientCallConcurrent(t *testing.T) {
 
 	var wg sync.WaitGroup
 	errs := make(chan error, 20)
-	for i := 0; i < 20; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+	for range 20 {
+		wg.Go(func() {
 			var reply string
 			errs <- client.Call("noop", nil, &reply)
-		}()
+		})
 	}
 	wg.Wait()
 	close(errs)

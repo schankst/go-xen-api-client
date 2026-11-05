@@ -20,9 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # The minimum version go.mod declares, plus current Go, so a
-        # regression against either shows up here rather than downstream.
-        go-version: ['1.16', 'stable']
+        # go.mod's minimum and the current release; keep the first in sync with go.mod.
+        go-version: ['1.25', 'stable']
     name: Go ${{ matrix.go-version }}
     steps:
       - uses: actions/checkout@v4

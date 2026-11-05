@@ -2,6 +2,7 @@ package xmlrpc
 
 import (
 	"encoding/xml"
+	"errors"
 	"fmt"
 	"reflect"
 	"strings"
@@ -10,7 +11,7 @@ import (
 
 // buildRequest renders method and params as a complete XML-RPC methodCall
 // document.
-func buildRequest(method string, params []interface{}) (string, error) {
+func buildRequest(method string, params []any) (string, error) {
 	var b strings.Builder
 	b.WriteString(`<?xml version="1.0" encoding="UTF-8"?><methodCall><methodName>`)
 	if err := writeEscaped(&b, method); err != nil {
@@ -29,7 +30,7 @@ func buildRequest(method string, params []interface{}) (string, error) {
 }
 
 // writeValue writes value as a complete <value>...</value> element to b.
-func writeValue(b *strings.Builder, value interface{}) error {
+func writeValue(b *strings.Builder, value any) error {
 	b.WriteString(`<value>`)
 	if err := writeValueBody(b, value); err != nil {
 		return err
@@ -38,7 +39,7 @@ func writeValue(b *strings.Builder, value interface{}) error {
 	return nil
 }
 
-func writeValueBody(b *strings.Builder, value interface{}) error {
+func writeValueBody(b *strings.Builder, value any) error {
 	switch v := value.(type) {
 	case Struct:
 		return writeStruct(b, v)
@@ -73,7 +74,7 @@ func writeValueBody(b *strings.Builder, value interface{}) error {
 		// non-universally-supported extension); XenAPI never sends one as
 		// a param, so make the failure explicit rather than silently
 		// emitting an empty <value/>.
-		return fmt.Errorf("xmlrpc: nil is not a supported XML-RPC value")
+		return errors.New("xmlrpc: nil is not a supported XML-RPC value")
 	default:
 		rv := reflect.ValueOf(value)
 		if rv.Kind() != reflect.Slice && rv.Kind() != reflect.Array {
@@ -103,7 +104,7 @@ func writeStruct(b *strings.Builder, s Struct) error {
 
 func writeArray(b *strings.Builder, rv reflect.Value) error {
 	b.WriteString(`<array><data>`)
-	for i := 0; i < rv.Len(); i++ {
+	for i := range rv.Len() {
 		if err := writeValue(b, rv.Index(i).Interface()); err != nil {
 			return fmt.Errorf("index %d: %w", i, err)
 		}

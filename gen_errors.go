@@ -1,5 +1,4 @@
 //go:build ignore
-// +build ignore
 
 // gen_errors.go regenerates error.go from the upstream xen-api error
 // definitions (a separate source from xenapi.json, not covered by

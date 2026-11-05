@@ -50,16 +50,16 @@ func NewClient(url string, transport *http.Transport) *Client {
 // The decoded value is stored as-is when its Go type is assignable to
 // reply's element type; it is never converted. An XML-RPC <int> always
 // decodes to int64, <dateTime.iso8601> to time.Time, <array> to
-// []interface{}, <struct> to Struct, and both <string> and an empty
+// []any, <struct> to Struct, and both <string> and an empty
 // <value/> to string - so declare reply as a pointer to one of those
-// (or to interface{}), not to int, time.Time aliases, or other types
+// (or to any), not to int, time.Time aliases, or other types
 // that merely look equivalent. A mismatch is returned as an error rather
 // than panicking.
 //
 // The first response's cookies are captured and replayed on every
 // subsequent call on this Client, since XCP-ng/XenServer pools use this
 // to pin a client to a specific host after a redirect.
-func (c *Client) Call(method string, params []interface{}, reply interface{}) error {
+func (c *Client) Call(method string, params []any, reply any) error {
 	body, err := buildRequest(method, params)
 	if err != nil {
 		return err
@@ -104,7 +104,7 @@ func (c *Client) Call(method string, params []interface{}, reply interface{}) er
 		return nil
 	}
 	rv := reflect.ValueOf(reply)
-	if rv.Kind() != reflect.Ptr || rv.IsNil() {
+	if rv.Kind() != reflect.Pointer || rv.IsNil() {
 		return fmt.Errorf("xmlrpc: reply must be a non-nil pointer, got %T", reply)
 	}
 
@@ -118,7 +118,7 @@ func (c *Client) Call(method string, params []interface{}, reply interface{}) er
 	// hide exactly the kind of wire-format surprise this check exists for.
 	dst := rv.Elem()
 	if dst.Kind() == reflect.Interface && dst.NumMethod() == 0 {
-		// interface{} (or any empty interface) accepts every decoded value.
+		// any (or any empty interface) accepts every decoded value.
 		dst.Set(reflect.ValueOf(value))
 		return nil
 	}
