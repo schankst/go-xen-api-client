@@ -1,10 +1,5 @@
-// Command generrors regenerates error.go from the upstream xen-api error
-// definitions (a separate source from xenapi.json, not covered by
-// `go generate` / genapi - see MAINTAINING.md's "Implementation notes"
-// for the source and the name/value rule, and README.md's "Versioning" for
-// how it relates to the schema release).
-//
-// Run from the repo root: go run ./internal/cmd/generrors
+// Command generrors generates error.go from xen-api's api_errors.ml, which
+// is not part of xenapi.json. Run it from the repo root.
 package main
 
 import (

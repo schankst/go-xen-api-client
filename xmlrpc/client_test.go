@@ -14,11 +14,6 @@ import (
 	"time"
 )
 
-// This replaces the old client_test.go, which required a live server on
-// localhost:40080 and could never pass in CI. httptest.Server gives a
-// real, working, CI-safe integration test instead of a network dependency
-// or a skipped test.
-
 func TestClientCallSuccess(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		body, err := io.ReadAll(r.Body)
@@ -85,11 +80,7 @@ func callAgainstResponse(t *testing.T, responseBody string, reply any) error {
 	return client.Call(t.Context(), "some.method", nil, reply)
 }
 
-// A decoded value whose Go type doesn't match the reply's element type
-// must be reported as an error, not stored. Before this was handled,
-// reflect.Value.Set panicked ("reflect.Set: value of type string is not
-// assignable to type int64") and took the caller's goroutine down with
-// it - the caller could only ever see the panic, never a returned error.
+// A result whose type doesn't fit the reply must be an error, not a panic.
 func TestClientCallReplyTypeMismatchReturnsError(t *testing.T) {
 	cases := []struct {
 		name     string

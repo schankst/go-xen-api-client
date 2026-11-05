@@ -1,20 +1,9 @@
 # Contributing
 
-This is a personal fork, maintained mainly for the maintainer's own use.
-Issues (bug reports, questions, "this XenAPI version broke it") are
-welcome. Pull requests are welcome too, especially for:
+Issues and pull requests are welcome.
 
-- Schema regeneration issues (new XenAPI constructs the generator doesn't
-  understand yet - see [MAINTAINING.md](MAINTAINING.md) for what that
-  usually looks like).
-- Bugs in the hand-maintained parts (`client.go`, `xmlrpc/`, the
-  generator tools).
+Most of the code is generated. Don't edit `*_gen.go` or `error.go` by hand;
+change the generators in `internal/cmd/` and regenerate (see
+[MAINTAINING.md](MAINTAINING.md)).
 
-Given most of the code is generated (see [MAINTAINING.md](MAINTAINING.md)),
-please don't send PRs that hand-edit `*_gen.go` files or
-`error.go` directly - those changes will be silently lost the next time
-the regeneration workflow runs. Fix the generator (`internal/cmd/genapi`,
-`internal/cmd/generrors`) or the schema-fetch step instead, then regenerate.
-
-Before opening a PR: `go build ./...`, `go vet ./...`, and
-`go test -short ./...` should all pass.
+Before opening a PR, run `go vet ./...` and `go test -race ./...`.

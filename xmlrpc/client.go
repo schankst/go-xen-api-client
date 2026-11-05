@@ -11,13 +11,8 @@ import (
 	"strings"
 )
 
-// Client is a minimal XML-RPC client over HTTP. Each Call is one
-// synchronous HTTP round trip - there's no request multiplexing to
-// justify anything more elaborate, since XML-RPC (unlike the transport
-// net/rpc.Client was designed around) has no notion of a persistent
-// bidirectional connection.
-//
-// Client is safe for concurrent use by multiple goroutines.
+// Client is an XML-RPC client over HTTP; each Call is one HTTP request.
+// It is safe for concurrent use.
 type Client struct {
 	url        string
 	httpClient *http.Client
@@ -36,13 +31,9 @@ func NewClient(url string, httpClient *http.Client) *Client {
 }
 
 // DefaultHTTPClient returns an http.Client with a cookie jar and a clone of
-// http.DefaultTransport (proxy from environment, dial and TLS handshake
-// timeouts, HTTP/2). If tlsConfig is non-nil, the transport uses a clone
-// of it.
-//
-// The client has no overall timeout, since XenAPI calls such as VM
-// migration can legitimately run for a long time; bound each call with
-// the context passed to Call instead.
+// http.DefaultTransport, using a clone of tlsConfig if it is non-nil. It
+// has no overall timeout, since calls such as VM migration can run for a
+// long time; bound each call with its context instead.
 func DefaultHTTPClient(tlsConfig *tls.Config) *http.Client {
 	transport, ok := http.DefaultTransport.(*http.Transport)
 	if ok {
@@ -57,27 +48,16 @@ func DefaultHTTPClient(tlsConfig *tls.Config) *http.Client {
 	return &http.Client{Transport: transport, Jar: jar}
 }
 
-// Call issues an XML-RPC call for method with params and, on success,
-// stores the decoded result into *reply (reply must be a non-nil
-// pointer; pass nil to discard the result). On a genuine XML-RPC <fault>
-// response the returned error is a *Error; on a non-2xx HTTP status it is
-// an *HTTPError.
+// Call calls method with params and stores the result in *reply, which
+// must be a non-nil pointer; pass a nil reply to discard the result. A
+// <fault> response is returned as *Error, a non-2xx HTTP status as
+// *HTTPError.
 //
-// The decoded value is stored as-is when its Go type is assignable to
-// reply's element type; it is never converted. An XML-RPC <int> always
-// decodes to int64, <dateTime.iso8601> to time.Time, <array> to
-// []any, <struct> to Struct, and both <string> and an empty
-// <value/> to string - so declare reply as a pointer to one of those
-// (or to any), not to int, time.Time aliases, or other types
-// that merely look equivalent. A mismatch is returned as an error rather
-// than panicking.
-//
-// ctx bounds the whole call, including reading the response; when it is
-// canceled or its deadline passes, Call returns an error that matches
-// ctx.Err() with errors.Is.
-//
-// Cookies are kept in a cookie jar, so e.g. a load balancer's affinity
-// cookie is honored across calls.
+// The result is stored without conversion: <int> decodes to int64,
+// <double> to float64, <boolean> to bool, <dateTime.iso8601> to time.Time,
+// <array> to []any, <struct> to Struct, <base64> to Base64, and <string>
+// or an untyped value to string. If *reply can't hold that type, Call
+// returns an error.
 func (c *Client) Call(ctx context.Context, method string, params []any, reply any) error {
 	body, err := buildRequest(method, params)
 	if err != nil {
@@ -119,17 +99,10 @@ func (c *Client) Call(ctx context.Context, method string, params []any, reply an
 		return fmt.Errorf("xmlrpc: reply must be a non-nil pointer, got %T", reply)
 	}
 
-	// reflect.Value.Set panics when the source type isn't assignable to the
-	// destination type, so that has to be checked here: a server answering
-	// with a different wire type than the caller's reply expects (e.g. an
-	// empty <value/> where an int was expected) must surface as an error,
-	// never as a panic in the caller's goroutine. No implicit conversion is
-	// attempted - int64 from <int> does not become int, and a time.Time
-	// does not become a Unix timestamp - because a silent conversion would
-	// hide exactly the kind of wire-format surprise this check exists for.
+	// Check assignability, since reflect.Value.Set would panic on a server
+	// answering with an unexpected type.
 	dst := rv.Elem()
 	if dst.Kind() == reflect.Interface && dst.NumMethod() == 0 {
-		// any (or any empty interface) accepts every decoded value.
 		dst.Set(reflect.ValueOf(value))
 		return nil
 	}

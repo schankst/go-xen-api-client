@@ -1,25 +1,9 @@
-## Description
-What does this PR do? What problem does it solve?
+## What and why
 
-## Related Issue
-Fixes #(issue number), or closes #(issue number) if applicable.
-
-## Changes
-- 
-- 
-- 
-
-## Testing
-How can this be verified? Include:
-- [ ] Unit tests added/updated
-- [ ] Integration tests (if applicable)
-- [ ] Manual testing steps (if relevant)
-
-## Documentation
-- [ ] `go doc` comments updated (if new/changed exported APIs)
-- [ ] Relevant `.md` files updated (GOOD_TO_KNOW.md, PERFORMANCE.md, etc.)
-- [ ] No new dependencies or license concerns introduced
+Closes #
 
 ## Checklist
-- [ ] Code builds and `go vet` is clean
-- [ ] Commits are logical and well-described
+
+- [ ] `go vet ./...` and `go test -race ./...` pass
+- [ ] Generated files changed only through the generators
+- [ ] Docs updated if behaviour or exported API changed

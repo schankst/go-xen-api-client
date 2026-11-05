@@ -13,33 +13,24 @@ import (
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
-// SchemaXAPIRelease is the newest XAPI release name/version present in the
-// xenapi.json schema the *_gen.go files in this fork were generated from
-// (see https://xapi-project.github.io/xen-api/releases.html for what a
-// release name/version maps to). Bindings are verified/typed up through
-// this release; enum values from newer releases pass through unchanged
-// (see toString in convert.go).
+// SchemaXAPIRelease is the newest XAPI release in the schema the bindings
+// were generated from. Enum values from newer releases pass through
+// unchanged.
 const SchemaXAPIRelease = "26.21.1"
 
-// APIResult is the raw, untyped result of an APICall - Value holds whatever
-// the XML-RPC response decoded to (a string, xmlrpc.Struct, []any,
-// etc., depending on the call). Generated methods decode this into a typed
-// result themselves; most callers should use those instead of APICall.
+// APIResult is the untyped result of APICall: a string, int64, float64,
+// bool, time.Time, xmlrpc.Struct or []any, as decoded from XML-RPC.
 type APIResult struct {
 	Value any
 }
 
-// APICall issues a raw XenAPI XML-RPC call (method is the wire-level name,
-// e.g. "VM.get_all_records", not the Go method name) and returns its
-// untyped result. Every generated method (Client.VM.GetAllRecords, etc.)
-// is a thin, typed wrapper around this; call it directly only for
-// functionality this fork doesn't expose a typed wrapper for. Returns an
-// *Error if XenAPI reports a protocol-level failure.
+// APICall calls the XenAPI method with its wire name, e.g.
+// "VM.get_all_records", and returns the untyped result. The generated
+// methods wrap it; use it for calls they don't cover. A failure reported
+// by XenAPI is returned as *Error.
 //
-// ctx bounds the call; once it is canceled or past its deadline, the call
-// returns an error matching ctx.Err() with errors.Is. Note that canceling
-// only abandons the request: an operation XAPI has already started (e.g.
-// VM.start) keeps running on the host.
+// Canceling ctx abandons the request; an operation XAPI has already
+// started keeps running on the host.
 func (client *Client) APICall(ctx context.Context, method string, params ...any) (result APIResult, err error) {
 	rpcResult := xmlrpc.Struct{}
 
@@ -112,25 +103,17 @@ func WithHTTPClient(c *http.Client) Option {
 	return func(o *clientOptions) { o.httpClient = c }
 }
 
-// WithTLSConfig sets the TLS configuration of the default HTTP client.
-// Use it to trust a host's self-signed certificate:
-//
-//	pool := x509.NewCertPool()
-//	pool.AppendCertsFromPEM(hostCertPEM)
-//	client, err := xenapi.NewClient(url, xenapi.WithTLSConfig(&tls.Config{RootCAs: pool}))
-//
-// Certificate verification is only disabled if cfg sets InsecureSkipVerify.
+// WithTLSConfig sets the TLS configuration of the default HTTP client, e.g.
+// RootCAs to trust a host's self-signed certificate. Verification is only
+// disabled if cfg sets InsecureSkipVerify.
 func WithTLSConfig(cfg *tls.Config) Option {
 	return func(o *clientOptions) { o.tlsConfig = cfg }
 }
 
-// NewClient creates a Client for the XenAPI server at rawURL, which must be
-// an absolute http or https URL such as "https://10.0.0.10". Call
-// Client.Session.LoginWithPassword before using it for anything else.
-//
-// By default, requests go through xmlrpc.DefaultHTTPClient and the host's
-// TLS certificate is verified against the system roots; see WithTLSConfig
-// for hosts with a self-signed certificate.
+// NewClient creates a Client for the XenAPI server at rawURL, an absolute
+// http or https URL such as "https://10.0.0.10". By default it uses
+// xmlrpc.DefaultHTTPClient and verifies the host's TLS certificate against
+// the system roots.
 func NewClient(rawURL string, opts ...Option) (*Client, error) {
 	u, err := url.Parse(rawURL)
 	if err != nil {

@@ -1,26 +1,19 @@
-# Go XenAPI client library (fork)
+# go-xen-api-client
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/schankst/go-xen-api-client.svg)](https://pkg.go.dev/github.com/schankst/go-xen-api-client)
 [![Tests](https://github.com/schankst/go-xen-api-client/actions/workflows/test.yml/badge.svg)](https://github.com/schankst/go-xen-api-client/actions/workflows/test.yml)
-[![Latest release](https://img.shields.io/github/v/release/schankst/go-xen-api-client)](https://github.com/schankst/go-xen-api-client/releases/latest)
-[![Go version](https://img.shields.io/github/go-mod/go-version/schankst/go-xen-api-client)](go.mod)
-[![License: MIT](https://img.shields.io/github/license/schankst/go-xen-api-client)](LICENSE)
-[![Regenerate bindings](https://github.com/schankst/go-xen-api-client/actions/workflows/regenerate.yml/badge.svg)](https://github.com/schankst/go-xen-api-client/actions/workflows/regenerate.yml)
 
-A Go client covering the entire [XenAPI](https://xapi-project.github.io/xen-api/)
-(XCP-ng / XenServer / Citrix Hypervisor) — one Go type per class/enum, one Go
-method per RPC message, generated straight from XenAPI's own schema.
+A Go client for the complete [XenAPI](https://xapi-project.github.io/xen-api/)
+of XCP-ng and XenServer, generated from XenAPI's own schema. Fork of
+[terra-farm/go-xen-api-client](https://github.com/terra-farm/go-xen-api-client).
 
-This is a fork of [terra-farm/go-xen-api-client](https://github.com/terra-farm/go-xen-api-client),
-originally forked from [v0.0.2](https://github.com/terra-farm/go-xen-api-client/releases/tag/v0.0.2)
-(a schema snapshot only current through XenServer 7.3 "inverness", ~2017).
+```
+go get github.com/schankst/go-xen-api-client
+```
 
-Module path is `github.com/schankst/go-xen-api-client` so it can be pulled
-in directly via `go get`/`require` without a `replace` directive.
+Requires Go 1.25 or later. No dependencies outside the standard library.
 
-## Usage example
-
-Start a VM by name label:
+## Example
 
 ```go
 package main
@@ -61,88 +54,31 @@ func main() {
 }
 ```
 
-The host's TLS certificate is verified. For a host with a self-signed
-certificate, pass its certificate with `xenapi.WithTLSConfig`
-(`&tls.Config{RootCAs: pool}`); see the `NewClient` documentation.
+## Usage notes
 
-## Status
+- **TLS** certificates are verified. For a host with a self-signed
+  certificate, trust it with `xenapi.WithTLSConfig(&tls.Config{RootCAs: pool})`.
+- **Context:** every call takes a `context.Context`; use it for deadlines and
+  cancellation. The default HTTP client has no overall timeout.
+- **Errors:** XenAPI failures are `*xenapi.Error` values with a `Code` and all
+  `Params`. Match them with `errors.Is(err, xenapi.ErrHandleInvalid)`.
+- **Versions:** `xenapi.SchemaXAPIRelease` names the XAPI release the bindings
+  were generated from. Enum values from newer hosts pass through unchanged.
+  APIs that XAPI deprecated or removed are marked `Deprecated:`; they still
+  work against hosts that support them.
 
-- **Actively maintained.** Dependency security alerts, `go vet` findings,
-  documentation gaps, and licensing issues in what it depends on get
-  triaged and fixed as they come up.
-- **Current.** Regenerated weekly against the live XenAPI schema (see
-  "Versioning" below), not a one-time snapshot.
-- **Tested.** `xmlrpc` has both unit and `httptest.Server`-based
-  integration tests; a handful of representative generated converters are
-  covered too — not exhaustive across all 74 generated files, but covers
-  what has actually broken so far.
-- **Documented.** `go doc` is useful throughout: generated code carries
-  XenAPI's own descriptions, and the hand-written scaffolding around it
-  has its own doc comments.
-- **Zero external Go module dependencies.** Including `xmlrpc` itself,
-  which used to be a vendored copy of an unlicensed library — see
-  [LICENSING.md](LICENSING.md).
+The bindings are regenerated weekly from the upstream schema; each
+regeneration is a minor release. Tags follow this module's own SemVer, not
+XAPI's version numbers.
 
-This entire fork - the schema regeneration, the enum-tolerance behavior,
-the `xmlrpc` rewrite, the documentation and test suite, and the CI
-automation - was built end to end by [Claude Code](https://claude.com/claude-code)
-(Anthropic's coding agent) working with the maintainer in a single ongoing
-conversation, starting from a client that panicked against a modern
-XCP-ng host because upstream's schema predated it by years.
+## Documentation
 
-See [Releases](https://github.com/schankst/go-xen-api-client/releases) for
-what changed release to release.
+- [docs/xapi-notes.md](docs/xapi-notes.md): XenAPI behaviour worth knowing, and fetching at scale
+- [docs/import-export.md](docs/import-export.md): disk import/export and backups
+- [docs/updates.md](docs/updates.md): finding pending updates and patches
+- [MAINTAINING.md](MAINTAINING.md): how the code is generated and released
+- [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), [LICENSING.md](LICENSING.md)
 
-## Versioning
+## License
 
-Git tags on this repo (`v0.1.0`, ...) are this module's own SemVer, tracked
-independently of XenAPI's own versioning — deliberately, since tagging this
-module to match an XAPI version number directly (e.g. tagging it `v26.1.2`)
-would make Go's module tooling treat it as a `v26` major version and require
-a `/v26` module path suffix, which has nothing to do with XAPI at all.
-
-To keep it traceable which live XAPI version a given tag was verified
-against, that's tracked separately:
-
-- `xenapi.SchemaXAPIRelease` (in `client.go`) — the newest XAPI release
-  name/version present in the `xenapi.json` schema the bindings were
-  generated from, queryable at runtime.
-- Each tag's annotation message states the same.
-
-## What's different from upstream
-
-- Bindings regenerated against the current XenAPI schema (see
-  `xenapi.SchemaXAPIRelease` for exactly which release), instead of the
-  original v0.0.2 snapshot, which only covered XenServer 7.3-era XenAPI.
-- Enum parsing tolerates unknown values instead of hard-erroring, as a hedge
-  against anything newer than that schema.
-- `error.go` is kept in sync with the current upstream error definitions
-  instead of a one-time, now-stale copy (see [MAINTAINING.md](MAINTAINING.md)).
-- Automated weekly regeneration (see [MAINTAINING.md](MAINTAINING.md)),
-  instead of a manual, one-off process.
-- Module path changed to `github.com/schankst/go-xen-api-client` so it can
-  be pulled in directly.
-- `xmlrpc` is this fork's own implementation instead of a dependency on
-  `amfranz/go-xmlrpc-client` — that library had no license (see
-  [LICENSING.md](LICENSING.md)), and the rewrite along the way fixed its
-  remaining bugs and made request encoding measurably faster.
-
-## More
-
-- [GOOD_TO_KNOW.md](GOOD_TO_KNOW.md) — real XenAPI behavior/gotchas this
-  fork's development turned up, with sources.
-- [IMPORT_EXPORT.md](IMPORT_EXPORT.md) — moving VDI data in and out: the
-  HTTP import/export endpoints, accepted formats (`raw`/`vhd`/`tar`/`qcow2`),
-  push vs. pull, the fixed-VHD gotcha, and task handling.
-- [PERFORMANCE.md](PERFORMANCE.md) — fetching at scale: why per-object RPC
-  calls don't scale to real environments, and the batch-fetch pattern to
-  use instead.
-- [UPDATES_AND_PATCHES.md](UPDATES_AND_PATCHES.md) — finding pending patches:
-  unapplied `pool_update` objects, repository-based updates, and outstanding
-  post-update guidances.
-- [MAINTAINING.md](MAINTAINING.md) — how the generated bindings and
-  `error.go` are produced, and how to refresh them by hand.
-- [LICENSING.md](LICENSING.md) — the licensing situation of everything
-  this fork is built from or against.
-- [CONTRIBUTING.md](CONTRIBUTING.md) — issue/PR process.
-- [SECURITY.md](SECURITY.md) — reporting a vulnerability.
+MIT, see [LICENSE](LICENSE).
