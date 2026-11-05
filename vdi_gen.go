@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VDIOperations string
@@ -153,6 +156,16 @@ type VDIRecord struct {
 	IsToolsISO bool
 	// True if changed blocks are tracked for this VDI
 	CBTEnabled bool
+}
+
+// DecodeVDIRecord converts a VDI record in its wire form, such as
+// an event snapshot from Event.From, to a VDIRecord.
+func DecodeVDIRecord(s xmlrpc.Struct) (VDIRecord, error) {
+	r, err := convertVDIRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VDI record: %w", err)
+	}
+	return r, nil
 }
 
 type VDIRef string

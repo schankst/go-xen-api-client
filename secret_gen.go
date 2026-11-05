@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type SecretRecord struct {
@@ -13,6 +16,16 @@ type SecretRecord struct {
 	Value string
 	// other_config
 	OtherConfig map[string]string
+}
+
+// DecodeSecretRecord converts a secret record in its wire form, such as
+// an event snapshot from Event.From, to a SecretRecord.
+func DecodeSecretRecord(s xmlrpc.Struct) (SecretRecord, error) {
+	r, err := convertSecretRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding secret record: %w", err)
+	}
+	return r, nil
 }
 
 type SecretRef string

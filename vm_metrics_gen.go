@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VMMetricsRecord struct {
@@ -54,6 +57,16 @@ type VMMetricsRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
 	NUMANodeMemory map[int64]int64
+}
+
+// DecodeVMMetricsRecord converts a VM_metrics record in its wire form, such as
+// an event snapshot from Event.From, to a VMMetricsRecord.
+func DecodeVMMetricsRecord(s xmlrpc.Struct) (VMMetricsRecord, error) {
+	r, err := convertVMMetricsRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VM_metrics record: %w", err)
+	}
+	return r, nil
 }
 
 type VMMetricsRef string

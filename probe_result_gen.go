@@ -2,6 +2,12 @@
 
 package xenapi
 
+import (
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
+)
+
 type ProbeResultRecord struct {
 	// Plugin-specific configuration which describes where and how to locate the storage repository. This may include the physical block device name, a remote NFS server and path or an RBD storage pool.
 	Configuration map[string]string
@@ -11,6 +17,16 @@ type ProbeResultRecord struct {
 	SR SRStatRecord
 	// Additional plugin-specific information about this configuration, that might be of use for an API user. This can, for example, include the LUN or the WWPN.
 	ExtraInfo map[string]string
+}
+
+// DecodeProbeResultRecord converts a probe_result record in its wire form, such as
+// an event snapshot from Event.From, to a ProbeResultRecord.
+func DecodeProbeResultRecord(s xmlrpc.Struct) (ProbeResultRecord, error) {
+	r, err := convertProbeResultRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding probe_result record: %w", err)
+	}
+	return r, nil
 }
 
 type ProbeResultRef string

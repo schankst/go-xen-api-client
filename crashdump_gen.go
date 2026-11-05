@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type CrashdumpRecord struct {
@@ -15,6 +18,16 @@ type CrashdumpRecord struct {
 	VDI VDIRef
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeCrashdumpRecord converts a crashdump record in its wire form, such as
+// an event snapshot from Event.From, to a CrashdumpRecord.
+func DecodeCrashdumpRecord(s xmlrpc.Struct) (CrashdumpRecord, error) {
+	r, err := convertCrashdumpRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding crashdump record: %w", err)
+	}
+	return r, nil
 }
 
 type CrashdumpRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PVSServerRecord struct {
@@ -17,6 +20,16 @@ type PVSServerRecord struct {
 	LastPort int64
 	// PVS site this server is part of
 	Site PVSSiteRef
+}
+
+// DecodePVSServerRecord converts a PVS_server record in its wire form, such as
+// an event snapshot from Event.From, to a PVSServerRecord.
+func DecodePVSServerRecord(s xmlrpc.Struct) (PVSServerRecord, error) {
+	r, err := convertPVSServerRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PVS_server record: %w", err)
+	}
+	return r, nil
 }
 
 type PVSServerRef string

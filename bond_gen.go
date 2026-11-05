@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type BondMode string
@@ -36,6 +39,16 @@ type BondRecord struct {
 	LinksUp int64
 	// true if the MAC was taken from the primary member when the bond was created, and false if the client specified the MAC
 	AutoUpdateMAC bool
+}
+
+// DecodeBondRecord converts a Bond record in its wire form, such as
+// an event snapshot from Event.From, to a BondRecord.
+func DecodeBondRecord(s xmlrpc.Struct) (BondRecord, error) {
+	r, err := convertBondRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Bond record: %w", err)
+	}
+	return r, nil
 }
 
 type BondRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type TunnelProtocol string
@@ -28,6 +31,16 @@ type TunnelRecord struct {
 	OtherConfig map[string]string
 	// The protocol used for tunneling (either GRE or VxLAN)
 	Protocol TunnelProtocol
+}
+
+// DecodeTunnelRecord converts a tunnel record in its wire form, such as
+// an event snapshot from Event.From, to a TunnelRecord.
+func DecodeTunnelRecord(s xmlrpc.Struct) (TunnelRecord, error) {
+	r, err := convertTunnelRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding tunnel record: %w", err)
+	}
+	return r, nil
 }
 
 type TunnelRef string

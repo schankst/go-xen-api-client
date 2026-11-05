@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PUSBRecord struct {
@@ -35,6 +38,16 @@ type PUSBRecord struct {
 	OtherConfig map[string]string
 	// USB device speed
 	Speed float64
+}
+
+// DecodePUSBRecord converts a PUSB record in its wire form, such as
+// an event snapshot from Event.From, to a PUSBRecord.
+func DecodePUSBRecord(s xmlrpc.Struct) (PUSBRecord, error) {
+	r, err := convertPUSBRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PUSB record: %w", err)
+	}
+	return r, nil
 }
 
 type PUSBRef string

@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type TristateType string
@@ -61,6 +64,16 @@ type VMGuestMetricsRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 25.15.0; it may change or be removed.
 	Services map[string]string
+}
+
+// DecodeVMGuestMetricsRecord converts a VM_guest_metrics record in its wire form, such as
+// an event snapshot from Event.From, to a VMGuestMetricsRecord.
+func DecodeVMGuestMetricsRecord(s xmlrpc.Struct) (VMGuestMetricsRecord, error) {
+	r, err := convertVMGuestMetricsRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VM_guest_metrics record: %w", err)
+	}
+	return r, nil
 }
 
 type VMGuestMetricsRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PIFIGMPStatus string
@@ -136,6 +139,16 @@ type PIFRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 	LLDPMode PIFLLDPMode
+}
+
+// DecodePIFRecord converts a PIF record in its wire form, such as
+// an event snapshot from Event.From, to a PIFRecord.
+func DecodePIFRecord(s xmlrpc.Struct) (PIFRecord, error) {
+	r, err := convertPIFRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PIF record: %w", err)
+	}
+	return r, nil
 }
 
 type PIFRef string

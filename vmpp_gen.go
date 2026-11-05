@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VMPPBackupType string
@@ -132,6 +135,16 @@ type VMPPRecord struct {
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	RecentAlerts []string
+}
+
+// DecodeVMPPRecord converts a VMPP record in its wire form, such as
+// an event snapshot from Event.From, to a VMPPRecord.
+func DecodeVMPPRecord(s xmlrpc.Struct) (VMPPRecord, error) {
+	r, err := convertVMPPRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VMPP record: %w", err)
+	}
+	return r, nil
 }
 
 type VMPPRef string

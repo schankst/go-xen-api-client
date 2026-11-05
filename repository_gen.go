@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type Origin string
@@ -48,6 +51,16 @@ type RepositoryRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 25.7.0; it may change or be removed.
 	Certificate string
+}
+
+// DecodeRepositoryRecord converts a Repository record in its wire form, such as
+// an event snapshot from Event.From, to a RepositoryRecord.
+func DecodeRepositoryRecord(s xmlrpc.Struct) (RepositoryRecord, error) {
+	r, err := convertRepositoryRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Repository record: %w", err)
+	}
+	return r, nil
 }
 
 type RepositoryRef string

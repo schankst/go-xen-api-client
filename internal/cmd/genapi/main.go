@@ -365,6 +365,7 @@ package xenapi
 import (
 	"cmp"
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/schankst/go-xen-api-client/xmlrpc"
@@ -384,6 +385,16 @@ const recordTypeTemplate string = `
 type {{ .Name|exported }}Record struct {{ "{" }}{{ range .Fields }}
 	{{ .Description|godoc }}{{ lifecycle .Lifecycle }}
 	{{ .Name|exported }} {{ .GoType }}{{ end }}
+}
+
+// Decode{{ .Name|exported }}Record converts a {{ .Name }} record in its wire form, such as
+// an event snapshot from Event.From, to a {{ .Name|exported }}Record.
+func Decode{{ .Name|exported }}Record(s xmlrpc.Struct) ({{ .Name|exported }}Record, error) {
+	r, err := {{ (printf "%s record" .Name)|convertToGo }}(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding {{ .Name }} record: %w", err)
+	}
+	return r, nil
 }
 `
 

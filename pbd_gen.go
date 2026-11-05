@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PBDRecord struct {
@@ -19,6 +22,16 @@ type PBDRecord struct {
 	CurrentlyAttached bool
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodePBDRecord converts a PBD record in its wire form, such as
+// an event snapshot from Event.From, to a PBDRecord.
+func DecodePBDRecord(s xmlrpc.Struct) (PBDRecord, error) {
+	r, err := convertPBDRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PBD record: %w", err)
+	}
+	return r, nil
 }
 
 type PBDRef string

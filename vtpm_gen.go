@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VTPMOperations string
@@ -43,6 +46,16 @@ type VTPMRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 	IsProtected bool
+}
+
+// DecodeVTPMRecord converts a VTPM record in its wire form, such as
+// an event snapshot from Event.From, to a VTPMRecord.
+func DecodeVTPMRecord(s xmlrpc.Struct) (VTPMRecord, error) {
+	r, err := convertVTPMRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VTPM record: %w", err)
+	}
+	return r, nil
 }
 
 type VTPMRef string

@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type HostCrashdumpRecord struct {
@@ -18,6 +21,16 @@ type HostCrashdumpRecord struct {
 	Size int64
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeHostCrashdumpRecord converts a host_crashdump record in its wire form, such as
+// an event snapshot from Event.From, to a HostCrashdumpRecord.
+func DecodeHostCrashdumpRecord(s xmlrpc.Struct) (HostCrashdumpRecord, error) {
+	r, err := convertHostCrashdumpRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding host_crashdump record: %w", err)
+	}
+	return r, nil
 }
 
 type HostCrashdumpRef string

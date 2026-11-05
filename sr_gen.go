@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type StorageOperations string
@@ -110,6 +113,16 @@ type SRRecord struct {
 	Clustered bool
 	// True if this is the SR that contains the Tools ISO VDIs
 	IsToolsSR bool
+}
+
+// DecodeSRRecord converts a SR record in its wire form, such as
+// an event snapshot from Event.From, to a SRRecord.
+func DecodeSRRecord(s xmlrpc.Struct) (SRRecord, error) {
+	r, err := convertSRRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding SR record: %w", err)
+	}
+	return r, nil
 }
 
 type SRRef string

@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PIFMetricsRecord struct {
@@ -42,6 +45,16 @@ type PIFMetricsRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 	LLDPNeighbor map[string]string
+}
+
+// DecodePIFMetricsRecord converts a PIF_metrics record in its wire form, such as
+// an event snapshot from Event.From, to a PIFMetricsRecord.
+func DecodePIFMetricsRecord(s xmlrpc.Struct) (PIFMetricsRecord, error) {
+	r, err := convertPIFMetricsRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PIF_metrics record: %w", err)
+	}
+	return r, nil
 }
 
 type PIFMetricsRef string

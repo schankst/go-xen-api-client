@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VMGuestOSRecord struct {
@@ -13,6 +16,16 @@ type VMGuestOSRecord struct {
 	Mode SharedMode
 	// os id
 	OSID int64
+}
+
+// DecodeVMGuestOSRecord converts a VM_guest_os record in its wire form, such as
+// an event snapshot from Event.From, to a VMGuestOSRecord.
+func DecodeVMGuestOSRecord(s xmlrpc.Struct) (VMGuestOSRecord, error) {
+	r, err := convertVMGuestOSRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VM_guest_os record: %w", err)
+	}
+	return r, nil
 }
 
 type VMGuestOSRef string

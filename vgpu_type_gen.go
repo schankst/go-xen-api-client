@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VGPUTypeImplementation string
@@ -54,6 +57,16 @@ type VGPUTypeRecord struct {
 	Experimental bool
 	// List of VGPU types which are compatible in one VM
 	CompatibleTypesInVM []VGPUTypeRef
+}
+
+// DecodeVGPUTypeRecord converts a VGPU_type record in its wire form, such as
+// an event snapshot from Event.From, to a VGPUTypeRecord.
+func DecodeVGPUTypeRecord(s xmlrpc.Struct) (VGPUTypeRecord, error) {
+	r, err := convertVGPUTypeRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VGPU_type record: %w", err)
+	}
+	return r, nil
 }
 
 type VGPUTypeRef string

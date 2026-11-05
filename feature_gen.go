@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type FeatureRecord struct {
@@ -21,6 +24,16 @@ type FeatureRecord struct {
 	Version string
 	// The host where this feature is available
 	Host HostRef
+}
+
+// DecodeFeatureRecord converts a Feature record in its wire form, such as
+// an event snapshot from Event.From, to a FeatureRecord.
+func DecodeFeatureRecord(s xmlrpc.Struct) (FeatureRecord, error) {
+	r, err := convertFeatureRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Feature record: %w", err)
+	}
+	return r, nil
 }
 
 type FeatureRef string

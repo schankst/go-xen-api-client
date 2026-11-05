@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type ClusterOperation string
@@ -66,6 +69,16 @@ type ClusterRecord struct {
 	ClusterConfig map[string]string
 	// Additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeClusterRecord converts a Cluster record in its wire form, such as
+// an event snapshot from Event.From, to a ClusterRecord.
+func DecodeClusterRecord(s xmlrpc.Struct) (ClusterRecord, error) {
+	r, err := convertClusterRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Cluster record: %w", err)
+	}
+	return r, nil
 }
 
 type ClusterRef string

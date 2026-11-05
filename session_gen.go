@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type SessionRecord struct {
@@ -40,6 +43,16 @@ type SessionRecord struct {
 	Originator string
 	// indicates whether this session was authenticated using a client certificate
 	ClientCertificate bool
+}
+
+// DecodeSessionRecord converts a session record in its wire form, such as
+// an event snapshot from Event.From, to a SessionRecord.
+func DecodeSessionRecord(s xmlrpc.Struct) (SessionRecord, error) {
+	r, err := convertSessionRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding session record: %w", err)
+	}
+	return r, nil
 }
 
 type SessionRef string

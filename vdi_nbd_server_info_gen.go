@@ -2,6 +2,12 @@
 
 package xenapi
 
+import (
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
+)
+
 type VDINBDServerInfoRecord struct {
 	// The exportname to request over NBD. This holds details including an authentication token, so it must be protected appropriately. Clients should regard the exportname as an opaque string or token.
 	Exportname string
@@ -13,6 +19,16 @@ type VDINBDServerInfoRecord struct {
 	Cert string
 	// For convenience, this redundant field holds a DNS (hostname) subject of the certificate. This can be a wildcard, but only for a certificate that has a wildcard subject and no concrete hostname subjects.
 	Subject string
+}
+
+// DecodeVDINBDServerInfoRecord converts a vdi_nbd_server_info record in its wire form, such as
+// an event snapshot from Event.From, to a VDINBDServerInfoRecord.
+func DecodeVDINBDServerInfoRecord(s xmlrpc.Struct) (VDINBDServerInfoRecord, error) {
+	r, err := convertVDINBDServerInfoRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding vdi_nbd_server_info record: %w", err)
+	}
+	return r, nil
 }
 
 type VDINBDServerInfoRef string

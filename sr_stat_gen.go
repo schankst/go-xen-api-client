@@ -2,6 +2,12 @@
 
 package xenapi
 
+import (
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
+)
+
 type SRHealth string
 
 const (
@@ -30,6 +36,16 @@ type SRStatRecord struct {
 	Clustered bool
 	// The health status of the SR.
 	Health SRHealth
+}
+
+// DecodeSRStatRecord converts a sr_stat record in its wire form, such as
+// an event snapshot from Event.From, to a SRStatRecord.
+func DecodeSRStatRecord(s xmlrpc.Struct) (SRStatRecord, error) {
+	r, err := convertSRStatRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding sr_stat record: %w", err)
+	}
+	return r, nil
 }
 
 type SRStatRef string

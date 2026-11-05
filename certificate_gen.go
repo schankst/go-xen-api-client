@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type CertificateType string
@@ -49,6 +52,16 @@ type CertificateRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.13.0; it may change or be removed.
 	Purpose []CertificatePurpose
+}
+
+// DecodeCertificateRecord converts a Certificate record in its wire form, such as
+// an event snapshot from Event.From, to a CertificateRecord.
+func DecodeCertificateRecord(s xmlrpc.Struct) (CertificateRecord, error) {
+	r, err := convertCertificateRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Certificate record: %w", err)
+	}
+	return r, nil
 }
 
 type CertificateRef string

@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type BlobRecord struct {
@@ -22,6 +25,16 @@ type BlobRecord struct {
 	LastUpdated time.Time
 	// The mime type associated with this object. Defaults to 'application/octet-stream' if the empty string is supplied
 	MimeType string
+}
+
+// DecodeBlobRecord converts a blob record in its wire form, such as
+// an event snapshot from Event.From, to a BlobRecord.
+func DecodeBlobRecord(s xmlrpc.Struct) (BlobRecord, error) {
+	r, err := convertBlobRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding blob record: %w", err)
+	}
+	return r, nil
 }
 
 type BlobRef string

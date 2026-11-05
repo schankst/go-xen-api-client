@@ -41,10 +41,12 @@ _, err := client.SR.GetRecord(ctx, session, pool.DefaultSR)
 if errors.Is(err, xenapi.ErrHandleInvalid) { /* stale: no default SR */ }
 ```
 
-## Events are untyped
+## Events
 
-The `Event.From` result and each event's `snapshot` field are polymorphic.
-The client returns them as `xmlrpc.Struct`; parse them yourself.
+The `Event.From` result is an `xmlrpc.Struct` with `events` and `token`;
+each event's `snapshot` depends on its `class`. Convert a snapshot with the
+matching `Decode<Class>Record`, e.g. `xenapi.DecodeVMRecord` (see its
+example).
 
 ## Float timestamps as strings
 
@@ -85,5 +87,4 @@ for _, vm := range vms {
 - Check `ok`: a missing ref usually means the object was deleted.
 - `VMRecord.Snapshots` refers to VMs already in the `VM.GetAllRecords` map.
 - `GetAllRecords` returns full records; fetch only the classes you join on.
-- For long-running processes, `Event.From` avoids re-polling, at the cost of
-  parsing untyped results (see above).
+- For long-running processes, `Event.From` avoids re-polling (see Events).

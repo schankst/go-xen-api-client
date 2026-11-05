@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type DriverVariantRecord struct {
@@ -35,6 +38,16 @@ type DriverVariantRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Status string
+}
+
+// DecodeDriverVariantRecord converts a Driver_variant record in its wire form, such as
+// an event snapshot from Event.From, to a DriverVariantRecord.
+func DecodeDriverVariantRecord(s xmlrpc.Struct) (DriverVariantRecord, error) {
+	r, err := convertDriverVariantRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Driver_variant record: %w", err)
+	}
+	return r, nil
 }
 
 type DriverVariantRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type USBGroupRecord struct {
@@ -19,6 +22,16 @@ type USBGroupRecord struct {
 	VUSBs []VUSBRef
 	// Additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeUSBGroupRecord converts a USB_group record in its wire form, such as
+// an event snapshot from Event.From, to a USBGroupRecord.
+func DecodeUSBGroupRecord(s xmlrpc.Struct) (USBGroupRecord, error) {
+	r, err := convertUSBGroupRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding USB_group record: %w", err)
+	}
+	return r, nil
 }
 
 type USBGroupRef string

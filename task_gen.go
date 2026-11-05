@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type TaskAllowedOperations string
@@ -66,6 +69,16 @@ type TaskRecord struct {
 	Subtasks []TaskRef
 	// Function call trace for debugging.
 	Backtrace string
+}
+
+// DecodeTaskRecord converts a task record in its wire form, such as
+// an event snapshot from Event.From, to a TaskRecord.
+func DecodeTaskRecord(s xmlrpc.Struct) (TaskRecord, error) {
+	r, err := convertTaskRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding task record: %w", err)
+	}
+	return r, nil
 }
 
 type TaskRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type SDNControllerProtocol string
@@ -24,6 +27,16 @@ type SDNControllerRecord struct {
 	Address string
 	// TCP port of the controller
 	Port int64
+}
+
+// DecodeSDNControllerRecord converts a SDN_controller record in its wire form, such as
+// an event snapshot from Event.From, to a SDNControllerRecord.
+func DecodeSDNControllerRecord(s xmlrpc.Struct) (SDNControllerRecord, error) {
+	r, err := convertSDNControllerRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding SDN_controller record: %w", err)
+	}
+	return r, nil
 }
 
 type SDNControllerRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type RateLimitRecord struct {
@@ -31,6 +34,16 @@ type RateLimitRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	FillRate float64
+}
+
+// DecodeRateLimitRecord converts a Rate_limit record in its wire form, such as
+// an event snapshot from Event.From, to a RateLimitRecord.
+func DecodeRateLimitRecord(s xmlrpc.Struct) (RateLimitRecord, error) {
+	r, err := convertRateLimitRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Rate_limit record: %w", err)
+	}
+	return r, nil
 }
 
 type RateLimitRef string

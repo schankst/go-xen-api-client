@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type ImageFormatType string
@@ -52,6 +55,16 @@ type SMRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
 	SupportedImageFormats []ImageFormatType
+}
+
+// DecodeSMRecord converts a SM record in its wire form, such as
+// an event snapshot from Event.From, to a SMRecord.
+func DecodeSMRecord(s xmlrpc.Struct) (SMRecord, error) {
+	r, err := convertSMRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding SM record: %w", err)
+	}
+	return r, nil
 }
 
 type SMRef string

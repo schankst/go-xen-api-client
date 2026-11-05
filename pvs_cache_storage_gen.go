@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PVSCacheStorageRecord struct {
@@ -19,6 +22,16 @@ type PVSCacheStorageRecord struct {
 	Size int64
 	// The VDI used for caching
 	VDI VDIRef
+}
+
+// DecodePVSCacheStorageRecord converts a PVS_cache_storage record in its wire form, such as
+// an event snapshot from Event.From, to a PVSCacheStorageRecord.
+func DecodePVSCacheStorageRecord(s xmlrpc.Struct) (PVSCacheStorageRecord, error) {
+	r, err := convertPVSCacheStorageRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PVS_cache_storage record: %w", err)
+	}
+	return r, nil
 }
 
 type PVSCacheStorageRef string

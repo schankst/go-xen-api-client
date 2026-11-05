@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VIFMetricsRecord struct {
@@ -22,6 +25,16 @@ type VIFMetricsRecord struct {
 	LastUpdated time.Time
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeVIFMetricsRecord converts a VIF_metrics record in its wire form, such as
+// an event snapshot from Event.From, to a VIFMetricsRecord.
+func DecodeVIFMetricsRecord(s xmlrpc.Struct) (VIFMetricsRecord, error) {
+	r, err := convertVIFMetricsRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VIF_metrics record: %w", err)
+	}
+	return r, nil
 }
 
 type VIFMetricsRef string

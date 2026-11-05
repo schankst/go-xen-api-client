@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type AfterApplyGuidance string
@@ -40,6 +43,16 @@ type PoolPatchRecord struct {
 	PoolUpdate PoolUpdateRef
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodePoolPatchRecord converts a pool_patch record in its wire form, such as
+// an event snapshot from Event.From, to a PoolPatchRecord.
+func DecodePoolPatchRecord(s xmlrpc.Struct) (PoolPatchRecord, error) {
+	r, err := convertPoolPatchRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding pool_patch record: %w", err)
+	}
+	return r, nil
 }
 
 type PoolPatchRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PGPURecord struct {
@@ -33,6 +36,16 @@ type PGPURecord struct {
 	IsSystemDisplayDevice bool
 	// PGPU metadata to determine whether a VGPU can migrate between two PGPUs
 	CompatibilityMetadata map[string]string
+}
+
+// DecodePGPURecord converts a PGPU record in its wire form, such as
+// an event snapshot from Event.From, to a PGPURecord.
+func DecodePGPURecord(s xmlrpc.Struct) (PGPURecord, error) {
+	r, err := convertPGPURecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PGPU record: %w", err)
+	}
+	return r, nil
 }
 
 type PGPURef string

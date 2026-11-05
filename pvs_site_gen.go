@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PVSSiteRecord struct {
@@ -21,6 +24,16 @@ type PVSSiteRecord struct {
 	Servers []PVSServerRef
 	// The set of proxies associated with the site
 	Proxies []PVSProxyRef
+}
+
+// DecodePVSSiteRecord converts a PVS_site record in its wire form, such as
+// an event snapshot from Event.From, to a PVSSiteRecord.
+func DecodePVSSiteRecord(s xmlrpc.Struct) (PVSSiteRecord, error) {
+	r, err := convertPVSSiteRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PVS_site record: %w", err)
+	}
+	return r, nil
 }
 
 type PVSSiteRef string
