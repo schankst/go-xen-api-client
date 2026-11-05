@@ -498,11 +498,12 @@ type converterFunc struct {
 // by type and direction; emittedEnums avoids duplicating an enum declared
 // under several classes.
 type apiGenerator struct {
-	outDir       string
-	classes      []*xapiClass
-	templates    *template.Template
-	converters   map[string]converterFunc
-	emittedEnums map[string]bool
+	outDir        string
+	lifecyclePath string // where to write the lifecycle doc; "" skips it
+	classes       []*xapiClass
+	templates     *template.Template
+	converters    map[string]converterFunc
+	emittedEnums  map[string]bool
 }
 
 func newAPIGenerator(outDir string) apiGenerator {
@@ -961,15 +962,20 @@ func (generator *apiGenerator) run(schemaPath string) (err error) {
 	}
 
 	err = generator.generateClient()
-	return
+	if err != nil || generator.lifecyclePath == "" {
+		return
+	}
+	return generator.generateLifecycleDoc(generator.lifecyclePath)
 }
 
 func main() {
 	schema := flag.String("schema", "xenapi.json", "path to the XenAPI schema")
 	out := flag.String("out", ".", "directory to write the generated files to")
+	lifecycle := flag.String("lifecycle", "docs/lifecycle.md", `where to write the API lifecycle doc ("" to skip)`)
 	flag.Parse()
 
 	generator := newAPIGenerator(*out)
+	generator.lifecyclePath = *lifecycle
 	if err := generator.run(*schema); err != nil {
 		fmt.Fprintln(os.Stderr, "genapi:", err)
 		os.Exit(1)

@@ -26,7 +26,7 @@ func TestGolden(t *testing.T) {
 		if err := os.MkdirAll(golden, 0o755); err != nil {
 			t.Fatal(err)
 		}
-		for _, name := range goFiles(t, out) {
+		for _, name := range append(goFiles(t, out), "lifecycle.md") {
 			data, err := os.ReadFile(filepath.Join(out, name))
 			if err != nil {
 				t.Fatal(err)
@@ -39,6 +39,7 @@ func TestGolden(t *testing.T) {
 	}
 
 	compare(t, out, golden, ".golden")
+	compareFile(t, filepath.Join(out, "lifecycle.md"), filepath.Join(golden, "lifecycle.md.golden"))
 }
 
 // TestCommittedBindingsUpToDate fails when the committed *_gen.go files
@@ -49,6 +50,7 @@ func TestCommittedBindingsUpToDate(t *testing.T) {
 	root := filepath.Join("..", "..", "..")
 	out := generate(t, filepath.Join(root, "xenapi.json"))
 	compare(t, out, root, "")
+	compareFile(t, filepath.Join(out, "lifecycle.md"), filepath.Join(root, "docs", "lifecycle.md"))
 }
 
 func TestUnsupportedType(t *testing.T) {
@@ -69,10 +71,26 @@ func generate(t *testing.T, schema string) string {
 	t.Helper()
 	out := t.TempDir()
 	g := newAPIGenerator(out)
+	g.lifecyclePath = filepath.Join(out, "lifecycle.md")
 	if err := g.run(schema); err != nil {
 		t.Fatalf("generating from %s: %v", schema, err)
 	}
 	return out
+}
+
+func compareFile(t *testing.T, got, want string) {
+	t.Helper()
+	g, err := os.ReadFile(got)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w, err := os.ReadFile(want)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if line, ok := firstDiff(g, w); ok {
+		t.Errorf("%s differs from %s at line %d", filepath.Base(got), want, line)
+	}
 }
 
 // goFiles lists the generated file names in dir.
@@ -159,6 +177,15 @@ func TestUnreleased(t *testing.T) {
 	for _, tt := range tests {
 		if got := unreleased(tt.l); got != tt.want {
 			t.Errorf("%s: unreleased() = %v, want %v", tt.name, got, tt.want)
+		}
+	}
+}
+
+func TestCompareReleases(t *testing.T) {
+	ordered := []string{"rio", "boston", "quebec", "nile-preview", "1.250.0", "1.329.0", "21.2.0", "24.0.0", "26.16.1", "26.16.1-next", "26.17.0"}
+	for i := range len(ordered) - 1 {
+		if got := compareReleases(ordered[i], ordered[i+1]); got >= 0 {
+			t.Errorf("compareReleases(%q, %q) = %d, want < 0", ordered[i], ordered[i+1], got)
 		}
 	}
 }
