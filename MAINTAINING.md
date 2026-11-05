@@ -4,7 +4,7 @@
 
 | Output | Generator | Source |
 | --- | --- | --- |
-| `*_gen.go` | `internal/cmd/genapi` (`go generate ./...`) | [`xenapi.json`](https://github.com/xapi-project/xapi-project.github.io/tree/master/_data) |
+| `*_gen.go`, `docs/lifecycle.md` | `internal/cmd/genapi` (`go generate ./...`) | [`xenapi.json`](https://github.com/xapi-project/xapi-project.github.io/tree/master/_data) |
 | `error.go` | `internal/cmd/generrors` | [`api_errors.ml`](https://github.com/xapi-project/xen-api/blob/master/ocaml/xapi-consts/api_errors.ml) |
 | `SchemaXAPIRelease` in `client.go` | `internal/cmd/schemarelease` | `xenapi.json` |
 
