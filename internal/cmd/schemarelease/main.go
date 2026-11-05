@@ -1,10 +1,8 @@
-//go:build ignore
-
-// update_schema_release.go scans xenapi.json for the newest XAPI release
+// Command schemarelease scans xenapi.json for the newest XAPI release
 // version and rewrites the SchemaXAPIRelease constant in client.go to
 // match, after a regeneration.
 //
-// Run with: go run update_schema_release.go
+// Run from the repo root: go run ./internal/cmd/schemarelease
 package main
 
 import (

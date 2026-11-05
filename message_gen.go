@@ -1,7 +1,7 @@
 //
 // This file is generated. To change the content of this file, please do not
 // apply the change to this file because it will get overwritten. Instead,
-// change xenapi.go and execute 'go generate'.
+// change internal/cmd/genapi and run 'go generate'.
 //
 
 package xenapi

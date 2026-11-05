@@ -1,4 +1,4 @@
-//go:generate go run xenapi.go
+//go:generate go run ./internal/cmd/genapi
 
 package xenapi
 
@@ -16,7 +16,7 @@ import (
 // release name/version maps to). Bindings are verified/typed up through
 // this release; anything newer falls back to the enum tolerance built
 // into convert_gen.go's converters (see convertEnumTypeToGoFuncTemplate
-// in xenapi.go).
+// in internal/cmd/genapi).
 const SchemaXAPIRelease = "26.21.1"
 
 // APIResult is the raw, untyped result of an APICall - Value holds whatever
