@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type RoleRecord struct {
@@ -17,6 +20,16 @@ type RoleRecord struct {
 	Subroles []RoleRef
 	// Indicates whether the role is only to be assigned internally by xapi, or can be used by clients
 	IsInternal bool
+}
+
+// DecodeRoleRecord converts a role record in its wire form, such as
+// an event snapshot from Event.From, to a RoleRecord.
+func DecodeRoleRecord(s xmlrpc.Struct) (RoleRecord, error) {
+	r, err := convertRoleRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding role record: %w", err)
+	}
+	return r, nil
 }
 
 type RoleRef string

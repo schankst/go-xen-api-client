@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PoolAllowedOperations string
@@ -282,6 +285,16 @@ type PoolRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 	LLDPMulticastAddress LLDPMulticastAddress
+}
+
+// DecodePoolRecord converts a pool record in its wire form, such as
+// an event snapshot from Event.From, to a PoolRecord.
+func DecodePoolRecord(s xmlrpc.Struct) (PoolRecord, error) {
+	r, err := convertPoolRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding pool record: %w", err)
+	}
+	return r, nil
 }
 
 type PoolRef string

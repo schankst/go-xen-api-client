@@ -4,6 +4,7 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/schankst/go-xen-api-client/xmlrpc"
@@ -39,6 +40,16 @@ type EventRecord struct {
 	//
 	// Deprecated: Deprecated in XAPI release boston.
 	ObjUUID string
+}
+
+// DecodeEventRecord converts a event record in its wire form, such as
+// an event snapshot from Event.From, to a EventRecord.
+func DecodeEventRecord(s xmlrpc.Struct) (EventRecord, error) {
+	r, err := convertEventRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding event record: %w", err)
+	}
+	return r, nil
 }
 
 type EventRef string

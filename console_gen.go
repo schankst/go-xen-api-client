@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type ConsoleProtocol string
@@ -28,6 +31,16 @@ type ConsoleRecord struct {
 	VM VMRef
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeConsoleRecord converts a console record in its wire form, such as
+// an event snapshot from Event.From, to a ConsoleRecord.
+func DecodeConsoleRecord(s xmlrpc.Struct) (ConsoleRecord, error) {
+	r, err := convertConsoleRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding console record: %w", err)
+	}
+	return r, nil
 }
 
 type ConsoleRef string

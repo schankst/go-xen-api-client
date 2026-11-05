@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VLANRecord struct {
@@ -17,6 +20,16 @@ type VLANRecord struct {
 	Tag int64
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeVLANRecord converts a VLAN record in its wire form, such as
+// an event snapshot from Event.From, to a VLANRecord.
+func DecodeVLANRecord(s xmlrpc.Struct) (VLANRecord, error) {
+	r, err := convertVLANRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VLAN record: %w", err)
+	}
+	return r, nil
 }
 
 type VLANRef string

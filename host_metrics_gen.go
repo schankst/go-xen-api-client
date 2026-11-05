@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type HostMetricsRecord struct {
@@ -22,6 +25,16 @@ type HostMetricsRecord struct {
 	LastUpdated time.Time
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeHostMetricsRecord converts a host_metrics record in its wire form, such as
+// an event snapshot from Event.From, to a HostMetricsRecord.
+func DecodeHostMetricsRecord(s xmlrpc.Struct) (HostMetricsRecord, error) {
+	r, err := convertHostMetricsRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding host_metrics record: %w", err)
+	}
+	return r, nil
 }
 
 type HostMetricsRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type HostCPURecord struct {
@@ -33,6 +36,16 @@ type HostCPURecord struct {
 	Utilisation float64
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeHostCPURecord converts a host_cpu record in its wire form, such as
+// an event snapshot from Event.From, to a HostCPURecord.
+func DecodeHostCPURecord(s xmlrpc.Struct) (HostCPURecord, error) {
+	r, err := convertHostCPURecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding host_cpu record: %w", err)
+	}
+	return r, nil
 }
 
 type HostCPURef string

@@ -2,6 +2,12 @@
 
 package xenapi
 
+import (
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
+)
+
 type DataSourceRecord struct {
 	// a human-readable name
 	NameLabel string
@@ -19,6 +25,16 @@ type DataSourceRecord struct {
 	Max float64
 	// current value of the data source
 	Value float64
+}
+
+// DecodeDataSourceRecord converts a data_source record in its wire form, such as
+// an event snapshot from Event.From, to a DataSourceRecord.
+func DecodeDataSourceRecord(s xmlrpc.Struct) (DataSourceRecord, error) {
+	r, err := convertDataSourceRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding data_source record: %w", err)
+	}
+	return r, nil
 }
 
 type DataSourceRef string

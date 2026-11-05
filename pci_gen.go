@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PCIDom0Access string
@@ -52,6 +55,16 @@ type PCIRecord struct {
 	SubsystemDeviceName string
 	// Driver name
 	DriverName string
+}
+
+// DecodePCIRecord converts a PCI record in its wire form, such as
+// an event snapshot from Event.From, to a PCIRecord.
+func DecodePCIRecord(s xmlrpc.Struct) (PCIRecord, error) {
+	r, err := convertPCIRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PCI record: %w", err)
+	}
+	return r, nil
 }
 
 type PCIRef string

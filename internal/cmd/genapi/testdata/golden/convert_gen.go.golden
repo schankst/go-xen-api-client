@@ -24,8 +24,34 @@ func convertThingRefToThingRecordMapToGo(input any) (map[ThingRef]ThingRecord, e
 	return toMap(input, toString[ThingRef], convertThingRecordToGo)
 }
 
+func convertVMGuestOSRecordToGo(input any) (VMGuestOSRecord, error) {
+	var r VMGuestOSRecord
+	s, ok := input.(xmlrpc.Struct)
+	if !ok {
+		return r, &conversionError{want: "struct", got: input}
+	}
+	err := cmp.Or(
+		field(s, "uuid", &r.UUID, toValue[string]),
+		field(s, "mode", &r.Mode, toString[SharedMode]),
+		field(s, "os_id", &r.OSID, toInt),
+	)
+	return r, err
+}
+
 func convertEnumThingStateSetToGo(input any) ([]ThingState, error) {
 	return toSlice(input, toString[ThingState])
+}
+
+func convertSessionRecordToGo(input any) (SessionRecord, error) {
+	var r SessionRecord
+	s, ok := input.(xmlrpc.Struct)
+	if !ok {
+		return r, &conversionError{want: "struct", got: input}
+	}
+	err := cmp.Or(
+		field(s, "uuid", &r.UUID, toValue[string]),
+	)
+	return r, err
 }
 
 func convertStringOptionToGo(input any) (string, error) {

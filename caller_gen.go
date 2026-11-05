@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type CallerRecord struct {
@@ -44,6 +47,16 @@ type CallerRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	AutoRegistered bool
+}
+
+// DecodeCallerRecord converts a Caller record in its wire form, such as
+// an event snapshot from Event.From, to a CallerRecord.
+func DecodeCallerRecord(s xmlrpc.Struct) (CallerRecord, error) {
+	r, err := convertCallerRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Caller record: %w", err)
+	}
+	return r, nil
 }
 
 type CallerRef string

@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VBDMetricsRecord struct {
@@ -26,6 +29,16 @@ type VBDMetricsRecord struct {
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 	OtherConfig map[string]string
+}
+
+// DecodeVBDMetricsRecord converts a VBD_metrics record in its wire form, such as
+// an event snapshot from Event.From, to a VBDMetricsRecord.
+func DecodeVBDMetricsRecord(s xmlrpc.Struct) (VBDMetricsRecord, error) {
+	r, err := convertVBDMetricsRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VBD_metrics record: %w", err)
+	}
+	return r, nil
 }
 
 type VBDMetricsRef string

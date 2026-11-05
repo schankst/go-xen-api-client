@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type HostPatchRecord struct {
@@ -28,6 +31,16 @@ type HostPatchRecord struct {
 	PoolPatch PoolPatchRef
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeHostPatchRecord converts a host_patch record in its wire form, such as
+// an event snapshot from Event.From, to a HostPatchRecord.
+func DecodeHostPatchRecord(s xmlrpc.Struct) (HostPatchRecord, error) {
+	r, err := convertHostPatchRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding host_patch record: %w", err)
+	}
+	return r, nil
 }
 
 type HostPatchRef string

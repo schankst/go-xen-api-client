@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VIFOperations string
@@ -113,6 +116,16 @@ type VIFRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	Trunks []int64
+}
+
+// DecodeVIFRecord converts a VIF record in its wire form, such as
+// an event snapshot from Event.From, to a VIFRecord.
+func DecodeVIFRecord(s xmlrpc.Struct) (VIFRecord, error) {
+	r, err := convertVIFRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VIF record: %w", err)
+	}
+	return r, nil
 }
 
 type VIFRef string

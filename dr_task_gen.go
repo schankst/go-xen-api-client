@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type DRTaskRecord struct {
@@ -11,6 +14,16 @@ type DRTaskRecord struct {
 	UUID string
 	// All SRs introduced by this appliance
 	IntroducedSRs []SRRef
+}
+
+// DecodeDRTaskRecord converts a DR_task record in its wire form, such as
+// an event snapshot from Event.From, to a DRTaskRecord.
+func DecodeDRTaskRecord(s xmlrpc.Struct) (DRTaskRecord, error) {
+	r, err := convertDRTaskRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding DR_task record: %w", err)
+	}
+	return r, nil
 }
 
 type DRTaskRef string

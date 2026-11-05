@@ -4,11 +4,24 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type LVHDRecord struct {
 	// Unique identifier/object reference
 	UUID string
+}
+
+// DecodeLVHDRecord converts a LVHD record in its wire form, such as
+// an event snapshot from Event.From, to a LVHDRecord.
+func DecodeLVHDRecord(s xmlrpc.Struct) (LVHDRecord, error) {
+	r, err := convertLVHDRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding LVHD record: %w", err)
+	}
+	return r, nil
 }
 
 type LVHDRef string

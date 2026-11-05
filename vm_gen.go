@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VMPowerState string
@@ -444,6 +447,16 @@ type VMRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.14.0; it may change or be removed.
 	SecurebootCertificatesState VMSecurebootCertificatesState
+}
+
+// DecodeVMRecord converts a VM record in its wire form, such as
+// an event snapshot from Event.From, to a VMRecord.
+func DecodeVMRecord(s xmlrpc.Struct) (VMRecord, error) {
+	r, err := convertVMRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VM record: %w", err)
+	}
+	return r, nil
 }
 
 type VMRef string

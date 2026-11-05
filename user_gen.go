@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type UserRecord struct {
@@ -15,6 +18,16 @@ type UserRecord struct {
 	Fullname string
 	// additional configuration
 	OtherConfig map[string]string
+}
+
+// DecodeUserRecord converts a user record in its wire form, such as
+// an event snapshot from Event.From, to a UserRecord.
+func DecodeUserRecord(s xmlrpc.Struct) (UserRecord, error) {
+	r, err := convertUserRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding user record: %w", err)
+	}
+	return r, nil
 }
 
 type UserRef string

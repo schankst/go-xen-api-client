@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type HostAllowedOperations string
@@ -292,6 +295,16 @@ type HostRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 	Timezone string
+}
+
+// DecodeHostRecord converts a host record in its wire form, such as
+// an event snapshot from Event.From, to a HostRecord.
+func DecodeHostRecord(s xmlrpc.Struct) (HostRecord, error) {
+	r, err := convertHostRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding host record: %w", err)
+	}
+	return r, nil
 }
 
 type HostRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VMApplianceOperation string
@@ -32,6 +35,16 @@ type VMApplianceRecord struct {
 	CurrentOperations map[string]VMApplianceOperation
 	// all VMs in this appliance
 	VMs []VMRef
+}
+
+// DecodeVMApplianceRecord converts a VM_appliance record in its wire form, such as
+// an event snapshot from Event.From, to a VMApplianceRecord.
+func DecodeVMApplianceRecord(s xmlrpc.Struct) (VMApplianceRecord, error) {
+	r, err := convertVMApplianceRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VM_appliance record: %w", err)
+	}
+	return r, nil
 }
 
 type VMApplianceRef string

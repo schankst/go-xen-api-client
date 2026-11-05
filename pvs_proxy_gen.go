@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PVSProxyStatus string
@@ -32,6 +35,16 @@ type PVSProxyRecord struct {
 	CurrentlyAttached bool
 	// The run-time status of the proxy
 	Status PVSProxyStatus
+}
+
+// DecodePVSProxyRecord converts a PVS_proxy record in its wire form, such as
+// an event snapshot from Event.From, to a PVSProxyRecord.
+func DecodePVSProxyRecord(s xmlrpc.Struct) (PVSProxyRecord, error) {
+	r, err := convertPVSProxyRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding PVS_proxy record: %w", err)
+	}
+	return r, nil
 }
 
 type PVSProxyRef string

@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type Cls string
@@ -45,6 +48,16 @@ type MessageRecord struct {
 	Timestamp time.Time
 	// The body of the message
 	Body string
+}
+
+// DecodeMessageRecord converts a message record in its wire form, such as
+// an event snapshot from Event.From, to a MessageRecord.
+func DecodeMessageRecord(s xmlrpc.Struct) (MessageRecord, error) {
+	r, err := convertMessageRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding message record: %w", err)
+	}
+	return r, nil
 }
 
 type MessageRef string

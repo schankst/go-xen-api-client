@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type UpdateAfterApplyGuidance string
@@ -53,6 +56,16 @@ type PoolUpdateRecord struct {
 	OtherConfig map[string]string
 	// Flag - if true, all hosts in a pool must apply this update
 	EnforceHomogeneity bool
+}
+
+// DecodePoolUpdateRecord converts a pool_update record in its wire form, such as
+// an event snapshot from Event.From, to a PoolUpdateRecord.
+func DecodePoolUpdateRecord(s xmlrpc.Struct) (PoolUpdateRecord, error) {
+	r, err := convertPoolUpdateRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding pool_update record: %w", err)
+	}
+	return r, nil
 }
 
 type PoolUpdateRef string

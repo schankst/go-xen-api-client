@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VUSBOperations string
@@ -32,6 +35,16 @@ type VUSBRecord struct {
 	OtherConfig map[string]string
 	// is the device currently attached
 	CurrentlyAttached bool
+}
+
+// DecodeVUSBRecord converts a VUSB record in its wire form, such as
+// an event snapshot from Event.From, to a VUSBRecord.
+func DecodeVUSBRecord(s xmlrpc.Struct) (VUSBRecord, error) {
+	r, err := convertVUSBRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VUSB record: %w", err)
+	}
+	return r, nil
 }
 
 type VUSBRef string

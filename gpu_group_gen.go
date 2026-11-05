@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type AllocationAlgorithm string
@@ -36,6 +39,16 @@ type GPUGroupRecord struct {
 	SupportedVGPUTypes []VGPUTypeRef
 	// vGPU types supported on at least one of the pGPUs in this group
 	EnabledVGPUTypes []VGPUTypeRef
+}
+
+// DecodeGPUGroupRecord converts a GPU_group record in its wire form, such as
+// an event snapshot from Event.From, to a GPUGroupRecord.
+func DecodeGPUGroupRecord(s xmlrpc.Struct) (GPUGroupRecord, error) {
+	r, err := convertGPUGroupRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding GPU_group record: %w", err)
+	}
+	return r, nil
 }
 
 type GPUGroupRef string

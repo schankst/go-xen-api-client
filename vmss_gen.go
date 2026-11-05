@@ -4,7 +4,10 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VMSSFrequency string
@@ -50,6 +53,16 @@ type VMSSRecord struct {
 	LastRunTime time.Time
 	// all VMs attached to this snapshot schedule
 	VMs []VMRef
+}
+
+// DecodeVMSSRecord converts a VMSS record in its wire form, such as
+// an event snapshot from Event.From, to a VMSSRecord.
+func DecodeVMSSRecord(s xmlrpc.Struct) (VMSSRecord, error) {
+	r, err := convertVMSSRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VMSS record: %w", err)
+	}
+	return r, nil
 }
 
 type VMSSRef string

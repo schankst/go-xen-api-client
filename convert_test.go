@@ -230,3 +230,17 @@ func TestToIntIs64Bit(t *testing.T) {
 		t.Errorf("fromInt(8 GiB) = %q", got)
 	}
 }
+
+func TestDecodeRecord(t *testing.T) {
+	vm, err := DecodeVMRecord(xmlrpc.Struct{"name_label": "web", "power_state": "Running", "memory_static_max": "8589934592"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if vm.NameLabel != "web" || vm.PowerState != VMPowerStateRunning || vm.MemoryStaticMax != 8<<30 {
+		t.Errorf("DecodeVMRecord = %+v", vm)
+	}
+	_, err = DecodeVMRecord(xmlrpc.Struct{"memory_static_max": int64(1)})
+	if err == nil || !strings.Contains(err.Error(), "xenapi: decoding VM record: .memory_static_max:") {
+		t.Errorf("DecodeVMRecord error = %v, want the record type and field", err)
+	}
+}

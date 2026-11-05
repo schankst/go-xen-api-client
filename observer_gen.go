@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type ObserverRecord struct {
@@ -35,6 +38,16 @@ type ObserverRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 	Enabled bool
+}
+
+// DecodeObserverRecord converts a Observer record in its wire form, such as
+// an event snapshot from Event.From, to a ObserverRecord.
+func DecodeObserverRecord(s xmlrpc.Struct) (ObserverRecord, error) {
+	r, err := convertObserverRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Observer record: %w", err)
+	}
+	return r, nil
 }
 
 type ObserverRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type PlacementPolicy string
@@ -30,6 +33,16 @@ type VMGroupRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 	VMs []VMRef
+}
+
+// DecodeVMGroupRecord converts a VM_group record in its wire form, such as
+// an event snapshot from Event.From, to a VMGroupRecord.
+func DecodeVMGroupRecord(s xmlrpc.Struct) (VMGroupRecord, error) {
+	r, err := convertVMGroupRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VM_group record: %w", err)
+	}
+	return r, nil
 }
 
 type VMGroupRef string

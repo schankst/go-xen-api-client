@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type SubjectRecord struct {
@@ -15,6 +18,16 @@ type SubjectRecord struct {
 	OtherConfig map[string]string
 	// the roles associated with this subject
 	Roles []RoleRef
+}
+
+// DecodeSubjectRecord converts a subject record in its wire form, such as
+// an event snapshot from Event.From, to a SubjectRecord.
+func DecodeSubjectRecord(s xmlrpc.Struct) (SubjectRecord, error) {
+	r, err := convertSubjectRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding subject record: %w", err)
+	}
+	return r, nil
 }
 
 type SubjectRef string

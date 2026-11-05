@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type NetworkOperations string
@@ -64,6 +67,16 @@ type NetworkRecord struct {
 	AssignedIPs map[VIFRef]string
 	// Set of purposes for which the server will use this network
 	Purpose []NetworkPurpose
+}
+
+// DecodeNetworkRecord converts a network record in its wire form, such as
+// an event snapshot from Event.From, to a NetworkRecord.
+func DecodeNetworkRecord(s xmlrpc.Struct) (NetworkRecord, error) {
+	r, err := convertNetworkRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding network record: %w", err)
+	}
+	return r, nil
 }
 
 type NetworkRef string

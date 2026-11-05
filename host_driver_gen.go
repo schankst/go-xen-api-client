@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type HostDriverRecord struct {
@@ -47,6 +50,16 @@ type HostDriverRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Info string
+}
+
+// DecodeHostDriverRecord converts a Host_driver record in its wire form, such as
+// an event snapshot from Event.From, to a HostDriverRecord.
+func DecodeHostDriverRecord(s xmlrpc.Struct) (HostDriverRecord, error) {
+	r, err := convertHostDriverRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding Host_driver record: %w", err)
+	}
+	return r, nil
 }
 
 type HostDriverRef string

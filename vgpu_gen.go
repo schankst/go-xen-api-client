@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type VGPURecord struct {
@@ -31,6 +34,16 @@ type VGPURecord struct {
 	ExtraArgs string
 	// Device passed trough to VM, either as full device or SR-IOV virtual function
 	PCI PCIRef
+}
+
+// DecodeVGPURecord converts a VGPU record in its wire form, such as
+// an event snapshot from Event.From, to a VGPURecord.
+func DecodeVGPURecord(s xmlrpc.Struct) (VGPURecord, error) {
+	r, err := convertVGPURecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding VGPU record: %w", err)
+	}
+	return r, nil
 }
 
 type VGPURef string

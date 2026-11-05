@@ -4,6 +4,7 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/schankst/go-xen-api-client/xmlrpc"
@@ -62,6 +63,16 @@ type ThingRecord struct {
 	//
 	// Deprecated: Deprecated in XAPI release boston.
 	LegacyField string
+}
+
+// DecodeThingRecord converts a thing record in its wire form, such as
+// an event snapshot from Event.From, to a ThingRecord.
+func DecodeThingRecord(s xmlrpc.Struct) (ThingRecord, error) {
+	r, err := convertThingRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding thing record: %w", err)
+	}
+	return r, nil
 }
 
 type ThingRef string

@@ -4,6 +4,9 @@ package xenapi
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/schankst/go-xen-api-client/xmlrpc"
 )
 
 type SRIOVConfigurationMode string
@@ -30,6 +33,16 @@ type NetworkSRIOVRecord struct {
 	RequiresReboot bool
 	// The mode for configure network sriov
 	ConfigurationMode SRIOVConfigurationMode
+}
+
+// DecodeNetworkSRIOVRecord converts a network_sriov record in its wire form, such as
+// an event snapshot from Event.From, to a NetworkSRIOVRecord.
+func DecodeNetworkSRIOVRecord(s xmlrpc.Struct) (NetworkSRIOVRecord, error) {
+	r, err := convertNetworkSRIOVRecordToGo(s)
+	if err != nil {
+		return r, fmt.Errorf("xenapi: decoding network_sriov record: %w", err)
+	}
+	return r, nil
 }
 
 type NetworkSRIOVRef string
