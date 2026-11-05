@@ -2,6 +2,7 @@ package xmlrpc
 
 import (
 	"fmt"
+	"math"
 	"reflect"
 	"strings"
 	"testing"
@@ -39,6 +40,14 @@ func TestValueRoundTrip(t *testing.T) {
 		{"nested struct in array", []any{Struct{"k": "v"}}},
 		{"empty struct", Struct{}},
 		{"empty array", []any{}},
+		{"double", 0.1},
+		{"tiny double", 1e-9},
+		{"huge double", 1e300},
+		{"negative double", -2.5},
+		{"zero double", 0.0},
+		{"max double", math.MaxFloat64},
+		{"smallest denormal", math.SmallestNonzeroFloat64},
+		{"float32", float32(0.1)},
 	}
 
 	for _, tc := range cases {
@@ -60,6 +69,11 @@ func TestValueRoundTrip(t *testing.T) {
 				if !ok || got != int64(want) {
 					t.Fatalf("got %#v (%T), want %d", result, result, want)
 				}
+			case float32:
+				got, ok := result.(float64)
+				if !ok || float32(got) != want {
+					t.Fatalf("got %#v (%T), want %v", result, result, want)
+				}
 			default:
 				if !reflect.DeepEqual(result, tc.value) {
 					t.Fatalf("got %#v, want %#v", result, tc.value)
@@ -74,6 +88,33 @@ func TestWriteValueUnsupportedTypeErrors(t *testing.T) {
 	var sb strings.Builder
 	if err := writeValue(&sb, unsupported{}); err == nil {
 		t.Fatal("expected an error for an unsupported value type, got none")
+	}
+}
+
+func TestWriteValueDoubleWireFormat(t *testing.T) {
+	cases := map[float64]string{
+		1e-9:  "<value><double>0.000000001</double></value>",
+		1e21:  "<value><double>1000000000000000000000</double></value>",
+		-0.25: "<value><double>-0.25</double></value>",
+		3:     "<value><double>3</double></value>",
+	}
+	for in, want := range cases {
+		var sb strings.Builder
+		if err := writeValue(&sb, in); err != nil {
+			t.Fatalf("writeValue(%v): %v", in, err)
+		}
+		if got := sb.String(); got != want {
+			t.Errorf("writeValue(%v) = %s, want %s", in, got, want)
+		}
+	}
+}
+
+func TestWriteValueNonFiniteDoubleErrors(t *testing.T) {
+	for _, v := range []any{math.NaN(), math.Inf(1), math.Inf(-1), float32(math.Inf(1))} {
+		var sb strings.Builder
+		if err := writeValue(&sb, v); err == nil {
+			t.Errorf("writeValue(%v) succeeded with %s, want an error", v, sb.String())
+		}
 	}
 }
 
