@@ -11,8 +11,12 @@ type PIFMetricsRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// Read bandwidth (KiB/s)
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 	IoReadKbs float64
 	// Write bandwidth (KiB/s)
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 	IoWriteKbs float64
 	// Report if the PIF got a carrier or not
 	Carrier bool
@@ -35,6 +39,8 @@ type PIFMetricsRecord struct {
 	// additional configuration
 	OtherConfig map[string]string
 	// The LLDP information for the physical NIC of the corresponding PIF: the effective LLDP state (key 'state', one of enabled, disabled or blocked) and, when a neighbour is seen, the received TLVs (keys 'system_name', 'port_id' and 'port_description'). Empty for PIFs that are not managed physical NICs.
+	//
+	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 	LldpNeighbor map[string]string
 }
 
@@ -74,6 +80,8 @@ func (c PIFMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRe
 }
 
 // GetLldpNeighbor Get the lldp_neighbor field of the given PIF_metrics.
+//
+// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 func (c PIFMetricsClass) GetLldpNeighbor(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_lldp_neighbor", convertStringToStringMapToGo, string(sessionID), string(self))
 }
@@ -129,11 +137,15 @@ func (c PIFMetricsClass) GetCarrier(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetIoWriteKbs Get the io/write_kbs field of the given PIF_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 func (c PIFMetricsClass) GetIoWriteKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_io_write_kbs", toValue[float64], string(sessionID), string(self))
 }
 
 // GetIoReadKbs Get the io/read_kbs field of the given PIF_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 func (c PIFMetricsClass) GetIoReadKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "PIF_metrics.get_io_read_kbs", toValue[float64], string(sessionID), string(self))
 }

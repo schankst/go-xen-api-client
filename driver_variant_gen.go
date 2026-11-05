@@ -8,85 +8,125 @@ import (
 
 type DriverVariantRecord struct {
 	// Unique identifier/object reference
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	UUID string
 	// Name identifying the driver variant within the driver
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Name string
 	// Driver this variant is a part of
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Driver HostDriverRef
 	// Unique version of this driver variant
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Version string
 	// True if the hardware for this variant is present on the host
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	HardwarePresent bool
 	// Priority; this needs an explanation how this is ordered
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Priority float64
 	// Development and release status of this variant, like 'alpha'
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Status string
 }
 
 type DriverVariantRef string
 
 // UNSUPPORTED. Variant of a host driver
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 type DriverVariantClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of Driver_variant references to Driver_variant records for all Driver_variants known to the system.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[DriverVariantRef]DriverVariantRecord, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_all_records", convertDriverVariantRefToDriverVariantRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the Driver_variants known to the system.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetAll(ctx context.Context, sessionID SessionRef) ([]DriverVariantRef, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_all", convertDriverVariantRefSetToGo, string(sessionID))
 }
 
 // Select UNSUPPORTED Select this variant of a driver to become active after reboot or immediately if currently no version is active
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) Select(ctx context.Context, sessionID SessionRef, self DriverVariantRef) error {
 	_, err := c.client.APICall(ctx, "Driver_variant.select", string(sessionID), string(self))
 	return err
 }
 
 // GetStatus Get the status field of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetStatus(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_status", toValue[string], string(sessionID), string(self))
 }
 
 // GetPriority Get the priority field of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetPriority(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_priority", toValue[float64], string(sessionID), string(self))
 }
 
 // GetHardwarePresent Get the hardware_present field of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetHardwarePresent(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_hardware_present", toValue[bool], string(sessionID), string(self))
 }
 
 // GetVersion Get the version field of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetVersion(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_version", toValue[string], string(sessionID), string(self))
 }
 
 // GetDriver Get the driver field of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetDriver(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (HostDriverRef, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_driver", toString[HostDriverRef], string(sessionID), string(self))
 }
 
 // GetName Get the name field of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetName(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_name", toValue[string], string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetUUID(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_uuid", toValue[string], string(sessionID), string(self))
 }
 
 // GetByUUID Get a reference to the Driver_variant instance with the specified UUID.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (DriverVariantRef, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_by_uuid", toString[DriverVariantRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given Driver_variant.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) GetRecord(ctx context.Context, sessionID SessionRef, self DriverVariantRef) (DriverVariantRecord, error) {
 	return callAndConvert(ctx, c.client, "Driver_variant.get_record", convertDriverVariantRecordToGo, string(sessionID), string(self))
 }

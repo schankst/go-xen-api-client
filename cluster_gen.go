@@ -33,14 +33,24 @@ type ClusterRecord struct {
 	// Simply the string 'corosync'. No other cluster stacks are currently supported
 	ClusterStack string
 	// Version of cluster stack, not writable via the API. Defaulting to 2 for backwards compatibility when upgrading from a cluster without this field, which means it is necessarily running version 2 of corosync, the only cluster stack supported so far.
+	//
+	// Experimental: prototyped in XAPI release 24.15.0; it may change or be removed.
 	ClusterStackVersion int
 	// Whether the cluster stack thinks the cluster is quorate
+	//
+	// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 	IsQuorate bool
 	// Number of live hosts in order to be quorate
+	//
+	// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 	Quorum int
 	// Current number of live hosts, according to the cluster stack
+	//
+	// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 	LiveHosts int
 	// Total number of hosts expected by the cluster stack
+	//
+	// Experimental: prototyped in XAPI release 25.17.0; it may change or be removed.
 	ExpectedHosts int
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
 	AllowedOperations []ClusterOperation
@@ -190,26 +200,36 @@ func (c ClusterClass) GetAllowedOperations(ctx context.Context, sessionID Sessio
 }
 
 // GetExpectedHosts Get the expected_hosts field of the given Cluster.
+//
+// Experimental: prototyped in XAPI release 25.17.0; it may change or be removed.
 func (c ClusterClass) GetExpectedHosts(ctx context.Context, sessionID SessionRef, self ClusterRef) (int, error) {
 	return callAndConvert(ctx, c.client, "Cluster.get_expected_hosts", toInt, string(sessionID), string(self))
 }
 
 // GetLiveHosts Get the live_hosts field of the given Cluster.
+//
+// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 func (c ClusterClass) GetLiveHosts(ctx context.Context, sessionID SessionRef, self ClusterRef) (int, error) {
 	return callAndConvert(ctx, c.client, "Cluster.get_live_hosts", toInt, string(sessionID), string(self))
 }
 
 // GetQuorum Get the quorum field of the given Cluster.
+//
+// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 func (c ClusterClass) GetQuorum(ctx context.Context, sessionID SessionRef, self ClusterRef) (int, error) {
 	return callAndConvert(ctx, c.client, "Cluster.get_quorum", toInt, string(sessionID), string(self))
 }
 
 // GetIsQuorate Get the is_quorate field of the given Cluster.
+//
+// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 func (c ClusterClass) GetIsQuorate(ctx context.Context, sessionID SessionRef, self ClusterRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "Cluster.get_is_quorate", toValue[bool], string(sessionID), string(self))
 }
 
 // GetClusterStackVersion Get the cluster_stack_version field of the given Cluster.
+//
+// Experimental: prototyped in XAPI release 24.15.0; it may change or be removed.
 func (c ClusterClass) GetClusterStackVersion(ctx context.Context, sessionID SessionRef, self ClusterRef) (int, error) {
 	return callAndConvert(ctx, c.client, "Cluster.get_cluster_stack_version", toInt, string(sessionID), string(self))
 }

@@ -34,12 +34,20 @@ type CertificateRecord struct {
 	// Date before which the certificate is valid
 	NotAfter time.Time
 	// Use fingerprint_sha256 instead
+	//
+	// Deprecated: Deprecated in XAPI release 24.19.0.
 	Fingerprint string
 	// The certificate's SHA256 fingerprint / hash
+	//
+	// Experimental: prototyped in XAPI release 24.20.0; it may change or be removed.
 	FingerprintSha256 string
 	// The certificate's SHA1 fingerprint / hash
+	//
+	// Experimental: prototyped in XAPI release 24.20.0; it may change or be removed.
 	FingerprintSha1 string
 	// The purposes of the certificate
+	//
+	// Experimental: prototyped in XAPI release 26.13.0; it may change or be removed.
 	Purpose []CertificatePurpose
 }
 
@@ -61,21 +69,29 @@ func (c CertificateClass) GetAll(ctx context.Context, sessionID SessionRef) ([]C
 }
 
 // GetPurpose Get the purpose field of the given Certificate.
+//
+// Experimental: prototyped in XAPI release 26.13.0; it may change or be removed.
 func (c CertificateClass) GetPurpose(ctx context.Context, sessionID SessionRef, self CertificateRef) ([]CertificatePurpose, error) {
 	return callAndConvert(ctx, c.client, "Certificate.get_purpose", convertEnumCertificatePurposeSetToGo, string(sessionID), string(self))
 }
 
 // GetFingerprintSha1 Get the fingerprint_sha1 field of the given Certificate.
+//
+// Experimental: prototyped in XAPI release 24.20.0; it may change or be removed.
 func (c CertificateClass) GetFingerprintSha1(ctx context.Context, sessionID SessionRef, self CertificateRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Certificate.get_fingerprint_sha1", toValue[string], string(sessionID), string(self))
 }
 
 // GetFingerprintSha256 Get the fingerprint_sha256 field of the given Certificate.
+//
+// Experimental: prototyped in XAPI release 24.20.0; it may change or be removed.
 func (c CertificateClass) GetFingerprintSha256(ctx context.Context, sessionID SessionRef, self CertificateRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Certificate.get_fingerprint_sha256", toValue[string], string(sessionID), string(self))
 }
 
 // GetFingerprint Get the fingerprint field of the given Certificate.
+//
+// Deprecated: Deprecated in XAPI release 24.19.0.
 func (c CertificateClass) GetFingerprint(ctx context.Context, sessionID SessionRef, self CertificateRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Certificate.get_fingerprint", toValue[string], string(sessionID), string(self))
 }

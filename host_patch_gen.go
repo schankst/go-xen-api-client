@@ -33,26 +33,36 @@ type HostPatchRecord struct {
 type HostPatchRef string
 
 // Represents a patch stored on a server
+//
+// Deprecated: Deprecated in XAPI release ely.
 type HostPatchClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of host_patch references to host_patch records for all host_patchs known to the system.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c HostPatchClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[HostPatchRef]HostPatchRecord, error) {
 	return callAndConvert(ctx, c.client, "host_patch.get_all_records", convertHostPatchRefToHostPatchRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the host_patchs known to the system.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c HostPatchClass) GetAll(ctx context.Context, sessionID SessionRef) ([]HostPatchRef, error) {
 	return callAndConvert(ctx, c.client, "host_patch.get_all", convertHostPatchRefSetToGo, string(sessionID))
 }
 
 // Apply Apply the selected patch and return its output
+//
+// Deprecated: Deprecated in XAPI release miami.
 func (c HostPatchClass) Apply(ctx context.Context, sessionID SessionRef, self HostPatchRef) (string, error) {
 	return callAndConvert(ctx, c.client, "host_patch.apply", toValue[string], string(sessionID), string(self))
 }
 
 // Destroy Destroy the specified host patch, removing it from the disk. This does NOT reverse the patch
+//
+// Deprecated: Deprecated in XAPI release miami.
 func (c HostPatchClass) Destroy(ctx context.Context, sessionID SessionRef, self HostPatchRef) error {
 	_, err := c.client.APICall(ctx, "host_patch.destroy", string(sessionID), string(self))
 	return err
@@ -127,16 +137,22 @@ func (c HostPatchClass) GetUUID(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetByNameLabel Get all the host_patch instances with the given label.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c HostPatchClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) ([]HostPatchRef, error) {
 	return callAndConvert(ctx, c.client, "host_patch.get_by_name_label", convertHostPatchRefSetToGo, string(sessionID), label)
 }
 
 // GetByUUID Get a reference to the host_patch instance with the specified UUID.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c HostPatchClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (HostPatchRef, error) {
 	return callAndConvert(ctx, c.client, "host_patch.get_by_uuid", toString[HostPatchRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given host_patch.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c HostPatchClass) GetRecord(ctx context.Context, sessionID SessionRef, self HostPatchRef) (HostPatchRecord, error) {
 	return callAndConvert(ctx, c.client, "host_patch.get_record", convertHostPatchRecordToGo, string(sessionID), string(self))
 }

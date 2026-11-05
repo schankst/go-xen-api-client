@@ -136,3 +136,29 @@ func firstDiff(a, b []byte) (line int, differ bool) {
 	}
 	return min(len(al), len(bl)) + 1, true
 }
+
+func TestUnreleased(t *testing.T) {
+	life := func(transitions ...string) *xapiLifecycleInfo {
+		l := &xapiLifecycleInfo{}
+		for i := 0; i < len(transitions); i += 2 {
+			l.Transitions = append(l.Transitions, &xapiLifecycle{Transition: transitions[i], Release: transitions[i+1]})
+		}
+		return l
+	}
+	tests := []struct {
+		name string
+		l    *xapiLifecycleInfo
+		want bool
+	}{
+		{"released", life("published", "rio"), false},
+		{"only next", life("published", "99.0.0-next"), true},
+		{"prototyped in next, then released", life("prototyped", "98.0.0-next", "published", "98.0.0"), false},
+		{"deprecated in next", life("published", "rio", "deprecated", "99.0.0-next"), false},
+		{"no transitions", life(), false},
+	}
+	for _, tt := range tests {
+		if got := unreleased(tt.l); got != tt.want {
+			t.Errorf("%s: unreleased() = %v, want %v", tt.name, got, tt.want)
+		}
+	}
+}

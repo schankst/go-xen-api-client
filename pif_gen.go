@@ -133,6 +133,8 @@ type PIFRecord struct {
 	// Link to underlying PCI device
 	PCI PCIRef
 	// The LLDP mode of the physical NIC for the PIF. This setting does not apply to other types of PIFs, such as non-managed PIFs, bond PIFs, VLAN PIFs, tunnel PIFs, or SR-IOV PIFs.
+	//
+	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 	LldpMode PifLldpMode
 }
 
@@ -154,6 +156,8 @@ func (c PIFClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PIFRef, e
 }
 
 // SetLldpMode Set the LLDP mode of this PIF, then apply the change by re-plugging the PIF. Only valid for managed physical PIFs.
+//
+// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 func (c PIFClass) SetLldpMode(ctx context.Context, sessionID SessionRef, self PIFRef, value PifLldpMode, force bool) error {
 	_, err := c.client.APICall(ctx, "PIF.set_lldp_mode", string(sessionID), string(self), string(value), force)
 	return err
@@ -263,6 +267,8 @@ func (c PIFClass) ReconfigureIP(ctx context.Context, sessionID SessionRef, self 
 // Errors:
 //
 //	PIF_IS_PHYSICAL - You tried to destroy a PIF, but it represents an aspect of the physical host configuration, and so cannot be destroyed. The parameter echoes the PIF handle you gave.
+//
+// Deprecated: Deprecated in XAPI release miami. Replaced by VLAN.destroy and Bond.destroy.
 func (c PIFClass) Destroy(ctx context.Context, sessionID SessionRef, self PIFRef) error {
 	_, err := c.client.APICall(ctx, "PIF.destroy", string(sessionID), string(self))
 	return err
@@ -273,6 +279,8 @@ func (c PIFClass) Destroy(ctx context.Context, sessionID SessionRef, self PIFRef
 // Errors:
 //
 //	VLAN_TAG_INVALID - The VLAN tag you gave was invalid -- it must be between 0 and 4094. The parameter echoes the VLAN tag you gave.
+//
+// Deprecated: Deprecated in XAPI release miami. Replaced by VLAN.create.
 func (c PIFClass) CreateVLAN(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, host HostRef, vlan int) (PIFRef, error) {
 	return callAndConvert(ctx, c.client, "PIF.create_VLAN", toString[PIFRef], string(sessionID), device, string(network), string(host), fromInt(vlan))
 }
@@ -296,6 +304,8 @@ func (c PIFClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetLldpMode Get the lldp_mode field of the given PIF.
+//
+// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 func (c PIFClass) GetLldpMode(ctx context.Context, sessionID SessionRef, self PIFRef) (PifLldpMode, error) {
 	return callAndConvert(ctx, c.client, "PIF.get_lldp_mode", toString[PifLldpMode], string(sessionID), string(self))
 }

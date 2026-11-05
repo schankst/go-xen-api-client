@@ -8,124 +8,176 @@ import (
 
 type RateLimitRecord struct {
 	// Unique identifier/object reference
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	UUID string
 	// a human-readable name
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	NameLabel string
 	// a notes field containing human-readable description
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	NameDescription string
 	// The set of callers attached to this rate limiter
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	Callers []CallerRef
 	// Maximum tokens that the bucket can hold
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	BurstSize float64
 	// Tokens added to the bucket per second
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	FillRate float64
 }
 
 type RateLimitRef string
 
 // A rate limiter associated with one or more callers
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 type RateLimitClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of Rate_limit references to Rate_limit records for all Rate_limits known to the system.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[RateLimitRef]RateLimitRecord, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_all_records", convertRateLimitRefToRateLimitRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the Rate_limits known to the system.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetAll(ctx context.Context, sessionID SessionRef) ([]RateLimitRef, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_all", convertRateLimitRefSetToGo, string(sessionID))
 }
 
 // SetFillRate Set the fill rate of the rate limiter
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) SetFillRate(ctx context.Context, sessionID SessionRef, self RateLimitRef, value float64) error {
 	_, err := c.client.APICall(ctx, "Rate_limit.set_fill_rate", string(sessionID), string(self), value)
 	return err
 }
 
 // SetBurstSize Set the burst size of the rate limiter
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) SetBurstSize(ctx context.Context, sessionID SessionRef, self RateLimitRef, value float64) error {
 	_, err := c.client.APICall(ctx, "Rate_limit.set_burst_size", string(sessionID), string(self), value)
 	return err
 }
 
 // RemoveCaller Detach the given caller from this rate limiter
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) RemoveCaller(ctx context.Context, sessionID SessionRef, self RateLimitRef, caller CallerRef) error {
 	_, err := c.client.APICall(ctx, "Rate_limit.remove_caller", string(sessionID), string(self), string(caller))
 	return err
 }
 
 // AddCaller Attach the given caller to this rate limiter. Replaces any rate limiter previously attached to the caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) AddCaller(ctx context.Context, sessionID SessionRef, self RateLimitRef, caller CallerRef) error {
 	_, err := c.client.APICall(ctx, "Rate_limit.add_caller", string(sessionID), string(self), string(caller))
 	return err
 }
 
 // SetNameDescription Set the name/description field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self RateLimitRef, value string) error {
 	_, err := c.client.APICall(ctx, "Rate_limit.set_name_description", string(sessionID), string(self), value)
 	return err
 }
 
 // SetNameLabel Set the name/label field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self RateLimitRef, value string) error {
 	_, err := c.client.APICall(ctx, "Rate_limit.set_name_label", string(sessionID), string(self), value)
 	return err
 }
 
 // GetFillRate Get the fill_rate field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetFillRate(ctx context.Context, sessionID SessionRef, self RateLimitRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_fill_rate", toValue[float64], string(sessionID), string(self))
 }
 
 // GetBurstSize Get the burst_size field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetBurstSize(ctx context.Context, sessionID SessionRef, self RateLimitRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_burst_size", toValue[float64], string(sessionID), string(self))
 }
 
 // GetCallers Get the callers field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetCallers(ctx context.Context, sessionID SessionRef, self RateLimitRef) ([]CallerRef, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_callers", convertCallerRefSetToGo, string(sessionID), string(self))
 }
 
 // GetNameDescription Get the name/description field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self RateLimitRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_name_description", toValue[string], string(sessionID), string(self))
 }
 
 // GetNameLabel Get the name/label field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self RateLimitRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_name_label", toValue[string], string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetUUID(ctx context.Context, sessionID SessionRef, self RateLimitRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_uuid", toValue[string], string(sessionID), string(self))
 }
 
 // GetByNameLabel Get all the Rate_limit instances with the given label.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) ([]RateLimitRef, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_by_name_label", convertRateLimitRefSetToGo, string(sessionID), label)
 }
 
 // Destroy Destroy the specified Rate_limit instance.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) Destroy(ctx context.Context, sessionID SessionRef, self RateLimitRef) error {
 	_, err := c.client.APICall(ctx, "Rate_limit.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Create a new Rate_limit instance, and return its handle. The constructor args are: name_label, name_description, burst_size, fill_rate (* = non-optional).
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) Create(ctx context.Context, sessionID SessionRef, args RateLimitRecord) (RateLimitRef, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.create", toString[RateLimitRef], string(sessionID), convertRateLimitRecordToXen(args))
 }
 
 // GetByUUID Get a reference to the Rate_limit instance with the specified UUID.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (RateLimitRef, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_by_uuid", toString[RateLimitRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given Rate_limit.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c RateLimitClass) GetRecord(ctx context.Context, sessionID SessionRef, self RateLimitRef) (RateLimitRecord, error) {
 	return callAndConvert(ctx, c.client, "Rate_limit.get_record", convertRateLimitRecordToGo, string(sessionID), string(self))
 }

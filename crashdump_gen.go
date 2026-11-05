@@ -20,16 +20,22 @@ type CrashdumpRecord struct {
 type CrashdumpRef string
 
 // A VM crashdump
+//
+// Deprecated: Deprecated in XAPI release inverness.
 type CrashdumpClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of crashdump references to crashdump records for all crashdumps known to the system.
+//
+// Deprecated: Deprecated in XAPI release inverness.
 func (c CrashdumpClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[CrashdumpRef]CrashdumpRecord, error) {
 	return callAndConvert(ctx, c.client, "crashdump.get_all_records", convertCrashdumpRefToCrashdumpRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the crashdumps known to the system.
+//
+// Deprecated: Deprecated in XAPI release inverness.
 func (c CrashdumpClass) GetAll(ctx context.Context, sessionID SessionRef) ([]CrashdumpRef, error) {
 	return callAndConvert(ctx, c.client, "crashdump.get_all", convertCrashdumpRefSetToGo, string(sessionID))
 }
@@ -79,11 +85,15 @@ func (c CrashdumpClass) GetUUID(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetByUUID Get a reference to the crashdump instance with the specified UUID.
+//
+// Deprecated: Deprecated in XAPI release inverness.
 func (c CrashdumpClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (CrashdumpRef, error) {
 	return callAndConvert(ctx, c.client, "crashdump.get_by_uuid", toString[CrashdumpRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given crashdump.
+//
+// Deprecated: Deprecated in XAPI release inverness.
 func (c CrashdumpClass) GetRecord(ctx context.Context, sessionID SessionRef, self CrashdumpRef) (CrashdumpRecord, error) {
 	return callAndConvert(ctx, c.client, "crashdump.get_record", convertCrashdumpRecordToGo, string(sessionID), string(self))
 }

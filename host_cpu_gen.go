@@ -38,16 +38,22 @@ type HostCPURecord struct {
 type HostCPURef string
 
 // A physical CPU
+//
+// Deprecated: Deprecated in XAPI release midnight-ride. Deprecated in favour of the Host.cpu_info field.
 type HostCPUClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of host_cpu references to host_cpu records for all host_cpus known to the system.
+//
+// Deprecated: Deprecated in XAPI release midnight-ride. Deprecated in favour of the Host.cpu_info field.
 func (c HostCPUClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[HostCPURef]HostCPURecord, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_all_records", convertHostCPURefToHostCPURecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the host_cpus known to the system.
+//
+// Deprecated: Deprecated in XAPI release midnight-ride. Deprecated in favour of the Host.cpu_info field.
 func (c HostCPUClass) GetAll(ctx context.Context, sessionID SessionRef) ([]HostCPURef, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_all", convertHostCPURefSetToGo, string(sessionID))
 }
@@ -136,11 +142,15 @@ func (c HostCPUClass) GetUUID(ctx context.Context, sessionID SessionRef, self Ho
 }
 
 // GetByUUID Get a reference to the host_cpu instance with the specified UUID.
+//
+// Deprecated: Deprecated in XAPI release midnight-ride. Deprecated in favour of the Host.cpu_info field.
 func (c HostCPUClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (HostCPURef, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_by_uuid", toString[HostCPURef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given host_cpu.
+//
+// Deprecated: Deprecated in XAPI release midnight-ride. Deprecated in favour of the Host.cpu_info field.
 func (c HostCPUClass) GetRecord(ctx context.Context, sessionID SessionRef, self HostCPURef) (HostCPURecord, error) {
 	return callAndConvert(ctx, c.client, "host_cpu.get_record", convertHostCPURecordToGo, string(sessionID), string(self))
 }

@@ -90,12 +90,16 @@ func (c MessageClass) Get(ctx context.Context, sessionID SessionRef, cls Cls, ob
 }
 
 // DestroyAll
+//
+// Experimental: prototyped in XAPI release 26.6.0; it may change or be removed.
 func (c MessageClass) DestroyAll(ctx context.Context, sessionID SessionRef, filters map[string]string) error {
 	_, err := c.client.APICall(ctx, "message.destroy_all", string(sessionID), convertStringToStringMapToXen(filters))
 	return err
 }
 
 // DestroyMany
+//
+// Experimental: prototyped in XAPI release 22.19.0; it may change or be removed.
 func (c MessageClass) DestroyMany(ctx context.Context, sessionID SessionRef, messages []MessageRef) error {
 	_, err := c.client.APICall(ctx, "message.destroy_many", string(sessionID), convertMessageRefSetToXen(messages))
 	return err

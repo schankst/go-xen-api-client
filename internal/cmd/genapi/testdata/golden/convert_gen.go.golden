@@ -66,6 +66,7 @@ func convertThingRecordToGo(input any) (ThingRecord, error) {
 		field(s, "labels", &r.Labels, convertThingRefToStringMapToGo),
 		field(s, "nickname", &r.Nickname, convertStringOptionToGo),
 		field(s, "mode", &r.Mode, toString[SharedMode]),
+		field(s, "legacy_field", &r.LegacyField, toValue[string]),
 	)
 	return r, err
 }

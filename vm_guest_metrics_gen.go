@@ -24,14 +24,22 @@ type VMGuestMetricsRecord struct {
 	// version of the OS
 	OSVersion map[string]string
 	// The NETBIOS name of the machine
+	//
+	// Experimental: prototyped in XAPI release 24.28.0; it may change or be removed.
 	NetbiosName map[string]string
 	// version of the PV drivers
 	PVDriversVersion map[string]string
 	// Logically equivalent to PV_drivers_detected
+	//
+	// Deprecated: Deprecated in XAPI release dundee. Deprecated in favour of PV_drivers_detected, and redefined in terms of it.
 	PVDriversUpToDate bool
 	// This field exists but has no data. Use the memory and memory_internal_free RRD data-sources instead.
+	//
+	// Deprecated: Removed in XAPI release george. Disabled in favour of the RRDs, to improve scalability.
 	Memory map[string]string
 	// This field exists but has no data.
+	//
+	// Deprecated: Removed in XAPI release orlando. No data.
 	Disks map[string]string
 	// network configuration
 	Networks map[string]string
@@ -50,6 +58,8 @@ type VMGuestMetricsRecord struct {
 	// At least one of the guest's devices has successfully connected to the backend.
 	PVDriversDetected bool
 	// The guest's services data.
+	//
+	// Experimental: prototyped in XAPI release 25.15.0; it may change or be removed.
 	Services map[string]string
 }
 
@@ -89,6 +99,8 @@ func (c VMGuestMetricsClass) SetOtherConfig(ctx context.Context, sessionID Sessi
 }
 
 // GetServices Get the services field of the given VM_guest_metrics.
+//
+// Experimental: prototyped in XAPI release 25.15.0; it may change or be removed.
 func (c VMGuestMetricsClass) GetServices(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_services", convertStringToStringMapToGo, string(sessionID), string(self))
 }
@@ -134,16 +146,22 @@ func (c VMGuestMetricsClass) GetNetworks(ctx context.Context, sessionID SessionR
 }
 
 // GetDisks Get the disks field of the given VM_guest_metrics.
+//
+// Deprecated: Removed in XAPI release orlando. No data.
 func (c VMGuestMetricsClass) GetDisks(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_disks", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetMemory Get the memory field of the given VM_guest_metrics.
+//
+// Deprecated: Removed in XAPI release george. Disabled in favour of the RRDs, to improve scalability.
 func (c VMGuestMetricsClass) GetMemory(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_memory", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetPVDriversUpToDate Get the PV_drivers_up_to_date field of the given VM_guest_metrics.
+//
+// Deprecated: Deprecated in XAPI release dundee. Deprecated in favour of PV_drivers_detected, and redefined in terms of it.
 func (c VMGuestMetricsClass) GetPVDriversUpToDate(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_PV_drivers_up_to_date", toValue[bool], string(sessionID), string(self))
 }
@@ -154,6 +172,8 @@ func (c VMGuestMetricsClass) GetPVDriversVersion(ctx context.Context, sessionID 
 }
 
 // GetNetbiosName Get the netbios_name field of the given VM_guest_metrics.
+//
+// Experimental: prototyped in XAPI release 24.28.0; it may change or be removed.
 func (c VMGuestMetricsClass) GetNetbiosName(ctx context.Context, sessionID SessionRef, self VMGuestMetricsRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VM_guest_metrics.get_netbios_name", convertStringToStringMapToGo, string(sessionID), string(self))
 }

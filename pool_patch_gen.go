@@ -45,56 +45,76 @@ type PoolPatchRecord struct {
 type PoolPatchRef string
 
 // Pool-wide patches
+//
+// Deprecated: Deprecated in XAPI release ely.
 type PoolPatchClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of pool_patch references to pool_patch records for all pool_patchs known to the system.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[PoolPatchRef]PoolPatchRecord, error) {
 	return callAndConvert(ctx, c.client, "pool_patch.get_all_records", convertPoolPatchRefToPoolPatchRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the pool_patchs known to the system.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PoolPatchRef, error) {
 	return callAndConvert(ctx, c.client, "pool_patch.get_all", convertPoolPatchRefSetToGo, string(sessionID))
 }
 
 // CleanOnHost Removes the patch's files from the specified host
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) CleanOnHost(ctx context.Context, sessionID SessionRef, self PoolPatchRef, host HostRef) error {
 	_, err := c.client.APICall(ctx, "pool_patch.clean_on_host", string(sessionID), string(self), string(host))
 	return err
 }
 
 // Destroy Removes the patch's files from all hosts in the pool, and removes the database entries.  Only works on unapplied patches.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) Destroy(ctx context.Context, sessionID SessionRef, self PoolPatchRef) error {
 	_, err := c.client.APICall(ctx, "pool_patch.destroy", string(sessionID), string(self))
 	return err
 }
 
 // PoolClean Removes the patch's files from all hosts in the pool, but does not remove the database entries
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) PoolClean(ctx context.Context, sessionID SessionRef, self PoolPatchRef) error {
 	_, err := c.client.APICall(ctx, "pool_patch.pool_clean", string(sessionID), string(self))
 	return err
 }
 
 // Clean Removes the patch's files from the server
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) Clean(ctx context.Context, sessionID SessionRef, self PoolPatchRef) error {
 	_, err := c.client.APICall(ctx, "pool_patch.clean", string(sessionID), string(self))
 	return err
 }
 
 // Precheck Execute the precheck stage of the selected patch on a host and return its output
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) Precheck(ctx context.Context, sessionID SessionRef, self PoolPatchRef, host HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool_patch.precheck", toValue[string], string(sessionID), string(self), string(host))
 }
 
 // PoolApply Apply the selected patch to all hosts in the pool and return a map of host_ref -> patch output
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) PoolApply(ctx context.Context, sessionID SessionRef, self PoolPatchRef) error {
 	_, err := c.client.APICall(ctx, "pool_patch.pool_apply", string(sessionID), string(self))
 	return err
 }
 
 // Apply Apply the selected patch to a host and return its output
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) Apply(ctx context.Context, sessionID SessionRef, self PoolPatchRef, host HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool_patch.apply", toValue[string], string(sessionID), string(self), string(host))
 }
@@ -168,16 +188,22 @@ func (c PoolPatchClass) GetUUID(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetByNameLabel Get all the pool_patch instances with the given label.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) ([]PoolPatchRef, error) {
 	return callAndConvert(ctx, c.client, "pool_patch.get_by_name_label", convertPoolPatchRefSetToGo, string(sessionID), label)
 }
 
 // GetByUUID Get a reference to the pool_patch instance with the specified UUID.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (PoolPatchRef, error) {
 	return callAndConvert(ctx, c.client, "pool_patch.get_by_uuid", toString[PoolPatchRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given pool_patch.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c PoolPatchClass) GetRecord(ctx context.Context, sessionID SessionRef, self PoolPatchRef) (PoolPatchRecord, error) {
 	return callAndConvert(ctx, c.client, "pool_patch.get_record", convertPoolPatchRecordToGo, string(sessionID), string(self))
 }

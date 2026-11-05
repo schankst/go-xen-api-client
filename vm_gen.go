@@ -267,6 +267,8 @@ type VMRecord struct {
 	// Virtualization memory overhead (bytes).
 	MemoryOverhead int
 	// Dynamically-set memory target (bytes). The value of this field indicates the current target for memory available to this VM.
+	//
+	// Deprecated: Deprecated in XAPI release midnight-ride.
 	MemoryTarget int
 	// Statically-set (i.e. absolute) maximum (bytes). The value of this field at VM start time acts as a hard limit of the amount of memory a guest can use. New values only take effect on reboot.
 	MemoryStaticMax int
@@ -283,6 +285,8 @@ type VMRecord struct {
 	// Boot number of VCPUs
 	VCPUsAtStartup int
 	// action to take after soft reboot
+	//
+	// Experimental: prototyped in XAPI release 23.1.0; it may change or be removed.
 	ActionsAfterSoftreboot OnSoftrebootBehavior
 	// action to take after the guest has shutdown itself
 	ActionsAfterShutdown OnNormalExit
@@ -315,6 +319,8 @@ type VMRecord struct {
 	// to make Zurich guests boot
 	PVLegacyArgs string
 	// HVM boot policy
+	//
+	// Deprecated: Deprecated in XAPI release kolkata. Replaced by VM.domain_type.
 	HVMBootPolicy string
 	// HVM boot params
 	HVMBootParams map[string]string
@@ -323,6 +329,8 @@ type VMRecord struct {
 	// platform-specific configuration
 	Platform map[string]string
 	// PCI bus path for pass-through devices
+	//
+	// Deprecated: Deprecated in XAPI release boston. Field was never used.
 	PCIBus string
 	// additional configuration
 	OtherConfig map[string]string
@@ -345,6 +353,8 @@ type VMRecord struct {
 	// data to be inserted into the xenstore tree (/local/domain/<domid>/vm-data) after the VM is created.
 	XenstoreData map[string]string
 	// if true then the system will attempt to keep the VM running as much as possible.
+	//
+	// Deprecated: Deprecated in XAPI release boston.
 	HaAlwaysRun bool
 	// has possible values: "best-effort" meaning "try to restart this VM if possible but don't consider the Pool to be overcommitted if this is not possible"; "restart" meaning "this VM should be restarted"; "" meaning "do not try to restart this VM"
 	HaRestartPriority string
@@ -375,8 +385,12 @@ type VMRecord struct {
 	// BIOS strings
 	BiosStrings map[string]string
 	// Ref pointing to a protection policy for this VM
+	//
+	// Deprecated: Deprecated in XAPI release clearwater. The VMPR feature was removed.
 	ProtectionPolicy VMPPRef
 	// true if this snapshot was created by the protection policy
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	IsSnapshotFromVmpp bool
 	// Ref pointing to a snapshot schedule for this VM
 	SnapshotSchedule VMSSRef
@@ -415,12 +429,20 @@ type VMRecord struct {
 	// The set of pending mandatory guidances after applying updates, which must be applied, otherwise there may be, for example, VM failures
 	PendingGuidances []UpdateGuidances
 	// The set of pending recommended guidances after applying updates, which most users should follow to make the updates effective, but if not followed, will not cause a failure
+	//
+	// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 	PendingGuidancesRecommended []UpdateGuidances
 	// The set of pending full guidances after applying updates, which a user should follow to make some updates, for example, specific hardware drivers or CPU features, fully effective, but the 'average user' doesn't need to
+	//
+	// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 	PendingGuidancesFull []UpdateGuidances
 	// VM groups associated with the VM
+	//
+	// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 	Groups []VMGroupRef
 	// The state of the Secure Boot certificates, showing whether an update is available, already scheduled, or not needed.
+	//
+	// Experimental: prototyped in XAPI release 26.14.0; it may change or be removed.
 	SecurebootCertificatesState VMSecurebootCertificatesState
 }
 
@@ -478,6 +500,8 @@ func (c VMClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, sel
 }
 
 // Sysprep Pass unattend.xml to Windows sysprep and wait for the VM to shut down as part of a reboot.
+//
+// Experimental: prototyped in XAPI release 25.24.0; it may change or be removed.
 func (c VMClass) Sysprep(ctx context.Context, sessionID SessionRef, self VMRef, unattend string, timeout float64) error {
 	_, err := c.client.APICall(ctx, "VM.sysprep", string(sessionID), string(self), unattend, timeout)
 	return err
@@ -502,17 +526,23 @@ func (c VMClass) SetBlockedOperations(ctx context.Context, sessionID SessionRef,
 }
 
 // UpdateSecurebootCertificatesOnBoot Mark or unmark secure boot certificate update on VM boot
+//
+// Experimental: prototyped in XAPI release 26.14.0; it may change or be removed.
 func (c VMClass) UpdateSecurebootCertificatesOnBoot(ctx context.Context, sessionID SessionRef, self VMRef, mark bool) error {
 	_, err := c.client.APICall(ctx, "VM.update_secureboot_certificates_on_boot", string(sessionID), string(self), mark)
 	return err
 }
 
 // GetSecurebootReadiness Return the secureboot readiness of the VM
+//
+// Experimental: prototyped in XAPI release 24.17.0; it may change or be removed.
 func (c VMClass) GetSecurebootReadiness(ctx context.Context, sessionID SessionRef, self VMRef) (VMSecurebootReadiness, error) {
 	return callAndConvert(ctx, c.client, "VM.get_secureboot_readiness", toString[VMSecurebootReadiness], string(sessionID), string(self))
 }
 
 // SetUefiMode Set the UEFI mode of a VM
+//
+// Experimental: prototyped in XAPI release 24.17.0; it may change or be removed.
 func (c VMClass) SetUefiMode(ctx context.Context, sessionID SessionRef, self VMRef, mode VMUefiMode) (string, error) {
 	return callAndConvert(ctx, c.client, "VM.set_uefi_mode", toValue[string], string(sessionID), string(self), string(mode))
 }
@@ -526,12 +556,16 @@ func (c VMClass) SetUefiMode(ctx context.Context, sessionID SessionRef, self VMR
 //	VM_IS_TEMPLATE - The operation attempted is not valid for templates
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
+//
+// Experimental: prototyped in XAPI release 23.30.0; it may change or be removed.
 func (c VMClass) RestartDeviceModels(ctx context.Context, sessionID SessionRef, self VMRef) error {
 	_, err := c.client.APICall(ctx, "VM.restart_device_models", string(sessionID), string(self))
 	return err
 }
 
 // SetHVMBootPolicy Set the VM.HVM_boot_policy field of the given VM, which will take effect when it is next started
+//
+// Deprecated: Deprecated in XAPI release kolkata. Replaced by VM.set_domain_type.
 func (c VMClass) SetHVMBootPolicy(ctx context.Context, sessionID SessionRef, self VMRef, value string) error {
 	_, err := c.client.APICall(ctx, "VM.set_HVM_boot_policy", string(sessionID), string(self), value)
 	return err
@@ -561,6 +595,8 @@ func (c VMClass) SetHasVendorDevice(ctx context.Context, sessionID SessionRef, s
 }
 
 // CallHostPlugin Call an API plugin on the host where this vm resides
+//
+// Experimental: prototyped in XAPI release 25.22.0; it may change or be removed.
 func (c VMClass) CallHostPlugin(ctx context.Context, sessionID SessionRef, vm VMRef, plugin string, fn string, args map[string]string) (string, error) {
 	return callAndConvert(ctx, c.client, "VM.call_host_plugin", toValue[string], string(sessionID), string(vm), plugin, fn, convertStringToStringMapToXen(args))
 }
@@ -580,6 +616,8 @@ func (c VMClass) QueryServices(ctx context.Context, sessionID SessionRef, self V
 // Errors:
 //
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMClass) SetGroups(ctx context.Context, sessionID SessionRef, self VMRef, value []VMGroupRef) error {
 	_, err := c.client.APICall(ctx, "VM.set_groups", string(sessionID), string(self), convertVMGroupRefSetToXen(value))
 	return err
@@ -650,6 +688,8 @@ func (c VMClass) SetSnapshotSchedule(ctx context.Context, sessionID SessionRef, 
 }
 
 // SetProtectionPolicy Set the value of the protection_policy field
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMClass) SetProtectionPolicy(ctx context.Context, sessionID SessionRef, self VMRef, value VMPPRef) error {
 	_, err := c.client.APICall(ctx, "VM.set_protection_policy", string(sessionID), string(self), string(value))
 	return err
@@ -766,6 +806,8 @@ func (c VMClass) GetDataSources(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetBootRecord Returns a record describing the VM's dynamic state, initialised when the VM boots and updated to reflect runtime configuration changes, for example CPU hotplug
+//
+// Deprecated: Deprecated in XAPI release inverness. Use the current VM record/fields instead.
 func (c VMClass) GetBootRecord(ctx context.Context, sessionID SessionRef, self VMRef) (VMRecord, error) {
 	return callAndConvert(ctx, c.client, "VM.get_boot_record", convertVMRecordToGo, string(sessionID), string(self))
 }
@@ -840,17 +882,23 @@ func (c VMClass) SetHVMShadowMultiplier(ctx context.Context, sessionID SessionRe
 }
 
 // GetCooperative Return true if the VM is currently 'co-operative' i.e. is expected to reach a balloon target and actually has done
+//
+// Deprecated: Deprecated in XAPI release tampa.
 func (c VMClass) GetCooperative(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM.get_cooperative", toValue[bool], string(sessionID), string(self))
 }
 
 // WaitMemoryTargetLive Wait for a running VM to reach its current memory target
+//
+// Deprecated: Deprecated in XAPI release midnight-ride.
 func (c VMClass) WaitMemoryTargetLive(ctx context.Context, sessionID SessionRef, self VMRef) error {
 	_, err := c.client.APICall(ctx, "VM.wait_memory_target_live", string(sessionID), string(self))
 	return err
 }
 
 // SetMemoryTargetLive Set the memory target for a running VM
+//
+// Deprecated: Deprecated in XAPI release midnight-ride.
 func (c VMClass) SetMemoryTargetLive(ctx context.Context, sessionID SessionRef, self VMRef, target int) error {
 	_, err := c.client.APICall(ctx, "VM.set_memory_target_live", string(sessionID), string(self), fromInt(target))
 	return err
@@ -914,6 +962,8 @@ func (c VMClass) ComputeMemoryOverhead(ctx context.Context, sessionID SessionRef
 }
 
 // SetHaAlwaysRun Set the value of the ha_always_run
+//
+// Deprecated: Deprecated in XAPI release boston.
 func (c VMClass) SetHaAlwaysRun(ctx context.Context, sessionID SessionRef, self VMRef, value bool) error {
 	_, err := c.client.APICall(ctx, "VM.set_ha_always_run", string(sessionID), string(self), value)
 	return err
@@ -1215,6 +1265,8 @@ func (c VMClass) Clone(ctx context.Context, sessionID SessionRef, vm VMRef, newN
 //	VM_SNAPSHOT_WITH_QUIESCE_TIMEOUT - The VSS plug-in has timed out
 //	VM_SNAPSHOT_WITH_QUIESCE_PLUGIN_DEOS_NOT_RESPOND - The VSS plug-in cannot be contacted
 //	VM_SNAPSHOT_WITH_QUIESCE_NOT_SUPPORTED - The VSS plug-in is not installed on this virtual machine
+//
+// Deprecated: Removed in XAPI release quebec. VSS support has been removed.
 func (c VMClass) SnapshotWithQuiesce(ctx context.Context, sessionID SessionRef, vm VMRef, newName string) (VMRef, error) {
 	return callAndConvert(ctx, c.client, "VM.snapshot_with_quiesce", toString[VMRef], string(sessionID), string(vm), newName)
 }
@@ -1285,6 +1337,8 @@ func (c VMClass) SetRecommendations(ctx context.Context, sessionID SessionRef, s
 }
 
 // SetPCIBus Set the PCI_bus field of the given VM.
+//
+// Deprecated: Deprecated in XAPI release boston. Field was never used.
 func (c VMClass) SetPCIBus(ctx context.Context, sessionID SessionRef, self VMRef, value string) error {
 	_, err := c.client.APICall(ctx, "VM.set_PCI_bus", string(sessionID), string(self), value)
 	return err
@@ -1357,6 +1411,8 @@ func (c VMClass) SetActionsAfterShutdown(ctx context.Context, sessionID SessionR
 }
 
 // SetActionsAfterSoftreboot Set the actions/after_softreboot field of the given VM.
+//
+// Experimental: prototyped in XAPI release 23.1.0; it may change or be removed.
 func (c VMClass) SetActionsAfterSoftreboot(ctx context.Context, sessionID SessionRef, self VMRef, value OnSoftrebootBehavior) error {
 	_, err := c.client.APICall(ctx, "VM.set_actions_after_softreboot", string(sessionID), string(self), string(value))
 	return err
@@ -1411,21 +1467,29 @@ func (c VMClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self VM
 }
 
 // GetSecurebootCertificatesState Get the secureboot_certificates_state field of the given VM.
+//
+// Experimental: prototyped in XAPI release 26.14.0; it may change or be removed.
 func (c VMClass) GetSecurebootCertificatesState(ctx context.Context, sessionID SessionRef, self VMRef) (VMSecurebootCertificatesState, error) {
 	return callAndConvert(ctx, c.client, "VM.get_secureboot_certificates_state", toString[VMSecurebootCertificatesState], string(sessionID), string(self))
 }
 
 // GetGroups Get the groups field of the given VM.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMClass) GetGroups(ctx context.Context, sessionID SessionRef, self VMRef) ([]VMGroupRef, error) {
 	return callAndConvert(ctx, c.client, "VM.get_groups", convertVMGroupRefSetToGo, string(sessionID), string(self))
 }
 
 // GetPendingGuidancesFull Get the pending_guidances_full field of the given VM.
+//
+// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 func (c VMClass) GetPendingGuidancesFull(ctx context.Context, sessionID SessionRef, self VMRef) ([]UpdateGuidances, error) {
 	return callAndConvert(ctx, c.client, "VM.get_pending_guidances_full", convertEnumUpdateGuidancesSetToGo, string(sessionID), string(self))
 }
 
 // GetPendingGuidancesRecommended Get the pending_guidances_recommended field of the given VM.
+//
+// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 func (c VMClass) GetPendingGuidancesRecommended(ctx context.Context, sessionID SessionRef, self VMRef) ([]UpdateGuidances, error) {
 	return callAndConvert(ctx, c.client, "VM.get_pending_guidances_recommended", convertEnumUpdateGuidancesSetToGo, string(sessionID), string(self))
 }
@@ -1521,11 +1585,15 @@ func (c VMClass) GetSnapshotSchedule(ctx context.Context, sessionID SessionRef, 
 }
 
 // GetIsSnapshotFromVmpp Get the is_snapshot_from_vmpp field of the given VM.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMClass) GetIsSnapshotFromVmpp(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM.get_is_snapshot_from_vmpp", toValue[bool], string(sessionID), string(self))
 }
 
 // GetProtectionPolicy Get the protection_policy field of the given VM.
+//
+// Deprecated: Deprecated in XAPI release clearwater. The VMPR feature was removed.
 func (c VMClass) GetProtectionPolicy(ctx context.Context, sessionID SessionRef, self VMRef) (VMPPRef, error) {
 	return callAndConvert(ctx, c.client, "VM.get_protection_policy", toString[VMPPRef], string(sessionID), string(self))
 }
@@ -1601,6 +1669,8 @@ func (c VMClass) GetHaRestartPriority(ctx context.Context, sessionID SessionRef,
 }
 
 // GetHaAlwaysRun Get the ha_always_run field of the given VM.
+//
+// Deprecated: Deprecated in XAPI release boston.
 func (c VMClass) GetHaAlwaysRun(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM.get_ha_always_run", toValue[bool], string(sessionID), string(self))
 }
@@ -1656,6 +1726,8 @@ func (c VMClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetPCIBus Get the PCI_bus field of the given VM.
+//
+// Deprecated: Deprecated in XAPI release boston. Field was never used.
 func (c VMClass) GetPCIBus(ctx context.Context, sessionID SessionRef, self VMRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VM.get_PCI_bus", toValue[string], string(sessionID), string(self))
 }
@@ -1676,6 +1748,8 @@ func (c VMClass) GetHVMBootParams(ctx context.Context, sessionID SessionRef, sel
 }
 
 // GetHVMBootPolicy Get the HVM/boot_policy field of the given VM.
+//
+// Deprecated: Deprecated in XAPI release kolkata. Replaced by VM.domain_type.
 func (c VMClass) GetHVMBootPolicy(ctx context.Context, sessionID SessionRef, self VMRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VM.get_HVM_boot_policy", toValue[string], string(sessionID), string(self))
 }
@@ -1756,6 +1830,8 @@ func (c VMClass) GetActionsAfterShutdown(ctx context.Context, sessionID SessionR
 }
 
 // GetActionsAfterSoftreboot Get the actions/after_softreboot field of the given VM.
+//
+// Experimental: prototyped in XAPI release 23.1.0; it may change or be removed.
 func (c VMClass) GetActionsAfterSoftreboot(ctx context.Context, sessionID SessionRef, self VMRef) (OnSoftrebootBehavior, error) {
 	return callAndConvert(ctx, c.client, "VM.get_actions_after_softreboot", toString[OnSoftrebootBehavior], string(sessionID), string(self))
 }
@@ -1796,6 +1872,8 @@ func (c VMClass) GetMemoryStaticMax(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetMemoryTarget Get the memory/target field of the given VM.
+//
+// Deprecated: Deprecated in XAPI release midnight-ride.
 func (c VMClass) GetMemoryTarget(ctx context.Context, sessionID SessionRef, self VMRef) (int, error) {
 	return callAndConvert(ctx, c.client, "VM.get_memory_target", toInt, string(sessionID), string(self))
 }

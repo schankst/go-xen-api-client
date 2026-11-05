@@ -364,6 +364,45 @@
       }
      ]
     }
+   },
+   {
+    "name": "legacy_field",
+    "description": "legacy field",
+    "type": "string",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Deprecated_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      },
+      {
+       "transition": "deprecated",
+       "release": "boston",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "future_field",
+    "description": "future field",
+    "type": "string",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "99.0.0-next",
+       "description": ""
+      }
+     ]
+    }
    }
   ],
   "messages": [
@@ -677,6 +716,186 @@
       {
        "transition": "published",
        "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "old_call",
+    "description": "old call",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "Reference to a valid session",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Removed_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      },
+      {
+       "transition": "deprecated",
+       "release": "dundee",
+       "description": ""
+      },
+      {
+       "transition": "removed",
+       "release": "quebec",
+       "description": "use new_call instead"
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "legacy_call",
+    "description": "legacy call",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "Reference to a valid session",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Deprecated_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      },
+      {
+       "transition": "deprecated",
+       "release": "24.0.0",
+       "description": "Legacy SSL no longer supported."
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "experimental_call",
+    "description": "experimental call",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "Reference to a valid session",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Prototyped_s",
+     "transitions": [
+      {
+       "transition": "prototyped",
+       "release": "22.26.0",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "future_call",
+    "description": "future call",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "Reference to a valid session",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "99.0.0-next",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "released_after_next",
+    "description": "released after next",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "Reference to a valid session",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "prototyped",
+       "release": "98.0.0-next",
+       "description": ""
+      },
+      {
+       "transition": "published",
+       "release": "98.0.0",
        "description": ""
       }
      ]

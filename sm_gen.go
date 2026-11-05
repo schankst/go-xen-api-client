@@ -37,6 +37,8 @@ type SMRecord struct {
 	// names and descriptions of device config keys
 	Configuration map[string]string
 	// capabilities of the SM plugin
+	//
+	// Deprecated: Deprecated in XAPI release clearwater. Use SM.features instead.
 	Capabilities []string
 	// capabilities of the SM plugin, with capability version numbers
 	Features map[string]int
@@ -47,6 +49,8 @@ type SMRecord struct {
 	// The storage plugin requires that one of these cluster stacks is configured and running.
 	RequiredClusterStack []string
 	// Image formats supported by the SR: raw, vhd, qcow2
+	//
+	// Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
 	SupportedImageFormats []ImageFormatType
 }
 
@@ -86,6 +90,8 @@ func (c SMClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetSupportedImageFormats Get the supported_image_formats field of the given SM.
+//
+// Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
 func (c SMClass) GetSupportedImageFormats(ctx context.Context, sessionID SessionRef, self SMRef) ([]ImageFormatType, error) {
 	return callAndConvert(ctx, c.client, "SM.get_supported_image_formats", convertEnumImageFormatTypeSetToGo, string(sessionID), string(self))
 }
@@ -111,6 +117,8 @@ func (c SMClass) GetFeatures(ctx context.Context, sessionID SessionRef, self SMR
 }
 
 // GetCapabilities Get the capabilities field of the given SM.
+//
+// Deprecated: Deprecated in XAPI release clearwater. Use SM.features instead.
 func (c SMClass) GetCapabilities(ctx context.Context, sessionID SessionRef, self SMRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "SM.get_capabilities", convertStringSetToGo, string(sessionID), string(self))
 }

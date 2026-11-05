@@ -141,12 +141,16 @@ type PoolRecord struct {
 	// true if workload balancing is enabled on the pool, false otherwise
 	WlbEnabled bool
 	// true if communication with the WLB server should enforce TLS certificate verification.
+	//
+	// Deprecated: Deprecated in XAPI release 1.290.0. Deprecated: to enable TLS verification use Pool.enable_tls_verification instead.
 	WlbVerifyCert bool
 	// true a redo-log is to be used other than when HA is enabled, false otherwise
 	RedoLogEnabled bool
 	// indicates the VDI to use for the redo-log other than when HA is enabled
 	RedoLogVdi VDIRef
 	// address of the vswitch controller
+	//
+	// Deprecated: Deprecated in XAPI release falcon. Deprecated: set the IP address of the vswitch controller in SDN_controller instead.
 	VswitchController string
 	// Pool-wide restrictions currently in effect
 	Restrictions map[string]string
@@ -163,6 +167,8 @@ type PoolRecord struct {
 	// Details about the physical CPUs on the pool
 	CPUInfo map[string]string
 	// This field was consulted when VM.create did not specify a value for 'has_vendor_device'; VM.create now uses a simple default and no longer consults this value.
+	//
+	// Deprecated: Deprecated in XAPI release 24.14.0. No longer considered by VM.create.
 	PolicyNoVendorDevice bool
 	// The pool-wide flag to show if the live patching feauture is disabled or not.
 	LivePatchingDisabled bool
@@ -171,6 +177,8 @@ type PoolRecord struct {
 	// The UEFI certificates allowing Secure Boot
 	UefiCertificates string
 	// Custom UEFI certificates allowing Secure Boot
+	//
+	// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
 	CustomUefiCertificates string
 	// True if either a PSR is running or we are waiting for a PSR to be re-run
 	IsPsrPending bool
@@ -189,48 +197,90 @@ type PoolRecord struct {
 	// Password for the authentication of the proxy used in syncing with the enabled repositories
 	RepositoryProxyPassword SecretRef
 	// Default behaviour during migration, True if stream compression should be used
+	//
+	// Experimental: prototyped in XAPI release 22.33.0; it may change or be removed.
 	MigrationCompression bool
 	// true if bias against pool coordinator when scheduling vms is enabled, false otherwise
 	CoordinatorBias bool
 	// Maximum number of threads to use for PAM authentication
+	//
+	// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
 	LocalAuthMaxThreads int
 	// Maximum number of threads to use for external (AD) authentication
+	//
+	// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
 	ExtAuthMaxThreads int
 	// Specifies whether external authentication caching is enabled for this pool or not
+	//
+	// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 	ExtAuthCacheEnabled bool
 	// Maximum capacity of external authentication cache
+	//
+	// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 	ExtAuthCacheSize int
 	// Specifies how long external authentication entries should be cached for (seconds)
+	//
+	// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 	ExtAuthCacheExpiry int
 	// The UUID of the pool for identification of telemetry data
+	//
+	// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 	TelemetryUUID SecretRef
 	// How often the telemetry collection will be carried out
+	//
+	// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 	TelemetryFrequency TelemetryFrequency
 	// The earliest timestamp (in UTC) when the next round of telemetry collection can be carried out
+	//
+	// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 	TelemetryNextCollection time.Time
 	// time of the last update sychronization
+	//
+	// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 	LastUpdateSync time.Time
 	// The frequency at which updates are synchronized from a remote CDN: daily or weekly.
+	//
+	// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 	UpdateSyncFrequency UpdateSyncFrequency
 	// The day of the week the update synchronizations will be scheduled, based on pool's local timezone. Ignored when update_sync_frequency is daily
+	//
+	// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 	UpdateSyncDay int
 	// Whether periodic update synchronization is enabled or not
+	//
+	// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 	UpdateSyncEnabled bool
 	// The recommended pool properties for clients to respect for optimal performance. For example, max-vm-group=5
+	//
+	// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 	Recommendations map[string]string
 	// Licensing data shared within the whole pool
+	//
+	// Experimental: prototyped in XAPI release 25.6.0; it may change or be removed.
 	LicenseServer map[string]string
 	// Indicates whether an HA-protected VM that is shut down from inside (not through the API) should be automatically rebooted when HA is enabled
+	//
+	// Experimental: prototyped in XAPI release 25.16.0; it may change or be removed.
 	HaRebootVMOnInternalShutdown bool
 	// When true, only one console connection per VM/host in the pool is accepted. Otherwise every connection for a VM/host's console is accepted. Note: when true, connection attempts via websocket will be rejected.
+	//
+	// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
 	LimitConsoleSessions bool
 	// The maximum time (in seconds) that a VM's console can be idle before it is automatically disconnected. The default value 0 means never timeout. This setting applies only to VM consoles; for host consoles, use the separate parameter 'host.console_idle_timeout'.
+	//
+	// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
 	VMConsoleIdleTimeout int
 	// When true, at VM.create time the pool automatically marks a newly created VM whose Secure Boot certificates are due to expire by setting VM.secureboot_certificates_state to update_on_boot (the same effect as VM.update_secureboot_certificates_on_boot), so the certificates are updated on the VM's next boot. This applies to VMs created by VM.create, including those created by operations that internally call it: the HTTP(s) PUT /import and /import_metadata calls and disaster recovery (VM.recover and VM_appliance.recover); it does not apply to VM.clone or VM.copy, which inherit the source VM's state.
+	//
+	// Experimental: prototyped in XAPI release 26.16.1; it may change or be removed.
 	AutoUpdateVMSecurebootCertificates bool
 	// When true, LLDP is enabled on the NIC associated with each managed physical PIF on every host in the pool. When false, it is disabled. However, it can be overridden by PIF.lldp_mode settings when mode is not inherited. LLDP receiving and advertising are always enabled or disabled together.
+	//
+	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 	LldpEnabled bool
 	// The multicast MAC address used for LLDP advertising. To apply a change, use pool.set_lldp_enabled(with force=true).
+	//
+	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 	LldpMulticastAddress LldpMulticastAddress
 }
 
@@ -252,124 +302,166 @@ func (c PoolClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PoolRef,
 }
 
 // SyncTrustedCertificatesFrom Download trusted TLS certificates from a remote pool and install them in this pool. Certificates already present locally (matched by fingerprint and purpose) are skipped.
+//
+// Experimental: prototyped in XAPI release 26.16.0; it may change or be removed.
 func (c PoolClass) SyncTrustedCertificatesFrom(ctx context.Context, sessionID SessionRef, self PoolRef, remotePool string, remoteSession SessionRef, remoteCertificate string, ca bool) ([]CertificateRef, error) {
 	return callAndConvert(ctx, c.client, "pool.sync_trusted_certificates_from", convertCertificateRefSetToGo, string(sessionID), string(self), remotePool, string(remoteSession), remoteCertificate, ca)
 }
 
 // UninstallTrustedCertificate Uninstall a trusted TLS certificate, pool-wide.
+//
+// Experimental: prototyped in XAPI release 26.13.0; it may change or be removed.
 func (c PoolClass) UninstallTrustedCertificate(ctx context.Context, sessionID SessionRef, self PoolRef, certificate CertificateRef) error {
 	_, err := c.client.APICall(ctx, "pool.uninstall_trusted_certificate", string(sessionID), string(self), string(certificate))
 	return err
 }
 
 // InstallTrustedCertificate Install a trusted TLS certificate, pool-wide.
+//
+// Experimental: prototyped in XAPI release 26.13.0; it may change or be removed.
 func (c PoolClass) InstallTrustedCertificate(ctx context.Context, sessionID SessionRef, self PoolRef, ca bool, cert string, purpose []CertificatePurpose) error {
 	_, err := c.client.APICall(ctx, "pool.install_trusted_certificate", string(sessionID), string(self), ca, cert, convertEnumCertificatePurposeSetToXen(purpose))
 	return err
 }
 
 // SetSSHAutoMode Set the SSH auto mode for all hosts in the pool
+//
+// Experimental: prototyped in XAPI release 25.27.0; it may change or be removed.
 func (c PoolClass) SetSSHAutoMode(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_ssh_auto_mode", string(sessionID), string(self), value)
 	return err
 }
 
 // SetConsoleIdleTimeout Set the console idle timeout for all hosts in the pool
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c PoolClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_console_idle_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetSSHEnabledTimeout Set the SSH enabled timeout for all hosts in the pool
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c PoolClass) SetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_ssh_enabled_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // DisableSSH Disable SSH access on all hosts in the pool. It's a helper which calls host.disable_ssh for all the hosts in the pool.
+//
+// Experimental: prototyped in XAPI release 25.13.0; it may change or be removed.
 func (c PoolClass) DisableSSH(ctx context.Context, sessionID SessionRef, self PoolRef) error {
 	_, err := c.client.APICall(ctx, "pool.disable_ssh", string(sessionID), string(self))
 	return err
 }
 
 // EnableSSH Enable SSH access on all hosts in the pool. It's a helper which calls host.enable_ssh for all the hosts in the pool.
+//
+// Experimental: prototyped in XAPI release 25.13.0; it may change or be removed.
 func (c PoolClass) EnableSSH(ctx context.Context, sessionID SessionRef, self PoolRef) error {
 	_, err := c.client.APICall(ctx, "pool.enable_ssh", string(sessionID), string(self))
 	return err
 }
 
 // GetGuestSecurebootReadiness
+//
+// Experimental: prototyped in XAPI release 24.17.0; it may change or be removed.
 func (c PoolClass) GetGuestSecurebootReadiness(ctx context.Context, sessionID SessionRef, self PoolRef) (PoolGuestSecurebootReadiness, error) {
 	return callAndConvert(ctx, c.client, "pool.get_guest_secureboot_readiness", toString[PoolGuestSecurebootReadiness], string(sessionID), string(self))
 }
 
 // SetExtAuthCacheExpiry
+//
+// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 func (c PoolClass) SetExtAuthCacheExpiry(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_ext_auth_cache_expiry", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetExtAuthCacheSize
+//
+// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 func (c PoolClass) SetExtAuthCacheSize(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_ext_auth_cache_size", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetExtAuthCacheEnabled
+//
+// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 func (c PoolClass) SetExtAuthCacheEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_ext_auth_cache_enabled", string(sessionID), string(self), value)
 	return err
 }
 
 // SetExtAuthMaxThreads
+//
+// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
 func (c PoolClass) SetExtAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_ext_auth_max_threads", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetLocalAuthMaxThreads
+//
+// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
 func (c PoolClass) SetLocalAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_local_auth_max_threads", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetUpdateSyncEnabled enable or disable periodic update synchronization depending on the value
+//
+// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 func (c PoolClass) SetUpdateSyncEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_update_sync_enabled", string(sessionID), string(self), value)
 	return err
 }
 
 // ConfigureUpdateSync Configure periodic update synchronization to synchronize updates from a remote CDN
+//
+// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 func (c PoolClass) ConfigureUpdateSync(ctx context.Context, sessionID SessionRef, self PoolRef, updateSyncFrequency UpdateSyncFrequency, updateSyncDay int) error {
 	_, err := c.client.APICall(ctx, "pool.configure_update_sync", string(sessionID), string(self), string(updateSyncFrequency), fromInt(updateSyncDay))
 	return err
 }
 
 // ResetTelemetryUUID Assign a new UUID to telemetry data.
+//
+// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 func (c PoolClass) ResetTelemetryUUID(ctx context.Context, sessionID SessionRef, self PoolRef) error {
 	_, err := c.client.APICall(ctx, "pool.reset_telemetry_uuid", string(sessionID), string(self))
 	return err
 }
 
 // SetTelemetryNextCollection Set the timestamp for the next telemetry data collection.
+//
+// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 func (c PoolClass) SetTelemetryNextCollection(ctx context.Context, sessionID SessionRef, self PoolRef, value time.Time) error {
 	_, err := c.client.APICall(ctx, "pool.set_telemetry_next_collection", string(sessionID), string(self), value)
 	return err
 }
 
 // SetHTTPSOnly updates all the host firewalls in the pool to open or close port 80 depending on the value
+//
+// Experimental: prototyped in XAPI release 22.27.0; it may change or be removed.
 func (c PoolClass) SetHTTPSOnly(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_https_only", string(sessionID), string(self), value)
 	return err
 }
 
 // SetCustomUefiCertificates Set custom UEFI certificates for a pool and all its hosts. Need `allow-custom-uefi-certs` set to true in conf. If empty: default back to Pool.uefi_certificates
+//
+// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
 func (c PoolClass) SetCustomUefiCertificates(ctx context.Context, sessionID SessionRef, self PoolRef, value string) error {
 	_, err := c.client.APICall(ctx, "pool.set_custom_uefi_certificates", string(sessionID), string(self), value)
 	return err
 }
 
 // SetUefiCertificates Set the UEFI certificates for a pool and all its hosts. Deprecated: use set_custom_uefi_certificates instead
+//
+// Deprecated: Deprecated in XAPI release 24.0.0. Use set_custom_uefi_certificates instead.
 func (c PoolClass) SetUefiCertificates(ctx context.Context, sessionID SessionRef, self PoolRef, value string) error {
 	_, err := c.client.APICall(ctx, "pool.set_uefi_certificates", string(sessionID), string(self), value)
 	return err
@@ -459,6 +551,8 @@ func (c PoolClass) HasExtension(ctx context.Context, sessionID SessionRef, self 
 }
 
 // SetLldpEnabled Enable or disable LLDP on the NIC of every managed physical PIF in the pool, then apply the change by re-plugging the affected PIFs.
+//
+// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 func (c PoolClass) SetLldpEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool, force bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_lldp_enabled", string(sessionID), string(self), value, force)
 	return err
@@ -471,12 +565,16 @@ func (c PoolClass) SetIgmpSnoopingEnabled(ctx context.Context, sessionID Session
 }
 
 // DisableSslLegacy Sets ssl_legacy false on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
+//
+// Deprecated: Deprecated in XAPI release stockholm. Legacy SSL no longer supported.
 func (c PoolClass) DisableSslLegacy(ctx context.Context, sessionID SessionRef, self PoolRef) error {
 	_, err := c.client.APICall(ctx, "pool.disable_ssl_legacy", string(sessionID), string(self))
 	return err
 }
 
 // EnableSslLegacy Sets ssl_legacy true on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
+//
+// Deprecated: Removed in XAPI release stockholm. Legacy SSL no longer supported.
 func (c PoolClass) EnableSslLegacy(ctx context.Context, sessionID SessionRef, self PoolRef) error {
 	_, err := c.client.APICall(ctx, "pool.enable_ssl_legacy", string(sessionID), string(self))
 	return err
@@ -511,6 +609,8 @@ func (c PoolClass) TestArchiveTarget(ctx context.Context, sessionID SessionRef, 
 }
 
 // SetVswitchController Set the IP address of the vswitch controller.
+//
+// Deprecated: Deprecated in XAPI release falcon. Deprecated: use 'SDN_controller.introduce' and 'SDN_controller.forget' instead.
 func (c PoolClass) SetVswitchController(ctx context.Context, sessionID SessionRef, address string) error {
 	_, err := c.client.APICall(ctx, "pool.set_vswitch_controller", string(sessionID), address)
 	return err
@@ -558,29 +658,39 @@ func (c PoolClass) CrlInstall(ctx context.Context, sessionID SessionRef, name st
 }
 
 // UninstallCaCertificate Remove a pool-wide TLS CA certificate.
+//
+// Deprecated: Deprecated in XAPI release 26.13.0. Use Pool.uninstall_trusted_certificate instead.
 func (c PoolClass) UninstallCaCertificate(ctx context.Context, sessionID SessionRef, name string, force bool) error {
 	_, err := c.client.APICall(ctx, "pool.uninstall_ca_certificate", string(sessionID), name, force)
 	return err
 }
 
 // InstallCaCertificate Install a TLS CA certificate, pool-wide.
+//
+// Deprecated: Deprecated in XAPI release 26.13.0. Use Pool.install_trusted_certificate instead.
 func (c PoolClass) InstallCaCertificate(ctx context.Context, sessionID SessionRef, name string, cert string) error {
 	_, err := c.client.APICall(ctx, "pool.install_ca_certificate", string(sessionID), name, cert)
 	return err
 }
 
 // CertificateList List the names of all installed TLS CA certificates.
+//
+// Deprecated: Deprecated in XAPI release 1.290.0. Use openssl to inspect certificate.
 func (c PoolClass) CertificateList(ctx context.Context, sessionID SessionRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "pool.certificate_list", convertStringSetToGo, string(sessionID))
 }
 
 // CertificateUninstall Remove a pool-wide TLS CA certificate.
+//
+// Deprecated: Deprecated in XAPI release 1.290.0. Use Pool.uninstall_ca_certificate instead.
 func (c PoolClass) CertificateUninstall(ctx context.Context, sessionID SessionRef, name string) error {
 	_, err := c.client.APICall(ctx, "pool.certificate_uninstall", string(sessionID), name)
 	return err
 }
 
 // CertificateInstall Install a TLS CA certificate, pool-wide.
+//
+// Deprecated: Deprecated in XAPI release 1.290.0. Use Pool.install_ca_certificate instead.
 func (c PoolClass) CertificateInstall(ctx context.Context, sessionID SessionRef, name string, cert string) error {
 	_, err := c.client.APICall(ctx, "pool.certificate_install", string(sessionID), name, cert)
 	return err
@@ -777,48 +887,64 @@ func (c PoolClass) Join(ctx context.Context, sessionID SessionRef, masterAddress
 }
 
 // SetLldpMulticastAddress Set the lldp_multicast_address field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 func (c PoolClass) SetLldpMulticastAddress(ctx context.Context, sessionID SessionRef, self PoolRef, value LldpMulticastAddress) error {
 	_, err := c.client.APICall(ctx, "pool.set_lldp_multicast_address", string(sessionID), string(self), string(value))
 	return err
 }
 
 // SetAutoUpdateVMSecurebootCertificates Set the auto_update_vm_secureboot_certificates field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.16.1; it may change or be removed.
 func (c PoolClass) SetAutoUpdateVMSecurebootCertificates(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_auto_update_vm_secureboot_certificates", string(sessionID), string(self), value)
 	return err
 }
 
 // SetVMConsoleIdleTimeout Set the vm_console_idle_timeout field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
 func (c PoolClass) SetVMConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_vm_console_idle_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetLimitConsoleSessions Set the limit_console_sessions field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
 func (c PoolClass) SetLimitConsoleSessions(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_limit_console_sessions", string(sessionID), string(self), value)
 	return err
 }
 
 // SetHaRebootVMOnInternalShutdown Set the ha_reboot_vm_on_internal_shutdown field of the given pool.
+//
+// Experimental: prototyped in XAPI release 25.16.0; it may change or be removed.
 func (c PoolClass) SetHaRebootVMOnInternalShutdown(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_ha_reboot_vm_on_internal_shutdown", string(sessionID), string(self), value)
 	return err
 }
 
 // RemoveFromLicenseServer Remove the given key and its corresponding value from the license_server field of the given pool.  If the key is not in that Map, then do nothing.
+//
+// Experimental: prototyped in XAPI release 25.6.0; it may change or be removed.
 func (c PoolClass) RemoveFromLicenseServer(ctx context.Context, sessionID SessionRef, self PoolRef, key string) error {
 	_, err := c.client.APICall(ctx, "pool.remove_from_license_server", string(sessionID), string(self), key)
 	return err
 }
 
 // AddToLicenseServer Add the given key-value pair to the license_server field of the given pool.
+//
+// Experimental: prototyped in XAPI release 25.6.0; it may change or be removed.
 func (c PoolClass) AddToLicenseServer(ctx context.Context, sessionID SessionRef, self PoolRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "pool.add_to_license_server", string(sessionID), string(self), key, value)
 	return err
 }
 
 // SetLicenseServer Set the license_server field of the given pool.
+//
+// Experimental: prototyped in XAPI release 25.6.0; it may change or be removed.
 func (c PoolClass) SetLicenseServer(ctx context.Context, sessionID SessionRef, self PoolRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "pool.set_license_server", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
@@ -831,6 +957,8 @@ func (c PoolClass) SetCoordinatorBias(ctx context.Context, sessionID SessionRef,
 }
 
 // SetMigrationCompression Set the migration_compression field of the given pool.
+//
+// Experimental: prototyped in XAPI release 22.33.0; it may change or be removed.
 func (c PoolClass) SetMigrationCompression(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_migration_compression", string(sessionID), string(self), value)
 	return err
@@ -849,12 +977,16 @@ func (c PoolClass) SetLivePatchingDisabled(ctx context.Context, sessionID Sessio
 }
 
 // SetPolicyNoVendorDevice Set the policy_no_vendor_device field of the given pool.
+//
+// Deprecated: Deprecated in XAPI release 24.14.0. No longer considered by VM.create.
 func (c PoolClass) SetPolicyNoVendorDevice(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_policy_no_vendor_device", string(sessionID), string(self), value)
 	return err
 }
 
 // SetWlbVerifyCert Set the wlb_verify_cert field of the given pool.
+//
+// Deprecated: Deprecated in XAPI release 1.290.0. Deprecated: to enable TLS verification use Pool.enable_tls_verification instead.
 func (c PoolClass) SetWlbVerifyCert(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_wlb_verify_cert", string(sessionID), string(self), value)
 	return err
@@ -975,101 +1107,141 @@ func (c PoolClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetLldpMulticastAddress Get the lldp_multicast_address field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 func (c PoolClass) GetLldpMulticastAddress(ctx context.Context, sessionID SessionRef, self PoolRef) (LldpMulticastAddress, error) {
 	return callAndConvert(ctx, c.client, "pool.get_lldp_multicast_address", toString[LldpMulticastAddress], string(sessionID), string(self))
 }
 
 // GetLldpEnabled Get the lldp_enabled field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
 func (c PoolClass) GetLldpEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_lldp_enabled", toValue[bool], string(sessionID), string(self))
 }
 
 // GetAutoUpdateVMSecurebootCertificates Get the auto_update_vm_secureboot_certificates field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.16.1; it may change or be removed.
 func (c PoolClass) GetAutoUpdateVMSecurebootCertificates(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_auto_update_vm_secureboot_certificates", toValue[bool], string(sessionID), string(self))
 }
 
 // GetVMConsoleIdleTimeout Get the vm_console_idle_timeout field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
 func (c PoolClass) GetVMConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_vm_console_idle_timeout", toInt, string(sessionID), string(self))
 }
 
 // GetLimitConsoleSessions Get the limit_console_sessions field of the given pool.
+//
+// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
 func (c PoolClass) GetLimitConsoleSessions(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_limit_console_sessions", toValue[bool], string(sessionID), string(self))
 }
 
 // GetHaRebootVMOnInternalShutdown Get the ha_reboot_vm_on_internal_shutdown field of the given pool.
+//
+// Experimental: prototyped in XAPI release 25.16.0; it may change or be removed.
 func (c PoolClass) GetHaRebootVMOnInternalShutdown(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_reboot_vm_on_internal_shutdown", toValue[bool], string(sessionID), string(self))
 }
 
 // GetLicenseServer Get the license_server field of the given pool.
+//
+// Experimental: prototyped in XAPI release 25.6.0; it may change or be removed.
 func (c PoolClass) GetLicenseServer(ctx context.Context, sessionID SessionRef, self PoolRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_license_server", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetRecommendations Get the recommendations field of the given pool.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c PoolClass) GetRecommendations(ctx context.Context, sessionID SessionRef, self PoolRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_recommendations", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetUpdateSyncEnabled Get the update_sync_enabled field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 func (c PoolClass) GetUpdateSyncEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_update_sync_enabled", toValue[bool], string(sessionID), string(self))
 }
 
 // GetUpdateSyncDay Get the update_sync_day field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 func (c PoolClass) GetUpdateSyncDay(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_update_sync_day", toInt, string(sessionID), string(self))
 }
 
 // GetUpdateSyncFrequency Get the update_sync_frequency field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 func (c PoolClass) GetUpdateSyncFrequency(ctx context.Context, sessionID SessionRef, self PoolRef) (UpdateSyncFrequency, error) {
 	return callAndConvert(ctx, c.client, "pool.get_update_sync_frequency", toString[UpdateSyncFrequency], string(sessionID), string(self))
 }
 
 // GetLastUpdateSync Get the last_update_sync field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 func (c PoolClass) GetLastUpdateSync(ctx context.Context, sessionID SessionRef, self PoolRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "pool.get_last_update_sync", toTime, string(sessionID), string(self))
 }
 
 // GetTelemetryNextCollection Get the telemetry_next_collection field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 func (c PoolClass) GetTelemetryNextCollection(ctx context.Context, sessionID SessionRef, self PoolRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "pool.get_telemetry_next_collection", toTime, string(sessionID), string(self))
 }
 
 // GetTelemetryFrequency Get the telemetry_frequency field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 func (c PoolClass) GetTelemetryFrequency(ctx context.Context, sessionID SessionRef, self PoolRef) (TelemetryFrequency, error) {
 	return callAndConvert(ctx, c.client, "pool.get_telemetry_frequency", toString[TelemetryFrequency], string(sessionID), string(self))
 }
 
 // GetTelemetryUUID Get the telemetry_uuid field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.9.0; it may change or be removed.
 func (c PoolClass) GetTelemetryUUID(ctx context.Context, sessionID SessionRef, self PoolRef) (SecretRef, error) {
 	return callAndConvert(ctx, c.client, "pool.get_telemetry_uuid", toString[SecretRef], string(sessionID), string(self))
 }
 
 // GetExtAuthCacheExpiry Get the ext_auth_cache_expiry field of the given pool.
+//
+// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 func (c PoolClass) GetExtAuthCacheExpiry(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ext_auth_cache_expiry", toInt, string(sessionID), string(self))
 }
 
 // GetExtAuthCacheSize Get the ext_auth_cache_size field of the given pool.
+//
+// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 func (c PoolClass) GetExtAuthCacheSize(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ext_auth_cache_size", toInt, string(sessionID), string(self))
 }
 
 // GetExtAuthCacheEnabled Get the ext_auth_cache_enabled field of the given pool.
+//
+// Experimental: prototyped in XAPI release 24.31.0; it may change or be removed.
 func (c PoolClass) GetExtAuthCacheEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ext_auth_cache_enabled", toValue[bool], string(sessionID), string(self))
 }
 
 // GetExtAuthMaxThreads Get the ext_auth_max_threads field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
 func (c PoolClass) GetExtAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ext_auth_max_threads", toInt, string(sessionID), string(self))
 }
 
 // GetLocalAuthMaxThreads Get the local_auth_max_threads field of the given pool.
+//
+// Experimental: prototyped in XAPI release 23.27.0; it may change or be removed.
 func (c PoolClass) GetLocalAuthMaxThreads(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_local_auth_max_threads", toInt, string(sessionID), string(self))
 }
@@ -1080,6 +1252,8 @@ func (c PoolClass) GetCoordinatorBias(ctx context.Context, sessionID SessionRef,
 }
 
 // GetMigrationCompression Get the migration_compression field of the given pool.
+//
+// Experimental: prototyped in XAPI release 22.33.0; it may change or be removed.
 func (c PoolClass) GetMigrationCompression(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_migration_compression", toValue[bool], string(sessionID), string(self))
 }
@@ -1125,6 +1299,8 @@ func (c PoolClass) GetIsPsrPending(ctx context.Context, sessionID SessionRef, se
 }
 
 // GetCustomUefiCertificates Get the custom_uefi_certificates field of the given pool.
+//
+// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
 func (c PoolClass) GetCustomUefiCertificates(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_custom_uefi_certificates", toValue[string], string(sessionID), string(self))
 }
@@ -1145,6 +1321,8 @@ func (c PoolClass) GetLivePatchingDisabled(ctx context.Context, sessionID Sessio
 }
 
 // GetPolicyNoVendorDevice Get the policy_no_vendor_device field of the given pool.
+//
+// Deprecated: Deprecated in XAPI release 24.14.0. No longer considered by VM.create.
 func (c PoolClass) GetPolicyNoVendorDevice(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_policy_no_vendor_device", toValue[bool], string(sessionID), string(self))
 }
@@ -1185,6 +1363,8 @@ func (c PoolClass) GetRestrictions(ctx context.Context, sessionID SessionRef, se
 }
 
 // GetVswitchController Get the vswitch_controller field of the given pool.
+//
+// Deprecated: Deprecated in XAPI release falcon. Deprecated: set the IP address of the vswitch controller in SDN_controller instead.
 func (c PoolClass) GetVswitchController(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_vswitch_controller", toValue[string], string(sessionID), string(self))
 }
@@ -1200,6 +1380,8 @@ func (c PoolClass) GetRedoLogEnabled(ctx context.Context, sessionID SessionRef, 
 }
 
 // GetWlbVerifyCert Get the wlb_verify_cert field of the given pool.
+//
+// Deprecated: Deprecated in XAPI release 1.290.0. Deprecated: to enable TLS verification use Pool.enable_tls_verification instead.
 func (c PoolClass) GetWlbVerifyCert(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_wlb_verify_cert", toValue[bool], string(sessionID), string(self))
 }

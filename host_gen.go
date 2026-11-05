@@ -139,6 +139,8 @@ type HostRecord struct {
 	// Set of host crash dumps
 	Crashdumps []HostCrashdumpRef
 	// Set of host patches
+	//
+	// Deprecated: Deprecated in XAPI release ely.
 	Patches []HostPatchRef
 	// Set of updates
 	Updates []PoolUpdateRef
@@ -191,6 +193,8 @@ type HostRecord struct {
 	// List of physical USBs in the host
 	PUSBs []PUSBRef
 	// Allow SSLv3 protocol and ciphersuites as used by older server versions. This controls both incoming and outgoing connections. When this is set to a different value, the host immediately restarts its SSL/TLS listening service; typically this takes less than a second but existing connections to it will be broken. API login sessions will remain valid.
+	//
+	// Deprecated: Deprecated in XAPI release stockholm. Legacy SSL no longer supported.
 	SslLegacy bool
 	// VCPUs params to apply to all resident guests
 	GuestVCPUsParams map[string]string
@@ -209,6 +213,8 @@ type HostRecord struct {
 	// Specifies whether multipathing is enabled
 	Multipathing bool
 	// The UEFI certificates allowing Secure Boot
+	//
+	// Deprecated: Deprecated in XAPI release 22.16.0. Use Pool.uefi_certificates instead.
 	UefiCertificates string
 	// List of certificates installed in the host
 	Certificates []CertificateRef
@@ -219,38 +225,72 @@ type HostRecord struct {
 	// True if this host has TLS verifcation enabled
 	TLSVerificationEnabled bool
 	// Date and time when the last software update was applied
+	//
+	// Experimental: prototyped in XAPI release 22.20.0; it may change or be removed.
 	LastSoftwareUpdate time.Time
 	// Reflects whether port 80 is open (false) or not (true)
+	//
+	// Experimental: prototyped in XAPI release 22.27.0; it may change or be removed.
 	HTTPSOnly bool
 	// Default as 'unknown', 'yes' if the host is up to date with updates synced from remote CDN, otherwise 'no'
+	//
+	// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 	LatestSyncedUpdatesApplied LatestSyncedUpdatesAppliedState
 	// NUMA-aware VM memory and vCPU placement policy
+	//
+	// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
 	NumaAffinityPolicy HostNumaAffinityPolicy
 	// The set of pending recommended guidances after applying updates, which most users should follow to make the updates effective, but if not followed, will not cause a failure
+	//
+	// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 	PendingGuidancesRecommended []UpdateGuidances
 	// The set of pending full guidances after applying updates, which a user should follow to make some updates, for example, specific hardware drivers or CPU features, fully effective, but the 'average user' doesn't need to
+	//
+	// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 	PendingGuidancesFull []UpdateGuidances
 	// The SHA256 checksum of updateinfo of the most recently applied update on the host
+	//
+	// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 	LastUpdateHash string
 	// True if SSH access is enabled for the host
+	//
+	// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 	SSHEnabled bool
 	// The timeout in seconds after which SSH access will be automatically disabled (0 means never), this setting will be applied every time the SSH is enabled by XAPI
+	//
+	// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 	SSHEnabledTimeout int
 	// The time in UTC after which the SSH access will be automatically disabled
+	//
+	// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 	SSHExpiry time.Time
 	// The timeout in seconds after which idle console will be automatically terminated (0 means never)
+	//
+	// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 	ConsoleIdleTimeout int
 	// Reflects whether SSH auto mode is enabled for the host
+	//
+	// Experimental: prototyped in XAPI release 25.27.0; it may change or be removed.
 	SSHAutoMode bool
 	// The maximum C-state that the host is allowed to enter, "" means unlimited; "N" means limit to CN; "N,M" means limit to CN with max sub cstate M.
+	//
+	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 	MaxCstate string
 	// Whether the host has booted in secure boot mode
+	//
+	// Experimental: prototyped in XAPI release 25.31.0; it may change or be removed.
 	SecureBoot bool
 	// Indicates NTP servers are assigned by DHCP, or configured by user, or the factory servers, or NTP is disabled
+	//
+	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 	NtpMode HostNtpMode
 	// Custom NTP servers configured by users, used in Custom NTP mode
+	//
+	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 	NtpCustomServers []string
 	// The time zone identifier as defined in the IANA Time Zone Database
+	//
+	// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 	Timezone string
 }
 
@@ -272,104 +312,140 @@ func (c HostClass) GetAll(ctx context.Context, sessionID SessionRef) ([]HostRef,
 }
 
 // SetServertime Set the host's system clock when NTP is disabled.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) SetServertime(ctx context.Context, sessionID SessionRef, self HostRef, value time.Time) error {
 	_, err := c.client.APICall(ctx, "host.set_servertime", string(sessionID), string(self), value)
 	return err
 }
 
 // GetNtpSynchronized Returns true if the system clock on the host is synchronized with the NTP servers.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) GetNtpSynchronized(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_ntp_synchronized", toValue[bool], string(sessionID), string(self))
 }
 
 // ListTimezones List all available timezones on the host.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) ListTimezones(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "host.list_timezones", convertStringSetToGo, string(sessionID), string(self))
 }
 
 // SetTimezone Set the host's timezone.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) SetTimezone(ctx context.Context, sessionID SessionRef, self HostRef, value string) error {
 	_, err := c.client.APICall(ctx, "host.set_timezone", string(sessionID), string(self), value)
 	return err
 }
 
 // GetNtpServersStatus Get the NTP servers status on the host
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) GetNtpServersStatus(ctx context.Context, sessionID SessionRef, self HostRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_ntp_servers_status", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // SetNtpCustomServers Set the custom NTP servers for the host
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) SetNtpCustomServers(ctx context.Context, sessionID SessionRef, self HostRef, value []string) error {
 	_, err := c.client.APICall(ctx, "host.set_ntp_custom_servers", string(sessionID), string(self), convertStringSetToXen(value))
 	return err
 }
 
 // SetNtpMode Set the NTP mode for the host
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) SetNtpMode(ctx context.Context, sessionID SessionRef, self HostRef, value HostNtpMode) error {
 	_, err := c.client.APICall(ctx, "host.set_ntp_mode", string(sessionID), string(self), string(value))
 	return err
 }
 
 // SetMaxCstate Sets xen's max-cstate on a host. See: https://xenbits.xen.org/docs/unstable/misc/xen-command-line.html#max_cstate-x86. "" means unlimited; "N" means limit to CN; "N,M" means limit to CN with max sub cstate M. Note: Only C0, C1, unlimited are supported currently.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) SetMaxCstate(ctx context.Context, sessionID SessionRef, self HostRef, value string) error {
 	_, err := c.client.APICall(ctx, "host.set_max_cstate", string(sessionID), string(self), value)
 	return err
 }
 
 // GetTrackedUserAgents Get the (name, version) list of tracked user agents on this host. If different versions of the same name are seen, keep the last-seen version. The oldest entry will be removed if reach the max num. Note that the list is cleared after host/XAPI restart
+//
+// Experimental: prototyped in XAPI release 25.34.0; it may change or be removed.
 func (c HostClass) GetTrackedUserAgents(ctx context.Context, sessionID SessionRef, self HostRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_tracked_user_agents", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // SetSSHAutoMode Set the SSH auto mode for the host
+//
+// Experimental: prototyped in XAPI release 25.27.0; it may change or be removed.
 func (c HostClass) SetSSHAutoMode(ctx context.Context, sessionID SessionRef, self HostRef, value bool) error {
 	_, err := c.client.APICall(ctx, "host.set_ssh_auto_mode", string(sessionID), string(self), value)
 	return err
 }
 
 // SetConsoleIdleTimeout Set the console idle timeout for the host
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c HostClass) SetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int) error {
 	_, err := c.client.APICall(ctx, "host.set_console_idle_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // SetSSHEnabledTimeout Set the SSH service enabled timeout for the host
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c HostClass) SetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef, value int) error {
 	_, err := c.client.APICall(ctx, "host.set_ssh_enabled_timeout", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // DisableSSH Disable SSH access on the host. It will stop the service sshd only if it is running. It will also disable the service sshd only if it is enabled. A newly joined host in the pool or an ejected host from the pool would keep the original status.
+//
+// Experimental: prototyped in XAPI release 25.13.0; it may change or be removed.
 func (c HostClass) DisableSSH(ctx context.Context, sessionID SessionRef, self HostRef) error {
 	_, err := c.client.APICall(ctx, "host.disable_ssh", string(sessionID), string(self))
 	return err
 }
 
 // EnableSSH Enable SSH access on the host. It will start the service sshd only if it is not running. It will also enable the service sshd only if it is not enabled. A newly joined host in the pool or an ejected host from the pool would keep the original status.
+//
+// Experimental: prototyped in XAPI release 25.13.0; it may change or be removed.
 func (c HostClass) EnableSSH(ctx context.Context, sessionID SessionRef, self HostRef) error {
 	_, err := c.client.APICall(ctx, "host.enable_ssh", string(sessionID), string(self))
 	return err
 }
 
 // EmergencyClearMandatoryGuidance Clear the pending mandatory guidance on this host
+//
+// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 func (c HostClass) EmergencyClearMandatoryGuidance(ctx context.Context, sessionID SessionRef) error {
 	_, err := c.client.APICall(ctx, "host.emergency_clear_mandatory_guidance", string(sessionID))
 	return err
 }
 
 // ApplyRecommendedGuidances apply all recommended guidances both on the host and on all HVM VMs on the host after updates are applied on the host
+//
+// Deprecated: Removed in XAPI release 23.25.0.
 func (c HostClass) ApplyRecommendedGuidances(ctx context.Context, sessionID SessionRef, self HostRef) error {
 	_, err := c.client.APICall(ctx, "host.apply_recommended_guidances", string(sessionID), string(self))
 	return err
 }
 
 // SetHTTPSOnly updates the host firewall to open or close port 80 depending on the value
+//
+// Experimental: prototyped in XAPI release 22.27.0; it may change or be removed.
 func (c HostClass) SetHTTPSOnly(ctx context.Context, sessionID SessionRef, self HostRef, value bool) error {
 	_, err := c.client.APICall(ctx, "host.set_https_only", string(sessionID), string(self), value)
 	return err
 }
 
 // RescanDrivers Scan the host and update its driver information.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostClass) RescanDrivers(ctx context.Context, sessionID SessionRef, self HostRef) error {
 	_, err := c.client.APICall(ctx, "host.rescan_drivers", string(sessionID), string(self))
 	return err
@@ -393,6 +469,8 @@ func (c HostClass) EmergencyDisableTLSVerification(ctx context.Context, sessionI
 }
 
 // SetNumaAffinityPolicy Set VM placement NUMA affinity policy
+//
+// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
 func (c HostClass) SetNumaAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef, value HostNumaAffinityPolicy) error {
 	_, err := c.client.APICall(ctx, "host.set_numa_affinity_policy", string(sessionID), string(self), string(value))
 	return err
@@ -410,6 +488,8 @@ func (c HostClass) SetSchedGran(ctx context.Context, sessionID SessionRef, self 
 }
 
 // SetUefiCertificates Sets the UEFI certificates on a host
+//
+// Deprecated: Deprecated in XAPI release 22.16.0. Use Pool.set_uefi_certificates instead.
 func (c HostClass) SetUefiCertificates(ctx context.Context, sessionID SessionRef, host HostRef, value string) error {
 	_, err := c.client.APICall(ctx, "host.set_uefi_certificates", string(sessionID), string(host), value)
 	return err
@@ -467,12 +547,16 @@ func (c HostClass) EnableLocalStorageCaching(ctx context.Context, sessionID Sess
 }
 
 // ResetCPUFeatures Remove the feature mask, such that after a reboot all features of the CPU are enabled.
+//
+// Deprecated: Removed in XAPI release dundee. Manual CPU feature setting was removed.
 func (c HostClass) ResetCPUFeatures(ctx context.Context, sessionID SessionRef, host HostRef) error {
 	_, err := c.client.APICall(ctx, "host.reset_cpu_features", string(sessionID), string(host))
 	return err
 }
 
 // SetCPUFeatures Set the CPU features to be used after a reboot, if the given features string is valid.
+//
+// Deprecated: Removed in XAPI release dundee. Manual CPU feature setting was removed.
 func (c HostClass) SetCPUFeatures(ctx context.Context, sessionID SessionRef, host HostRef, features string) error {
 	_, err := c.client.APICall(ctx, "host.set_cpu_features", string(sessionID), string(host), features)
 	return err
@@ -485,6 +569,8 @@ func (c HostClass) SetPowerOnMode(ctx context.Context, sessionID SessionRef, sel
 }
 
 // RefreshPackInfo Refresh the list of installed Supplemental Packs.
+//
+// Deprecated: Deprecated in XAPI release ely. Use Pool_update.resync_host instead.
 func (c HostClass) RefreshPackInfo(ctx context.Context, sessionID SessionRef, host HostRef) error {
 	_, err := c.client.APICall(ctx, "host.refresh_pack_info", string(sessionID), string(host))
 	return err
@@ -663,6 +749,8 @@ func (c HostClass) Evacuate(ctx context.Context, sessionID SessionRef, host Host
 }
 
 // GetUncooperativeResidentVMs Return a set of VMs which are not co-operating with the host's memory control system
+//
+// Deprecated: Deprecated in XAPI release tampa.
 func (c HostClass) GetUncooperativeResidentVMs(ctx context.Context, sessionID SessionRef, self HostRef) ([]VMRef, error) {
 	return callAndConvert(ctx, c.client, "host.get_uncooperative_resident_VMs", convertVMRefSetToGo, string(sessionID), string(self))
 }
@@ -739,6 +827,8 @@ func (c HostClass) LicenseAdd(ctx context.Context, sessionID SessionRef, host Ho
 // Errors:
 //
 //	LICENSE_PROCESSING_ERROR - There was an error processing your license. Please contact your support representative.
+//
+// Deprecated: Removed in XAPI release clearwater. Free licenses no longer handled by xapi.
 func (c HostClass) LicenseApply(ctx context.Context, sessionID SessionRef, host HostRef, contents string) error {
 	_, err := c.client.APICall(ctx, "host.license_apply", string(sessionID), string(host), contents)
 	return err
@@ -933,86 +1023,120 @@ func (c HostClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetTimezone Get the timezone field of the given host.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) GetTimezone(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "host.get_timezone", toValue[string], string(sessionID), string(self))
 }
 
 // GetNtpCustomServers Get the ntp_custom_servers field of the given host.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) GetNtpCustomServers(ctx context.Context, sessionID SessionRef, self HostRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "host.get_ntp_custom_servers", convertStringSetToGo, string(sessionID), string(self))
 }
 
 // GetNtpMode Get the ntp_mode field of the given host.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) GetNtpMode(ctx context.Context, sessionID SessionRef, self HostRef) (HostNtpMode, error) {
 	return callAndConvert(ctx, c.client, "host.get_ntp_mode", toString[HostNtpMode], string(sessionID), string(self))
 }
 
 // GetSecureBoot Get the secure_boot field of the given host.
+//
+// Experimental: prototyped in XAPI release 25.31.0; it may change or be removed.
 func (c HostClass) GetSecureBoot(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_secure_boot", toValue[bool], string(sessionID), string(self))
 }
 
 // GetMaxCstate Get the max_cstate field of the given host.
+//
+// Experimental: prototyped in XAPI release 26.0.0; it may change or be removed.
 func (c HostClass) GetMaxCstate(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "host.get_max_cstate", toValue[string], string(sessionID), string(self))
 }
 
 // GetSSHAutoMode Get the ssh_auto_mode field of the given host.
+//
+// Experimental: prototyped in XAPI release 25.27.0; it may change or be removed.
 func (c HostClass) GetSSHAutoMode(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_ssh_auto_mode", toValue[bool], string(sessionID), string(self))
 }
 
 // GetConsoleIdleTimeout Get the console_idle_timeout field of the given host.
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c HostClass) GetConsoleIdleTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (int, error) {
 	return callAndConvert(ctx, c.client, "host.get_console_idle_timeout", toInt, string(sessionID), string(self))
 }
 
 // GetSSHExpiry Get the ssh_expiry field of the given host.
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c HostClass) GetSSHExpiry(ctx context.Context, sessionID SessionRef, self HostRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "host.get_ssh_expiry", toTime, string(sessionID), string(self))
 }
 
 // GetSSHEnabledTimeout Get the ssh_enabled_timeout field of the given host.
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c HostClass) GetSSHEnabledTimeout(ctx context.Context, sessionID SessionRef, self HostRef) (int, error) {
 	return callAndConvert(ctx, c.client, "host.get_ssh_enabled_timeout", toInt, string(sessionID), string(self))
 }
 
 // GetSSHEnabled Get the ssh_enabled field of the given host.
+//
+// Experimental: prototyped in XAPI release 25.21.0; it may change or be removed.
 func (c HostClass) GetSSHEnabled(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_ssh_enabled", toValue[bool], string(sessionID), string(self))
 }
 
 // GetLastUpdateHash Get the last_update_hash field of the given host.
+//
+// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 func (c HostClass) GetLastUpdateHash(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "host.get_last_update_hash", toValue[string], string(sessionID), string(self))
 }
 
 // GetPendingGuidancesFull Get the pending_guidances_full field of the given host.
+//
+// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 func (c HostClass) GetPendingGuidancesFull(ctx context.Context, sessionID SessionRef, self HostRef) ([]UpdateGuidances, error) {
 	return callAndConvert(ctx, c.client, "host.get_pending_guidances_full", convertEnumUpdateGuidancesSetToGo, string(sessionID), string(self))
 }
 
 // GetPendingGuidancesRecommended Get the pending_guidances_recommended field of the given host.
+//
+// Experimental: prototyped in XAPI release 24.10.0; it may change or be removed.
 func (c HostClass) GetPendingGuidancesRecommended(ctx context.Context, sessionID SessionRef, self HostRef) ([]UpdateGuidances, error) {
 	return callAndConvert(ctx, c.client, "host.get_pending_guidances_recommended", convertEnumUpdateGuidancesSetToGo, string(sessionID), string(self))
 }
 
 // GetNumaAffinityPolicy Get the numa_affinity_policy field of the given host.
+//
+// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
 func (c HostClass) GetNumaAffinityPolicy(ctx context.Context, sessionID SessionRef, self HostRef) (HostNumaAffinityPolicy, error) {
 	return callAndConvert(ctx, c.client, "host.get_numa_affinity_policy", toString[HostNumaAffinityPolicy], string(sessionID), string(self))
 }
 
 // GetLatestSyncedUpdatesApplied Get the latest_synced_updates_applied field of the given host.
+//
+// Experimental: prototyped in XAPI release 23.18.0; it may change or be removed.
 func (c HostClass) GetLatestSyncedUpdatesApplied(ctx context.Context, sessionID SessionRef, self HostRef) (LatestSyncedUpdatesAppliedState, error) {
 	return callAndConvert(ctx, c.client, "host.get_latest_synced_updates_applied", toString[LatestSyncedUpdatesAppliedState], string(sessionID), string(self))
 }
 
 // GetHTTPSOnly Get the https_only field of the given host.
+//
+// Experimental: prototyped in XAPI release 22.27.0; it may change or be removed.
 func (c HostClass) GetHTTPSOnly(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_https_only", toValue[bool], string(sessionID), string(self))
 }
 
 // GetLastSoftwareUpdate Get the last_software_update field of the given host.
+//
+// Experimental: prototyped in XAPI release 22.20.0; it may change or be removed.
 func (c HostClass) GetLastSoftwareUpdate(ctx context.Context, sessionID SessionRef, self HostRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "host.get_last_software_update", toTime, string(sessionID), string(self))
 }
@@ -1038,6 +1162,8 @@ func (c HostClass) GetCertificates(ctx context.Context, sessionID SessionRef, se
 }
 
 // GetUefiCertificates Get the uefi_certificates field of the given host.
+//
+// Deprecated: Deprecated in XAPI release 22.16.0. Use Pool.uefi_certificates instead.
 func (c HostClass) GetUefiCertificates(ctx context.Context, sessionID SessionRef, self HostRef) (string, error) {
 	return callAndConvert(ctx, c.client, "host.get_uefi_certificates", toValue[string], string(sessionID), string(self))
 }
@@ -1083,6 +1209,8 @@ func (c HostClass) GetGuestVCPUsParams(ctx context.Context, sessionID SessionRef
 }
 
 // GetSslLegacy Get the ssl_legacy field of the given host.
+//
+// Deprecated: Deprecated in XAPI release stockholm. Legacy SSL no longer supported.
 func (c HostClass) GetSslLegacy(ctx context.Context, sessionID SessionRef, self HostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "host.get_ssl_legacy", toValue[bool], string(sessionID), string(self))
 }
@@ -1213,6 +1341,8 @@ func (c HostClass) GetUpdates(ctx context.Context, sessionID SessionRef, self Ho
 }
 
 // GetPatches Get the patches field of the given host.
+//
+// Deprecated: Deprecated in XAPI release ely.
 func (c HostClass) GetPatches(ctx context.Context, sessionID SessionRef, self HostRef) ([]HostPatchRef, error) {
 	return callAndConvert(ctx, c.client, "host.get_patches", convertHostPatchRefSetToGo, string(sessionID), string(self))
 }
