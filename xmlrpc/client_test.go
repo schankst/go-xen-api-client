@@ -1,6 +1,7 @@
 package xmlrpc
 
 import (
+	"context"
 	"errors"
 	"io"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 )
@@ -37,7 +39,7 @@ func TestClientCallSuccess(t *testing.T) {
 	client := NewClient(server.URL, nil)
 
 	var reply string
-	err := client.Call("session.login_with_password", []any{"root", "pw"}, &reply)
+	err := client.Call(t.Context(), "session.login_with_password", []any{"root", "pw"}, &reply)
 	if err != nil {
 		t.Fatalf("Call: %v", err)
 	}
@@ -59,7 +61,7 @@ func TestClientCallFault(t *testing.T) {
 	client := NewClient(server.URL, nil)
 
 	var reply any
-	err := client.Call("some.method", nil, &reply)
+	err := client.Call(t.Context(), "some.method", nil, &reply)
 	if err == nil {
 		t.Fatal("expected an error for a fault response, got nil")
 	}
@@ -80,7 +82,7 @@ func callAgainstResponse(t *testing.T, responseBody string, reply any) error {
 	defer server.Close()
 
 	client := NewClient(server.URL, nil)
-	return client.Call("some.method", nil, reply)
+	return client.Call(t.Context(), "some.method", nil, reply)
 }
 
 // A decoded value whose Go type doesn't match the reply's element type
@@ -243,7 +245,7 @@ func TestClientCallCookies(t *testing.T) {
 
 	client := NewClient(server.URL, nil)
 	for i := range steps {
-		if err := client.Call("noop", nil, nil); err != nil {
+		if err := client.Call(t.Context(), "noop", nil, nil); err != nil {
 			t.Fatalf("Call %d: %v", i+1, err)
 		}
 	}
@@ -264,7 +266,7 @@ func TestClientCallConcurrent(t *testing.T) {
 	for range 20 {
 		wg.Go(func() {
 			var reply string
-			errs <- client.Call("noop", nil, &reply)
+			errs <- client.Call(t.Context(), "noop", nil, &reply)
 		})
 	}
 	wg.Wait()
@@ -297,7 +299,7 @@ func TestClientCallHTTPErrorStatus(t *testing.T) {
 			defer server.Close()
 
 			var reply any
-			err := NewClient(server.URL, nil).Call("some.method", nil, &reply)
+			err := NewClient(server.URL, nil).Call(t.Context(), "some.method", nil, &reply)
 
 			var httpErr *HTTPError
 			if !errors.As(err, &httpErr) {
@@ -324,7 +326,7 @@ func TestHTTPErrorTruncatesBody(t *testing.T) {
 	}))
 	defer server.Close()
 
-	err := NewClient(server.URL, nil).Call("some.method", nil, nil)
+	err := NewClient(server.URL, nil).Call(t.Context(), "some.method", nil, nil)
 
 	var httpErr *HTTPError
 	if !errors.As(err, &httpErr) {
@@ -332,5 +334,64 @@ func TestHTTPErrorTruncatesBody(t *testing.T) {
 	}
 	if len(httpErr.Body) != maxErrorBody {
 		t.Errorf("len(Body) = %d, want %d", len(httpErr.Body), maxErrorBody)
+	}
+}
+
+// blockingServer answers only after the request's context is done or the
+// test ends, so a Call against it returns only through cancellation.
+func blockingServer(t *testing.T) *httptest.Server {
+	t.Helper()
+	release := make(chan struct{})
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case <-r.Context().Done():
+		case <-release:
+		}
+	}))
+	t.Cleanup(func() {
+		close(release)
+		server.Close()
+	})
+	return server
+}
+
+func TestClientCallCanceled(t *testing.T) {
+	server := blockingServer(t)
+	ctx, cancel := context.WithCancel(t.Context())
+	time.AfterFunc(20*time.Millisecond, cancel)
+
+	err := NewClient(server.URL, nil).Call(ctx, "slow.method", nil, nil)
+	if !errors.Is(err, context.Canceled) {
+		t.Fatalf("Call error = %v, want context.Canceled", err)
+	}
+}
+
+func TestClientCallDeadline(t *testing.T) {
+	server := blockingServer(t)
+	ctx, cancel := context.WithTimeout(t.Context(), 20*time.Millisecond)
+	defer cancel()
+
+	err := NewClient(server.URL, nil).Call(ctx, "slow.method", nil, nil)
+	if !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("Call error = %v, want context.DeadlineExceeded", err)
+	}
+}
+
+func TestClientCallAlreadyCanceledSendsNothing(t *testing.T) {
+	var requests atomic.Int32
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requests.Add(1)
+	}))
+	defer server.Close()
+
+	ctx, cancel := context.WithCancel(t.Context())
+	cancel()
+
+	err := NewClient(server.URL, nil).Call(ctx, "some.method", nil, nil)
+	if !errors.Is(err, context.Canceled) {
+		t.Fatalf("Call error = %v, want context.Canceled", err)
+	}
+	if n := requests.Load(); n != 0 {
+		t.Errorf("server received %d requests, want 0", n)
 	}
 }

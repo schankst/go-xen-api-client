@@ -3,6 +3,7 @@
 package xenapi
 
 import (
+	"context"
 	"crypto/tls"
 	"fmt"
 	"net/http"
@@ -36,7 +37,7 @@ type APIResult struct {
 func (client *Client) APICall(method string, params ...any) (result APIResult, err error) {
 	rpcResult := xmlrpc.Struct{}
 
-	err = client.rpc.Call(method, params, &rpcResult)
+	err = client.rpc.Call(context.TODO(), method, params, &rpcResult)
 	if err != nil {
 		return
 	}
