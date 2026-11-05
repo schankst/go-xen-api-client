@@ -20,67 +20,47 @@ in directly via `go get`/`require` without a `replace` directive.
 
 ## Usage example
 
-The following example demonstrates how to instruct XenServer to start a VM with
-a given name label. `XEN_API_HOST` is just the host - a bare IP/hostname, not a
-URL - and `XEN_API_INSECURE` controls TLS certificate verification, off by
-default here since XCP-ng/XenServer hosts commonly run with a self-signed
-certificate:
+Start a VM by name label:
 
 ```go
 package main
 
 import (
-    "crypto/tls"
     "fmt"
-    "net/http"
+    "log"
 
-    "github.com/schankst/go-xen-api-client"
+    xenapi "github.com/schankst/go-xen-api-client"
 )
 
-const XEN_API_HOST string = "10.0.0.10"
-const XEN_API_INSECURE bool = true // false to verify the server's TLS certificate
-const XEN_API_USERNAME string = "USERNAME"
-const XEN_API_PASSWORD string = "PASSWORD"
-const VM_NAME_LABEL = "VM NAME LABEL"
-
 func main() {
-    transport := &http.Transport{
-        TLSClientConfig: &tls.Config{InsecureSkipVerify: XEN_API_INSECURE},
-    }
-
-    xapi := xenapi.NewClient(fmt.Sprintf("https://%s/", XEN_API_HOST), transport)
-
-    session, err := xapi.Session.LoginWithPassword(XEN_API_USERNAME, XEN_API_PASSWORD, "1.0", "example")
+    xapi, err := xenapi.NewClient("https://10.0.0.10")
     if err != nil {
-        panic(err)
+        log.Fatal(err)
     }
 
-    vms, err := xapi.VM.GetByNameLabel(session, VM_NAME_LABEL)
+    session, err := xapi.Session.LoginWithPassword("root", "password", "1.0", "example")
     if err != nil {
-        panic(err)
+        log.Fatal(err)
     }
+    defer xapi.Session.Logout(session)
 
-    if len(vms) == 0 {
-        panic(fmt.Errorf("No VM template with name label %q has been found", VM_NAME_LABEL))
-    }
-
-    if len(vms) > 1 {
-        panic(fmt.Errorf("More than one VM with name label %q has been found", VM_NAME_LABEL))
-    }
-
-    vm := vms[0]
-
-    err = xapi.VM.Start(session, vm, false, false)
+    vms, err := xapi.VM.GetByNameLabel(session, "my-vm")
     if err != nil {
-        panic(err)
+        log.Fatal(err)
+    }
+    if len(vms) != 1 {
+        log.Fatal(fmt.Errorf("found %d VMs named my-vm, want 1", len(vms)))
     }
 
-    err = xapi.Session.Logout(session)
-    if err != nil {
-        panic(err)
+    if err := xapi.VM.Start(session, vms[0], false, false); err != nil {
+        log.Fatal(err)
     }
 }
 ```
+
+The host's TLS certificate is verified. For a host with a self-signed
+certificate, pass its certificate with `xenapi.WithTLSConfig`
+(`&tls.Config{RootCAs: pool}`); see the `NewClient` documentation.
 
 ## Status
 
