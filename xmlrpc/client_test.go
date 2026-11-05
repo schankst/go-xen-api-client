@@ -1,9 +1,11 @@
 package xmlrpc
 
 import (
+	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
@@ -276,5 +278,63 @@ func TestClientCallConcurrent(t *testing.T) {
 		if err != nil {
 			t.Errorf("concurrent Call failed: %v", err)
 		}
+	}
+}
+
+func TestClientCallHTTPErrorStatus(t *testing.T) {
+	cases := []struct {
+		name   string
+		status int
+		body   string
+	}{
+		{"unauthorized", http.StatusUnauthorized, "denied"},
+		{"server error with XML body", http.StatusInternalServerError, `<?xml version="1.0"?><methodResponse><params><param><value>ok</value></param></params></methodResponse>`},
+		{"proxy HTML page", http.StatusBadGateway, "<html><body>Bad Gateway</body></html>"},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(tc.status)
+				_, _ = io.WriteString(w, tc.body)
+			}))
+			defer server.Close()
+
+			var reply any
+			err := NewClient(server.URL, nil).Call("some.method", nil, &reply)
+
+			var httpErr *HTTPError
+			if !errors.As(err, &httpErr) {
+				t.Fatalf("Call error = %v (%T), want *HTTPError", err, err)
+			}
+			if httpErr.StatusCode != tc.status {
+				t.Errorf("StatusCode = %d, want %d", httpErr.StatusCode, tc.status)
+			}
+			if !strings.Contains(err.Error(), strconv.Itoa(tc.status)) {
+				t.Errorf("Error() = %q, want it to name the status code", err)
+			}
+			if reply != nil {
+				t.Errorf("reply = %v, want it left untouched", reply)
+			}
+		})
+	}
+}
+
+func TestHTTPErrorTruncatesBody(t *testing.T) {
+	long := strings.Repeat("x", 10*maxErrorBody)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusServiceUnavailable)
+		_, _ = io.WriteString(w, long)
+	}))
+	defer server.Close()
+
+	err := NewClient(server.URL, nil).Call("some.method", nil, nil)
+
+	var httpErr *HTTPError
+	if !errors.As(err, &httpErr) {
+		t.Fatalf("Call error = %v, want *HTTPError", err)
+	}
+	if len(httpErr.Body) != maxErrorBody {
+		t.Errorf("len(Body) = %d, want %d", len(httpErr.Body), maxErrorBody)
 	}
 }
