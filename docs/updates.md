@@ -28,7 +28,8 @@ for _, u := range updates {
 - `PoolUpdate.Precheck` returns a `LivepatchStatus` (can it apply live?).
 - `AfterApplyGuidance`: `restartHost`, `restartXAPI`, `restartHVM`, `restartPV`.
 - `PoolUpdate.Apply` applies to one host, `PoolUpdate.PoolApply` to all. On
-  XenServer 6.x, use `Host.GetPatches` and `host_patch.applied` instead.
+  XenServer 6.x, use the deprecated `Host.GetPatches` and `host_patch.applied`
+  instead.
 
 ## Repository updates (XenServer 8, XCP-ng)
 
@@ -43,8 +44,8 @@ applied, err := client.Host.ApplyUpdates(ctx, session, host, hash)
 The list comes from `GET https://<master>/updates?session_id=<ref>` (JSON,
 not wrapped by this package).
 
-- State: `Repository.GetUpToDate`, `Repository.GetHash`,
-  `Pool.GetLastUpdateSync`, `Pool.GetRepositories`.
+- State: `Repository.GetHash`, `Pool.GetLastUpdateSync`,
+  `Pool.GetRepositories`.
 - Scheduled sync: `Pool.SetUpdateSyncEnabled`, `Pool.ConfigureUpdateSync`
   (`daily`/`weekly`, day) and the `GetUpdateSync*` getters.
 
@@ -54,6 +55,6 @@ not wrapped by this package).
   (synced updates are missing on this host) or `unknown`.
 - Details: `Host.GetPendingGuidances`, `GetPendingGuidancesRecommended`,
   `GetPendingGuidancesFull`, `GetUpdatesRequiringReboot`,
-  `GetLastSoftwareUpdate`. `Host.ApplyRecommendedGuidances` applies them.
+  `GetLastSoftwareUpdate`.
 - `UpdateGuidances`: `reboot_host`, `reboot_host_on_[kernel_|xen_]livepatch_failure`,
   `restart_toolstack`, `restart_device_model`, `restart_vm`.
