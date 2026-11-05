@@ -1,6 +1,7 @@
 package xmlrpc
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
@@ -25,7 +26,7 @@ type Client struct {
 // transport is nil, http.DefaultTransport's zero-value equivalent
 // (&http.Transport{}) is used.
 //
-// There is no error return: http.NewRequest is what would normally fail at
+// There is no error return: building the request is what would normally fail at
 // construction time (a malformed URL), and that happens inside Call, where
 // it is reported per call. Validating the URL here as well would mean
 // duplicating net/url's parsing rules against http.NewRequest's.
@@ -55,15 +56,19 @@ func NewClient(url string, transport *http.Transport) *Client {
 // that merely look equivalent. A mismatch is returned as an error rather
 // than panicking.
 //
+// ctx bounds the whole call, including reading the response; when it is
+// canceled or its deadline passes, Call returns an error that matches
+// ctx.Err() with errors.Is.
+//
 // Cookies are kept in a cookie jar, so e.g. a load balancer's affinity
 // cookie is honored across calls.
-func (c *Client) Call(method string, params []any, reply any) error {
+func (c *Client) Call(ctx context.Context, method string, params []any, reply any) error {
 	body, err := buildRequest(method, params)
 	if err != nil {
 		return err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, c.url, strings.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.url, strings.NewReader(body))
 	if err != nil {
 		return err
 	}
