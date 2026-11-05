@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -39,13 +41,13 @@ type CrashdumpClass struct {
 }
 
 // GetAllRecords Return a map of crashdump references to crashdump records for all crashdumps known to the system.
-func (_class CrashdumpClass) GetAllRecords(sessionID SessionRef) (_retval map[CrashdumpRef]CrashdumpRecord, _err error) {
+func (_class CrashdumpClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[CrashdumpRef]CrashdumpRecord, _err error) {
 	_method := "crashdump.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -54,13 +56,13 @@ func (_class CrashdumpClass) GetAllRecords(sessionID SessionRef) (_retval map[Cr
 }
 
 // GetAll Return a list of all the crashdumps known to the system.
-func (_class CrashdumpClass) GetAll(sessionID SessionRef) (_retval []CrashdumpRef, _err error) {
+func (_class CrashdumpClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []CrashdumpRef, _err error) {
 	_method := "crashdump.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -69,7 +71,7 @@ func (_class CrashdumpClass) GetAll(sessionID SessionRef) (_retval []CrashdumpRe
 }
 
 // Destroy Destroy the specified crashdump
-func (_class CrashdumpClass) Destroy(sessionID SessionRef, self CrashdumpRef) (_err error) {
+func (_class CrashdumpClass) Destroy(ctx context.Context, sessionID SessionRef, self CrashdumpRef) (_err error) {
 	_method := "crashdump.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -79,12 +81,12 @@ func (_class CrashdumpClass) Destroy(sessionID SessionRef, self CrashdumpRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given crashdump.  If the key is not in that Map, then do nothing.
-func (_class CrashdumpClass) RemoveFromOtherConfig(sessionID SessionRef, self CrashdumpRef, key string) (_err error) {
+func (_class CrashdumpClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self CrashdumpRef, key string) (_err error) {
 	_method := "crashdump.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -98,12 +100,12 @@ func (_class CrashdumpClass) RemoveFromOtherConfig(sessionID SessionRef, self Cr
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given crashdump.
-func (_class CrashdumpClass) AddToOtherConfig(sessionID SessionRef, self CrashdumpRef, key string, value string) (_err error) {
+func (_class CrashdumpClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self CrashdumpRef, key string, value string) (_err error) {
 	_method := "crashdump.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -121,12 +123,12 @@ func (_class CrashdumpClass) AddToOtherConfig(sessionID SessionRef, self Crashdu
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given crashdump.
-func (_class CrashdumpClass) SetOtherConfig(sessionID SessionRef, self CrashdumpRef, value map[string]string) (_err error) {
+func (_class CrashdumpClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self CrashdumpRef, value map[string]string) (_err error) {
 	_method := "crashdump.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -140,12 +142,12 @@ func (_class CrashdumpClass) SetOtherConfig(sessionID SessionRef, self Crashdump
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given crashdump.
-func (_class CrashdumpClass) GetOtherConfig(sessionID SessionRef, self CrashdumpRef) (_retval map[string]string, _err error) {
+func (_class CrashdumpClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self CrashdumpRef) (_retval map[string]string, _err error) {
 	_method := "crashdump.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -155,7 +157,7 @@ func (_class CrashdumpClass) GetOtherConfig(sessionID SessionRef, self Crashdump
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -164,7 +166,7 @@ func (_class CrashdumpClass) GetOtherConfig(sessionID SessionRef, self Crashdump
 }
 
 // GetVDI Get the VDI field of the given crashdump.
-func (_class CrashdumpClass) GetVDI(sessionID SessionRef, self CrashdumpRef) (_retval VDIRef, _err error) {
+func (_class CrashdumpClass) GetVDI(ctx context.Context, sessionID SessionRef, self CrashdumpRef) (_retval VDIRef, _err error) {
 	_method := "crashdump.get_VDI"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -174,7 +176,7 @@ func (_class CrashdumpClass) GetVDI(sessionID SessionRef, self CrashdumpRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -183,7 +185,7 @@ func (_class CrashdumpClass) GetVDI(sessionID SessionRef, self CrashdumpRef) (_r
 }
 
 // GetVM Get the VM field of the given crashdump.
-func (_class CrashdumpClass) GetVM(sessionID SessionRef, self CrashdumpRef) (_retval VMRef, _err error) {
+func (_class CrashdumpClass) GetVM(ctx context.Context, sessionID SessionRef, self CrashdumpRef) (_retval VMRef, _err error) {
 	_method := "crashdump.get_VM"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -193,7 +195,7 @@ func (_class CrashdumpClass) GetVM(sessionID SessionRef, self CrashdumpRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -202,7 +204,7 @@ func (_class CrashdumpClass) GetVM(sessionID SessionRef, self CrashdumpRef) (_re
 }
 
 // GetUUID Get the uuid field of the given crashdump.
-func (_class CrashdumpClass) GetUUID(sessionID SessionRef, self CrashdumpRef) (_retval string, _err error) {
+func (_class CrashdumpClass) GetUUID(ctx context.Context, sessionID SessionRef, self CrashdumpRef) (_retval string, _err error) {
 	_method := "crashdump.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -212,7 +214,7 @@ func (_class CrashdumpClass) GetUUID(sessionID SessionRef, self CrashdumpRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -221,7 +223,7 @@ func (_class CrashdumpClass) GetUUID(sessionID SessionRef, self CrashdumpRef) (_
 }
 
 // GetByUUID Get a reference to the crashdump instance with the specified UUID.
-func (_class CrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_retval CrashdumpRef, _err error) {
+func (_class CrashdumpClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval CrashdumpRef, _err error) {
 	_method := "crashdump.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -231,7 +233,7 @@ func (_class CrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -240,7 +242,7 @@ func (_class CrashdumpClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 }
 
 // GetRecord Get a record containing the current state of the given crashdump.
-func (_class CrashdumpClass) GetRecord(sessionID SessionRef, self CrashdumpRef) (_retval CrashdumpRecord, _err error) {
+func (_class CrashdumpClass) GetRecord(ctx context.Context, sessionID SessionRef, self CrashdumpRef) (_retval CrashdumpRecord, _err error) {
 	_method := "crashdump.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -250,7 +252,7 @@ func (_class CrashdumpClass) GetRecord(sessionID SessionRef, self CrashdumpRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

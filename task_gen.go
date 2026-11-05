@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -89,13 +91,13 @@ type TaskClass struct {
 }
 
 // GetAllRecords Return a map of task references to task records for all tasks known to the system.
-func (_class TaskClass) GetAllRecords(sessionID SessionRef) (_retval map[TaskRef]TaskRecord, _err error) {
+func (_class TaskClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[TaskRef]TaskRecord, _err error) {
 	_method := "task.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -104,13 +106,13 @@ func (_class TaskClass) GetAllRecords(sessionID SessionRef) (_retval map[TaskRef
 }
 
 // GetAll Return a list of all the tasks known to the system.
-func (_class TaskClass) GetAll(sessionID SessionRef) (_retval []TaskRef, _err error) {
+func (_class TaskClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []TaskRef, _err error) {
 	_method := "task.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -119,7 +121,7 @@ func (_class TaskClass) GetAll(sessionID SessionRef) (_retval []TaskRef, _err er
 }
 
 // SetOtherConfig Set the other_config field of the given task.
-func (_class TaskClass) SetOtherConfig(sessionID SessionRef, self TaskRef, value map[string]string) (_err error) {
+func (_class TaskClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self TaskRef, value map[string]string) (_err error) {
 	_method := "task.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -133,12 +135,12 @@ func (_class TaskClass) SetOtherConfig(sessionID SessionRef, self TaskRef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given task. If the key is not in that Map, then do nothing.
-func (_class TaskClass) RemoveFromOtherConfig(sessionID SessionRef, self TaskRef, key string) (_err error) {
+func (_class TaskClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self TaskRef, key string) (_err error) {
 	_method := "task.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -152,12 +154,12 @@ func (_class TaskClass) RemoveFromOtherConfig(sessionID SessionRef, self TaskRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given task.
-func (_class TaskClass) AddToOtherConfig(sessionID SessionRef, self TaskRef, key string, value string) (_err error) {
+func (_class TaskClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self TaskRef, key string, value string) (_err error) {
 	_method := "task.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -175,12 +177,12 @@ func (_class TaskClass) AddToOtherConfig(sessionID SessionRef, self TaskRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetErrorInfo Set the task error info
-func (_class TaskClass) SetErrorInfo(sessionID SessionRef, self TaskRef, value []string) (_err error) {
+func (_class TaskClass) SetErrorInfo(ctx context.Context, sessionID SessionRef, self TaskRef, value []string) (_err error) {
 	_method := "task.set_error_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -194,12 +196,12 @@ func (_class TaskClass) SetErrorInfo(sessionID SessionRef, self TaskRef, value [
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetResult Set the task result
-func (_class TaskClass) SetResult(sessionID SessionRef, self TaskRef, value string) (_err error) {
+func (_class TaskClass) SetResult(ctx context.Context, sessionID SessionRef, self TaskRef, value string) (_err error) {
 	_method := "task.set_result"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -213,12 +215,12 @@ func (_class TaskClass) SetResult(sessionID SessionRef, self TaskRef, value stri
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetProgress Set the task progress
-func (_class TaskClass) SetProgress(sessionID SessionRef, self TaskRef, value float64) (_err error) {
+func (_class TaskClass) SetProgress(ctx context.Context, sessionID SessionRef, self TaskRef, value float64) (_err error) {
 	_method := "task.set_progress"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -232,12 +234,12 @@ func (_class TaskClass) SetProgress(sessionID SessionRef, self TaskRef, value fl
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetStatus Set the task status
-func (_class TaskClass) SetStatus(sessionID SessionRef, self TaskRef, value TaskStatusType) (_err error) {
+func (_class TaskClass) SetStatus(ctx context.Context, sessionID SessionRef, self TaskRef, value TaskStatusType) (_err error) {
 	_method := "task.set_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -251,7 +253,7 @@ func (_class TaskClass) SetStatus(sessionID SessionRef, self TaskRef, value Task
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -260,7 +262,7 @@ func (_class TaskClass) SetStatus(sessionID SessionRef, self TaskRef, value Task
 // Errors:
 //
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-func (_class TaskClass) Cancel(sessionID SessionRef, task TaskRef) (_err error) {
+func (_class TaskClass) Cancel(ctx context.Context, sessionID SessionRef, task TaskRef) (_err error) {
 	_method := "task.cancel"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -270,12 +272,12 @@ func (_class TaskClass) Cancel(sessionID SessionRef, task TaskRef) (_err error) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _taskArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _taskArg)
 	return
 }
 
 // Destroy Destroy the task object
-func (_class TaskClass) Destroy(sessionID SessionRef, self TaskRef) (_err error) {
+func (_class TaskClass) Destroy(ctx context.Context, sessionID SessionRef, self TaskRef) (_err error) {
 	_method := "task.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -285,12 +287,12 @@ func (_class TaskClass) Destroy(sessionID SessionRef, self TaskRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new task object which must be manually destroyed.
-func (_class TaskClass) Create(sessionID SessionRef, label string, description string) (_retval TaskRef, _err error) {
+func (_class TaskClass) Create(ctx context.Context, sessionID SessionRef, label string, description string) (_retval TaskRef, _err error) {
 	_method := "task.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -304,7 +306,7 @@ func (_class TaskClass) Create(sessionID SessionRef, label string, description s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg, _descriptionArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg, _descriptionArg)
 	if _err != nil {
 		return
 	}
@@ -313,7 +315,7 @@ func (_class TaskClass) Create(sessionID SessionRef, label string, description s
 }
 
 // GetBacktrace Get the backtrace field of the given task.
-func (_class TaskClass) GetBacktrace(sessionID SessionRef, self TaskRef) (_retval string, _err error) {
+func (_class TaskClass) GetBacktrace(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval string, _err error) {
 	_method := "task.get_backtrace"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -323,7 +325,7 @@ func (_class TaskClass) GetBacktrace(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -332,7 +334,7 @@ func (_class TaskClass) GetBacktrace(sessionID SessionRef, self TaskRef) (_retva
 }
 
 // GetSubtasks Get the subtasks field of the given task.
-func (_class TaskClass) GetSubtasks(sessionID SessionRef, self TaskRef) (_retval []TaskRef, _err error) {
+func (_class TaskClass) GetSubtasks(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval []TaskRef, _err error) {
 	_method := "task.get_subtasks"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -342,7 +344,7 @@ func (_class TaskClass) GetSubtasks(sessionID SessionRef, self TaskRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -351,7 +353,7 @@ func (_class TaskClass) GetSubtasks(sessionID SessionRef, self TaskRef) (_retval
 }
 
 // GetSubtaskOf Get the subtask_of field of the given task.
-func (_class TaskClass) GetSubtaskOf(sessionID SessionRef, self TaskRef) (_retval TaskRef, _err error) {
+func (_class TaskClass) GetSubtaskOf(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval TaskRef, _err error) {
 	_method := "task.get_subtask_of"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -361,7 +363,7 @@ func (_class TaskClass) GetSubtaskOf(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -370,7 +372,7 @@ func (_class TaskClass) GetSubtaskOf(sessionID SessionRef, self TaskRef) (_retva
 }
 
 // GetOtherConfig Get the other_config field of the given task.
-func (_class TaskClass) GetOtherConfig(sessionID SessionRef, self TaskRef) (_retval map[string]string, _err error) {
+func (_class TaskClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval map[string]string, _err error) {
 	_method := "task.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -380,7 +382,7 @@ func (_class TaskClass) GetOtherConfig(sessionID SessionRef, self TaskRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -389,7 +391,7 @@ func (_class TaskClass) GetOtherConfig(sessionID SessionRef, self TaskRef) (_ret
 }
 
 // GetErrorInfo Get the error_info field of the given task.
-func (_class TaskClass) GetErrorInfo(sessionID SessionRef, self TaskRef) (_retval []string, _err error) {
+func (_class TaskClass) GetErrorInfo(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval []string, _err error) {
 	_method := "task.get_error_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -399,7 +401,7 @@ func (_class TaskClass) GetErrorInfo(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -408,7 +410,7 @@ func (_class TaskClass) GetErrorInfo(sessionID SessionRef, self TaskRef) (_retva
 }
 
 // GetResult Get the result field of the given task.
-func (_class TaskClass) GetResult(sessionID SessionRef, self TaskRef) (_retval string, _err error) {
+func (_class TaskClass) GetResult(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval string, _err error) {
 	_method := "task.get_result"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -418,7 +420,7 @@ func (_class TaskClass) GetResult(sessionID SessionRef, self TaskRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -427,7 +429,7 @@ func (_class TaskClass) GetResult(sessionID SessionRef, self TaskRef) (_retval s
 }
 
 // GetType Get the type field of the given task.
-func (_class TaskClass) GetType(sessionID SessionRef, self TaskRef) (_retval string, _err error) {
+func (_class TaskClass) GetType(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval string, _err error) {
 	_method := "task.get_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -437,7 +439,7 @@ func (_class TaskClass) GetType(sessionID SessionRef, self TaskRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -446,7 +448,7 @@ func (_class TaskClass) GetType(sessionID SessionRef, self TaskRef) (_retval str
 }
 
 // GetProgress Get the progress field of the given task.
-func (_class TaskClass) GetProgress(sessionID SessionRef, self TaskRef) (_retval float64, _err error) {
+func (_class TaskClass) GetProgress(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval float64, _err error) {
 	_method := "task.get_progress"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -456,7 +458,7 @@ func (_class TaskClass) GetProgress(sessionID SessionRef, self TaskRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -465,7 +467,7 @@ func (_class TaskClass) GetProgress(sessionID SessionRef, self TaskRef) (_retval
 }
 
 // GetResidentOn Get the resident_on field of the given task.
-func (_class TaskClass) GetResidentOn(sessionID SessionRef, self TaskRef) (_retval HostRef, _err error) {
+func (_class TaskClass) GetResidentOn(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval HostRef, _err error) {
 	_method := "task.get_resident_on"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -475,7 +477,7 @@ func (_class TaskClass) GetResidentOn(sessionID SessionRef, self TaskRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -484,7 +486,7 @@ func (_class TaskClass) GetResidentOn(sessionID SessionRef, self TaskRef) (_retv
 }
 
 // GetStatus Get the status field of the given task.
-func (_class TaskClass) GetStatus(sessionID SessionRef, self TaskRef) (_retval TaskStatusType, _err error) {
+func (_class TaskClass) GetStatus(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval TaskStatusType, _err error) {
 	_method := "task.get_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -494,7 +496,7 @@ func (_class TaskClass) GetStatus(sessionID SessionRef, self TaskRef) (_retval T
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -503,7 +505,7 @@ func (_class TaskClass) GetStatus(sessionID SessionRef, self TaskRef) (_retval T
 }
 
 // GetFinished Get the finished field of the given task.
-func (_class TaskClass) GetFinished(sessionID SessionRef, self TaskRef) (_retval time.Time, _err error) {
+func (_class TaskClass) GetFinished(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval time.Time, _err error) {
 	_method := "task.get_finished"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -513,7 +515,7 @@ func (_class TaskClass) GetFinished(sessionID SessionRef, self TaskRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -522,7 +524,7 @@ func (_class TaskClass) GetFinished(sessionID SessionRef, self TaskRef) (_retval
 }
 
 // GetCreated Get the created field of the given task.
-func (_class TaskClass) GetCreated(sessionID SessionRef, self TaskRef) (_retval time.Time, _err error) {
+func (_class TaskClass) GetCreated(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval time.Time, _err error) {
 	_method := "task.get_created"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -532,7 +534,7 @@ func (_class TaskClass) GetCreated(sessionID SessionRef, self TaskRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -541,7 +543,7 @@ func (_class TaskClass) GetCreated(sessionID SessionRef, self TaskRef) (_retval 
 }
 
 // GetCurrentOperations Get the current_operations field of the given task.
-func (_class TaskClass) GetCurrentOperations(sessionID SessionRef, self TaskRef) (_retval map[string]TaskAllowedOperations, _err error) {
+func (_class TaskClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval map[string]TaskAllowedOperations, _err error) {
 	_method := "task.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -551,7 +553,7 @@ func (_class TaskClass) GetCurrentOperations(sessionID SessionRef, self TaskRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -560,7 +562,7 @@ func (_class TaskClass) GetCurrentOperations(sessionID SessionRef, self TaskRef)
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given task.
-func (_class TaskClass) GetAllowedOperations(sessionID SessionRef, self TaskRef) (_retval []TaskAllowedOperations, _err error) {
+func (_class TaskClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval []TaskAllowedOperations, _err error) {
 	_method := "task.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -570,7 +572,7 @@ func (_class TaskClass) GetAllowedOperations(sessionID SessionRef, self TaskRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -579,7 +581,7 @@ func (_class TaskClass) GetAllowedOperations(sessionID SessionRef, self TaskRef)
 }
 
 // GetNameDescription Get the name/description field of the given task.
-func (_class TaskClass) GetNameDescription(sessionID SessionRef, self TaskRef) (_retval string, _err error) {
+func (_class TaskClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval string, _err error) {
 	_method := "task.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -589,7 +591,7 @@ func (_class TaskClass) GetNameDescription(sessionID SessionRef, self TaskRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -598,7 +600,7 @@ func (_class TaskClass) GetNameDescription(sessionID SessionRef, self TaskRef) (
 }
 
 // GetNameLabel Get the name/label field of the given task.
-func (_class TaskClass) GetNameLabel(sessionID SessionRef, self TaskRef) (_retval string, _err error) {
+func (_class TaskClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval string, _err error) {
 	_method := "task.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -608,7 +610,7 @@ func (_class TaskClass) GetNameLabel(sessionID SessionRef, self TaskRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -617,7 +619,7 @@ func (_class TaskClass) GetNameLabel(sessionID SessionRef, self TaskRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given task.
-func (_class TaskClass) GetUUID(sessionID SessionRef, self TaskRef) (_retval string, _err error) {
+func (_class TaskClass) GetUUID(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval string, _err error) {
 	_method := "task.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -627,7 +629,7 @@ func (_class TaskClass) GetUUID(sessionID SessionRef, self TaskRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -636,7 +638,7 @@ func (_class TaskClass) GetUUID(sessionID SessionRef, self TaskRef) (_retval str
 }
 
 // GetByNameLabel Get all the task instances with the given label.
-func (_class TaskClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []TaskRef, _err error) {
+func (_class TaskClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []TaskRef, _err error) {
 	_method := "task.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -646,7 +648,7 @@ func (_class TaskClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -655,7 +657,7 @@ func (_class TaskClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 }
 
 // GetByUUID Get a reference to the task instance with the specified UUID.
-func (_class TaskClass) GetByUUID(sessionID SessionRef, uuid string) (_retval TaskRef, _err error) {
+func (_class TaskClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval TaskRef, _err error) {
 	_method := "task.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -665,7 +667,7 @@ func (_class TaskClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ta
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -674,7 +676,7 @@ func (_class TaskClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ta
 }
 
 // GetRecord Get a record containing the current state of the given task.
-func (_class TaskClass) GetRecord(sessionID SessionRef, self TaskRef) (_retval TaskRecord, _err error) {
+func (_class TaskClass) GetRecord(ctx context.Context, sessionID SessionRef, self TaskRef) (_retval TaskRecord, _err error) {
 	_method := "task.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -684,7 +686,7 @@ func (_class TaskClass) GetRecord(sessionID SessionRef, self TaskRef) (_retval T
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

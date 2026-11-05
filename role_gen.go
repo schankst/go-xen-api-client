@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -41,13 +43,13 @@ type RoleClass struct {
 }
 
 // GetAllRecords Return a map of role references to role records for all roles known to the system.
-func (_class RoleClass) GetAllRecords(sessionID SessionRef) (_retval map[RoleRef]RoleRecord, _err error) {
+func (_class RoleClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[RoleRef]RoleRecord, _err error) {
 	_method := "role.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -56,13 +58,13 @@ func (_class RoleClass) GetAllRecords(sessionID SessionRef) (_retval map[RoleRef
 }
 
 // GetAll Return a list of all the roles known to the system.
-func (_class RoleClass) GetAll(sessionID SessionRef) (_retval []RoleRef, _err error) {
+func (_class RoleClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []RoleRef, _err error) {
 	_method := "role.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -71,7 +73,7 @@ func (_class RoleClass) GetAll(sessionID SessionRef) (_retval []RoleRef, _err er
 }
 
 // GetByPermissionNameLabel This call returns a list of roles given a permission name
-func (_class RoleClass) GetByPermissionNameLabel(sessionID SessionRef, label string) (_retval []RoleRef, _err error) {
+func (_class RoleClass) GetByPermissionNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []RoleRef, _err error) {
 	_method := "role.get_by_permission_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -81,7 +83,7 @@ func (_class RoleClass) GetByPermissionNameLabel(sessionID SessionRef, label str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -90,7 +92,7 @@ func (_class RoleClass) GetByPermissionNameLabel(sessionID SessionRef, label str
 }
 
 // GetByPermission This call returns a list of roles given a permission
-func (_class RoleClass) GetByPermission(sessionID SessionRef, permission RoleRef) (_retval []RoleRef, _err error) {
+func (_class RoleClass) GetByPermission(ctx context.Context, sessionID SessionRef, permission RoleRef) (_retval []RoleRef, _err error) {
 	_method := "role.get_by_permission"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -100,7 +102,7 @@ func (_class RoleClass) GetByPermission(sessionID SessionRef, permission RoleRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _permissionArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _permissionArg)
 	if _err != nil {
 		return
 	}
@@ -109,7 +111,7 @@ func (_class RoleClass) GetByPermission(sessionID SessionRef, permission RoleRef
 }
 
 // GetPermissionsNameLabel This call returns a list of permission names given a role
-func (_class RoleClass) GetPermissionsNameLabel(sessionID SessionRef, self RoleRef) (_retval []string, _err error) {
+func (_class RoleClass) GetPermissionsNameLabel(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval []string, _err error) {
 	_method := "role.get_permissions_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -119,7 +121,7 @@ func (_class RoleClass) GetPermissionsNameLabel(sessionID SessionRef, self RoleR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -128,7 +130,7 @@ func (_class RoleClass) GetPermissionsNameLabel(sessionID SessionRef, self RoleR
 }
 
 // GetPermissions This call returns a list of permissions given a role
-func (_class RoleClass) GetPermissions(sessionID SessionRef, self RoleRef) (_retval []RoleRef, _err error) {
+func (_class RoleClass) GetPermissions(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval []RoleRef, _err error) {
 	_method := "role.get_permissions"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -138,7 +140,7 @@ func (_class RoleClass) GetPermissions(sessionID SessionRef, self RoleRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -147,7 +149,7 @@ func (_class RoleClass) GetPermissions(sessionID SessionRef, self RoleRef) (_ret
 }
 
 // GetIsInternal Get the is_internal field of the given role.
-func (_class RoleClass) GetIsInternal(sessionID SessionRef, self RoleRef) (_retval bool, _err error) {
+func (_class RoleClass) GetIsInternal(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval bool, _err error) {
 	_method := "role.get_is_internal"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -157,7 +159,7 @@ func (_class RoleClass) GetIsInternal(sessionID SessionRef, self RoleRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -166,7 +168,7 @@ func (_class RoleClass) GetIsInternal(sessionID SessionRef, self RoleRef) (_retv
 }
 
 // GetSubroles Get the subroles field of the given role.
-func (_class RoleClass) GetSubroles(sessionID SessionRef, self RoleRef) (_retval []RoleRef, _err error) {
+func (_class RoleClass) GetSubroles(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval []RoleRef, _err error) {
 	_method := "role.get_subroles"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -176,7 +178,7 @@ func (_class RoleClass) GetSubroles(sessionID SessionRef, self RoleRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -185,7 +187,7 @@ func (_class RoleClass) GetSubroles(sessionID SessionRef, self RoleRef) (_retval
 }
 
 // GetNameDescription Get the name/description field of the given role.
-func (_class RoleClass) GetNameDescription(sessionID SessionRef, self RoleRef) (_retval string, _err error) {
+func (_class RoleClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval string, _err error) {
 	_method := "role.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -195,7 +197,7 @@ func (_class RoleClass) GetNameDescription(sessionID SessionRef, self RoleRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -204,7 +206,7 @@ func (_class RoleClass) GetNameDescription(sessionID SessionRef, self RoleRef) (
 }
 
 // GetNameLabel Get the name/label field of the given role.
-func (_class RoleClass) GetNameLabel(sessionID SessionRef, self RoleRef) (_retval string, _err error) {
+func (_class RoleClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval string, _err error) {
 	_method := "role.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -214,7 +216,7 @@ func (_class RoleClass) GetNameLabel(sessionID SessionRef, self RoleRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -223,7 +225,7 @@ func (_class RoleClass) GetNameLabel(sessionID SessionRef, self RoleRef) (_retva
 }
 
 // GetUUID Get the uuid field of the given role.
-func (_class RoleClass) GetUUID(sessionID SessionRef, self RoleRef) (_retval string, _err error) {
+func (_class RoleClass) GetUUID(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval string, _err error) {
 	_method := "role.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -233,7 +235,7 @@ func (_class RoleClass) GetUUID(sessionID SessionRef, self RoleRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -242,7 +244,7 @@ func (_class RoleClass) GetUUID(sessionID SessionRef, self RoleRef) (_retval str
 }
 
 // GetByNameLabel Get all the role instances with the given label.
-func (_class RoleClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []RoleRef, _err error) {
+func (_class RoleClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []RoleRef, _err error) {
 	_method := "role.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -252,7 +254,7 @@ func (_class RoleClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -261,7 +263,7 @@ func (_class RoleClass) GetByNameLabel(sessionID SessionRef, label string) (_ret
 }
 
 // GetByUUID Get a reference to the role instance with the specified UUID.
-func (_class RoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval RoleRef, _err error) {
+func (_class RoleClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval RoleRef, _err error) {
 	_method := "role.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -271,7 +273,7 @@ func (_class RoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ro
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -280,7 +282,7 @@ func (_class RoleClass) GetByUUID(sessionID SessionRef, uuid string) (_retval Ro
 }
 
 // GetRecord Get a record containing the current state of the given role.
-func (_class RoleClass) GetRecord(sessionID SessionRef, self RoleRef) (_retval RoleRecord, _err error) {
+func (_class RoleClass) GetRecord(ctx context.Context, sessionID SessionRef, self RoleRef) (_retval RoleRecord, _err error) {
 	_method := "role.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -290,7 +292,7 @@ func (_class RoleClass) GetRecord(sessionID SessionRef, self RoleRef) (_retval R
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

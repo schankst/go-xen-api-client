@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -134,13 +136,13 @@ type SRClass struct {
 }
 
 // GetAllRecords Return a map of SR references to SR records for all SRs known to the system.
-func (_class SRClass) GetAllRecords(sessionID SessionRef) (_retval map[SRRef]SRRecord, _err error) {
+func (_class SRClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[SRRef]SRRecord, _err error) {
 	_method := "SR.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -149,13 +151,13 @@ func (_class SRClass) GetAllRecords(sessionID SessionRef) (_retval map[SRRef]SRR
 }
 
 // GetAll Return a list of all the SRs known to the system.
-func (_class SRClass) GetAll(sessionID SessionRef) (_retval []SRRef, _err error) {
+func (_class SRClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []SRRef, _err error) {
 	_method := "SR.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -164,7 +166,7 @@ func (_class SRClass) GetAll(sessionID SessionRef) (_retval []SRRef, _err error)
 }
 
 // ForgetDataSourceArchives Forget the recorded statistics related to the specified data source
-func (_class SRClass) ForgetDataSourceArchives(sessionID SessionRef, sr SRRef, dataSource string) (_err error) {
+func (_class SRClass) ForgetDataSourceArchives(ctx context.Context, sessionID SessionRef, sr SRRef, dataSource string) (_err error) {
 	_method := "SR.forget_data_source_archives"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -178,12 +180,12 @@ func (_class SRClass) ForgetDataSourceArchives(sessionID SessionRef, sr SRRef, d
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg, _dataSourceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg, _dataSourceArg)
 	return
 }
 
 // QueryDataSource Query the latest value of the specified data source
-func (_class SRClass) QueryDataSource(sessionID SessionRef, sr SRRef, dataSource string) (_retval float64, _err error) {
+func (_class SRClass) QueryDataSource(ctx context.Context, sessionID SessionRef, sr SRRef, dataSource string) (_retval float64, _err error) {
 	_method := "SR.query_data_source"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -197,7 +199,7 @@ func (_class SRClass) QueryDataSource(sessionID SessionRef, sr SRRef, dataSource
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _srArg, _dataSourceArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _srArg, _dataSourceArg)
 	if _err != nil {
 		return
 	}
@@ -206,7 +208,7 @@ func (_class SRClass) QueryDataSource(sessionID SessionRef, sr SRRef, dataSource
 }
 
 // RecordDataSource Start recording the specified data source
-func (_class SRClass) RecordDataSource(sessionID SessionRef, sr SRRef, dataSource string) (_err error) {
+func (_class SRClass) RecordDataSource(ctx context.Context, sessionID SessionRef, sr SRRef, dataSource string) (_err error) {
 	_method := "SR.record_data_source"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -220,12 +222,12 @@ func (_class SRClass) RecordDataSource(sessionID SessionRef, sr SRRef, dataSourc
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg, _dataSourceArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg, _dataSourceArg)
 	return
 }
 
 // GetDataSources
-func (_class SRClass) GetDataSources(sessionID SessionRef, sr SRRef) (_retval []DataSourceRecord, _err error) {
+func (_class SRClass) GetDataSources(ctx context.Context, sessionID SessionRef, sr SRRef) (_retval []DataSourceRecord, _err error) {
 	_method := "SR.get_data_sources"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -235,7 +237,7 @@ func (_class SRClass) GetDataSources(sessionID SessionRef, sr SRRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	if _err != nil {
 		return
 	}
@@ -244,7 +246,7 @@ func (_class SRClass) GetDataSources(sessionID SessionRef, sr SRRef) (_retval []
 }
 
 // DisableDatabaseReplication
-func (_class SRClass) DisableDatabaseReplication(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) DisableDatabaseReplication(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.disable_database_replication"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -254,12 +256,12 @@ func (_class SRClass) DisableDatabaseReplication(sessionID SessionRef, sr SRRef)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
 // EnableDatabaseReplication
-func (_class SRClass) EnableDatabaseReplication(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) EnableDatabaseReplication(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.enable_database_replication"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -269,12 +271,12 @@ func (_class SRClass) EnableDatabaseReplication(sessionID SessionRef, sr SRRef) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
 // AssertSupportsDatabaseReplication Returns successfully if the given SR supports database replication. Otherwise returns an error to explain why not.
-func (_class SRClass) AssertSupportsDatabaseReplication(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) AssertSupportsDatabaseReplication(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.assert_supports_database_replication"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -284,12 +286,12 @@ func (_class SRClass) AssertSupportsDatabaseReplication(sessionID SessionRef, sr
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
 // AssertCanHostHaStatefile Returns successfully if the given SR can host an HA statefile. Otherwise returns an error to explain why not
-func (_class SRClass) AssertCanHostHaStatefile(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) AssertCanHostHaStatefile(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.assert_can_host_ha_statefile"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -299,12 +301,12 @@ func (_class SRClass) AssertCanHostHaStatefile(sessionID SessionRef, sr SRRef) (
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
 // SetPhysicalSize Sets the SR's physical_size field
-func (_class SRClass) SetPhysicalSize(sessionID SessionRef, self SRRef, value int) (_err error) {
+func (_class SRClass) SetPhysicalSize(ctx context.Context, sessionID SessionRef, self SRRef, value int) (_err error) {
 	_method := "SR.set_physical_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -318,12 +320,12 @@ func (_class SRClass) SetPhysicalSize(sessionID SessionRef, self SRRef, value in
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // CreateNewBlob Create a placeholder for a named binary blob of data that is associated with this SR
-func (_class SRClass) CreateNewBlob(sessionID SessionRef, sr SRRef, name string, mimeType string, public bool) (_retval BlobRef, _err error) {
+func (_class SRClass) CreateNewBlob(ctx context.Context, sessionID SessionRef, sr SRRef, name string, mimeType string, public bool) (_retval BlobRef, _err error) {
 	_method := "SR.create_new_blob"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -345,7 +347,7 @@ func (_class SRClass) CreateNewBlob(sessionID SessionRef, sr SRRef, name string,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _srArg, _nameArg, _mimeTypeArg, _publicArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _srArg, _nameArg, _mimeTypeArg, _publicArg)
 	if _err != nil {
 		return
 	}
@@ -354,7 +356,7 @@ func (_class SRClass) CreateNewBlob(sessionID SessionRef, sr SRRef, name string,
 }
 
 // SetNameDescription Set the name description of the SR
-func (_class SRClass) SetNameDescription(sessionID SessionRef, sr SRRef, value string) (_err error) {
+func (_class SRClass) SetNameDescription(ctx context.Context, sessionID SessionRef, sr SRRef, value string) (_err error) {
 	_method := "SR.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -368,12 +370,12 @@ func (_class SRClass) SetNameDescription(sessionID SessionRef, sr SRRef, value s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name label of the SR
-func (_class SRClass) SetNameLabel(sessionID SessionRef, sr SRRef, value string) (_err error) {
+func (_class SRClass) SetNameLabel(ctx context.Context, sessionID SessionRef, sr SRRef, value string) (_err error) {
 	_method := "SR.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -387,12 +389,12 @@ func (_class SRClass) SetNameLabel(sessionID SessionRef, sr SRRef, value string)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg, _valueArg)
 	return
 }
 
 // SetShared Sets the shared flag on the SR
-func (_class SRClass) SetShared(sessionID SessionRef, sr SRRef, value bool) (_err error) {
+func (_class SRClass) SetShared(ctx context.Context, sessionID SessionRef, sr SRRef, value bool) (_err error) {
 	_method := "SR.set_shared"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -406,12 +408,12 @@ func (_class SRClass) SetShared(sessionID SessionRef, sr SRRef, value bool) (_er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg, _valueArg)
 	return
 }
 
 // ProbeExt Perform a backend-specific scan, using the given device_config.  If the device_config is complete, then this will return a list of the SRs present of this type on the device, if any.  If the device_config is partial, then a backend-specific scan will be performed, returning results that will guide the user in improving the device_config.
-func (_class SRClass) ProbeExt(sessionID SessionRef, host HostRef, deviceConfig map[string]string, atype string, smConfig map[string]string) (_retval []ProbeResultRecord, _err error) {
+func (_class SRClass) ProbeExt(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, atype string, smConfig map[string]string) (_retval []ProbeResultRecord, _err error) {
 	_method := "SR.probe_ext"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -433,7 +435,7 @@ func (_class SRClass) ProbeExt(sessionID SessionRef, host HostRef, deviceConfig 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _deviceConfigArg, _atypeArg, _smConfigArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _deviceConfigArg, _atypeArg, _smConfigArg)
 	if _err != nil {
 		return
 	}
@@ -442,7 +444,7 @@ func (_class SRClass) ProbeExt(sessionID SessionRef, host HostRef, deviceConfig 
 }
 
 // Probe Perform a backend-specific scan, using the given device_config.  If the device_config is complete, then this will return a list of the SRs present of this type on the device, if any.  If the device_config is partial, then a backend-specific scan will be performed, returning results that will guide the user in improving the device_config.
-func (_class SRClass) Probe(sessionID SessionRef, host HostRef, deviceConfig map[string]string, atype string, smConfig map[string]string) (_retval string, _err error) {
+func (_class SRClass) Probe(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, atype string, smConfig map[string]string) (_retval string, _err error) {
 	_method := "SR.probe"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -464,7 +466,7 @@ func (_class SRClass) Probe(sessionID SessionRef, host HostRef, deviceConfig map
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _deviceConfigArg, _atypeArg, _smConfigArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _deviceConfigArg, _atypeArg, _smConfigArg)
 	if _err != nil {
 		return
 	}
@@ -473,7 +475,7 @@ func (_class SRClass) Probe(sessionID SessionRef, host HostRef, deviceConfig map
 }
 
 // Scan Refreshes the list of VDIs associated with an SR
-func (_class SRClass) Scan(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) Scan(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.scan"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -483,18 +485,18 @@ func (_class SRClass) Scan(sessionID SessionRef, sr SRRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
 // GetSupportedTypes Return a set of all the SR types supported by the system
-func (_class SRClass) GetSupportedTypes(sessionID SessionRef) (_retval []string, _err error) {
+func (_class SRClass) GetSupportedTypes(ctx context.Context, sessionID SessionRef) (_retval []string, _err error) {
 	_method := "SR.get_supported_types"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -503,7 +505,7 @@ func (_class SRClass) GetSupportedTypes(sessionID SessionRef) (_retval []string,
 }
 
 // Update Refresh the fields on the SR object
-func (_class SRClass) Update(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) Update(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.update"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -513,7 +515,7 @@ func (_class SRClass) Update(sessionID SessionRef, sr SRRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
@@ -522,7 +524,7 @@ func (_class SRClass) Update(sessionID SessionRef, sr SRRef) (_err error) {
 // Errors:
 //
 //	SR_HAS_PBD - The SR is still connected to a host via a PBD. It cannot be destroyed or forgotten.
-func (_class SRClass) Forget(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) Forget(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.forget"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -532,7 +534,7 @@ func (_class SRClass) Forget(sessionID SessionRef, sr SRRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
@@ -541,7 +543,7 @@ func (_class SRClass) Forget(sessionID SessionRef, sr SRRef) (_err error) {
 // Errors:
 //
 //	SR_HAS_PBD - The SR is still connected to a host via a PBD. It cannot be destroyed or forgotten.
-func (_class SRClass) Destroy(sessionID SessionRef, sr SRRef) (_err error) {
+func (_class SRClass) Destroy(ctx context.Context, sessionID SessionRef, sr SRRef) (_err error) {
 	_method := "SR.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -551,12 +553,12 @@ func (_class SRClass) Destroy(sessionID SessionRef, sr SRRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _srArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _srArg)
 	return
 }
 
 // Make Create a new Storage Repository on disk. This call is deprecated: use SR.create instead.
-func (_class SRClass) Make(sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int, nameLabel string, nameDescription string, atype string, contentType string, smConfig map[string]string) (_retval string, _err error) {
+func (_class SRClass) Make(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int, nameLabel string, nameDescription string, atype string, contentType string, smConfig map[string]string) (_retval string, _err error) {
 	_method := "SR.make"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -594,7 +596,7 @@ func (_class SRClass) Make(sessionID SessionRef, host HostRef, deviceConfig map[
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _deviceConfigArg, _physicalSizeArg, _nameLabelArg, _nameDescriptionArg, _atypeArg, _contentTypeArg, _smConfigArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _deviceConfigArg, _physicalSizeArg, _nameLabelArg, _nameDescriptionArg, _atypeArg, _contentTypeArg, _smConfigArg)
 	if _err != nil {
 		return
 	}
@@ -603,7 +605,7 @@ func (_class SRClass) Make(sessionID SessionRef, host HostRef, deviceConfig map[
 }
 
 // Introduce Introduce a new Storage Repository into the managed system
-func (_class SRClass) Introduce(sessionID SessionRef, uuid string, nameLabel string, nameDescription string, atype string, contentType string, shared bool, smConfig map[string]string) (_retval SRRef, _err error) {
+func (_class SRClass) Introduce(ctx context.Context, sessionID SessionRef, uuid string, nameLabel string, nameDescription string, atype string, contentType string, shared bool, smConfig map[string]string) (_retval SRRef, _err error) {
 	_method := "SR.introduce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -637,7 +639,7 @@ func (_class SRClass) Introduce(sessionID SessionRef, uuid string, nameLabel str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg, _nameLabelArg, _nameDescriptionArg, _atypeArg, _contentTypeArg, _sharedArg, _smConfigArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg, _nameLabelArg, _nameDescriptionArg, _atypeArg, _contentTypeArg, _sharedArg, _smConfigArg)
 	if _err != nil {
 		return
 	}
@@ -650,7 +652,7 @@ func (_class SRClass) Introduce(sessionID SessionRef, uuid string, nameLabel str
 // Errors:
 //
 //	SR_UNKNOWN_DRIVER - The SR could not be connected because the driver was not recognised.
-func (_class SRClass) Create(sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int, nameLabel string, nameDescription string, atype string, contentType string, shared bool, smConfig map[string]string) (_retval SRRef, _err error) {
+func (_class SRClass) Create(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int, nameLabel string, nameDescription string, atype string, contentType string, shared bool, smConfig map[string]string) (_retval SRRef, _err error) {
 	_method := "SR.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -692,7 +694,7 @@ func (_class SRClass) Create(sessionID SessionRef, host HostRef, deviceConfig ma
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _hostArg, _deviceConfigArg, _physicalSizeArg, _nameLabelArg, _nameDescriptionArg, _atypeArg, _contentTypeArg, _sharedArg, _smConfigArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _hostArg, _deviceConfigArg, _physicalSizeArg, _nameLabelArg, _nameDescriptionArg, _atypeArg, _contentTypeArg, _sharedArg, _smConfigArg)
 	if _err != nil {
 		return
 	}
@@ -701,7 +703,7 @@ func (_class SRClass) Create(sessionID SessionRef, host HostRef, deviceConfig ma
 }
 
 // RemoveFromSmConfig Remove the given key and its corresponding value from the sm_config field of the given SR.  If the key is not in that Map, then do nothing.
-func (_class SRClass) RemoveFromSmConfig(sessionID SessionRef, self SRRef, key string) (_err error) {
+func (_class SRClass) RemoveFromSmConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string) (_err error) {
 	_method := "SR.remove_from_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -715,12 +717,12 @@ func (_class SRClass) RemoveFromSmConfig(sessionID SessionRef, self SRRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToSmConfig Add the given key-value pair to the sm_config field of the given SR.
-func (_class SRClass) AddToSmConfig(sessionID SessionRef, self SRRef, key string, value string) (_err error) {
+func (_class SRClass) AddToSmConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string, value string) (_err error) {
 	_method := "SR.add_to_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -738,12 +740,12 @@ func (_class SRClass) AddToSmConfig(sessionID SessionRef, self SRRef, key string
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetSmConfig Set the sm_config field of the given SR.
-func (_class SRClass) SetSmConfig(sessionID SessionRef, self SRRef, value map[string]string) (_err error) {
+func (_class SRClass) SetSmConfig(ctx context.Context, sessionID SessionRef, self SRRef, value map[string]string) (_err error) {
 	_method := "SR.set_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -757,12 +759,12 @@ func (_class SRClass) SetSmConfig(sessionID SessionRef, self SRRef, value map[st
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveTags Remove the given value from the tags field of the given SR.  If the value is not in that Set, then do nothing.
-func (_class SRClass) RemoveTags(sessionID SessionRef, self SRRef, value string) (_err error) {
+func (_class SRClass) RemoveTags(ctx context.Context, sessionID SessionRef, self SRRef, value string) (_err error) {
 	_method := "SR.remove_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -776,12 +778,12 @@ func (_class SRClass) RemoveTags(sessionID SessionRef, self SRRef, value string)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // AddTags Add the given value to the tags field of the given SR.  If the value is already in that Set, then do nothing.
-func (_class SRClass) AddTags(sessionID SessionRef, self SRRef, value string) (_err error) {
+func (_class SRClass) AddTags(ctx context.Context, sessionID SessionRef, self SRRef, value string) (_err error) {
 	_method := "SR.add_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -795,12 +797,12 @@ func (_class SRClass) AddTags(sessionID SessionRef, self SRRef, value string) (_
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetTags Set the tags field of the given SR.
-func (_class SRClass) SetTags(sessionID SessionRef, self SRRef, value []string) (_err error) {
+func (_class SRClass) SetTags(ctx context.Context, sessionID SessionRef, self SRRef, value []string) (_err error) {
 	_method := "SR.set_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -814,12 +816,12 @@ func (_class SRClass) SetTags(sessionID SessionRef, self SRRef, value []string) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given SR.  If the key is not in that Map, then do nothing.
-func (_class SRClass) RemoveFromOtherConfig(sessionID SessionRef, self SRRef, key string) (_err error) {
+func (_class SRClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string) (_err error) {
 	_method := "SR.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -833,12 +835,12 @@ func (_class SRClass) RemoveFromOtherConfig(sessionID SessionRef, self SRRef, ke
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given SR.
-func (_class SRClass) AddToOtherConfig(sessionID SessionRef, self SRRef, key string, value string) (_err error) {
+func (_class SRClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self SRRef, key string, value string) (_err error) {
 	_method := "SR.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -856,12 +858,12 @@ func (_class SRClass) AddToOtherConfig(sessionID SessionRef, self SRRef, key str
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given SR.
-func (_class SRClass) SetOtherConfig(sessionID SessionRef, self SRRef, value map[string]string) (_err error) {
+func (_class SRClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self SRRef, value map[string]string) (_err error) {
 	_method := "SR.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -875,12 +877,12 @@ func (_class SRClass) SetOtherConfig(sessionID SessionRef, self SRRef, value map
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetIsToolsSr Get the is_tools_sr field of the given SR.
-func (_class SRClass) GetIsToolsSr(sessionID SessionRef, self SRRef) (_retval bool, _err error) {
+func (_class SRClass) GetIsToolsSr(ctx context.Context, sessionID SessionRef, self SRRef) (_retval bool, _err error) {
 	_method := "SR.get_is_tools_sr"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -890,7 +892,7 @@ func (_class SRClass) GetIsToolsSr(sessionID SessionRef, self SRRef) (_retval bo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -899,7 +901,7 @@ func (_class SRClass) GetIsToolsSr(sessionID SessionRef, self SRRef) (_retval bo
 }
 
 // GetClustered Get the clustered field of the given SR.
-func (_class SRClass) GetClustered(sessionID SessionRef, self SRRef) (_retval bool, _err error) {
+func (_class SRClass) GetClustered(ctx context.Context, sessionID SessionRef, self SRRef) (_retval bool, _err error) {
 	_method := "SR.get_clustered"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -909,7 +911,7 @@ func (_class SRClass) GetClustered(sessionID SessionRef, self SRRef) (_retval bo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -918,7 +920,7 @@ func (_class SRClass) GetClustered(sessionID SessionRef, self SRRef) (_retval bo
 }
 
 // GetIntroducedBy Get the introduced_by field of the given SR.
-func (_class SRClass) GetIntroducedBy(sessionID SessionRef, self SRRef) (_retval DRTaskRef, _err error) {
+func (_class SRClass) GetIntroducedBy(ctx context.Context, sessionID SessionRef, self SRRef) (_retval DRTaskRef, _err error) {
 	_method := "SR.get_introduced_by"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -928,7 +930,7 @@ func (_class SRClass) GetIntroducedBy(sessionID SessionRef, self SRRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -937,7 +939,7 @@ func (_class SRClass) GetIntroducedBy(sessionID SessionRef, self SRRef) (_retval
 }
 
 // GetLocalCacheEnabled Get the local_cache_enabled field of the given SR.
-func (_class SRClass) GetLocalCacheEnabled(sessionID SessionRef, self SRRef) (_retval bool, _err error) {
+func (_class SRClass) GetLocalCacheEnabled(ctx context.Context, sessionID SessionRef, self SRRef) (_retval bool, _err error) {
 	_method := "SR.get_local_cache_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -947,7 +949,7 @@ func (_class SRClass) GetLocalCacheEnabled(sessionID SessionRef, self SRRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -956,7 +958,7 @@ func (_class SRClass) GetLocalCacheEnabled(sessionID SessionRef, self SRRef) (_r
 }
 
 // GetBlobs Get the blobs field of the given SR.
-func (_class SRClass) GetBlobs(sessionID SessionRef, self SRRef) (_retval map[string]BlobRef, _err error) {
+func (_class SRClass) GetBlobs(ctx context.Context, sessionID SessionRef, self SRRef) (_retval map[string]BlobRef, _err error) {
 	_method := "SR.get_blobs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -966,7 +968,7 @@ func (_class SRClass) GetBlobs(sessionID SessionRef, self SRRef) (_retval map[st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -975,7 +977,7 @@ func (_class SRClass) GetBlobs(sessionID SessionRef, self SRRef) (_retval map[st
 }
 
 // GetSmConfig Get the sm_config field of the given SR.
-func (_class SRClass) GetSmConfig(sessionID SessionRef, self SRRef) (_retval map[string]string, _err error) {
+func (_class SRClass) GetSmConfig(ctx context.Context, sessionID SessionRef, self SRRef) (_retval map[string]string, _err error) {
 	_method := "SR.get_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -985,7 +987,7 @@ func (_class SRClass) GetSmConfig(sessionID SessionRef, self SRRef) (_retval map
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -994,7 +996,7 @@ func (_class SRClass) GetSmConfig(sessionID SessionRef, self SRRef) (_retval map
 }
 
 // GetTags Get the tags field of the given SR.
-func (_class SRClass) GetTags(sessionID SessionRef, self SRRef) (_retval []string, _err error) {
+func (_class SRClass) GetTags(ctx context.Context, sessionID SessionRef, self SRRef) (_retval []string, _err error) {
 	_method := "SR.get_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1004,7 +1006,7 @@ func (_class SRClass) GetTags(sessionID SessionRef, self SRRef) (_retval []strin
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1013,7 +1015,7 @@ func (_class SRClass) GetTags(sessionID SessionRef, self SRRef) (_retval []strin
 }
 
 // GetOtherConfig Get the other_config field of the given SR.
-func (_class SRClass) GetOtherConfig(sessionID SessionRef, self SRRef) (_retval map[string]string, _err error) {
+func (_class SRClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self SRRef) (_retval map[string]string, _err error) {
 	_method := "SR.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1023,7 +1025,7 @@ func (_class SRClass) GetOtherConfig(sessionID SessionRef, self SRRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1032,7 +1034,7 @@ func (_class SRClass) GetOtherConfig(sessionID SessionRef, self SRRef) (_retval 
 }
 
 // GetShared Get the shared field of the given SR.
-func (_class SRClass) GetShared(sessionID SessionRef, self SRRef) (_retval bool, _err error) {
+func (_class SRClass) GetShared(ctx context.Context, sessionID SessionRef, self SRRef) (_retval bool, _err error) {
 	_method := "SR.get_shared"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1042,7 +1044,7 @@ func (_class SRClass) GetShared(sessionID SessionRef, self SRRef) (_retval bool,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1051,7 +1053,7 @@ func (_class SRClass) GetShared(sessionID SessionRef, self SRRef) (_retval bool,
 }
 
 // GetContentType Get the content_type field of the given SR.
-func (_class SRClass) GetContentType(sessionID SessionRef, self SRRef) (_retval string, _err error) {
+func (_class SRClass) GetContentType(ctx context.Context, sessionID SessionRef, self SRRef) (_retval string, _err error) {
 	_method := "SR.get_content_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1061,7 +1063,7 @@ func (_class SRClass) GetContentType(sessionID SessionRef, self SRRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1070,7 +1072,7 @@ func (_class SRClass) GetContentType(sessionID SessionRef, self SRRef) (_retval 
 }
 
 // GetType Get the type field of the given SR.
-func (_class SRClass) GetType(sessionID SessionRef, self SRRef) (_retval string, _err error) {
+func (_class SRClass) GetType(ctx context.Context, sessionID SessionRef, self SRRef) (_retval string, _err error) {
 	_method := "SR.get_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1080,7 +1082,7 @@ func (_class SRClass) GetType(sessionID SessionRef, self SRRef) (_retval string,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1089,7 +1091,7 @@ func (_class SRClass) GetType(sessionID SessionRef, self SRRef) (_retval string,
 }
 
 // GetPhysicalSize Get the physical_size field of the given SR.
-func (_class SRClass) GetPhysicalSize(sessionID SessionRef, self SRRef) (_retval int, _err error) {
+func (_class SRClass) GetPhysicalSize(ctx context.Context, sessionID SessionRef, self SRRef) (_retval int, _err error) {
 	_method := "SR.get_physical_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1099,7 +1101,7 @@ func (_class SRClass) GetPhysicalSize(sessionID SessionRef, self SRRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1108,7 +1110,7 @@ func (_class SRClass) GetPhysicalSize(sessionID SessionRef, self SRRef) (_retval
 }
 
 // GetPhysicalUtilisation Get the physical_utilisation field of the given SR.
-func (_class SRClass) GetPhysicalUtilisation(sessionID SessionRef, self SRRef) (_retval int, _err error) {
+func (_class SRClass) GetPhysicalUtilisation(ctx context.Context, sessionID SessionRef, self SRRef) (_retval int, _err error) {
 	_method := "SR.get_physical_utilisation"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1118,7 +1120,7 @@ func (_class SRClass) GetPhysicalUtilisation(sessionID SessionRef, self SRRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1127,7 +1129,7 @@ func (_class SRClass) GetPhysicalUtilisation(sessionID SessionRef, self SRRef) (
 }
 
 // GetVirtualAllocation Get the virtual_allocation field of the given SR.
-func (_class SRClass) GetVirtualAllocation(sessionID SessionRef, self SRRef) (_retval int, _err error) {
+func (_class SRClass) GetVirtualAllocation(ctx context.Context, sessionID SessionRef, self SRRef) (_retval int, _err error) {
 	_method := "SR.get_virtual_allocation"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1137,7 +1139,7 @@ func (_class SRClass) GetVirtualAllocation(sessionID SessionRef, self SRRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1146,7 +1148,7 @@ func (_class SRClass) GetVirtualAllocation(sessionID SessionRef, self SRRef) (_r
 }
 
 // GetPBDs Get the PBDs field of the given SR.
-func (_class SRClass) GetPBDs(sessionID SessionRef, self SRRef) (_retval []PBDRef, _err error) {
+func (_class SRClass) GetPBDs(ctx context.Context, sessionID SessionRef, self SRRef) (_retval []PBDRef, _err error) {
 	_method := "SR.get_PBDs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1156,7 +1158,7 @@ func (_class SRClass) GetPBDs(sessionID SessionRef, self SRRef) (_retval []PBDRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1165,7 +1167,7 @@ func (_class SRClass) GetPBDs(sessionID SessionRef, self SRRef) (_retval []PBDRe
 }
 
 // GetVDIs Get the VDIs field of the given SR.
-func (_class SRClass) GetVDIs(sessionID SessionRef, self SRRef) (_retval []VDIRef, _err error) {
+func (_class SRClass) GetVDIs(ctx context.Context, sessionID SessionRef, self SRRef) (_retval []VDIRef, _err error) {
 	_method := "SR.get_VDIs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1175,7 +1177,7 @@ func (_class SRClass) GetVDIs(sessionID SessionRef, self SRRef) (_retval []VDIRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1184,7 +1186,7 @@ func (_class SRClass) GetVDIs(sessionID SessionRef, self SRRef) (_retval []VDIRe
 }
 
 // GetCurrentOperations Get the current_operations field of the given SR.
-func (_class SRClass) GetCurrentOperations(sessionID SessionRef, self SRRef) (_retval map[string]StorageOperations, _err error) {
+func (_class SRClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self SRRef) (_retval map[string]StorageOperations, _err error) {
 	_method := "SR.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1194,7 +1196,7 @@ func (_class SRClass) GetCurrentOperations(sessionID SessionRef, self SRRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1203,7 +1205,7 @@ func (_class SRClass) GetCurrentOperations(sessionID SessionRef, self SRRef) (_r
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given SR.
-func (_class SRClass) GetAllowedOperations(sessionID SessionRef, self SRRef) (_retval []StorageOperations, _err error) {
+func (_class SRClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self SRRef) (_retval []StorageOperations, _err error) {
 	_method := "SR.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1213,7 +1215,7 @@ func (_class SRClass) GetAllowedOperations(sessionID SessionRef, self SRRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1222,7 +1224,7 @@ func (_class SRClass) GetAllowedOperations(sessionID SessionRef, self SRRef) (_r
 }
 
 // GetNameDescription Get the name/description field of the given SR.
-func (_class SRClass) GetNameDescription(sessionID SessionRef, self SRRef) (_retval string, _err error) {
+func (_class SRClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self SRRef) (_retval string, _err error) {
 	_method := "SR.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1232,7 +1234,7 @@ func (_class SRClass) GetNameDescription(sessionID SessionRef, self SRRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1241,7 +1243,7 @@ func (_class SRClass) GetNameDescription(sessionID SessionRef, self SRRef) (_ret
 }
 
 // GetNameLabel Get the name/label field of the given SR.
-func (_class SRClass) GetNameLabel(sessionID SessionRef, self SRRef) (_retval string, _err error) {
+func (_class SRClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self SRRef) (_retval string, _err error) {
 	_method := "SR.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1251,7 +1253,7 @@ func (_class SRClass) GetNameLabel(sessionID SessionRef, self SRRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1260,7 +1262,7 @@ func (_class SRClass) GetNameLabel(sessionID SessionRef, self SRRef) (_retval st
 }
 
 // GetUUID Get the uuid field of the given SR.
-func (_class SRClass) GetUUID(sessionID SessionRef, self SRRef) (_retval string, _err error) {
+func (_class SRClass) GetUUID(ctx context.Context, sessionID SessionRef, self SRRef) (_retval string, _err error) {
 	_method := "SR.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1270,7 +1272,7 @@ func (_class SRClass) GetUUID(sessionID SessionRef, self SRRef) (_retval string,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1279,7 +1281,7 @@ func (_class SRClass) GetUUID(sessionID SessionRef, self SRRef) (_retval string,
 }
 
 // GetByNameLabel Get all the SR instances with the given label.
-func (_class SRClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []SRRef, _err error) {
+func (_class SRClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []SRRef, _err error) {
 	_method := "SR.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1289,7 +1291,7 @@ func (_class SRClass) GetByNameLabel(sessionID SessionRef, label string) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -1298,7 +1300,7 @@ func (_class SRClass) GetByNameLabel(sessionID SessionRef, label string) (_retva
 }
 
 // GetByUUID Get a reference to the SR instance with the specified UUID.
-func (_class SRClass) GetByUUID(sessionID SessionRef, uuid string) (_retval SRRef, _err error) {
+func (_class SRClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval SRRef, _err error) {
 	_method := "SR.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1308,7 +1310,7 @@ func (_class SRClass) GetByUUID(sessionID SessionRef, uuid string) (_retval SRRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -1317,7 +1319,7 @@ func (_class SRClass) GetByUUID(sessionID SessionRef, uuid string) (_retval SRRe
 }
 
 // GetRecord Get a record containing the current state of the given SR.
-func (_class SRClass) GetRecord(sessionID SessionRef, self SRRef) (_retval SRRecord, _err error) {
+func (_class SRClass) GetRecord(ctx context.Context, sessionID SessionRef, self SRRef) (_retval SRRecord, _err error) {
 	_method := "SR.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1327,7 +1329,7 @@ func (_class SRClass) GetRecord(sessionID SessionRef, self SRRef) (_retval SRRec
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

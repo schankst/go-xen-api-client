@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -51,13 +53,13 @@ type HostPatchClass struct {
 }
 
 // GetAllRecords Return a map of host_patch references to host_patch records for all host_patchs known to the system.
-func (_class HostPatchClass) GetAllRecords(sessionID SessionRef) (_retval map[HostPatchRef]HostPatchRecord, _err error) {
+func (_class HostPatchClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[HostPatchRef]HostPatchRecord, _err error) {
 	_method := "host_patch.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -66,13 +68,13 @@ func (_class HostPatchClass) GetAllRecords(sessionID SessionRef) (_retval map[Ho
 }
 
 // GetAll Return a list of all the host_patchs known to the system.
-func (_class HostPatchClass) GetAll(sessionID SessionRef) (_retval []HostPatchRef, _err error) {
+func (_class HostPatchClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []HostPatchRef, _err error) {
 	_method := "host_patch.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -81,7 +83,7 @@ func (_class HostPatchClass) GetAll(sessionID SessionRef) (_retval []HostPatchRe
 }
 
 // Apply Apply the selected patch and return its output
-func (_class HostPatchClass) Apply(sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
+func (_class HostPatchClass) Apply(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
 	_method := "host_patch.apply"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -91,7 +93,7 @@ func (_class HostPatchClass) Apply(sessionID SessionRef, self HostPatchRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -100,7 +102,7 @@ func (_class HostPatchClass) Apply(sessionID SessionRef, self HostPatchRef) (_re
 }
 
 // Destroy Destroy the specified host patch, removing it from the disk. This does NOT reverse the patch
-func (_class HostPatchClass) Destroy(sessionID SessionRef, self HostPatchRef) (_err error) {
+func (_class HostPatchClass) Destroy(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_err error) {
 	_method := "host_patch.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -110,12 +112,12 @@ func (_class HostPatchClass) Destroy(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given host_patch.  If the key is not in that Map, then do nothing.
-func (_class HostPatchClass) RemoveFromOtherConfig(sessionID SessionRef, self HostPatchRef, key string) (_err error) {
+func (_class HostPatchClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self HostPatchRef, key string) (_err error) {
 	_method := "host_patch.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -129,12 +131,12 @@ func (_class HostPatchClass) RemoveFromOtherConfig(sessionID SessionRef, self Ho
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given host_patch.
-func (_class HostPatchClass) AddToOtherConfig(sessionID SessionRef, self HostPatchRef, key string, value string) (_err error) {
+func (_class HostPatchClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self HostPatchRef, key string, value string) (_err error) {
 	_method := "host_patch.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -152,12 +154,12 @@ func (_class HostPatchClass) AddToOtherConfig(sessionID SessionRef, self HostPat
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given host_patch.
-func (_class HostPatchClass) SetOtherConfig(sessionID SessionRef, self HostPatchRef, value map[string]string) (_err error) {
+func (_class HostPatchClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self HostPatchRef, value map[string]string) (_err error) {
 	_method := "host_patch.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -171,12 +173,12 @@ func (_class HostPatchClass) SetOtherConfig(sessionID SessionRef, self HostPatch
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given host_patch.
-func (_class HostPatchClass) GetOtherConfig(sessionID SessionRef, self HostPatchRef) (_retval map[string]string, _err error) {
+func (_class HostPatchClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval map[string]string, _err error) {
 	_method := "host_patch.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -186,7 +188,7 @@ func (_class HostPatchClass) GetOtherConfig(sessionID SessionRef, self HostPatch
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -195,7 +197,7 @@ func (_class HostPatchClass) GetOtherConfig(sessionID SessionRef, self HostPatch
 }
 
 // GetPoolPatch Get the pool_patch field of the given host_patch.
-func (_class HostPatchClass) GetPoolPatch(sessionID SessionRef, self HostPatchRef) (_retval PoolPatchRef, _err error) {
+func (_class HostPatchClass) GetPoolPatch(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval PoolPatchRef, _err error) {
 	_method := "host_patch.get_pool_patch"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -205,7 +207,7 @@ func (_class HostPatchClass) GetPoolPatch(sessionID SessionRef, self HostPatchRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -214,7 +216,7 @@ func (_class HostPatchClass) GetPoolPatch(sessionID SessionRef, self HostPatchRe
 }
 
 // GetSize Get the size field of the given host_patch.
-func (_class HostPatchClass) GetSize(sessionID SessionRef, self HostPatchRef) (_retval int, _err error) {
+func (_class HostPatchClass) GetSize(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval int, _err error) {
 	_method := "host_patch.get_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -224,7 +226,7 @@ func (_class HostPatchClass) GetSize(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -233,7 +235,7 @@ func (_class HostPatchClass) GetSize(sessionID SessionRef, self HostPatchRef) (_
 }
 
 // GetTimestampApplied Get the timestamp_applied field of the given host_patch.
-func (_class HostPatchClass) GetTimestampApplied(sessionID SessionRef, self HostPatchRef) (_retval time.Time, _err error) {
+func (_class HostPatchClass) GetTimestampApplied(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval time.Time, _err error) {
 	_method := "host_patch.get_timestamp_applied"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -243,7 +245,7 @@ func (_class HostPatchClass) GetTimestampApplied(sessionID SessionRef, self Host
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -252,7 +254,7 @@ func (_class HostPatchClass) GetTimestampApplied(sessionID SessionRef, self Host
 }
 
 // GetApplied Get the applied field of the given host_patch.
-func (_class HostPatchClass) GetApplied(sessionID SessionRef, self HostPatchRef) (_retval bool, _err error) {
+func (_class HostPatchClass) GetApplied(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval bool, _err error) {
 	_method := "host_patch.get_applied"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -262,7 +264,7 @@ func (_class HostPatchClass) GetApplied(sessionID SessionRef, self HostPatchRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -271,7 +273,7 @@ func (_class HostPatchClass) GetApplied(sessionID SessionRef, self HostPatchRef)
 }
 
 // GetHost Get the host field of the given host_patch.
-func (_class HostPatchClass) GetHost(sessionID SessionRef, self HostPatchRef) (_retval HostRef, _err error) {
+func (_class HostPatchClass) GetHost(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval HostRef, _err error) {
 	_method := "host_patch.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -281,7 +283,7 @@ func (_class HostPatchClass) GetHost(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -290,7 +292,7 @@ func (_class HostPatchClass) GetHost(sessionID SessionRef, self HostPatchRef) (_
 }
 
 // GetVersion Get the version field of the given host_patch.
-func (_class HostPatchClass) GetVersion(sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
+func (_class HostPatchClass) GetVersion(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
 	_method := "host_patch.get_version"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -300,7 +302,7 @@ func (_class HostPatchClass) GetVersion(sessionID SessionRef, self HostPatchRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -309,7 +311,7 @@ func (_class HostPatchClass) GetVersion(sessionID SessionRef, self HostPatchRef)
 }
 
 // GetNameDescription Get the name/description field of the given host_patch.
-func (_class HostPatchClass) GetNameDescription(sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
+func (_class HostPatchClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
 	_method := "host_patch.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -319,7 +321,7 @@ func (_class HostPatchClass) GetNameDescription(sessionID SessionRef, self HostP
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -328,7 +330,7 @@ func (_class HostPatchClass) GetNameDescription(sessionID SessionRef, self HostP
 }
 
 // GetNameLabel Get the name/label field of the given host_patch.
-func (_class HostPatchClass) GetNameLabel(sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
+func (_class HostPatchClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
 	_method := "host_patch.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -338,7 +340,7 @@ func (_class HostPatchClass) GetNameLabel(sessionID SessionRef, self HostPatchRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -347,7 +349,7 @@ func (_class HostPatchClass) GetNameLabel(sessionID SessionRef, self HostPatchRe
 }
 
 // GetUUID Get the uuid field of the given host_patch.
-func (_class HostPatchClass) GetUUID(sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
+func (_class HostPatchClass) GetUUID(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval string, _err error) {
 	_method := "host_patch.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -357,7 +359,7 @@ func (_class HostPatchClass) GetUUID(sessionID SessionRef, self HostPatchRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -366,7 +368,7 @@ func (_class HostPatchClass) GetUUID(sessionID SessionRef, self HostPatchRef) (_
 }
 
 // GetByNameLabel Get all the host_patch instances with the given label.
-func (_class HostPatchClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []HostPatchRef, _err error) {
+func (_class HostPatchClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []HostPatchRef, _err error) {
 	_method := "host_patch.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -376,7 +378,7 @@ func (_class HostPatchClass) GetByNameLabel(sessionID SessionRef, label string) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -385,7 +387,7 @@ func (_class HostPatchClass) GetByNameLabel(sessionID SessionRef, label string) 
 }
 
 // GetByUUID Get a reference to the host_patch instance with the specified UUID.
-func (_class HostPatchClass) GetByUUID(sessionID SessionRef, uuid string) (_retval HostPatchRef, _err error) {
+func (_class HostPatchClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval HostPatchRef, _err error) {
 	_method := "host_patch.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -395,7 +397,7 @@ func (_class HostPatchClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -404,7 +406,7 @@ func (_class HostPatchClass) GetByUUID(sessionID SessionRef, uuid string) (_retv
 }
 
 // GetRecord Get a record containing the current state of the given host_patch.
-func (_class HostPatchClass) GetRecord(sessionID SessionRef, self HostPatchRef) (_retval HostPatchRecord, _err error) {
+func (_class HostPatchClass) GetRecord(ctx context.Context, sessionID SessionRef, self HostPatchRef) (_retval HostPatchRecord, _err error) {
 	_method := "host_patch.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -414,7 +416,7 @@ func (_class HostPatchClass) GetRecord(sessionID SessionRef, self HostPatchRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

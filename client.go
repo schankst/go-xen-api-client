@@ -36,10 +36,15 @@ type APIResult struct {
 // is a thin, typed wrapper around this; call it directly only for
 // functionality this fork doesn't expose a typed wrapper for. Returns an
 // *Error if XenAPI reports a protocol-level failure.
-func (client *Client) APICall(method string, params ...any) (result APIResult, err error) {
+//
+// ctx bounds the call; once it is canceled or past its deadline, the call
+// returns an error matching ctx.Err() with errors.Is. Note that canceling
+// only abandons the request: an operation XAPI has already started (e.g.
+// VM.start) keeps running on the host.
+func (client *Client) APICall(ctx context.Context, method string, params ...any) (result APIResult, err error) {
 	rpcResult := xmlrpc.Struct{}
 
-	err = client.rpc.Call(context.TODO(), method, params, &rpcResult)
+	err = client.rpc.Call(ctx, method, params, &rpcResult)
 	if err != nil {
 		return
 	}

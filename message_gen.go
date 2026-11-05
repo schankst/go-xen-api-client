@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -68,7 +70,7 @@ type MessageClass struct {
 }
 
 // GetAllRecordsWhere
-func (_class MessageClass) GetAllRecordsWhere(sessionID SessionRef, expr string) (_retval map[MessageRef]MessageRecord, _err error) {
+func (_class MessageClass) GetAllRecordsWhere(ctx context.Context, sessionID SessionRef, expr string) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get_all_records_where"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -78,7 +80,7 @@ func (_class MessageClass) GetAllRecordsWhere(sessionID SessionRef, expr string)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _exprArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _exprArg)
 	if _err != nil {
 		return
 	}
@@ -87,13 +89,13 @@ func (_class MessageClass) GetAllRecordsWhere(sessionID SessionRef, expr string)
 }
 
 // GetAllRecords
-func (_class MessageClass) GetAllRecords(sessionID SessionRef) (_retval map[MessageRef]MessageRecord, _err error) {
+func (_class MessageClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -102,7 +104,7 @@ func (_class MessageClass) GetAllRecords(sessionID SessionRef) (_retval map[Mess
 }
 
 // GetByUUID
-func (_class MessageClass) GetByUUID(sessionID SessionRef, uuid string) (_retval MessageRef, _err error) {
+func (_class MessageClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval MessageRef, _err error) {
 	_method := "message.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -112,7 +114,7 @@ func (_class MessageClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -121,7 +123,7 @@ func (_class MessageClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 }
 
 // GetRecord
-func (_class MessageClass) GetRecord(sessionID SessionRef, self MessageRef) (_retval MessageRecord, _err error) {
+func (_class MessageClass) GetRecord(ctx context.Context, sessionID SessionRef, self MessageRef) (_retval MessageRecord, _err error) {
 	_method := "message.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -131,7 +133,7 @@ func (_class MessageClass) GetRecord(sessionID SessionRef, self MessageRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -140,7 +142,7 @@ func (_class MessageClass) GetRecord(sessionID SessionRef, self MessageRef) (_re
 }
 
 // GetSince
-func (_class MessageClass) GetSince(sessionID SessionRef, since time.Time) (_retval map[MessageRef]MessageRecord, _err error) {
+func (_class MessageClass) GetSince(ctx context.Context, sessionID SessionRef, since time.Time) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get_since"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -150,7 +152,7 @@ func (_class MessageClass) GetSince(sessionID SessionRef, since time.Time) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _sinceArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _sinceArg)
 	if _err != nil {
 		return
 	}
@@ -159,13 +161,13 @@ func (_class MessageClass) GetSince(sessionID SessionRef, since time.Time) (_ret
 }
 
 // GetAll
-func (_class MessageClass) GetAll(sessionID SessionRef) (_retval []MessageRef, _err error) {
+func (_class MessageClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []MessageRef, _err error) {
 	_method := "message.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -174,7 +176,7 @@ func (_class MessageClass) GetAll(sessionID SessionRef) (_retval []MessageRef, _
 }
 
 // Get
-func (_class MessageClass) Get(sessionID SessionRef, cls Cls, objUUID string, since time.Time) (_retval map[MessageRef]MessageRecord, _err error) {
+func (_class MessageClass) Get(ctx context.Context, sessionID SessionRef, cls Cls, objUUID string, since time.Time) (_retval map[MessageRef]MessageRecord, _err error) {
 	_method := "message.get"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -192,7 +194,7 @@ func (_class MessageClass) Get(sessionID SessionRef, cls Cls, objUUID string, si
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _clsArg, _objUUIDArg, _sinceArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _clsArg, _objUUIDArg, _sinceArg)
 	if _err != nil {
 		return
 	}
@@ -201,7 +203,7 @@ func (_class MessageClass) Get(sessionID SessionRef, cls Cls, objUUID string, si
 }
 
 // DestroyAll
-func (_class MessageClass) DestroyAll(sessionID SessionRef, filters map[string]string) (_err error) {
+func (_class MessageClass) DestroyAll(ctx context.Context, sessionID SessionRef, filters map[string]string) (_err error) {
 	_method := "message.destroy_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -211,12 +213,12 @@ func (_class MessageClass) DestroyAll(sessionID SessionRef, filters map[string]s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _filtersArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _filtersArg)
 	return
 }
 
 // DestroyMany
-func (_class MessageClass) DestroyMany(sessionID SessionRef, messages []MessageRef) (_err error) {
+func (_class MessageClass) DestroyMany(ctx context.Context, sessionID SessionRef, messages []MessageRef) (_err error) {
 	_method := "message.destroy_many"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -226,12 +228,12 @@ func (_class MessageClass) DestroyMany(sessionID SessionRef, messages []MessageR
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _messagesArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _messagesArg)
 	return
 }
 
 // Destroy
-func (_class MessageClass) Destroy(sessionID SessionRef, self MessageRef) (_err error) {
+func (_class MessageClass) Destroy(ctx context.Context, sessionID SessionRef, self MessageRef) (_err error) {
 	_method := "message.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -241,12 +243,12 @@ func (_class MessageClass) Destroy(sessionID SessionRef, self MessageRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create
-func (_class MessageClass) Create(sessionID SessionRef, name string, priority int, cls Cls, objUUID string, body string) (_retval MessageRef, _err error) {
+func (_class MessageClass) Create(ctx context.Context, sessionID SessionRef, name string, priority int, cls Cls, objUUID string, body string) (_retval MessageRef, _err error) {
 	_method := "message.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -272,7 +274,7 @@ func (_class MessageClass) Create(sessionID SessionRef, name string, priority in
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _nameArg, _priorityArg, _clsArg, _objUUIDArg, _bodyArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _nameArg, _priorityArg, _clsArg, _objUUIDArg, _bodyArg)
 	if _err != nil {
 		return
 	}

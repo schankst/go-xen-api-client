@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -77,13 +79,13 @@ type PoolUpdateClass struct {
 }
 
 // GetAllRecords Return a map of pool_update references to pool_update records for all pool_updates known to the system.
-func (_class PoolUpdateClass) GetAllRecords(sessionID SessionRef) (_retval map[PoolUpdateRef]PoolUpdateRecord, _err error) {
+func (_class PoolUpdateClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PoolUpdateRef]PoolUpdateRecord, _err error) {
 	_method := "pool_update.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -92,13 +94,13 @@ func (_class PoolUpdateClass) GetAllRecords(sessionID SessionRef) (_retval map[P
 }
 
 // GetAll Return a list of all the pool_updates known to the system.
-func (_class PoolUpdateClass) GetAll(sessionID SessionRef) (_retval []PoolUpdateRef, _err error) {
+func (_class PoolUpdateClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PoolUpdateRef, _err error) {
 	_method := "pool_update.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -107,7 +109,7 @@ func (_class PoolUpdateClass) GetAll(sessionID SessionRef) (_retval []PoolUpdate
 }
 
 // Destroy Removes the database entry. Only works on unapplied update.
-func (_class PoolUpdateClass) Destroy(sessionID SessionRef, self PoolUpdateRef) (_err error) {
+func (_class PoolUpdateClass) Destroy(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_err error) {
 	_method := "pool_update.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -117,12 +119,12 @@ func (_class PoolUpdateClass) Destroy(sessionID SessionRef, self PoolUpdateRef) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // PoolClean Removes the update's files from all hosts in the pool, but does not revert the update
-func (_class PoolUpdateClass) PoolClean(sessionID SessionRef, self PoolUpdateRef) (_err error) {
+func (_class PoolUpdateClass) PoolClean(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_err error) {
 	_method := "pool_update.pool_clean"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -132,12 +134,12 @@ func (_class PoolUpdateClass) PoolClean(sessionID SessionRef, self PoolUpdateRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // PoolApply Apply the selected update to all hosts in the pool
-func (_class PoolUpdateClass) PoolApply(sessionID SessionRef, self PoolUpdateRef) (_err error) {
+func (_class PoolUpdateClass) PoolApply(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_err error) {
 	_method := "pool_update.pool_apply"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -147,12 +149,12 @@ func (_class PoolUpdateClass) PoolApply(sessionID SessionRef, self PoolUpdateRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Apply Apply the selected update to a host
-func (_class PoolUpdateClass) Apply(sessionID SessionRef, self PoolUpdateRef, host HostRef) (_err error) {
+func (_class PoolUpdateClass) Apply(ctx context.Context, sessionID SessionRef, self PoolUpdateRef, host HostRef) (_err error) {
 	_method := "pool_update.apply"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -166,12 +168,12 @@ func (_class PoolUpdateClass) Apply(sessionID SessionRef, self PoolUpdateRef, ho
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _hostArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _hostArg)
 	return
 }
 
 // Precheck Execute the precheck stage of the selected update on a host
-func (_class PoolUpdateClass) Precheck(sessionID SessionRef, self PoolUpdateRef, host HostRef) (_retval LivepatchStatus, _err error) {
+func (_class PoolUpdateClass) Precheck(ctx context.Context, sessionID SessionRef, self PoolUpdateRef, host HostRef) (_retval LivepatchStatus, _err error) {
 	_method := "pool_update.precheck"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -185,7 +187,7 @@ func (_class PoolUpdateClass) Precheck(sessionID SessionRef, self PoolUpdateRef,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg, _hostArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _hostArg)
 	if _err != nil {
 		return
 	}
@@ -194,7 +196,7 @@ func (_class PoolUpdateClass) Precheck(sessionID SessionRef, self PoolUpdateRef,
 }
 
 // Introduce Introduce update VDI
-func (_class PoolUpdateClass) Introduce(sessionID SessionRef, vdi VDIRef) (_retval PoolUpdateRef, _err error) {
+func (_class PoolUpdateClass) Introduce(ctx context.Context, sessionID SessionRef, vdi VDIRef) (_retval PoolUpdateRef, _err error) {
 	_method := "pool_update.introduce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -204,7 +206,7 @@ func (_class PoolUpdateClass) Introduce(sessionID SessionRef, vdi VDIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vdiArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg)
 	if _err != nil {
 		return
 	}
@@ -213,7 +215,7 @@ func (_class PoolUpdateClass) Introduce(sessionID SessionRef, vdi VDIRef) (_retv
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given pool_update.  If the key is not in that Map, then do nothing.
-func (_class PoolUpdateClass) RemoveFromOtherConfig(sessionID SessionRef, self PoolUpdateRef, key string) (_err error) {
+func (_class PoolUpdateClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self PoolUpdateRef, key string) (_err error) {
 	_method := "pool_update.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -227,12 +229,12 @@ func (_class PoolUpdateClass) RemoveFromOtherConfig(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given pool_update.
-func (_class PoolUpdateClass) AddToOtherConfig(sessionID SessionRef, self PoolUpdateRef, key string, value string) (_err error) {
+func (_class PoolUpdateClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self PoolUpdateRef, key string, value string) (_err error) {
 	_method := "pool_update.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -250,12 +252,12 @@ func (_class PoolUpdateClass) AddToOtherConfig(sessionID SessionRef, self PoolUp
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given pool_update.
-func (_class PoolUpdateClass) SetOtherConfig(sessionID SessionRef, self PoolUpdateRef, value map[string]string) (_err error) {
+func (_class PoolUpdateClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self PoolUpdateRef, value map[string]string) (_err error) {
 	_method := "pool_update.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -269,12 +271,12 @@ func (_class PoolUpdateClass) SetOtherConfig(sessionID SessionRef, self PoolUpda
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetEnforceHomogeneity Get the enforce_homogeneity field of the given pool_update.
-func (_class PoolUpdateClass) GetEnforceHomogeneity(sessionID SessionRef, self PoolUpdateRef) (_retval bool, _err error) {
+func (_class PoolUpdateClass) GetEnforceHomogeneity(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval bool, _err error) {
 	_method := "pool_update.get_enforce_homogeneity"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -284,7 +286,7 @@ func (_class PoolUpdateClass) GetEnforceHomogeneity(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -293,7 +295,7 @@ func (_class PoolUpdateClass) GetEnforceHomogeneity(sessionID SessionRef, self P
 }
 
 // GetOtherConfig Get the other_config field of the given pool_update.
-func (_class PoolUpdateClass) GetOtherConfig(sessionID SessionRef, self PoolUpdateRef) (_retval map[string]string, _err error) {
+func (_class PoolUpdateClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval map[string]string, _err error) {
 	_method := "pool_update.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -303,7 +305,7 @@ func (_class PoolUpdateClass) GetOtherConfig(sessionID SessionRef, self PoolUpda
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -312,7 +314,7 @@ func (_class PoolUpdateClass) GetOtherConfig(sessionID SessionRef, self PoolUpda
 }
 
 // GetHosts Get the hosts field of the given pool_update.
-func (_class PoolUpdateClass) GetHosts(sessionID SessionRef, self PoolUpdateRef) (_retval []HostRef, _err error) {
+func (_class PoolUpdateClass) GetHosts(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval []HostRef, _err error) {
 	_method := "pool_update.get_hosts"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -322,7 +324,7 @@ func (_class PoolUpdateClass) GetHosts(sessionID SessionRef, self PoolUpdateRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -331,7 +333,7 @@ func (_class PoolUpdateClass) GetHosts(sessionID SessionRef, self PoolUpdateRef)
 }
 
 // GetVdi Get the vdi field of the given pool_update.
-func (_class PoolUpdateClass) GetVdi(sessionID SessionRef, self PoolUpdateRef) (_retval VDIRef, _err error) {
+func (_class PoolUpdateClass) GetVdi(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval VDIRef, _err error) {
 	_method := "pool_update.get_vdi"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -341,7 +343,7 @@ func (_class PoolUpdateClass) GetVdi(sessionID SessionRef, self PoolUpdateRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -350,7 +352,7 @@ func (_class PoolUpdateClass) GetVdi(sessionID SessionRef, self PoolUpdateRef) (
 }
 
 // GetAfterApplyGuidance Get the after_apply_guidance field of the given pool_update.
-func (_class PoolUpdateClass) GetAfterApplyGuidance(sessionID SessionRef, self PoolUpdateRef) (_retval []UpdateAfterApplyGuidance, _err error) {
+func (_class PoolUpdateClass) GetAfterApplyGuidance(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval []UpdateAfterApplyGuidance, _err error) {
 	_method := "pool_update.get_after_apply_guidance"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -360,7 +362,7 @@ func (_class PoolUpdateClass) GetAfterApplyGuidance(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -369,7 +371,7 @@ func (_class PoolUpdateClass) GetAfterApplyGuidance(sessionID SessionRef, self P
 }
 
 // GetKey Get the key field of the given pool_update.
-func (_class PoolUpdateClass) GetKey(sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
+func (_class PoolUpdateClass) GetKey(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
 	_method := "pool_update.get_key"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -379,7 +381,7 @@ func (_class PoolUpdateClass) GetKey(sessionID SessionRef, self PoolUpdateRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -388,7 +390,7 @@ func (_class PoolUpdateClass) GetKey(sessionID SessionRef, self PoolUpdateRef) (
 }
 
 // GetInstallationSize Get the installation_size field of the given pool_update.
-func (_class PoolUpdateClass) GetInstallationSize(sessionID SessionRef, self PoolUpdateRef) (_retval int, _err error) {
+func (_class PoolUpdateClass) GetInstallationSize(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval int, _err error) {
 	_method := "pool_update.get_installation_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -398,7 +400,7 @@ func (_class PoolUpdateClass) GetInstallationSize(sessionID SessionRef, self Poo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -407,7 +409,7 @@ func (_class PoolUpdateClass) GetInstallationSize(sessionID SessionRef, self Poo
 }
 
 // GetVersion Get the version field of the given pool_update.
-func (_class PoolUpdateClass) GetVersion(sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
+func (_class PoolUpdateClass) GetVersion(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
 	_method := "pool_update.get_version"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -417,7 +419,7 @@ func (_class PoolUpdateClass) GetVersion(sessionID SessionRef, self PoolUpdateRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -426,7 +428,7 @@ func (_class PoolUpdateClass) GetVersion(sessionID SessionRef, self PoolUpdateRe
 }
 
 // GetNameDescription Get the name/description field of the given pool_update.
-func (_class PoolUpdateClass) GetNameDescription(sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
+func (_class PoolUpdateClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
 	_method := "pool_update.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -436,7 +438,7 @@ func (_class PoolUpdateClass) GetNameDescription(sessionID SessionRef, self Pool
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -445,7 +447,7 @@ func (_class PoolUpdateClass) GetNameDescription(sessionID SessionRef, self Pool
 }
 
 // GetNameLabel Get the name/label field of the given pool_update.
-func (_class PoolUpdateClass) GetNameLabel(sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
+func (_class PoolUpdateClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
 	_method := "pool_update.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -455,7 +457,7 @@ func (_class PoolUpdateClass) GetNameLabel(sessionID SessionRef, self PoolUpdate
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -464,7 +466,7 @@ func (_class PoolUpdateClass) GetNameLabel(sessionID SessionRef, self PoolUpdate
 }
 
 // GetUUID Get the uuid field of the given pool_update.
-func (_class PoolUpdateClass) GetUUID(sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
+func (_class PoolUpdateClass) GetUUID(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval string, _err error) {
 	_method := "pool_update.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -474,7 +476,7 @@ func (_class PoolUpdateClass) GetUUID(sessionID SessionRef, self PoolUpdateRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -483,7 +485,7 @@ func (_class PoolUpdateClass) GetUUID(sessionID SessionRef, self PoolUpdateRef) 
 }
 
 // GetByNameLabel Get all the pool_update instances with the given label.
-func (_class PoolUpdateClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []PoolUpdateRef, _err error) {
+func (_class PoolUpdateClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []PoolUpdateRef, _err error) {
 	_method := "pool_update.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -493,7 +495,7 @@ func (_class PoolUpdateClass) GetByNameLabel(sessionID SessionRef, label string)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -502,7 +504,7 @@ func (_class PoolUpdateClass) GetByNameLabel(sessionID SessionRef, label string)
 }
 
 // GetByUUID Get a reference to the pool_update instance with the specified UUID.
-func (_class PoolUpdateClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PoolUpdateRef, _err error) {
+func (_class PoolUpdateClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PoolUpdateRef, _err error) {
 	_method := "pool_update.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -512,7 +514,7 @@ func (_class PoolUpdateClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -521,7 +523,7 @@ func (_class PoolUpdateClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 }
 
 // GetRecord Get a record containing the current state of the given pool_update.
-func (_class PoolUpdateClass) GetRecord(sessionID SessionRef, self PoolUpdateRef) (_retval PoolUpdateRecord, _err error) {
+func (_class PoolUpdateClass) GetRecord(ctx context.Context, sessionID SessionRef, self PoolUpdateRef) (_retval PoolUpdateRecord, _err error) {
 	_method := "pool_update.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -531,7 +533,7 @@ func (_class PoolUpdateClass) GetRecord(sessionID SessionRef, self PoolUpdateRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

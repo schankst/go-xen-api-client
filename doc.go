@@ -13,18 +13,20 @@ release to release.
 
 Create a Client with NewClient, log in via Client.Session.LoginWithPassword,
 then call methods through the per-class fields on Client (Client.VM,
-Client.Host, Client.SR, and so on - one field per XenAPI class):
+Client.Host, Client.SR, and so on - one field per XenAPI class). Every
+method takes a context.Context first; use it to cancel calls or bound
+them with a deadline:
 
 	client, err := xenapi.NewClient("https://10.0.0.10")
 	if err != nil {
 		return err
 	}
-	session, err := client.Session.LoginWithPassword("root", "password", "", "")
+	session, err := client.Session.LoginWithPassword(ctx, "root", "password", "", "")
 	if err != nil {
 		return err
 	}
-	vms, err := client.VM.GetAllRecords(session)
-	err = client.Session.Logout(session)
+	vms, err := client.VM.GetAllRecords(ctx, session)
+	err = client.Session.Logout(ctx, session)
 
 Almost all of this package (every *_gen.go file) is generated from XenAPI's
 own xenapi.json schema description, one Go method per XenAPI message and

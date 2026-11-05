@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -61,13 +63,13 @@ type VTPMClass struct {
 }
 
 // GetAllRecords Return a map of VTPM references to VTPM records for all VTPMs known to the system.
-func (_class VTPMClass) GetAllRecords(sessionID SessionRef) (_retval map[VTPMRef]VTPMRecord, _err error) {
+func (_class VTPMClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[VTPMRef]VTPMRecord, _err error) {
 	_method := "VTPM.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -76,13 +78,13 @@ func (_class VTPMClass) GetAllRecords(sessionID SessionRef) (_retval map[VTPMRef
 }
 
 // GetAll Return a list of all the VTPMs known to the system.
-func (_class VTPMClass) GetAll(sessionID SessionRef) (_retval []VTPMRef, _err error) {
+func (_class VTPMClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []VTPMRef, _err error) {
 	_method := "VTPM.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -91,7 +93,7 @@ func (_class VTPMClass) GetAll(sessionID SessionRef) (_retval []VTPMRef, _err er
 }
 
 // Destroy Destroy the specified VTPM instance, along with its state.
-func (_class VTPMClass) Destroy(sessionID SessionRef, self VTPMRef) (_err error) {
+func (_class VTPMClass) Destroy(ctx context.Context, sessionID SessionRef, self VTPMRef) (_err error) {
 	_method := "VTPM.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -101,12 +103,12 @@ func (_class VTPMClass) Destroy(sessionID SessionRef, self VTPMRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new VTPM instance, and return its handle.
-func (_class VTPMClass) Create(sessionID SessionRef, vm VMRef, isUnique bool) (_retval VTPMRef, _err error) {
+func (_class VTPMClass) Create(ctx context.Context, sessionID SessionRef, vm VMRef, isUnique bool) (_retval VTPMRef, _err error) {
 	_method := "VTPM.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -120,7 +122,7 @@ func (_class VTPMClass) Create(sessionID SessionRef, vm VMRef, isUnique bool) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vmArg, _isUniqueArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vmArg, _isUniqueArg)
 	if _err != nil {
 		return
 	}
@@ -129,7 +131,7 @@ func (_class VTPMClass) Create(sessionID SessionRef, vm VMRef, isUnique bool) (_
 }
 
 // GetIsProtected Get the is_protected field of the given VTPM.
-func (_class VTPMClass) GetIsProtected(sessionID SessionRef, self VTPMRef) (_retval bool, _err error) {
+func (_class VTPMClass) GetIsProtected(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval bool, _err error) {
 	_method := "VTPM.get_is_protected"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -139,7 +141,7 @@ func (_class VTPMClass) GetIsProtected(sessionID SessionRef, self VTPMRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -148,7 +150,7 @@ func (_class VTPMClass) GetIsProtected(sessionID SessionRef, self VTPMRef) (_ret
 }
 
 // GetIsUnique Get the is_unique field of the given VTPM.
-func (_class VTPMClass) GetIsUnique(sessionID SessionRef, self VTPMRef) (_retval bool, _err error) {
+func (_class VTPMClass) GetIsUnique(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval bool, _err error) {
 	_method := "VTPM.get_is_unique"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -158,7 +160,7 @@ func (_class VTPMClass) GetIsUnique(sessionID SessionRef, self VTPMRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -167,7 +169,7 @@ func (_class VTPMClass) GetIsUnique(sessionID SessionRef, self VTPMRef) (_retval
 }
 
 // GetPersistenceBackend Get the persistence_backend field of the given VTPM.
-func (_class VTPMClass) GetPersistenceBackend(sessionID SessionRef, self VTPMRef) (_retval PersistenceBackend, _err error) {
+func (_class VTPMClass) GetPersistenceBackend(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval PersistenceBackend, _err error) {
 	_method := "VTPM.get_persistence_backend"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -177,7 +179,7 @@ func (_class VTPMClass) GetPersistenceBackend(sessionID SessionRef, self VTPMRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -186,7 +188,7 @@ func (_class VTPMClass) GetPersistenceBackend(sessionID SessionRef, self VTPMRef
 }
 
 // GetBackend Get the backend field of the given VTPM.
-func (_class VTPMClass) GetBackend(sessionID SessionRef, self VTPMRef) (_retval VMRef, _err error) {
+func (_class VTPMClass) GetBackend(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval VMRef, _err error) {
 	_method := "VTPM.get_backend"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -196,7 +198,7 @@ func (_class VTPMClass) GetBackend(sessionID SessionRef, self VTPMRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -205,7 +207,7 @@ func (_class VTPMClass) GetBackend(sessionID SessionRef, self VTPMRef) (_retval 
 }
 
 // GetVM Get the VM field of the given VTPM.
-func (_class VTPMClass) GetVM(sessionID SessionRef, self VTPMRef) (_retval VMRef, _err error) {
+func (_class VTPMClass) GetVM(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval VMRef, _err error) {
 	_method := "VTPM.get_VM"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -215,7 +217,7 @@ func (_class VTPMClass) GetVM(sessionID SessionRef, self VTPMRef) (_retval VMRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -224,7 +226,7 @@ func (_class VTPMClass) GetVM(sessionID SessionRef, self VTPMRef) (_retval VMRef
 }
 
 // GetCurrentOperations Get the current_operations field of the given VTPM.
-func (_class VTPMClass) GetCurrentOperations(sessionID SessionRef, self VTPMRef) (_retval map[string]VtpmOperations, _err error) {
+func (_class VTPMClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval map[string]VtpmOperations, _err error) {
 	_method := "VTPM.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -234,7 +236,7 @@ func (_class VTPMClass) GetCurrentOperations(sessionID SessionRef, self VTPMRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -243,7 +245,7 @@ func (_class VTPMClass) GetCurrentOperations(sessionID SessionRef, self VTPMRef)
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given VTPM.
-func (_class VTPMClass) GetAllowedOperations(sessionID SessionRef, self VTPMRef) (_retval []VtpmOperations, _err error) {
+func (_class VTPMClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval []VtpmOperations, _err error) {
 	_method := "VTPM.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -253,7 +255,7 @@ func (_class VTPMClass) GetAllowedOperations(sessionID SessionRef, self VTPMRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -262,7 +264,7 @@ func (_class VTPMClass) GetAllowedOperations(sessionID SessionRef, self VTPMRef)
 }
 
 // GetUUID Get the uuid field of the given VTPM.
-func (_class VTPMClass) GetUUID(sessionID SessionRef, self VTPMRef) (_retval string, _err error) {
+func (_class VTPMClass) GetUUID(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval string, _err error) {
 	_method := "VTPM.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -272,7 +274,7 @@ func (_class VTPMClass) GetUUID(sessionID SessionRef, self VTPMRef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -281,7 +283,7 @@ func (_class VTPMClass) GetUUID(sessionID SessionRef, self VTPMRef) (_retval str
 }
 
 // GetByUUID Get a reference to the VTPM instance with the specified UUID.
-func (_class VTPMClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VTPMRef, _err error) {
+func (_class VTPMClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval VTPMRef, _err error) {
 	_method := "VTPM.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -291,7 +293,7 @@ func (_class VTPMClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VT
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -300,7 +302,7 @@ func (_class VTPMClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VT
 }
 
 // GetRecord Get a record containing the current state of the given VTPM.
-func (_class VTPMClass) GetRecord(sessionID SessionRef, self VTPMRef) (_retval VTPMRecord, _err error) {
+func (_class VTPMClass) GetRecord(ctx context.Context, sessionID SessionRef, self VTPMRef) (_retval VTPMRecord, _err error) {
 	_method := "VTPM.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -310,7 +312,7 @@ func (_class VTPMClass) GetRecord(sessionID SessionRef, self VTPMRef) (_retval V
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

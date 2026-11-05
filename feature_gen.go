@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -45,13 +47,13 @@ type FeatureClass struct {
 }
 
 // GetAllRecords Return a map of Feature references to Feature records for all Features known to the system.
-func (_class FeatureClass) GetAllRecords(sessionID SessionRef) (_retval map[FeatureRef]FeatureRecord, _err error) {
+func (_class FeatureClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[FeatureRef]FeatureRecord, _err error) {
 	_method := "Feature.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -60,13 +62,13 @@ func (_class FeatureClass) GetAllRecords(sessionID SessionRef) (_retval map[Feat
 }
 
 // GetAll Return a list of all the Features known to the system.
-func (_class FeatureClass) GetAll(sessionID SessionRef) (_retval []FeatureRef, _err error) {
+func (_class FeatureClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []FeatureRef, _err error) {
 	_method := "Feature.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -75,7 +77,7 @@ func (_class FeatureClass) GetAll(sessionID SessionRef) (_retval []FeatureRef, _
 }
 
 // GetHost Get the host field of the given Feature.
-func (_class FeatureClass) GetHost(sessionID SessionRef, self FeatureRef) (_retval HostRef, _err error) {
+func (_class FeatureClass) GetHost(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval HostRef, _err error) {
 	_method := "Feature.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -85,7 +87,7 @@ func (_class FeatureClass) GetHost(sessionID SessionRef, self FeatureRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -94,7 +96,7 @@ func (_class FeatureClass) GetHost(sessionID SessionRef, self FeatureRef) (_retv
 }
 
 // GetVersion Get the version field of the given Feature.
-func (_class FeatureClass) GetVersion(sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
+func (_class FeatureClass) GetVersion(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
 	_method := "Feature.get_version"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -104,7 +106,7 @@ func (_class FeatureClass) GetVersion(sessionID SessionRef, self FeatureRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -113,7 +115,7 @@ func (_class FeatureClass) GetVersion(sessionID SessionRef, self FeatureRef) (_r
 }
 
 // GetExperimental Get the experimental field of the given Feature.
-func (_class FeatureClass) GetExperimental(sessionID SessionRef, self FeatureRef) (_retval bool, _err error) {
+func (_class FeatureClass) GetExperimental(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval bool, _err error) {
 	_method := "Feature.get_experimental"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -123,7 +125,7 @@ func (_class FeatureClass) GetExperimental(sessionID SessionRef, self FeatureRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -132,7 +134,7 @@ func (_class FeatureClass) GetExperimental(sessionID SessionRef, self FeatureRef
 }
 
 // GetEnabled Get the enabled field of the given Feature.
-func (_class FeatureClass) GetEnabled(sessionID SessionRef, self FeatureRef) (_retval bool, _err error) {
+func (_class FeatureClass) GetEnabled(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval bool, _err error) {
 	_method := "Feature.get_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -142,7 +144,7 @@ func (_class FeatureClass) GetEnabled(sessionID SessionRef, self FeatureRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -151,7 +153,7 @@ func (_class FeatureClass) GetEnabled(sessionID SessionRef, self FeatureRef) (_r
 }
 
 // GetNameDescription Get the name/description field of the given Feature.
-func (_class FeatureClass) GetNameDescription(sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
+func (_class FeatureClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
 	_method := "Feature.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -161,7 +163,7 @@ func (_class FeatureClass) GetNameDescription(sessionID SessionRef, self Feature
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -170,7 +172,7 @@ func (_class FeatureClass) GetNameDescription(sessionID SessionRef, self Feature
 }
 
 // GetNameLabel Get the name/label field of the given Feature.
-func (_class FeatureClass) GetNameLabel(sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
+func (_class FeatureClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
 	_method := "Feature.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -180,7 +182,7 @@ func (_class FeatureClass) GetNameLabel(sessionID SessionRef, self FeatureRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -189,7 +191,7 @@ func (_class FeatureClass) GetNameLabel(sessionID SessionRef, self FeatureRef) (
 }
 
 // GetUUID Get the uuid field of the given Feature.
-func (_class FeatureClass) GetUUID(sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
+func (_class FeatureClass) GetUUID(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval string, _err error) {
 	_method := "Feature.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -199,7 +201,7 @@ func (_class FeatureClass) GetUUID(sessionID SessionRef, self FeatureRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -208,7 +210,7 @@ func (_class FeatureClass) GetUUID(sessionID SessionRef, self FeatureRef) (_retv
 }
 
 // GetByNameLabel Get all the Feature instances with the given label.
-func (_class FeatureClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []FeatureRef, _err error) {
+func (_class FeatureClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []FeatureRef, _err error) {
 	_method := "Feature.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -218,7 +220,7 @@ func (_class FeatureClass) GetByNameLabel(sessionID SessionRef, label string) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -227,7 +229,7 @@ func (_class FeatureClass) GetByNameLabel(sessionID SessionRef, label string) (_
 }
 
 // GetByUUID Get a reference to the Feature instance with the specified UUID.
-func (_class FeatureClass) GetByUUID(sessionID SessionRef, uuid string) (_retval FeatureRef, _err error) {
+func (_class FeatureClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval FeatureRef, _err error) {
 	_method := "Feature.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -237,7 +239,7 @@ func (_class FeatureClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -246,7 +248,7 @@ func (_class FeatureClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 }
 
 // GetRecord Get a record containing the current state of the given Feature.
-func (_class FeatureClass) GetRecord(sessionID SessionRef, self FeatureRef) (_retval FeatureRecord, _err error) {
+func (_class FeatureClass) GetRecord(ctx context.Context, sessionID SessionRef, self FeatureRef) (_retval FeatureRecord, _err error) {
 	_method := "Feature.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -256,7 +258,7 @@ func (_class FeatureClass) GetRecord(sessionID SessionRef, self FeatureRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

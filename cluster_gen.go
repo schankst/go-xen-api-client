@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -80,13 +82,13 @@ type ClusterClass struct {
 }
 
 // GetAllRecords Return a map of Cluster references to Cluster records for all Clusters known to the system.
-func (_class ClusterClass) GetAllRecords(sessionID SessionRef) (_retval map[ClusterRef]ClusterRecord, _err error) {
+func (_class ClusterClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[ClusterRef]ClusterRecord, _err error) {
 	_method := "Cluster.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -95,13 +97,13 @@ func (_class ClusterClass) GetAllRecords(sessionID SessionRef) (_retval map[Clus
 }
 
 // GetAll Return a list of all the Clusters known to the system.
-func (_class ClusterClass) GetAll(sessionID SessionRef) (_retval []ClusterRef, _err error) {
+func (_class ClusterClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []ClusterRef, _err error) {
 	_method := "Cluster.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -110,7 +112,7 @@ func (_class ClusterClass) GetAll(sessionID SessionRef) (_retval []ClusterRef, _
 }
 
 // PoolResync Resynchronise the cluster_host objects across the pool. Creates them where they need creating and then plugs them
-func (_class ClusterClass) PoolResync(sessionID SessionRef, self ClusterRef) (_err error) {
+func (_class ClusterClass) PoolResync(ctx context.Context, sessionID SessionRef, self ClusterRef) (_err error) {
 	_method := "Cluster.pool_resync"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -120,7 +122,7 @@ func (_class ClusterClass) PoolResync(sessionID SessionRef, self ClusterRef) (_e
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -131,7 +133,7 @@ func (_class ClusterClass) PoolResync(sessionID SessionRef, self ClusterRef) (_e
 //	CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
 //	CLUSTERING_DISABLED - An operation was attempted while clustering was disabled on the cluster_host.
 //	CLUSTER_HOST_IS_LAST - The last cluster host cannot be destroyed. Destroy the cluster instead
-func (_class ClusterClass) PoolDestroy(sessionID SessionRef, self ClusterRef) (_err error) {
+func (_class ClusterClass) PoolDestroy(ctx context.Context, sessionID SessionRef, self ClusterRef) (_err error) {
 	_method := "Cluster.pool_destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -141,7 +143,7 @@ func (_class ClusterClass) PoolDestroy(sessionID SessionRef, self ClusterRef) (_
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -150,7 +152,7 @@ func (_class ClusterClass) PoolDestroy(sessionID SessionRef, self ClusterRef) (_
 // Errors:
 //
 //	CLUSTER_FORCE_DESTROY_FAILED - Force destroy failed on a Cluster_host while force destroying the cluster.
-func (_class ClusterClass) PoolForceDestroy(sessionID SessionRef, self ClusterRef) (_err error) {
+func (_class ClusterClass) PoolForceDestroy(ctx context.Context, sessionID SessionRef, self ClusterRef) (_err error) {
 	_method := "Cluster.pool_force_destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -160,12 +162,12 @@ func (_class ClusterClass) PoolForceDestroy(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // PoolCreate Attempt to create a Cluster from the entire pool
-func (_class ClusterClass) PoolCreate(sessionID SessionRef, network NetworkRef, clusterStack string, tokenTimeout float64, tokenTimeoutCoefficient float64) (_retval ClusterRef, _err error) {
+func (_class ClusterClass) PoolCreate(ctx context.Context, sessionID SessionRef, network NetworkRef, clusterStack string, tokenTimeout float64, tokenTimeoutCoefficient float64) (_retval ClusterRef, _err error) {
 	_method := "Cluster.pool_create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -187,7 +189,7 @@ func (_class ClusterClass) PoolCreate(sessionID SessionRef, network NetworkRef, 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _networkArg, _clusterStackArg, _tokenTimeoutArg, _tokenTimeoutCoefficientArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _networkArg, _clusterStackArg, _tokenTimeoutArg, _tokenTimeoutCoefficientArg)
 	if _err != nil {
 		return
 	}
@@ -196,7 +198,7 @@ func (_class ClusterClass) PoolCreate(sessionID SessionRef, network NetworkRef, 
 }
 
 // GetNetwork Returns the network used by the cluster for inter-host communication, i.e. the network shared by all cluster host PIFs
-func (_class ClusterClass) GetNetwork(sessionID SessionRef, self ClusterRef) (_retval NetworkRef, _err error) {
+func (_class ClusterClass) GetNetwork(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval NetworkRef, _err error) {
 	_method := "Cluster.get_network"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -206,7 +208,7 @@ func (_class ClusterClass) GetNetwork(sessionID SessionRef, self ClusterRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -220,7 +222,7 @@ func (_class ClusterClass) GetNetwork(sessionID SessionRef, self ClusterRef) (_r
 //
 //	CLUSTER_DOES_NOT_HAVE_ONE_NODE - An operation failed as it expected the cluster to have only one node but found multiple cluster_hosts.
 //	CLUSTER_STACK_IN_USE - The cluster stack is still in use by at least one plugged PBD.
-func (_class ClusterClass) Destroy(sessionID SessionRef, self ClusterRef) (_err error) {
+func (_class ClusterClass) Destroy(ctx context.Context, sessionID SessionRef, self ClusterRef) (_err error) {
 	_method := "Cluster.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -230,7 +232,7 @@ func (_class ClusterClass) Destroy(sessionID SessionRef, self ClusterRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -242,7 +244,7 @@ func (_class ClusterClass) Destroy(sessionID SessionRef, self ClusterRef) (_err 
 //	INVALID_VALUE - The value given is invalid
 //	PIF_ALLOWS_UNPLUG - The operation you requested cannot be performed because the specified PIF allows unplug.
 //	REQUIRED_PIF_IS_UNPLUGGED - The operation you requested cannot be performed because the specified PIF is currently unplugged.
-func (_class ClusterClass) Create(sessionID SessionRef, pif PIFRef, clusterStack string, poolAutoJoin bool, tokenTimeout float64, tokenTimeoutCoefficient float64) (_retval ClusterRef, _err error) {
+func (_class ClusterClass) Create(ctx context.Context, sessionID SessionRef, pif PIFRef, clusterStack string, poolAutoJoin bool, tokenTimeout float64, tokenTimeoutCoefficient float64) (_retval ClusterRef, _err error) {
 	_method := "Cluster.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -268,7 +270,7 @@ func (_class ClusterClass) Create(sessionID SessionRef, pif PIFRef, clusterStack
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _pifArg, _clusterStackArg, _poolAutoJoinArg, _tokenTimeoutArg, _tokenTimeoutCoefficientArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _pifArg, _clusterStackArg, _poolAutoJoinArg, _tokenTimeoutArg, _tokenTimeoutCoefficientArg)
 	if _err != nil {
 		return
 	}
@@ -277,7 +279,7 @@ func (_class ClusterClass) Create(sessionID SessionRef, pif PIFRef, clusterStack
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given Cluster.  If the key is not in that Map, then do nothing.
-func (_class ClusterClass) RemoveFromOtherConfig(sessionID SessionRef, self ClusterRef, key string) (_err error) {
+func (_class ClusterClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self ClusterRef, key string) (_err error) {
 	_method := "Cluster.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -291,12 +293,12 @@ func (_class ClusterClass) RemoveFromOtherConfig(sessionID SessionRef, self Clus
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given Cluster.
-func (_class ClusterClass) AddToOtherConfig(sessionID SessionRef, self ClusterRef, key string, value string) (_err error) {
+func (_class ClusterClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self ClusterRef, key string, value string) (_err error) {
 	_method := "Cluster.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -314,12 +316,12 @@ func (_class ClusterClass) AddToOtherConfig(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given Cluster.
-func (_class ClusterClass) SetOtherConfig(sessionID SessionRef, self ClusterRef, value map[string]string) (_err error) {
+func (_class ClusterClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self ClusterRef, value map[string]string) (_err error) {
 	_method := "Cluster.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -333,12 +335,12 @@ func (_class ClusterClass) SetOtherConfig(sessionID SessionRef, self ClusterRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given Cluster.
-func (_class ClusterClass) GetOtherConfig(sessionID SessionRef, self ClusterRef) (_retval map[string]string, _err error) {
+func (_class ClusterClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval map[string]string, _err error) {
 	_method := "Cluster.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -348,7 +350,7 @@ func (_class ClusterClass) GetOtherConfig(sessionID SessionRef, self ClusterRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -357,7 +359,7 @@ func (_class ClusterClass) GetOtherConfig(sessionID SessionRef, self ClusterRef)
 }
 
 // GetClusterConfig Get the cluster_config field of the given Cluster.
-func (_class ClusterClass) GetClusterConfig(sessionID SessionRef, self ClusterRef) (_retval map[string]string, _err error) {
+func (_class ClusterClass) GetClusterConfig(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval map[string]string, _err error) {
 	_method := "Cluster.get_cluster_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -367,7 +369,7 @@ func (_class ClusterClass) GetClusterConfig(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -376,7 +378,7 @@ func (_class ClusterClass) GetClusterConfig(sessionID SessionRef, self ClusterRe
 }
 
 // GetTokenTimeoutCoefficient Get the token_timeout_coefficient field of the given Cluster.
-func (_class ClusterClass) GetTokenTimeoutCoefficient(sessionID SessionRef, self ClusterRef) (_retval float64, _err error) {
+func (_class ClusterClass) GetTokenTimeoutCoefficient(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval float64, _err error) {
 	_method := "Cluster.get_token_timeout_coefficient"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -386,7 +388,7 @@ func (_class ClusterClass) GetTokenTimeoutCoefficient(sessionID SessionRef, self
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -395,7 +397,7 @@ func (_class ClusterClass) GetTokenTimeoutCoefficient(sessionID SessionRef, self
 }
 
 // GetTokenTimeout Get the token_timeout field of the given Cluster.
-func (_class ClusterClass) GetTokenTimeout(sessionID SessionRef, self ClusterRef) (_retval float64, _err error) {
+func (_class ClusterClass) GetTokenTimeout(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval float64, _err error) {
 	_method := "Cluster.get_token_timeout"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -405,7 +407,7 @@ func (_class ClusterClass) GetTokenTimeout(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -414,7 +416,7 @@ func (_class ClusterClass) GetTokenTimeout(sessionID SessionRef, self ClusterRef
 }
 
 // GetPoolAutoJoin Get the pool_auto_join field of the given Cluster.
-func (_class ClusterClass) GetPoolAutoJoin(sessionID SessionRef, self ClusterRef) (_retval bool, _err error) {
+func (_class ClusterClass) GetPoolAutoJoin(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval bool, _err error) {
 	_method := "Cluster.get_pool_auto_join"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -424,7 +426,7 @@ func (_class ClusterClass) GetPoolAutoJoin(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -433,7 +435,7 @@ func (_class ClusterClass) GetPoolAutoJoin(sessionID SessionRef, self ClusterRef
 }
 
 // GetCurrentOperations Get the current_operations field of the given Cluster.
-func (_class ClusterClass) GetCurrentOperations(sessionID SessionRef, self ClusterRef) (_retval map[string]ClusterOperation, _err error) {
+func (_class ClusterClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval map[string]ClusterOperation, _err error) {
 	_method := "Cluster.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -443,7 +445,7 @@ func (_class ClusterClass) GetCurrentOperations(sessionID SessionRef, self Clust
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -452,7 +454,7 @@ func (_class ClusterClass) GetCurrentOperations(sessionID SessionRef, self Clust
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given Cluster.
-func (_class ClusterClass) GetAllowedOperations(sessionID SessionRef, self ClusterRef) (_retval []ClusterOperation, _err error) {
+func (_class ClusterClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval []ClusterOperation, _err error) {
 	_method := "Cluster.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -462,7 +464,7 @@ func (_class ClusterClass) GetAllowedOperations(sessionID SessionRef, self Clust
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -471,7 +473,7 @@ func (_class ClusterClass) GetAllowedOperations(sessionID SessionRef, self Clust
 }
 
 // GetExpectedHosts Get the expected_hosts field of the given Cluster.
-func (_class ClusterClass) GetExpectedHosts(sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
+func (_class ClusterClass) GetExpectedHosts(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
 	_method := "Cluster.get_expected_hosts"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -481,7 +483,7 @@ func (_class ClusterClass) GetExpectedHosts(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -490,7 +492,7 @@ func (_class ClusterClass) GetExpectedHosts(sessionID SessionRef, self ClusterRe
 }
 
 // GetLiveHosts Get the live_hosts field of the given Cluster.
-func (_class ClusterClass) GetLiveHosts(sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
+func (_class ClusterClass) GetLiveHosts(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
 	_method := "Cluster.get_live_hosts"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -500,7 +502,7 @@ func (_class ClusterClass) GetLiveHosts(sessionID SessionRef, self ClusterRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -509,7 +511,7 @@ func (_class ClusterClass) GetLiveHosts(sessionID SessionRef, self ClusterRef) (
 }
 
 // GetQuorum Get the quorum field of the given Cluster.
-func (_class ClusterClass) GetQuorum(sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
+func (_class ClusterClass) GetQuorum(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
 	_method := "Cluster.get_quorum"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -519,7 +521,7 @@ func (_class ClusterClass) GetQuorum(sessionID SessionRef, self ClusterRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -528,7 +530,7 @@ func (_class ClusterClass) GetQuorum(sessionID SessionRef, self ClusterRef) (_re
 }
 
 // GetIsQuorate Get the is_quorate field of the given Cluster.
-func (_class ClusterClass) GetIsQuorate(sessionID SessionRef, self ClusterRef) (_retval bool, _err error) {
+func (_class ClusterClass) GetIsQuorate(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval bool, _err error) {
 	_method := "Cluster.get_is_quorate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -538,7 +540,7 @@ func (_class ClusterClass) GetIsQuorate(sessionID SessionRef, self ClusterRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -547,7 +549,7 @@ func (_class ClusterClass) GetIsQuorate(sessionID SessionRef, self ClusterRef) (
 }
 
 // GetClusterStackVersion Get the cluster_stack_version field of the given Cluster.
-func (_class ClusterClass) GetClusterStackVersion(sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
+func (_class ClusterClass) GetClusterStackVersion(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval int, _err error) {
 	_method := "Cluster.get_cluster_stack_version"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -557,7 +559,7 @@ func (_class ClusterClass) GetClusterStackVersion(sessionID SessionRef, self Clu
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -566,7 +568,7 @@ func (_class ClusterClass) GetClusterStackVersion(sessionID SessionRef, self Clu
 }
 
 // GetClusterStack Get the cluster_stack field of the given Cluster.
-func (_class ClusterClass) GetClusterStack(sessionID SessionRef, self ClusterRef) (_retval string, _err error) {
+func (_class ClusterClass) GetClusterStack(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval string, _err error) {
 	_method := "Cluster.get_cluster_stack"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -576,7 +578,7 @@ func (_class ClusterClass) GetClusterStack(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -585,7 +587,7 @@ func (_class ClusterClass) GetClusterStack(sessionID SessionRef, self ClusterRef
 }
 
 // GetClusterToken Get the cluster_token field of the given Cluster.
-func (_class ClusterClass) GetClusterToken(sessionID SessionRef, self ClusterRef) (_retval string, _err error) {
+func (_class ClusterClass) GetClusterToken(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval string, _err error) {
 	_method := "Cluster.get_cluster_token"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -595,7 +597,7 @@ func (_class ClusterClass) GetClusterToken(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -604,7 +606,7 @@ func (_class ClusterClass) GetClusterToken(sessionID SessionRef, self ClusterRef
 }
 
 // GetPendingForget Get the pending_forget field of the given Cluster.
-func (_class ClusterClass) GetPendingForget(sessionID SessionRef, self ClusterRef) (_retval []string, _err error) {
+func (_class ClusterClass) GetPendingForget(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval []string, _err error) {
 	_method := "Cluster.get_pending_forget"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -614,7 +616,7 @@ func (_class ClusterClass) GetPendingForget(sessionID SessionRef, self ClusterRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -623,7 +625,7 @@ func (_class ClusterClass) GetPendingForget(sessionID SessionRef, self ClusterRe
 }
 
 // GetClusterHosts Get the cluster_hosts field of the given Cluster.
-func (_class ClusterClass) GetClusterHosts(sessionID SessionRef, self ClusterRef) (_retval []ClusterHostRef, _err error) {
+func (_class ClusterClass) GetClusterHosts(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval []ClusterHostRef, _err error) {
 	_method := "Cluster.get_cluster_hosts"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -633,7 +635,7 @@ func (_class ClusterClass) GetClusterHosts(sessionID SessionRef, self ClusterRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -642,7 +644,7 @@ func (_class ClusterClass) GetClusterHosts(sessionID SessionRef, self ClusterRef
 }
 
 // GetUUID Get the uuid field of the given Cluster.
-func (_class ClusterClass) GetUUID(sessionID SessionRef, self ClusterRef) (_retval string, _err error) {
+func (_class ClusterClass) GetUUID(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval string, _err error) {
 	_method := "Cluster.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -652,7 +654,7 @@ func (_class ClusterClass) GetUUID(sessionID SessionRef, self ClusterRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -661,7 +663,7 @@ func (_class ClusterClass) GetUUID(sessionID SessionRef, self ClusterRef) (_retv
 }
 
 // GetByUUID Get a reference to the Cluster instance with the specified UUID.
-func (_class ClusterClass) GetByUUID(sessionID SessionRef, uuid string) (_retval ClusterRef, _err error) {
+func (_class ClusterClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval ClusterRef, _err error) {
 	_method := "Cluster.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -671,7 +673,7 @@ func (_class ClusterClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -680,7 +682,7 @@ func (_class ClusterClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 }
 
 // GetRecord Get a record containing the current state of the given Cluster.
-func (_class ClusterClass) GetRecord(sessionID SessionRef, self ClusterRef) (_retval ClusterRecord, _err error) {
+func (_class ClusterClass) GetRecord(ctx context.Context, sessionID SessionRef, self ClusterRef) (_retval ClusterRecord, _err error) {
 	_method := "Cluster.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -690,7 +692,7 @@ func (_class ClusterClass) GetRecord(sessionID SessionRef, self ClusterRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

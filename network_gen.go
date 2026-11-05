@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -88,13 +90,13 @@ type NetworkClass struct {
 }
 
 // GetAllRecords Return a map of network references to network records for all networks known to the system.
-func (_class NetworkClass) GetAllRecords(sessionID SessionRef) (_retval map[NetworkRef]NetworkRecord, _err error) {
+func (_class NetworkClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[NetworkRef]NetworkRecord, _err error) {
 	_method := "network.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -103,13 +105,13 @@ func (_class NetworkClass) GetAllRecords(sessionID SessionRef) (_retval map[Netw
 }
 
 // GetAll Return a list of all the networks known to the system.
-func (_class NetworkClass) GetAll(sessionID SessionRef) (_retval []NetworkRef, _err error) {
+func (_class NetworkClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []NetworkRef, _err error) {
 	_method := "network.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -118,7 +120,7 @@ func (_class NetworkClass) GetAll(sessionID SessionRef) (_retval []NetworkRef, _
 }
 
 // RemovePurpose Remove a purpose from a network (if present)
-func (_class NetworkClass) RemovePurpose(sessionID SessionRef, self NetworkRef, value NetworkPurpose) (_err error) {
+func (_class NetworkClass) RemovePurpose(ctx context.Context, sessionID SessionRef, self NetworkRef, value NetworkPurpose) (_err error) {
 	_method := "network.remove_purpose"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -132,7 +134,7 @@ func (_class NetworkClass) RemovePurpose(sessionID SessionRef, self NetworkRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
@@ -141,7 +143,7 @@ func (_class NetworkClass) RemovePurpose(sessionID SessionRef, self NetworkRef, 
 // Errors:
 //
 //	NETWORK_INCOMPATIBLE_PURPOSES - You tried to add a purpose to a network but the new purpose is not compatible with an existing purpose of the network or other networks.
-func (_class NetworkClass) AddPurpose(sessionID SessionRef, self NetworkRef, value NetworkPurpose) (_err error) {
+func (_class NetworkClass) AddPurpose(ctx context.Context, sessionID SessionRef, self NetworkRef, value NetworkPurpose) (_err error) {
 	_method := "network.add_purpose"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -155,12 +157,12 @@ func (_class NetworkClass) AddPurpose(sessionID SessionRef, self NetworkRef, val
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetDefaultLockingMode Set the default locking mode for VIFs attached to this network
-func (_class NetworkClass) SetDefaultLockingMode(sessionID SessionRef, network NetworkRef, value NetworkDefaultLockingMode) (_err error) {
+func (_class NetworkClass) SetDefaultLockingMode(ctx context.Context, sessionID SessionRef, network NetworkRef, value NetworkDefaultLockingMode) (_err error) {
 	_method := "network.set_default_locking_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -174,12 +176,12 @@ func (_class NetworkClass) SetDefaultLockingMode(sessionID SessionRef, network N
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _networkArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _networkArg, _valueArg)
 	return
 }
 
 // CreateNewBlob Create a placeholder for a named binary blob of data that is associated with this pool
-func (_class NetworkClass) CreateNewBlob(sessionID SessionRef, network NetworkRef, name string, mimeType string, public bool) (_retval BlobRef, _err error) {
+func (_class NetworkClass) CreateNewBlob(ctx context.Context, sessionID SessionRef, network NetworkRef, name string, mimeType string, public bool) (_retval BlobRef, _err error) {
 	_method := "network.create_new_blob"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -201,7 +203,7 @@ func (_class NetworkClass) CreateNewBlob(sessionID SessionRef, network NetworkRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _networkArg, _nameArg, _mimeTypeArg, _publicArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _networkArg, _nameArg, _mimeTypeArg, _publicArg)
 	if _err != nil {
 		return
 	}
@@ -210,7 +212,7 @@ func (_class NetworkClass) CreateNewBlob(sessionID SessionRef, network NetworkRe
 }
 
 // RemoveTags Remove the given value from the tags field of the given network.  If the value is not in that Set, then do nothing.
-func (_class NetworkClass) RemoveTags(sessionID SessionRef, self NetworkRef, value string) (_err error) {
+func (_class NetworkClass) RemoveTags(ctx context.Context, sessionID SessionRef, self NetworkRef, value string) (_err error) {
 	_method := "network.remove_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -224,12 +226,12 @@ func (_class NetworkClass) RemoveTags(sessionID SessionRef, self NetworkRef, val
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // AddTags Add the given value to the tags field of the given network.  If the value is already in that Set, then do nothing.
-func (_class NetworkClass) AddTags(sessionID SessionRef, self NetworkRef, value string) (_err error) {
+func (_class NetworkClass) AddTags(ctx context.Context, sessionID SessionRef, self NetworkRef, value string) (_err error) {
 	_method := "network.add_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -243,12 +245,12 @@ func (_class NetworkClass) AddTags(sessionID SessionRef, self NetworkRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetTags Set the tags field of the given network.
-func (_class NetworkClass) SetTags(sessionID SessionRef, self NetworkRef, value []string) (_err error) {
+func (_class NetworkClass) SetTags(ctx context.Context, sessionID SessionRef, self NetworkRef, value []string) (_err error) {
 	_method := "network.set_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -262,12 +264,12 @@ func (_class NetworkClass) SetTags(sessionID SessionRef, self NetworkRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given network.  If the key is not in that Map, then do nothing.
-func (_class NetworkClass) RemoveFromOtherConfig(sessionID SessionRef, self NetworkRef, key string) (_err error) {
+func (_class NetworkClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self NetworkRef, key string) (_err error) {
 	_method := "network.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -281,12 +283,12 @@ func (_class NetworkClass) RemoveFromOtherConfig(sessionID SessionRef, self Netw
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given network.
-func (_class NetworkClass) AddToOtherConfig(sessionID SessionRef, self NetworkRef, key string, value string) (_err error) {
+func (_class NetworkClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self NetworkRef, key string, value string) (_err error) {
 	_method := "network.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -304,12 +306,12 @@ func (_class NetworkClass) AddToOtherConfig(sessionID SessionRef, self NetworkRe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given network.
-func (_class NetworkClass) SetOtherConfig(sessionID SessionRef, self NetworkRef, value map[string]string) (_err error) {
+func (_class NetworkClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self NetworkRef, value map[string]string) (_err error) {
 	_method := "network.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -323,12 +325,12 @@ func (_class NetworkClass) SetOtherConfig(sessionID SessionRef, self NetworkRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetMTU Set the MTU field of the given network.
-func (_class NetworkClass) SetMTU(sessionID SessionRef, self NetworkRef, value int) (_err error) {
+func (_class NetworkClass) SetMTU(ctx context.Context, sessionID SessionRef, self NetworkRef, value int) (_err error) {
 	_method := "network.set_MTU"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -342,12 +344,12 @@ func (_class NetworkClass) SetMTU(sessionID SessionRef, self NetworkRef, value i
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameDescription Set the name/description field of the given network.
-func (_class NetworkClass) SetNameDescription(sessionID SessionRef, self NetworkRef, value string) (_err error) {
+func (_class NetworkClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self NetworkRef, value string) (_err error) {
 	_method := "network.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -361,12 +363,12 @@ func (_class NetworkClass) SetNameDescription(sessionID SessionRef, self Network
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given network.
-func (_class NetworkClass) SetNameLabel(sessionID SessionRef, self NetworkRef, value string) (_err error) {
+func (_class NetworkClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self NetworkRef, value string) (_err error) {
 	_method := "network.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -380,12 +382,12 @@ func (_class NetworkClass) SetNameLabel(sessionID SessionRef, self NetworkRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetPurpose Get the purpose field of the given network.
-func (_class NetworkClass) GetPurpose(sessionID SessionRef, self NetworkRef) (_retval []NetworkPurpose, _err error) {
+func (_class NetworkClass) GetPurpose(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval []NetworkPurpose, _err error) {
 	_method := "network.get_purpose"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -395,7 +397,7 @@ func (_class NetworkClass) GetPurpose(sessionID SessionRef, self NetworkRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -404,7 +406,7 @@ func (_class NetworkClass) GetPurpose(sessionID SessionRef, self NetworkRef) (_r
 }
 
 // GetAssignedIps Get the assigned_ips field of the given network.
-func (_class NetworkClass) GetAssignedIps(sessionID SessionRef, self NetworkRef) (_retval map[VIFRef]string, _err error) {
+func (_class NetworkClass) GetAssignedIps(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval map[VIFRef]string, _err error) {
 	_method := "network.get_assigned_ips"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -414,7 +416,7 @@ func (_class NetworkClass) GetAssignedIps(sessionID SessionRef, self NetworkRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -423,7 +425,7 @@ func (_class NetworkClass) GetAssignedIps(sessionID SessionRef, self NetworkRef)
 }
 
 // GetDefaultLockingMode Get the default_locking_mode field of the given network.
-func (_class NetworkClass) GetDefaultLockingMode(sessionID SessionRef, self NetworkRef) (_retval NetworkDefaultLockingMode, _err error) {
+func (_class NetworkClass) GetDefaultLockingMode(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval NetworkDefaultLockingMode, _err error) {
 	_method := "network.get_default_locking_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -433,7 +435,7 @@ func (_class NetworkClass) GetDefaultLockingMode(sessionID SessionRef, self Netw
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -442,7 +444,7 @@ func (_class NetworkClass) GetDefaultLockingMode(sessionID SessionRef, self Netw
 }
 
 // GetTags Get the tags field of the given network.
-func (_class NetworkClass) GetTags(sessionID SessionRef, self NetworkRef) (_retval []string, _err error) {
+func (_class NetworkClass) GetTags(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval []string, _err error) {
 	_method := "network.get_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -452,7 +454,7 @@ func (_class NetworkClass) GetTags(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -461,7 +463,7 @@ func (_class NetworkClass) GetTags(sessionID SessionRef, self NetworkRef) (_retv
 }
 
 // GetBlobs Get the blobs field of the given network.
-func (_class NetworkClass) GetBlobs(sessionID SessionRef, self NetworkRef) (_retval map[string]BlobRef, _err error) {
+func (_class NetworkClass) GetBlobs(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval map[string]BlobRef, _err error) {
 	_method := "network.get_blobs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -471,7 +473,7 @@ func (_class NetworkClass) GetBlobs(sessionID SessionRef, self NetworkRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -480,7 +482,7 @@ func (_class NetworkClass) GetBlobs(sessionID SessionRef, self NetworkRef) (_ret
 }
 
 // GetManaged Get the managed field of the given network.
-func (_class NetworkClass) GetManaged(sessionID SessionRef, self NetworkRef) (_retval bool, _err error) {
+func (_class NetworkClass) GetManaged(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval bool, _err error) {
 	_method := "network.get_managed"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -490,7 +492,7 @@ func (_class NetworkClass) GetManaged(sessionID SessionRef, self NetworkRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -499,7 +501,7 @@ func (_class NetworkClass) GetManaged(sessionID SessionRef, self NetworkRef) (_r
 }
 
 // GetBridge Get the bridge field of the given network.
-func (_class NetworkClass) GetBridge(sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
+func (_class NetworkClass) GetBridge(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
 	_method := "network.get_bridge"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -509,7 +511,7 @@ func (_class NetworkClass) GetBridge(sessionID SessionRef, self NetworkRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -518,7 +520,7 @@ func (_class NetworkClass) GetBridge(sessionID SessionRef, self NetworkRef) (_re
 }
 
 // GetOtherConfig Get the other_config field of the given network.
-func (_class NetworkClass) GetOtherConfig(sessionID SessionRef, self NetworkRef) (_retval map[string]string, _err error) {
+func (_class NetworkClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval map[string]string, _err error) {
 	_method := "network.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -528,7 +530,7 @@ func (_class NetworkClass) GetOtherConfig(sessionID SessionRef, self NetworkRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -537,7 +539,7 @@ func (_class NetworkClass) GetOtherConfig(sessionID SessionRef, self NetworkRef)
 }
 
 // GetMTU Get the MTU field of the given network.
-func (_class NetworkClass) GetMTU(sessionID SessionRef, self NetworkRef) (_retval int, _err error) {
+func (_class NetworkClass) GetMTU(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval int, _err error) {
 	_method := "network.get_MTU"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -547,7 +549,7 @@ func (_class NetworkClass) GetMTU(sessionID SessionRef, self NetworkRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -556,7 +558,7 @@ func (_class NetworkClass) GetMTU(sessionID SessionRef, self NetworkRef) (_retva
 }
 
 // GetPIFs Get the PIFs field of the given network.
-func (_class NetworkClass) GetPIFs(sessionID SessionRef, self NetworkRef) (_retval []PIFRef, _err error) {
+func (_class NetworkClass) GetPIFs(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval []PIFRef, _err error) {
 	_method := "network.get_PIFs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -566,7 +568,7 @@ func (_class NetworkClass) GetPIFs(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -575,7 +577,7 @@ func (_class NetworkClass) GetPIFs(sessionID SessionRef, self NetworkRef) (_retv
 }
 
 // GetVIFs Get the VIFs field of the given network.
-func (_class NetworkClass) GetVIFs(sessionID SessionRef, self NetworkRef) (_retval []VIFRef, _err error) {
+func (_class NetworkClass) GetVIFs(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval []VIFRef, _err error) {
 	_method := "network.get_VIFs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -585,7 +587,7 @@ func (_class NetworkClass) GetVIFs(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -594,7 +596,7 @@ func (_class NetworkClass) GetVIFs(sessionID SessionRef, self NetworkRef) (_retv
 }
 
 // GetCurrentOperations Get the current_operations field of the given network.
-func (_class NetworkClass) GetCurrentOperations(sessionID SessionRef, self NetworkRef) (_retval map[string]NetworkOperations, _err error) {
+func (_class NetworkClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval map[string]NetworkOperations, _err error) {
 	_method := "network.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -604,7 +606,7 @@ func (_class NetworkClass) GetCurrentOperations(sessionID SessionRef, self Netwo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -613,7 +615,7 @@ func (_class NetworkClass) GetCurrentOperations(sessionID SessionRef, self Netwo
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given network.
-func (_class NetworkClass) GetAllowedOperations(sessionID SessionRef, self NetworkRef) (_retval []NetworkOperations, _err error) {
+func (_class NetworkClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval []NetworkOperations, _err error) {
 	_method := "network.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -623,7 +625,7 @@ func (_class NetworkClass) GetAllowedOperations(sessionID SessionRef, self Netwo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -632,7 +634,7 @@ func (_class NetworkClass) GetAllowedOperations(sessionID SessionRef, self Netwo
 }
 
 // GetNameDescription Get the name/description field of the given network.
-func (_class NetworkClass) GetNameDescription(sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
+func (_class NetworkClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
 	_method := "network.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -642,7 +644,7 @@ func (_class NetworkClass) GetNameDescription(sessionID SessionRef, self Network
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -651,7 +653,7 @@ func (_class NetworkClass) GetNameDescription(sessionID SessionRef, self Network
 }
 
 // GetNameLabel Get the name/label field of the given network.
-func (_class NetworkClass) GetNameLabel(sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
+func (_class NetworkClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
 	_method := "network.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -661,7 +663,7 @@ func (_class NetworkClass) GetNameLabel(sessionID SessionRef, self NetworkRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -670,7 +672,7 @@ func (_class NetworkClass) GetNameLabel(sessionID SessionRef, self NetworkRef) (
 }
 
 // GetUUID Get the uuid field of the given network.
-func (_class NetworkClass) GetUUID(sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
+func (_class NetworkClass) GetUUID(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval string, _err error) {
 	_method := "network.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -680,7 +682,7 @@ func (_class NetworkClass) GetUUID(sessionID SessionRef, self NetworkRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -689,7 +691,7 @@ func (_class NetworkClass) GetUUID(sessionID SessionRef, self NetworkRef) (_retv
 }
 
 // GetByNameLabel Get all the network instances with the given label.
-func (_class NetworkClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []NetworkRef, _err error) {
+func (_class NetworkClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []NetworkRef, _err error) {
 	_method := "network.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -699,7 +701,7 @@ func (_class NetworkClass) GetByNameLabel(sessionID SessionRef, label string) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -708,7 +710,7 @@ func (_class NetworkClass) GetByNameLabel(sessionID SessionRef, label string) (_
 }
 
 // Destroy Destroy the specified network instance.
-func (_class NetworkClass) Destroy(sessionID SessionRef, self NetworkRef) (_err error) {
+func (_class NetworkClass) Destroy(ctx context.Context, sessionID SessionRef, self NetworkRef) (_err error) {
 	_method := "network.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -718,12 +720,12 @@ func (_class NetworkClass) Destroy(sessionID SessionRef, self NetworkRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new network instance, and return its handle. The constructor args are: name_label, name_description, MTU, other_config*, bridge, managed, tags (* = non-optional).
-func (_class NetworkClass) Create(sessionID SessionRef, args NetworkRecord) (_retval NetworkRef, _err error) {
+func (_class NetworkClass) Create(ctx context.Context, sessionID SessionRef, args NetworkRecord) (_retval NetworkRef, _err error) {
 	_method := "network.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -733,7 +735,7 @@ func (_class NetworkClass) Create(sessionID SessionRef, args NetworkRecord) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -742,7 +744,7 @@ func (_class NetworkClass) Create(sessionID SessionRef, args NetworkRecord) (_re
 }
 
 // GetByUUID Get a reference to the network instance with the specified UUID.
-func (_class NetworkClass) GetByUUID(sessionID SessionRef, uuid string) (_retval NetworkRef, _err error) {
+func (_class NetworkClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval NetworkRef, _err error) {
 	_method := "network.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -752,7 +754,7 @@ func (_class NetworkClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -761,7 +763,7 @@ func (_class NetworkClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 }
 
 // GetRecord Get a record containing the current state of the given network.
-func (_class NetworkClass) GetRecord(sessionID SessionRef, self NetworkRef) (_retval NetworkRecord, _err error) {
+func (_class NetworkClass) GetRecord(ctx context.Context, sessionID SessionRef, self NetworkRef) (_retval NetworkRecord, _err error) {
 	_method := "network.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -771,7 +773,7 @@ func (_class NetworkClass) GetRecord(sessionID SessionRef, self NetworkRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -55,13 +57,13 @@ type PGPUClass struct {
 }
 
 // GetAllRecords Return a map of PGPU references to PGPU records for all PGPUs known to the system.
-func (_class PGPUClass) GetAllRecords(sessionID SessionRef) (_retval map[PGPURef]PGPURecord, _err error) {
+func (_class PGPUClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PGPURef]PGPURecord, _err error) {
 	_method := "PGPU.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -70,13 +72,13 @@ func (_class PGPUClass) GetAllRecords(sessionID SessionRef) (_retval map[PGPURef
 }
 
 // GetAll Return a list of all the PGPUs known to the system.
-func (_class PGPUClass) GetAll(sessionID SessionRef) (_retval []PGPURef, _err error) {
+func (_class PGPUClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PGPURef, _err error) {
 	_method := "PGPU.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -85,7 +87,7 @@ func (_class PGPUClass) GetAll(sessionID SessionRef) (_retval []PGPURef, _err er
 }
 
 // DisableDom0Access
-func (_class PGPUClass) DisableDom0Access(sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
+func (_class PGPUClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
 	_method := "PGPU.disable_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -95,7 +97,7 @@ func (_class PGPUClass) DisableDom0Access(sessionID SessionRef, self PGPURef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -104,7 +106,7 @@ func (_class PGPUClass) DisableDom0Access(sessionID SessionRef, self PGPURef) (_
 }
 
 // EnableDom0Access
-func (_class PGPUClass) EnableDom0Access(sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
+func (_class PGPUClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
 	_method := "PGPU.enable_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -114,7 +116,7 @@ func (_class PGPUClass) EnableDom0Access(sessionID SessionRef, self PGPURef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -123,7 +125,7 @@ func (_class PGPUClass) EnableDom0Access(sessionID SessionRef, self PGPURef) (_r
 }
 
 // GetRemainingCapacity
-func (_class PGPUClass) GetRemainingCapacity(sessionID SessionRef, self PGPURef, vgpuType VGPUTypeRef) (_retval int, _err error) {
+func (_class PGPUClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self PGPURef, vgpuType VGPUTypeRef) (_retval int, _err error) {
 	_method := "PGPU.get_remaining_capacity"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -137,7 +139,7 @@ func (_class PGPUClass) GetRemainingCapacity(sessionID SessionRef, self PGPURef,
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg, _vgpuTypeArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _vgpuTypeArg)
 	if _err != nil {
 		return
 	}
@@ -146,7 +148,7 @@ func (_class PGPUClass) GetRemainingCapacity(sessionID SessionRef, self PGPURef,
 }
 
 // SetGPUGroup
-func (_class PGPUClass) SetGPUGroup(sessionID SessionRef, self PGPURef, value GPUGroupRef) (_err error) {
+func (_class PGPUClass) SetGPUGroup(ctx context.Context, sessionID SessionRef, self PGPURef, value GPUGroupRef) (_err error) {
 	_method := "PGPU.set_GPU_group"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -160,12 +162,12 @@ func (_class PGPUClass) SetGPUGroup(sessionID SessionRef, self PGPURef, value GP
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetEnabledVGPUTypes
-func (_class PGPUClass) SetEnabledVGPUTypes(sessionID SessionRef, self PGPURef, value []VGPUTypeRef) (_err error) {
+func (_class PGPUClass) SetEnabledVGPUTypes(ctx context.Context, sessionID SessionRef, self PGPURef, value []VGPUTypeRef) (_err error) {
 	_method := "PGPU.set_enabled_VGPU_types"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -179,12 +181,12 @@ func (_class PGPUClass) SetEnabledVGPUTypes(sessionID SessionRef, self PGPURef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveEnabledVGPUTypes
-func (_class PGPUClass) RemoveEnabledVGPUTypes(sessionID SessionRef, self PGPURef, value VGPUTypeRef) (_err error) {
+func (_class PGPUClass) RemoveEnabledVGPUTypes(ctx context.Context, sessionID SessionRef, self PGPURef, value VGPUTypeRef) (_err error) {
 	_method := "PGPU.remove_enabled_VGPU_types"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -198,12 +200,12 @@ func (_class PGPUClass) RemoveEnabledVGPUTypes(sessionID SessionRef, self PGPURe
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // AddEnabledVGPUTypes
-func (_class PGPUClass) AddEnabledVGPUTypes(sessionID SessionRef, self PGPURef, value VGPUTypeRef) (_err error) {
+func (_class PGPUClass) AddEnabledVGPUTypes(ctx context.Context, sessionID SessionRef, self PGPURef, value VGPUTypeRef) (_err error) {
 	_method := "PGPU.add_enabled_VGPU_types"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -217,12 +219,12 @@ func (_class PGPUClass) AddEnabledVGPUTypes(sessionID SessionRef, self PGPURef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given PGPU.  If the key is not in that Map, then do nothing.
-func (_class PGPUClass) RemoveFromOtherConfig(sessionID SessionRef, self PGPURef, key string) (_err error) {
+func (_class PGPUClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self PGPURef, key string) (_err error) {
 	_method := "PGPU.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -236,12 +238,12 @@ func (_class PGPUClass) RemoveFromOtherConfig(sessionID SessionRef, self PGPURef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given PGPU.
-func (_class PGPUClass) AddToOtherConfig(sessionID SessionRef, self PGPURef, key string, value string) (_err error) {
+func (_class PGPUClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self PGPURef, key string, value string) (_err error) {
 	_method := "PGPU.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -259,12 +261,12 @@ func (_class PGPUClass) AddToOtherConfig(sessionID SessionRef, self PGPURef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given PGPU.
-func (_class PGPUClass) SetOtherConfig(sessionID SessionRef, self PGPURef, value map[string]string) (_err error) {
+func (_class PGPUClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self PGPURef, value map[string]string) (_err error) {
 	_method := "PGPU.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -278,12 +280,12 @@ func (_class PGPUClass) SetOtherConfig(sessionID SessionRef, self PGPURef, value
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetCompatibilityMetadata Get the compatibility_metadata field of the given PGPU.
-func (_class PGPUClass) GetCompatibilityMetadata(sessionID SessionRef, self PGPURef) (_retval map[string]string, _err error) {
+func (_class PGPUClass) GetCompatibilityMetadata(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval map[string]string, _err error) {
 	_method := "PGPU.get_compatibility_metadata"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -293,7 +295,7 @@ func (_class PGPUClass) GetCompatibilityMetadata(sessionID SessionRef, self PGPU
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -302,7 +304,7 @@ func (_class PGPUClass) GetCompatibilityMetadata(sessionID SessionRef, self PGPU
 }
 
 // GetIsSystemDisplayDevice Get the is_system_display_device field of the given PGPU.
-func (_class PGPUClass) GetIsSystemDisplayDevice(sessionID SessionRef, self PGPURef) (_retval bool, _err error) {
+func (_class PGPUClass) GetIsSystemDisplayDevice(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval bool, _err error) {
 	_method := "PGPU.get_is_system_display_device"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -312,7 +314,7 @@ func (_class PGPUClass) GetIsSystemDisplayDevice(sessionID SessionRef, self PGPU
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -321,7 +323,7 @@ func (_class PGPUClass) GetIsSystemDisplayDevice(sessionID SessionRef, self PGPU
 }
 
 // GetDom0Access Get the dom0_access field of the given PGPU.
-func (_class PGPUClass) GetDom0Access(sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
+func (_class PGPUClass) GetDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval PciDom0Access, _err error) {
 	_method := "PGPU.get_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -331,7 +333,7 @@ func (_class PGPUClass) GetDom0Access(sessionID SessionRef, self PGPURef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -340,7 +342,7 @@ func (_class PGPUClass) GetDom0Access(sessionID SessionRef, self PGPURef) (_retv
 }
 
 // GetSupportedVGPUMaxCapacities Get the supported_VGPU_max_capacities field of the given PGPU.
-func (_class PGPUClass) GetSupportedVGPUMaxCapacities(sessionID SessionRef, self PGPURef) (_retval map[VGPUTypeRef]int, _err error) {
+func (_class PGPUClass) GetSupportedVGPUMaxCapacities(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval map[VGPUTypeRef]int, _err error) {
 	_method := "PGPU.get_supported_VGPU_max_capacities"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -350,7 +352,7 @@ func (_class PGPUClass) GetSupportedVGPUMaxCapacities(sessionID SessionRef, self
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -359,7 +361,7 @@ func (_class PGPUClass) GetSupportedVGPUMaxCapacities(sessionID SessionRef, self
 }
 
 // GetResidentVGPUs Get the resident_VGPUs field of the given PGPU.
-func (_class PGPUClass) GetResidentVGPUs(sessionID SessionRef, self PGPURef) (_retval []VGPURef, _err error) {
+func (_class PGPUClass) GetResidentVGPUs(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval []VGPURef, _err error) {
 	_method := "PGPU.get_resident_VGPUs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -369,7 +371,7 @@ func (_class PGPUClass) GetResidentVGPUs(sessionID SessionRef, self PGPURef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -378,7 +380,7 @@ func (_class PGPUClass) GetResidentVGPUs(sessionID SessionRef, self PGPURef) (_r
 }
 
 // GetEnabledVGPUTypes Get the enabled_VGPU_types field of the given PGPU.
-func (_class PGPUClass) GetEnabledVGPUTypes(sessionID SessionRef, self PGPURef) (_retval []VGPUTypeRef, _err error) {
+func (_class PGPUClass) GetEnabledVGPUTypes(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval []VGPUTypeRef, _err error) {
 	_method := "PGPU.get_enabled_VGPU_types"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -388,7 +390,7 @@ func (_class PGPUClass) GetEnabledVGPUTypes(sessionID SessionRef, self PGPURef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -397,7 +399,7 @@ func (_class PGPUClass) GetEnabledVGPUTypes(sessionID SessionRef, self PGPURef) 
 }
 
 // GetSupportedVGPUTypes Get the supported_VGPU_types field of the given PGPU.
-func (_class PGPUClass) GetSupportedVGPUTypes(sessionID SessionRef, self PGPURef) (_retval []VGPUTypeRef, _err error) {
+func (_class PGPUClass) GetSupportedVGPUTypes(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval []VGPUTypeRef, _err error) {
 	_method := "PGPU.get_supported_VGPU_types"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -407,7 +409,7 @@ func (_class PGPUClass) GetSupportedVGPUTypes(sessionID SessionRef, self PGPURef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -416,7 +418,7 @@ func (_class PGPUClass) GetSupportedVGPUTypes(sessionID SessionRef, self PGPURef
 }
 
 // GetOtherConfig Get the other_config field of the given PGPU.
-func (_class PGPUClass) GetOtherConfig(sessionID SessionRef, self PGPURef) (_retval map[string]string, _err error) {
+func (_class PGPUClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval map[string]string, _err error) {
 	_method := "PGPU.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -426,7 +428,7 @@ func (_class PGPUClass) GetOtherConfig(sessionID SessionRef, self PGPURef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -435,7 +437,7 @@ func (_class PGPUClass) GetOtherConfig(sessionID SessionRef, self PGPURef) (_ret
 }
 
 // GetHost Get the host field of the given PGPU.
-func (_class PGPUClass) GetHost(sessionID SessionRef, self PGPURef) (_retval HostRef, _err error) {
+func (_class PGPUClass) GetHost(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval HostRef, _err error) {
 	_method := "PGPU.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -445,7 +447,7 @@ func (_class PGPUClass) GetHost(sessionID SessionRef, self PGPURef) (_retval Hos
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -454,7 +456,7 @@ func (_class PGPUClass) GetHost(sessionID SessionRef, self PGPURef) (_retval Hos
 }
 
 // GetGPUGroup Get the GPU_group field of the given PGPU.
-func (_class PGPUClass) GetGPUGroup(sessionID SessionRef, self PGPURef) (_retval GPUGroupRef, _err error) {
+func (_class PGPUClass) GetGPUGroup(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval GPUGroupRef, _err error) {
 	_method := "PGPU.get_GPU_group"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -464,7 +466,7 @@ func (_class PGPUClass) GetGPUGroup(sessionID SessionRef, self PGPURef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -473,7 +475,7 @@ func (_class PGPUClass) GetGPUGroup(sessionID SessionRef, self PGPURef) (_retval
 }
 
 // GetPCI Get the PCI field of the given PGPU.
-func (_class PGPUClass) GetPCI(sessionID SessionRef, self PGPURef) (_retval PCIRef, _err error) {
+func (_class PGPUClass) GetPCI(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval PCIRef, _err error) {
 	_method := "PGPU.get_PCI"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -483,7 +485,7 @@ func (_class PGPUClass) GetPCI(sessionID SessionRef, self PGPURef) (_retval PCIR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -492,7 +494,7 @@ func (_class PGPUClass) GetPCI(sessionID SessionRef, self PGPURef) (_retval PCIR
 }
 
 // GetUUID Get the uuid field of the given PGPU.
-func (_class PGPUClass) GetUUID(sessionID SessionRef, self PGPURef) (_retval string, _err error) {
+func (_class PGPUClass) GetUUID(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval string, _err error) {
 	_method := "PGPU.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -502,7 +504,7 @@ func (_class PGPUClass) GetUUID(sessionID SessionRef, self PGPURef) (_retval str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -511,7 +513,7 @@ func (_class PGPUClass) GetUUID(sessionID SessionRef, self PGPURef) (_retval str
 }
 
 // GetByUUID Get a reference to the PGPU instance with the specified UUID.
-func (_class PGPUClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PGPURef, _err error) {
+func (_class PGPUClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PGPURef, _err error) {
 	_method := "PGPU.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -521,7 +523,7 @@ func (_class PGPUClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PG
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -530,7 +532,7 @@ func (_class PGPUClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PG
 }
 
 // GetRecord Get a record containing the current state of the given PGPU.
-func (_class PGPUClass) GetRecord(sessionID SessionRef, self PGPURef) (_retval PGPURecord, _err error) {
+func (_class PGPUClass) GetRecord(ctx context.Context, sessionID SessionRef, self PGPURef) (_retval PGPURecord, _err error) {
 	_method := "PGPU.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -540,7 +542,7 @@ func (_class PGPUClass) GetRecord(sessionID SessionRef, self PGPURef) (_retval P
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -64,13 +66,13 @@ type CertificateClass struct {
 }
 
 // GetAllRecords Return a map of Certificate references to Certificate records for all Certificates known to the system.
-func (_class CertificateClass) GetAllRecords(sessionID SessionRef) (_retval map[CertificateRef]CertificateRecord, _err error) {
+func (_class CertificateClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[CertificateRef]CertificateRecord, _err error) {
 	_method := "Certificate.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -79,13 +81,13 @@ func (_class CertificateClass) GetAllRecords(sessionID SessionRef) (_retval map[
 }
 
 // GetAll Return a list of all the Certificates known to the system.
-func (_class CertificateClass) GetAll(sessionID SessionRef) (_retval []CertificateRef, _err error) {
+func (_class CertificateClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []CertificateRef, _err error) {
 	_method := "Certificate.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -94,7 +96,7 @@ func (_class CertificateClass) GetAll(sessionID SessionRef) (_retval []Certifica
 }
 
 // GetPurpose Get the purpose field of the given Certificate.
-func (_class CertificateClass) GetPurpose(sessionID SessionRef, self CertificateRef) (_retval []CertificatePurpose, _err error) {
+func (_class CertificateClass) GetPurpose(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval []CertificatePurpose, _err error) {
 	_method := "Certificate.get_purpose"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -104,7 +106,7 @@ func (_class CertificateClass) GetPurpose(sessionID SessionRef, self Certificate
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -113,7 +115,7 @@ func (_class CertificateClass) GetPurpose(sessionID SessionRef, self Certificate
 }
 
 // GetFingerprintSha1 Get the fingerprint_sha1 field of the given Certificate.
-func (_class CertificateClass) GetFingerprintSha1(sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
+func (_class CertificateClass) GetFingerprintSha1(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
 	_method := "Certificate.get_fingerprint_sha1"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -123,7 +125,7 @@ func (_class CertificateClass) GetFingerprintSha1(sessionID SessionRef, self Cer
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -132,7 +134,7 @@ func (_class CertificateClass) GetFingerprintSha1(sessionID SessionRef, self Cer
 }
 
 // GetFingerprintSha256 Get the fingerprint_sha256 field of the given Certificate.
-func (_class CertificateClass) GetFingerprintSha256(sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
+func (_class CertificateClass) GetFingerprintSha256(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
 	_method := "Certificate.get_fingerprint_sha256"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -142,7 +144,7 @@ func (_class CertificateClass) GetFingerprintSha256(sessionID SessionRef, self C
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -151,7 +153,7 @@ func (_class CertificateClass) GetFingerprintSha256(sessionID SessionRef, self C
 }
 
 // GetFingerprint Get the fingerprint field of the given Certificate.
-func (_class CertificateClass) GetFingerprint(sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
+func (_class CertificateClass) GetFingerprint(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
 	_method := "Certificate.get_fingerprint"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -161,7 +163,7 @@ func (_class CertificateClass) GetFingerprint(sessionID SessionRef, self Certifi
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -170,7 +172,7 @@ func (_class CertificateClass) GetFingerprint(sessionID SessionRef, self Certifi
 }
 
 // GetNotAfter Get the not_after field of the given Certificate.
-func (_class CertificateClass) GetNotAfter(sessionID SessionRef, self CertificateRef) (_retval time.Time, _err error) {
+func (_class CertificateClass) GetNotAfter(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval time.Time, _err error) {
 	_method := "Certificate.get_not_after"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -180,7 +182,7 @@ func (_class CertificateClass) GetNotAfter(sessionID SessionRef, self Certificat
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -189,7 +191,7 @@ func (_class CertificateClass) GetNotAfter(sessionID SessionRef, self Certificat
 }
 
 // GetNotBefore Get the not_before field of the given Certificate.
-func (_class CertificateClass) GetNotBefore(sessionID SessionRef, self CertificateRef) (_retval time.Time, _err error) {
+func (_class CertificateClass) GetNotBefore(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval time.Time, _err error) {
 	_method := "Certificate.get_not_before"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -199,7 +201,7 @@ func (_class CertificateClass) GetNotBefore(sessionID SessionRef, self Certifica
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -208,7 +210,7 @@ func (_class CertificateClass) GetNotBefore(sessionID SessionRef, self Certifica
 }
 
 // GetHost Get the host field of the given Certificate.
-func (_class CertificateClass) GetHost(sessionID SessionRef, self CertificateRef) (_retval HostRef, _err error) {
+func (_class CertificateClass) GetHost(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval HostRef, _err error) {
 	_method := "Certificate.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -218,7 +220,7 @@ func (_class CertificateClass) GetHost(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -227,7 +229,7 @@ func (_class CertificateClass) GetHost(sessionID SessionRef, self CertificateRef
 }
 
 // GetType Get the type field of the given Certificate.
-func (_class CertificateClass) GetType(sessionID SessionRef, self CertificateRef) (_retval CertificateType, _err error) {
+func (_class CertificateClass) GetType(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval CertificateType, _err error) {
 	_method := "Certificate.get_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -237,7 +239,7 @@ func (_class CertificateClass) GetType(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -246,7 +248,7 @@ func (_class CertificateClass) GetType(sessionID SessionRef, self CertificateRef
 }
 
 // GetName Get the name field of the given Certificate.
-func (_class CertificateClass) GetName(sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
+func (_class CertificateClass) GetName(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
 	_method := "Certificate.get_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -256,7 +258,7 @@ func (_class CertificateClass) GetName(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -265,7 +267,7 @@ func (_class CertificateClass) GetName(sessionID SessionRef, self CertificateRef
 }
 
 // GetUUID Get the uuid field of the given Certificate.
-func (_class CertificateClass) GetUUID(sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
+func (_class CertificateClass) GetUUID(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval string, _err error) {
 	_method := "Certificate.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -275,7 +277,7 @@ func (_class CertificateClass) GetUUID(sessionID SessionRef, self CertificateRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -284,7 +286,7 @@ func (_class CertificateClass) GetUUID(sessionID SessionRef, self CertificateRef
 }
 
 // GetByUUID Get a reference to the Certificate instance with the specified UUID.
-func (_class CertificateClass) GetByUUID(sessionID SessionRef, uuid string) (_retval CertificateRef, _err error) {
+func (_class CertificateClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval CertificateRef, _err error) {
 	_method := "Certificate.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -294,7 +296,7 @@ func (_class CertificateClass) GetByUUID(sessionID SessionRef, uuid string) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -303,7 +305,7 @@ func (_class CertificateClass) GetByUUID(sessionID SessionRef, uuid string) (_re
 }
 
 // GetRecord Get a record containing the current state of the given Certificate.
-func (_class CertificateClass) GetRecord(sessionID SessionRef, self CertificateRef) (_retval CertificateRecord, _err error) {
+func (_class CertificateClass) GetRecord(ctx context.Context, sessionID SessionRef, self CertificateRef) (_retval CertificateRecord, _err error) {
 	_method := "Certificate.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -313,7 +315,7 @@ func (_class CertificateClass) GetRecord(sessionID SessionRef, self CertificateR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

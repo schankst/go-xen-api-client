@@ -19,11 +19,11 @@ The classic case. The `pool_update.hosts` field lists the hosts the update has
 the pool.
 
 ```go
-updates, err := client.PoolUpdate.GetAllRecords(session) // pool_update_gen.go:80
+updates, err := client.PoolUpdate.GetAllRecords(ctx, session) // pool_update_gen.go:80
 if err != nil {
     return err
 }
-hosts, err := client.Host.GetAll(session)
+hosts, err := client.Host.GetAll(ctx, session)
 if err != nil {
     return err
 }
@@ -61,10 +61,10 @@ Here XAPI provides **no** RPC listing of the available packages. The XML-RPC
 surface only covers syncing and applying:
 
 ```go
-hash, err := client.Pool.SyncUpdates(session, pool, false, "", "", "", "") // pool_gen.go:787
-ready, err := client.Pool.CheckUpdateReadiness(session, pool, true)        // pool_gen.go:764
+hash, err := client.Pool.SyncUpdates(ctx, session, pool, false, "", "", "", "") // pool_gen.go:787
+ready, err := client.Pool.CheckUpdateReadiness(ctx, session, pool, true)        // pool_gen.go:764
 // apply:
-applied, err := client.Host.ApplyUpdates(session, host, hash)              // host_gen.go:626
+applied, err := client.Host.ApplyUpdates(ctx, session, host, hash)              // host_gen.go:626
 ```
 
 The actual **list** of available updates is fetched by XenCenter through an HTTP
@@ -91,12 +91,12 @@ Checking repository state:
 If "pending" means "is there anything still open on this host":
 
 ```go
-client.Host.GetPendingGuidances(session, host)            // host_gen.go:2766
-client.Host.GetPendingGuidancesRecommended(session, host) // host_gen.go:2652
-client.Host.GetPendingGuidancesFull(session, host)        // host_gen.go:2633
-client.Host.GetUpdatesRequiringReboot(session, host)      // host_gen.go:2899
-client.Host.GetLatestSyncedUpdatesApplied(session, host)  // host_gen.go:2690
-client.Host.GetLastSoftwareUpdate(session, host)          // host_gen.go:2728
+client.Host.GetPendingGuidances(ctx, session, host)            // host_gen.go:2766
+client.Host.GetPendingGuidancesRecommended(ctx, session, host) // host_gen.go:2652
+client.Host.GetPendingGuidancesFull(ctx, session, host)        // host_gen.go:2633
+client.Host.GetUpdatesRequiringReboot(ctx, session, host)      // host_gen.go:2899
+client.Host.GetLatestSyncedUpdatesApplied(ctx, session, host)  // host_gen.go:2690
+client.Host.GetLastSoftwareUpdate(ctx, session, host)          // host_gen.go:2728
 ```
 
 `GetLatestSyncedUpdatesApplied` is the quickest per-host check: the

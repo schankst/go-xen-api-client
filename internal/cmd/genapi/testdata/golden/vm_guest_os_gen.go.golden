@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -37,7 +39,7 @@ type VMGuestOSClass struct {
 }
 
 // GetMode get mode
-func (_class VMGuestOSClass) GetMode(sessionID SessionRef, self VMGuestOSRef) (_retval SharedMode, _err error) {
+func (_class VMGuestOSClass) GetMode(ctx context.Context, sessionID SessionRef, self VMGuestOSRef) (_retval SharedMode, _err error) {
 	_method := "VM_guest_os.get_mode"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -47,7 +49,7 @@ func (_class VMGuestOSClass) GetMode(sessionID SessionRef, self VMGuestOSRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

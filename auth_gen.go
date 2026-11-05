@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -28,7 +30,7 @@ type AuthClass struct {
 }
 
 // GetGroupMembership This call queries the external directory service to obtain the transitively-closed set of groups that the subject_identifier is a member of.
-func (_class AuthClass) GetGroupMembership(sessionID SessionRef, subjectIdentifier string) (_retval []string, _err error) {
+func (_class AuthClass) GetGroupMembership(ctx context.Context, sessionID SessionRef, subjectIdentifier string) (_retval []string, _err error) {
 	_method := "auth.get_group_membership"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -38,7 +40,7 @@ func (_class AuthClass) GetGroupMembership(sessionID SessionRef, subjectIdentifi
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _subjectIdentifierArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _subjectIdentifierArg)
 	if _err != nil {
 		return
 	}
@@ -47,7 +49,7 @@ func (_class AuthClass) GetGroupMembership(sessionID SessionRef, subjectIdentifi
 }
 
 // GetSubjectInformationFromIdentifier This call queries the external directory service to obtain the user information (for example, username, organization etc.) from the specified subject_identifier
-func (_class AuthClass) GetSubjectInformationFromIdentifier(sessionID SessionRef, subjectIdentifier string) (_retval map[string]string, _err error) {
+func (_class AuthClass) GetSubjectInformationFromIdentifier(ctx context.Context, sessionID SessionRef, subjectIdentifier string) (_retval map[string]string, _err error) {
 	_method := "auth.get_subject_information_from_identifier"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -57,7 +59,7 @@ func (_class AuthClass) GetSubjectInformationFromIdentifier(sessionID SessionRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _subjectIdentifierArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _subjectIdentifierArg)
 	if _err != nil {
 		return
 	}
@@ -66,7 +68,7 @@ func (_class AuthClass) GetSubjectInformationFromIdentifier(sessionID SessionRef
 }
 
 // GetSubjectIdentifier This call queries the external directory service to obtain the subject_identifier as a string from the human-readable subject_name
-func (_class AuthClass) GetSubjectIdentifier(sessionID SessionRef, subjectName string) (_retval string, _err error) {
+func (_class AuthClass) GetSubjectIdentifier(ctx context.Context, sessionID SessionRef, subjectName string) (_retval string, _err error) {
 	_method := "auth.get_subject_identifier"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -76,7 +78,7 @@ func (_class AuthClass) GetSubjectIdentifier(sessionID SessionRef, subjectName s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _subjectNameArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _subjectNameArg)
 	if _err != nil {
 		return
 	}

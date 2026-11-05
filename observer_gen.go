@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -47,13 +49,13 @@ type ObserverClass struct {
 }
 
 // GetAllRecords Return a map of Observer references to Observer records for all Observers known to the system.
-func (_class ObserverClass) GetAllRecords(sessionID SessionRef) (_retval map[ObserverRef]ObserverRecord, _err error) {
+func (_class ObserverClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[ObserverRef]ObserverRecord, _err error) {
 	_method := "Observer.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -62,13 +64,13 @@ func (_class ObserverClass) GetAllRecords(sessionID SessionRef) (_retval map[Obs
 }
 
 // GetAll Return a list of all the Observers known to the system.
-func (_class ObserverClass) GetAll(sessionID SessionRef) (_retval []ObserverRef, _err error) {
+func (_class ObserverClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []ObserverRef, _err error) {
 	_method := "Observer.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -77,7 +79,7 @@ func (_class ObserverClass) GetAll(sessionID SessionRef) (_retval []ObserverRef,
 }
 
 // SetComponents Set the components on which the observer will broadcast to. i.e. xapi, xenopsd, networkd, etc.
-func (_class ObserverClass) SetComponents(sessionID SessionRef, self ObserverRef, value []string) (_err error) {
+func (_class ObserverClass) SetComponents(ctx context.Context, sessionID SessionRef, self ObserverRef, value []string) (_err error) {
 	_method := "Observer.set_components"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -91,12 +93,12 @@ func (_class ObserverClass) SetComponents(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetEndpoints Set the file/HTTP endpoints the observer sends data to
-func (_class ObserverClass) SetEndpoints(sessionID SessionRef, self ObserverRef, value []string) (_err error) {
+func (_class ObserverClass) SetEndpoints(ctx context.Context, sessionID SessionRef, self ObserverRef, value []string) (_err error) {
 	_method := "Observer.set_endpoints"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -110,12 +112,12 @@ func (_class ObserverClass) SetEndpoints(sessionID SessionRef, self ObserverRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetAttributes Set the attributes of an observer. These are used to emit metadata by the observer
-func (_class ObserverClass) SetAttributes(sessionID SessionRef, self ObserverRef, value map[string]string) (_err error) {
+func (_class ObserverClass) SetAttributes(ctx context.Context, sessionID SessionRef, self ObserverRef, value map[string]string) (_err error) {
 	_method := "Observer.set_attributes"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -129,12 +131,12 @@ func (_class ObserverClass) SetAttributes(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetEnabled Enable / disable this observer which will stop the observer from producing observability information
-func (_class ObserverClass) SetEnabled(sessionID SessionRef, self ObserverRef, value bool) (_err error) {
+func (_class ObserverClass) SetEnabled(ctx context.Context, sessionID SessionRef, self ObserverRef, value bool) (_err error) {
 	_method := "Observer.set_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -148,12 +150,12 @@ func (_class ObserverClass) SetEnabled(sessionID SessionRef, self ObserverRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetHosts Sets the hosts that the observer is to be registered on
-func (_class ObserverClass) SetHosts(sessionID SessionRef, self ObserverRef, value []HostRef) (_err error) {
+func (_class ObserverClass) SetHosts(ctx context.Context, sessionID SessionRef, self ObserverRef, value []HostRef) (_err error) {
 	_method := "Observer.set_hosts"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -167,12 +169,12 @@ func (_class ObserverClass) SetHosts(sessionID SessionRef, self ObserverRef, val
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameDescription Set the name/description field of the given Observer.
-func (_class ObserverClass) SetNameDescription(sessionID SessionRef, self ObserverRef, value string) (_err error) {
+func (_class ObserverClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self ObserverRef, value string) (_err error) {
 	_method := "Observer.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -186,12 +188,12 @@ func (_class ObserverClass) SetNameDescription(sessionID SessionRef, self Observ
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given Observer.
-func (_class ObserverClass) SetNameLabel(sessionID SessionRef, self ObserverRef, value string) (_err error) {
+func (_class ObserverClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self ObserverRef, value string) (_err error) {
 	_method := "Observer.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -205,12 +207,12 @@ func (_class ObserverClass) SetNameLabel(sessionID SessionRef, self ObserverRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetEnabled Get the enabled field of the given Observer.
-func (_class ObserverClass) GetEnabled(sessionID SessionRef, self ObserverRef) (_retval bool, _err error) {
+func (_class ObserverClass) GetEnabled(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval bool, _err error) {
 	_method := "Observer.get_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -220,7 +222,7 @@ func (_class ObserverClass) GetEnabled(sessionID SessionRef, self ObserverRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -229,7 +231,7 @@ func (_class ObserverClass) GetEnabled(sessionID SessionRef, self ObserverRef) (
 }
 
 // GetComponents Get the components field of the given Observer.
-func (_class ObserverClass) GetComponents(sessionID SessionRef, self ObserverRef) (_retval []string, _err error) {
+func (_class ObserverClass) GetComponents(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval []string, _err error) {
 	_method := "Observer.get_components"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -239,7 +241,7 @@ func (_class ObserverClass) GetComponents(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -248,7 +250,7 @@ func (_class ObserverClass) GetComponents(sessionID SessionRef, self ObserverRef
 }
 
 // GetEndpoints Get the endpoints field of the given Observer.
-func (_class ObserverClass) GetEndpoints(sessionID SessionRef, self ObserverRef) (_retval []string, _err error) {
+func (_class ObserverClass) GetEndpoints(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval []string, _err error) {
 	_method := "Observer.get_endpoints"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -258,7 +260,7 @@ func (_class ObserverClass) GetEndpoints(sessionID SessionRef, self ObserverRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -267,7 +269,7 @@ func (_class ObserverClass) GetEndpoints(sessionID SessionRef, self ObserverRef)
 }
 
 // GetAttributes Get the attributes field of the given Observer.
-func (_class ObserverClass) GetAttributes(sessionID SessionRef, self ObserverRef) (_retval map[string]string, _err error) {
+func (_class ObserverClass) GetAttributes(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval map[string]string, _err error) {
 	_method := "Observer.get_attributes"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -277,7 +279,7 @@ func (_class ObserverClass) GetAttributes(sessionID SessionRef, self ObserverRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -286,7 +288,7 @@ func (_class ObserverClass) GetAttributes(sessionID SessionRef, self ObserverRef
 }
 
 // GetHosts Get the hosts field of the given Observer.
-func (_class ObserverClass) GetHosts(sessionID SessionRef, self ObserverRef) (_retval []HostRef, _err error) {
+func (_class ObserverClass) GetHosts(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval []HostRef, _err error) {
 	_method := "Observer.get_hosts"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -296,7 +298,7 @@ func (_class ObserverClass) GetHosts(sessionID SessionRef, self ObserverRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -305,7 +307,7 @@ func (_class ObserverClass) GetHosts(sessionID SessionRef, self ObserverRef) (_r
 }
 
 // GetNameDescription Get the name/description field of the given Observer.
-func (_class ObserverClass) GetNameDescription(sessionID SessionRef, self ObserverRef) (_retval string, _err error) {
+func (_class ObserverClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval string, _err error) {
 	_method := "Observer.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -315,7 +317,7 @@ func (_class ObserverClass) GetNameDescription(sessionID SessionRef, self Observ
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -324,7 +326,7 @@ func (_class ObserverClass) GetNameDescription(sessionID SessionRef, self Observ
 }
 
 // GetNameLabel Get the name/label field of the given Observer.
-func (_class ObserverClass) GetNameLabel(sessionID SessionRef, self ObserverRef) (_retval string, _err error) {
+func (_class ObserverClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval string, _err error) {
 	_method := "Observer.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -334,7 +336,7 @@ func (_class ObserverClass) GetNameLabel(sessionID SessionRef, self ObserverRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -343,7 +345,7 @@ func (_class ObserverClass) GetNameLabel(sessionID SessionRef, self ObserverRef)
 }
 
 // GetUUID Get the uuid field of the given Observer.
-func (_class ObserverClass) GetUUID(sessionID SessionRef, self ObserverRef) (_retval string, _err error) {
+func (_class ObserverClass) GetUUID(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval string, _err error) {
 	_method := "Observer.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -353,7 +355,7 @@ func (_class ObserverClass) GetUUID(sessionID SessionRef, self ObserverRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -362,7 +364,7 @@ func (_class ObserverClass) GetUUID(sessionID SessionRef, self ObserverRef) (_re
 }
 
 // GetByNameLabel Get all the Observer instances with the given label.
-func (_class ObserverClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []ObserverRef, _err error) {
+func (_class ObserverClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []ObserverRef, _err error) {
 	_method := "Observer.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -372,7 +374,7 @@ func (_class ObserverClass) GetByNameLabel(sessionID SessionRef, label string) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -381,7 +383,7 @@ func (_class ObserverClass) GetByNameLabel(sessionID SessionRef, label string) (
 }
 
 // Destroy Destroy the specified Observer instance.
-func (_class ObserverClass) Destroy(sessionID SessionRef, self ObserverRef) (_err error) {
+func (_class ObserverClass) Destroy(ctx context.Context, sessionID SessionRef, self ObserverRef) (_err error) {
 	_method := "Observer.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -391,12 +393,12 @@ func (_class ObserverClass) Destroy(sessionID SessionRef, self ObserverRef) (_er
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new Observer instance, and return its handle. The constructor args are: name_label, name_description, hosts, attributes, endpoints, components, enabled (* = non-optional).
-func (_class ObserverClass) Create(sessionID SessionRef, args ObserverRecord) (_retval ObserverRef, _err error) {
+func (_class ObserverClass) Create(ctx context.Context, sessionID SessionRef, args ObserverRecord) (_retval ObserverRef, _err error) {
 	_method := "Observer.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -406,7 +408,7 @@ func (_class ObserverClass) Create(sessionID SessionRef, args ObserverRecord) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -415,7 +417,7 @@ func (_class ObserverClass) Create(sessionID SessionRef, args ObserverRecord) (_
 }
 
 // GetByUUID Get a reference to the Observer instance with the specified UUID.
-func (_class ObserverClass) GetByUUID(sessionID SessionRef, uuid string) (_retval ObserverRef, _err error) {
+func (_class ObserverClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval ObserverRef, _err error) {
 	_method := "Observer.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -425,7 +427,7 @@ func (_class ObserverClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -434,7 +436,7 @@ func (_class ObserverClass) GetByUUID(sessionID SessionRef, uuid string) (_retva
 }
 
 // GetRecord Get a record containing the current state of the given Observer.
-func (_class ObserverClass) GetRecord(sessionID SessionRef, self ObserverRef) (_retval ObserverRecord, _err error) {
+func (_class ObserverClass) GetRecord(ctx context.Context, sessionID SessionRef, self ObserverRef) (_retval ObserverRecord, _err error) {
 	_method := "Observer.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -444,7 +446,7 @@ func (_class ObserverClass) GetRecord(sessionID SessionRef, self ObserverRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

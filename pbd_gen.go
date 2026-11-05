@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -43,13 +45,13 @@ type PBDClass struct {
 }
 
 // GetAllRecords Return a map of PBD references to PBD records for all PBDs known to the system.
-func (_class PBDClass) GetAllRecords(sessionID SessionRef) (_retval map[PBDRef]PBDRecord, _err error) {
+func (_class PBDClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PBDRef]PBDRecord, _err error) {
 	_method := "PBD.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -58,13 +60,13 @@ func (_class PBDClass) GetAllRecords(sessionID SessionRef) (_retval map[PBDRef]P
 }
 
 // GetAll Return a list of all the PBDs known to the system.
-func (_class PBDClass) GetAll(sessionID SessionRef) (_retval []PBDRef, _err error) {
+func (_class PBDClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PBDRef, _err error) {
 	_method := "PBD.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -73,7 +75,7 @@ func (_class PBDClass) GetAll(sessionID SessionRef) (_retval []PBDRef, _err erro
 }
 
 // SetDeviceConfig Sets the PBD's device_config field
-func (_class PBDClass) SetDeviceConfig(sessionID SessionRef, self PBDRef, value map[string]string) (_err error) {
+func (_class PBDClass) SetDeviceConfig(ctx context.Context, sessionID SessionRef, self PBDRef, value map[string]string) (_err error) {
 	_method := "PBD.set_device_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -87,12 +89,12 @@ func (_class PBDClass) SetDeviceConfig(sessionID SessionRef, self PBDRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // Unplug Deactivate the specified PBD, causing the referenced SR to be detached and no longer scanned
-func (_class PBDClass) Unplug(sessionID SessionRef, self PBDRef) (_err error) {
+func (_class PBDClass) Unplug(ctx context.Context, sessionID SessionRef, self PBDRef) (_err error) {
 	_method := "PBD.unplug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -102,7 +104,7 @@ func (_class PBDClass) Unplug(sessionID SessionRef, self PBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -111,7 +113,7 @@ func (_class PBDClass) Unplug(sessionID SessionRef, self PBDRef) (_err error) {
 // Errors:
 //
 //	SR_UNKNOWN_DRIVER - The SR could not be connected because the driver was not recognised.
-func (_class PBDClass) Plug(sessionID SessionRef, self PBDRef) (_err error) {
+func (_class PBDClass) Plug(ctx context.Context, sessionID SessionRef, self PBDRef) (_err error) {
 	_method := "PBD.plug"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -121,12 +123,12 @@ func (_class PBDClass) Plug(sessionID SessionRef, self PBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given PBD.  If the key is not in that Map, then do nothing.
-func (_class PBDClass) RemoveFromOtherConfig(sessionID SessionRef, self PBDRef, key string) (_err error) {
+func (_class PBDClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self PBDRef, key string) (_err error) {
 	_method := "PBD.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -140,12 +142,12 @@ func (_class PBDClass) RemoveFromOtherConfig(sessionID SessionRef, self PBDRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given PBD.
-func (_class PBDClass) AddToOtherConfig(sessionID SessionRef, self PBDRef, key string, value string) (_err error) {
+func (_class PBDClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self PBDRef, key string, value string) (_err error) {
 	_method := "PBD.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -163,12 +165,12 @@ func (_class PBDClass) AddToOtherConfig(sessionID SessionRef, self PBDRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given PBD.
-func (_class PBDClass) SetOtherConfig(sessionID SessionRef, self PBDRef, value map[string]string) (_err error) {
+func (_class PBDClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self PBDRef, value map[string]string) (_err error) {
 	_method := "PBD.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -182,12 +184,12 @@ func (_class PBDClass) SetOtherConfig(sessionID SessionRef, self PBDRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetOtherConfig Get the other_config field of the given PBD.
-func (_class PBDClass) GetOtherConfig(sessionID SessionRef, self PBDRef) (_retval map[string]string, _err error) {
+func (_class PBDClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self PBDRef) (_retval map[string]string, _err error) {
 	_method := "PBD.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -197,7 +199,7 @@ func (_class PBDClass) GetOtherConfig(sessionID SessionRef, self PBDRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -206,7 +208,7 @@ func (_class PBDClass) GetOtherConfig(sessionID SessionRef, self PBDRef) (_retva
 }
 
 // GetCurrentlyAttached Get the currently_attached field of the given PBD.
-func (_class PBDClass) GetCurrentlyAttached(sessionID SessionRef, self PBDRef) (_retval bool, _err error) {
+func (_class PBDClass) GetCurrentlyAttached(ctx context.Context, sessionID SessionRef, self PBDRef) (_retval bool, _err error) {
 	_method := "PBD.get_currently_attached"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -216,7 +218,7 @@ func (_class PBDClass) GetCurrentlyAttached(sessionID SessionRef, self PBDRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -225,7 +227,7 @@ func (_class PBDClass) GetCurrentlyAttached(sessionID SessionRef, self PBDRef) (
 }
 
 // GetDeviceConfig Get the device_config field of the given PBD.
-func (_class PBDClass) GetDeviceConfig(sessionID SessionRef, self PBDRef) (_retval map[string]string, _err error) {
+func (_class PBDClass) GetDeviceConfig(ctx context.Context, sessionID SessionRef, self PBDRef) (_retval map[string]string, _err error) {
 	_method := "PBD.get_device_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -235,7 +237,7 @@ func (_class PBDClass) GetDeviceConfig(sessionID SessionRef, self PBDRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -244,7 +246,7 @@ func (_class PBDClass) GetDeviceConfig(sessionID SessionRef, self PBDRef) (_retv
 }
 
 // GetSR Get the SR field of the given PBD.
-func (_class PBDClass) GetSR(sessionID SessionRef, self PBDRef) (_retval SRRef, _err error) {
+func (_class PBDClass) GetSR(ctx context.Context, sessionID SessionRef, self PBDRef) (_retval SRRef, _err error) {
 	_method := "PBD.get_SR"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -254,7 +256,7 @@ func (_class PBDClass) GetSR(sessionID SessionRef, self PBDRef) (_retval SRRef, 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -263,7 +265,7 @@ func (_class PBDClass) GetSR(sessionID SessionRef, self PBDRef) (_retval SRRef, 
 }
 
 // GetHost Get the host field of the given PBD.
-func (_class PBDClass) GetHost(sessionID SessionRef, self PBDRef) (_retval HostRef, _err error) {
+func (_class PBDClass) GetHost(ctx context.Context, sessionID SessionRef, self PBDRef) (_retval HostRef, _err error) {
 	_method := "PBD.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -273,7 +275,7 @@ func (_class PBDClass) GetHost(sessionID SessionRef, self PBDRef) (_retval HostR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -282,7 +284,7 @@ func (_class PBDClass) GetHost(sessionID SessionRef, self PBDRef) (_retval HostR
 }
 
 // GetUUID Get the uuid field of the given PBD.
-func (_class PBDClass) GetUUID(sessionID SessionRef, self PBDRef) (_retval string, _err error) {
+func (_class PBDClass) GetUUID(ctx context.Context, sessionID SessionRef, self PBDRef) (_retval string, _err error) {
 	_method := "PBD.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -292,7 +294,7 @@ func (_class PBDClass) GetUUID(sessionID SessionRef, self PBDRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -301,7 +303,7 @@ func (_class PBDClass) GetUUID(sessionID SessionRef, self PBDRef) (_retval strin
 }
 
 // Destroy Destroy the specified PBD instance.
-func (_class PBDClass) Destroy(sessionID SessionRef, self PBDRef) (_err error) {
+func (_class PBDClass) Destroy(ctx context.Context, sessionID SessionRef, self PBDRef) (_err error) {
 	_method := "PBD.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -311,12 +313,12 @@ func (_class PBDClass) Destroy(sessionID SessionRef, self PBDRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new PBD instance, and return its handle. The constructor args are: host*, SR*, device_config*, other_config (* = non-optional).
-func (_class PBDClass) Create(sessionID SessionRef, args PBDRecord) (_retval PBDRef, _err error) {
+func (_class PBDClass) Create(ctx context.Context, sessionID SessionRef, args PBDRecord) (_retval PBDRef, _err error) {
 	_method := "PBD.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -326,7 +328,7 @@ func (_class PBDClass) Create(sessionID SessionRef, args PBDRecord) (_retval PBD
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -335,7 +337,7 @@ func (_class PBDClass) Create(sessionID SessionRef, args PBDRecord) (_retval PBD
 }
 
 // GetByUUID Get a reference to the PBD instance with the specified UUID.
-func (_class PBDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PBDRef, _err error) {
+func (_class PBDClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PBDRef, _err error) {
 	_method := "PBD.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -345,7 +347,7 @@ func (_class PBDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PBD
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -354,7 +356,7 @@ func (_class PBDClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PBD
 }
 
 // GetRecord Get a record containing the current state of the given PBD.
-func (_class PBDClass) GetRecord(sessionID SessionRef, self PBDRef) (_retval PBDRecord, _err error) {
+func (_class PBDClass) GetRecord(ctx context.Context, sessionID SessionRef, self PBDRef) (_retval PBDRecord, _err error) {
 	_method := "PBD.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -364,7 +366,7 @@ func (_class PBDClass) GetRecord(sessionID SessionRef, self PBDRef) (_retval PBD
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

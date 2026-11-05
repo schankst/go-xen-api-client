@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -76,13 +78,13 @@ type PCIClass struct {
 }
 
 // GetAllRecords Return a map of PCI references to PCI records for all PCIs known to the system.
-func (_class PCIClass) GetAllRecords(sessionID SessionRef) (_retval map[PCIRef]PCIRecord, _err error) {
+func (_class PCIClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PCIRef]PCIRecord, _err error) {
 	_method := "PCI.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -91,13 +93,13 @@ func (_class PCIClass) GetAllRecords(sessionID SessionRef) (_retval map[PCIRef]P
 }
 
 // GetAll Return a list of all the PCIs known to the system.
-func (_class PCIClass) GetAll(sessionID SessionRef) (_retval []PCIRef, _err error) {
+func (_class PCIClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PCIRef, _err error) {
 	_method := "PCI.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -106,7 +108,7 @@ func (_class PCIClass) GetAll(sessionID SessionRef) (_retval []PCIRef, _err erro
 }
 
 // GetDom0AccessStatus Return a PCI device dom0 access status.
-func (_class PCIClass) GetDom0AccessStatus(sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
+func (_class PCIClass) GetDom0AccessStatus(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
 	_method := "PCI.get_dom0_access_status"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -116,7 +118,7 @@ func (_class PCIClass) GetDom0AccessStatus(sessionID SessionRef, self PCIRef) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -125,7 +127,7 @@ func (_class PCIClass) GetDom0AccessStatus(sessionID SessionRef, self PCIRef) (_
 }
 
 // EnableDom0Access Unhide a PCI device from the dom0 kernel. (Takes affect after next boot.)
-func (_class PCIClass) EnableDom0Access(sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
+func (_class PCIClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
 	_method := "PCI.enable_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -135,7 +137,7 @@ func (_class PCIClass) EnableDom0Access(sessionID SessionRef, self PCIRef) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -144,7 +146,7 @@ func (_class PCIClass) EnableDom0Access(sessionID SessionRef, self PCIRef) (_ret
 }
 
 // DisableDom0Access Hide a PCI device from the dom0 kernel. (Takes affect after next boot.)
-func (_class PCIClass) DisableDom0Access(sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
+func (_class PCIClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval PciDom0Access, _err error) {
 	_method := "PCI.disable_dom0_access"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -154,7 +156,7 @@ func (_class PCIClass) DisableDom0Access(sessionID SessionRef, self PCIRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -163,7 +165,7 @@ func (_class PCIClass) DisableDom0Access(sessionID SessionRef, self PCIRef) (_re
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given PCI.  If the key is not in that Map, then do nothing.
-func (_class PCIClass) RemoveFromOtherConfig(sessionID SessionRef, self PCIRef, key string) (_err error) {
+func (_class PCIClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self PCIRef, key string) (_err error) {
 	_method := "PCI.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -177,12 +179,12 @@ func (_class PCIClass) RemoveFromOtherConfig(sessionID SessionRef, self PCIRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given PCI.
-func (_class PCIClass) AddToOtherConfig(sessionID SessionRef, self PCIRef, key string, value string) (_err error) {
+func (_class PCIClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self PCIRef, key string, value string) (_err error) {
 	_method := "PCI.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -200,12 +202,12 @@ func (_class PCIClass) AddToOtherConfig(sessionID SessionRef, self PCIRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given PCI.
-func (_class PCIClass) SetOtherConfig(sessionID SessionRef, self PCIRef, value map[string]string) (_err error) {
+func (_class PCIClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self PCIRef, value map[string]string) (_err error) {
 	_method := "PCI.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -219,12 +221,12 @@ func (_class PCIClass) SetOtherConfig(sessionID SessionRef, self PCIRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetDriverName Get the driver_name field of the given PCI.
-func (_class PCIClass) GetDriverName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetDriverName(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_driver_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -234,7 +236,7 @@ func (_class PCIClass) GetDriverName(sessionID SessionRef, self PCIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -243,7 +245,7 @@ func (_class PCIClass) GetDriverName(sessionID SessionRef, self PCIRef) (_retval
 }
 
 // GetSubsystemDeviceName Get the subsystem_device_name field of the given PCI.
-func (_class PCIClass) GetSubsystemDeviceName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetSubsystemDeviceName(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_subsystem_device_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -253,7 +255,7 @@ func (_class PCIClass) GetSubsystemDeviceName(sessionID SessionRef, self PCIRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -262,7 +264,7 @@ func (_class PCIClass) GetSubsystemDeviceName(sessionID SessionRef, self PCIRef)
 }
 
 // GetSubsystemDeviceID Get the subsystem_device_id field of the given PCI.
-func (_class PCIClass) GetSubsystemDeviceID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetSubsystemDeviceID(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_subsystem_device_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -272,7 +274,7 @@ func (_class PCIClass) GetSubsystemDeviceID(sessionID SessionRef, self PCIRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -281,7 +283,7 @@ func (_class PCIClass) GetSubsystemDeviceID(sessionID SessionRef, self PCIRef) (
 }
 
 // GetSubsystemVendorName Get the subsystem_vendor_name field of the given PCI.
-func (_class PCIClass) GetSubsystemVendorName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetSubsystemVendorName(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_subsystem_vendor_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -291,7 +293,7 @@ func (_class PCIClass) GetSubsystemVendorName(sessionID SessionRef, self PCIRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -300,7 +302,7 @@ func (_class PCIClass) GetSubsystemVendorName(sessionID SessionRef, self PCIRef)
 }
 
 // GetSubsystemVendorID Get the subsystem_vendor_id field of the given PCI.
-func (_class PCIClass) GetSubsystemVendorID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetSubsystemVendorID(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_subsystem_vendor_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -310,7 +312,7 @@ func (_class PCIClass) GetSubsystemVendorID(sessionID SessionRef, self PCIRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -319,7 +321,7 @@ func (_class PCIClass) GetSubsystemVendorID(sessionID SessionRef, self PCIRef) (
 }
 
 // GetOtherConfig Get the other_config field of the given PCI.
-func (_class PCIClass) GetOtherConfig(sessionID SessionRef, self PCIRef) (_retval map[string]string, _err error) {
+func (_class PCIClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval map[string]string, _err error) {
 	_method := "PCI.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -329,7 +331,7 @@ func (_class PCIClass) GetOtherConfig(sessionID SessionRef, self PCIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -338,7 +340,7 @@ func (_class PCIClass) GetOtherConfig(sessionID SessionRef, self PCIRef) (_retva
 }
 
 // GetDependencies Get the dependencies field of the given PCI.
-func (_class PCIClass) GetDependencies(sessionID SessionRef, self PCIRef) (_retval []PCIRef, _err error) {
+func (_class PCIClass) GetDependencies(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval []PCIRef, _err error) {
 	_method := "PCI.get_dependencies"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -348,7 +350,7 @@ func (_class PCIClass) GetDependencies(sessionID SessionRef, self PCIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -357,7 +359,7 @@ func (_class PCIClass) GetDependencies(sessionID SessionRef, self PCIRef) (_retv
 }
 
 // GetPciID Get the pci_id field of the given PCI.
-func (_class PCIClass) GetPciID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetPciID(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_pci_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -367,7 +369,7 @@ func (_class PCIClass) GetPciID(sessionID SessionRef, self PCIRef) (_retval stri
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -376,7 +378,7 @@ func (_class PCIClass) GetPciID(sessionID SessionRef, self PCIRef) (_retval stri
 }
 
 // GetHost Get the host field of the given PCI.
-func (_class PCIClass) GetHost(sessionID SessionRef, self PCIRef) (_retval HostRef, _err error) {
+func (_class PCIClass) GetHost(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval HostRef, _err error) {
 	_method := "PCI.get_host"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -386,7 +388,7 @@ func (_class PCIClass) GetHost(sessionID SessionRef, self PCIRef) (_retval HostR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -395,7 +397,7 @@ func (_class PCIClass) GetHost(sessionID SessionRef, self PCIRef) (_retval HostR
 }
 
 // GetDeviceName Get the device_name field of the given PCI.
-func (_class PCIClass) GetDeviceName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetDeviceName(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_device_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -405,7 +407,7 @@ func (_class PCIClass) GetDeviceName(sessionID SessionRef, self PCIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -414,7 +416,7 @@ func (_class PCIClass) GetDeviceName(sessionID SessionRef, self PCIRef) (_retval
 }
 
 // GetDeviceID Get the device_id field of the given PCI.
-func (_class PCIClass) GetDeviceID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetDeviceID(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_device_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -424,7 +426,7 @@ func (_class PCIClass) GetDeviceID(sessionID SessionRef, self PCIRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -433,7 +435,7 @@ func (_class PCIClass) GetDeviceID(sessionID SessionRef, self PCIRef) (_retval s
 }
 
 // GetVendorName Get the vendor_name field of the given PCI.
-func (_class PCIClass) GetVendorName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetVendorName(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_vendor_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -443,7 +445,7 @@ func (_class PCIClass) GetVendorName(sessionID SessionRef, self PCIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -452,7 +454,7 @@ func (_class PCIClass) GetVendorName(sessionID SessionRef, self PCIRef) (_retval
 }
 
 // GetVendorID Get the vendor_id field of the given PCI.
-func (_class PCIClass) GetVendorID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetVendorID(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_vendor_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -462,7 +464,7 @@ func (_class PCIClass) GetVendorID(sessionID SessionRef, self PCIRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -471,7 +473,7 @@ func (_class PCIClass) GetVendorID(sessionID SessionRef, self PCIRef) (_retval s
 }
 
 // GetClassName Get the class_name field of the given PCI.
-func (_class PCIClass) GetClassName(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetClassName(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_class_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -481,7 +483,7 @@ func (_class PCIClass) GetClassName(sessionID SessionRef, self PCIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -490,7 +492,7 @@ func (_class PCIClass) GetClassName(sessionID SessionRef, self PCIRef) (_retval 
 }
 
 // GetClassID Get the class_id field of the given PCI.
-func (_class PCIClass) GetClassID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetClassID(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_class_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -500,7 +502,7 @@ func (_class PCIClass) GetClassID(sessionID SessionRef, self PCIRef) (_retval st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -509,7 +511,7 @@ func (_class PCIClass) GetClassID(sessionID SessionRef, self PCIRef) (_retval st
 }
 
 // GetUUID Get the uuid field of the given PCI.
-func (_class PCIClass) GetUUID(sessionID SessionRef, self PCIRef) (_retval string, _err error) {
+func (_class PCIClass) GetUUID(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval string, _err error) {
 	_method := "PCI.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -519,7 +521,7 @@ func (_class PCIClass) GetUUID(sessionID SessionRef, self PCIRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -528,7 +530,7 @@ func (_class PCIClass) GetUUID(sessionID SessionRef, self PCIRef) (_retval strin
 }
 
 // GetByUUID Get a reference to the PCI instance with the specified UUID.
-func (_class PCIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PCIRef, _err error) {
+func (_class PCIClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PCIRef, _err error) {
 	_method := "PCI.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -538,7 +540,7 @@ func (_class PCIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PCI
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -547,7 +549,7 @@ func (_class PCIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PCI
 }
 
 // GetRecord Get a record containing the current state of the given PCI.
-func (_class PCIClass) GetRecord(sessionID SessionRef, self PCIRef) (_retval PCIRecord, _err error) {
+func (_class PCIClass) GetRecord(ctx context.Context, sessionID SessionRef, self PCIRef) (_retval PCIRecord, _err error) {
 	_method := "PCI.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -557,7 +559,7 @@ func (_class PCIClass) GetRecord(sessionID SessionRef, self PCIRef) (_retval PCI
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

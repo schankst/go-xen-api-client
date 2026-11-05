@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -174,13 +176,13 @@ type VDIClass struct {
 }
 
 // GetAllRecords Return a map of VDI references to VDI records for all VDIs known to the system.
-func (_class VDIClass) GetAllRecords(sessionID SessionRef) (_retval map[VDIRef]VDIRecord, _err error) {
+func (_class VDIClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[VDIRef]VDIRecord, _err error) {
 	_method := "VDI.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -189,13 +191,13 @@ func (_class VDIClass) GetAllRecords(sessionID SessionRef) (_retval map[VDIRef]V
 }
 
 // GetAll Return a list of all the VDIs known to the system.
-func (_class VDIClass) GetAll(sessionID SessionRef) (_retval []VDIRef, _err error) {
+func (_class VDIClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []VDIRef, _err error) {
 	_method := "VDI.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -208,7 +210,7 @@ func (_class VDIClass) GetAll(sessionID SessionRef) (_retval []VDIRef, _err erro
 // Errors:
 //
 //	UNIMPLEMENTED_IN_SM_BACKEND - You have attempted a function which is not implemented
-func (_class VDIClass) Revert(sessionID SessionRef, snapshot VDIRef) (_err error) {
+func (_class VDIClass) Revert(ctx context.Context, sessionID SessionRef, snapshot VDIRef) (_err error) {
 	_method := "VDI.revert"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -218,7 +220,7 @@ func (_class VDIClass) Revert(sessionID SessionRef, snapshot VDIRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _snapshotArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _snapshotArg)
 	return
 }
 
@@ -227,7 +229,7 @@ func (_class VDIClass) Revert(sessionID SessionRef, snapshot VDIRef) (_err error
 // Errors:
 //
 //	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
-func (_class VDIClass) GetNbdInfo(sessionID SessionRef, self VDIRef) (_retval []VdiNbdServerInfoRecord, _err error) {
+func (_class VDIClass) GetNbdInfo(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval []VdiNbdServerInfoRecord, _err error) {
 	_method := "VDI.get_nbd_info"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -237,7 +239,7 @@ func (_class VDIClass) GetNbdInfo(sessionID SessionRef, self VDIRef) (_retval []
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -254,7 +256,7 @@ func (_class VDIClass) GetNbdInfo(sessionID SessionRef, self VDIRef) (_retval []
 //	SR_NOT_ATTACHED - The SR is not attached.
 //	SR_HAS_NO_PBDS - The SR has no attached PBDs
 //	VDI_IN_USE - This operation cannot be performed because this VDI is in use by some other operation
-func (_class VDIClass) ListChangedBlocks(sessionID SessionRef, vdiFrom VDIRef, vdiTo VDIRef) (_retval string, _err error) {
+func (_class VDIClass) ListChangedBlocks(ctx context.Context, sessionID SessionRef, vdiFrom VDIRef, vdiTo VDIRef) (_retval string, _err error) {
 	_method := "VDI.list_changed_blocks"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -268,7 +270,7 @@ func (_class VDIClass) ListChangedBlocks(sessionID SessionRef, vdiFrom VDIRef, v
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vdiFromArg, _vdiToArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vdiFromArg, _vdiToArg)
 	if _err != nil {
 		return
 	}
@@ -289,7 +291,7 @@ func (_class VDIClass) ListChangedBlocks(sessionID SessionRef, vdiFrom VDIRef, v
 //	VDI_NO_CBT_METADATA - The requested operation is not allowed because the specified VDI does not have changed block tracking metadata.
 //	VDI_IN_USE - This operation cannot be performed because this VDI is in use by some other operation
 //	VDI_IS_A_PHYSICAL_DEVICE - The operation cannot be performed on physical device
-func (_class VDIClass) DataDestroy(sessionID SessionRef, self VDIRef) (_err error) {
+func (_class VDIClass) DataDestroy(ctx context.Context, sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.data_destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -299,7 +301,7 @@ func (_class VDIClass) DataDestroy(sessionID SessionRef, self VDIRef) (_err erro
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -314,7 +316,7 @@ func (_class VDIClass) DataDestroy(sessionID SessionRef, self VDIRef) (_err erro
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 //	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
-func (_class VDIClass) DisableCbt(sessionID SessionRef, self VDIRef) (_err error) {
+func (_class VDIClass) DisableCbt(ctx context.Context, sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.disable_cbt"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -324,7 +326,7 @@ func (_class VDIClass) DisableCbt(sessionID SessionRef, self VDIRef) (_err error
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
@@ -339,7 +341,7 @@ func (_class VDIClass) DisableCbt(sessionID SessionRef, self VDIRef) (_err error
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
 //	VDI_INCOMPATIBLE_TYPE - This operation cannot be performed because the specified VDI is of an incompatible type (for example, an HA statefile cannot be attached to a VM)
 //	VDI_ON_BOOT_MODE_INCOMPATIBLE_WITH_OPERATION - This operation is not permitted on VDIs in the 'on-boot=reset' mode, or on VMs having such VDIs.
-func (_class VDIClass) EnableCbt(sessionID SessionRef, self VDIRef) (_err error) {
+func (_class VDIClass) EnableCbt(ctx context.Context, sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.enable_cbt"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -349,12 +351,12 @@ func (_class VDIClass) EnableCbt(sessionID SessionRef, self VDIRef) (_err error)
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // PoolMigrate Migrate a VDI, which may be attached to a running guest, to a different SR. The destination SR must be visible to the guest.
-func (_class VDIClass) PoolMigrate(sessionID SessionRef, vdi VDIRef, sr SRRef, options map[string]string) (_retval VDIRef, _err error) {
+func (_class VDIClass) PoolMigrate(ctx context.Context, sessionID SessionRef, vdi VDIRef, sr SRRef, options map[string]string) (_retval VDIRef, _err error) {
 	_method := "VDI.pool_migrate"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -372,7 +374,7 @@ func (_class VDIClass) PoolMigrate(sessionID SessionRef, vdi VDIRef, sr SRRef, o
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vdiArg, _srArg, _optionsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg, _srArg, _optionsArg)
 	if _err != nil {
 		return
 	}
@@ -381,7 +383,7 @@ func (_class VDIClass) PoolMigrate(sessionID SessionRef, vdi VDIRef, sr SRRef, o
 }
 
 // ReadDatabasePoolUUID Check the VDI cache for the pool UUID of the database on this VDI.
-func (_class VDIClass) ReadDatabasePoolUUID(sessionID SessionRef, self VDIRef) (_retval string, _err error) {
+func (_class VDIClass) ReadDatabasePoolUUID(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval string, _err error) {
 	_method := "VDI.read_database_pool_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -391,7 +393,7 @@ func (_class VDIClass) ReadDatabasePoolUUID(sessionID SessionRef, self VDIRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -400,7 +402,7 @@ func (_class VDIClass) ReadDatabasePoolUUID(sessionID SessionRef, self VDIRef) (
 }
 
 // OpenDatabase Load the metadata found on the supplied VDI and return a session reference which can be used in API calls to query its contents.
-func (_class VDIClass) OpenDatabase(sessionID SessionRef, self VDIRef) (_retval SessionRef, _err error) {
+func (_class VDIClass) OpenDatabase(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval SessionRef, _err error) {
 	_method := "VDI.open_database"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -410,7 +412,7 @@ func (_class VDIClass) OpenDatabase(sessionID SessionRef, self VDIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -419,7 +421,7 @@ func (_class VDIClass) OpenDatabase(sessionID SessionRef, self VDIRef) (_retval 
 }
 
 // SetAllowCaching Set the value of the allow_caching parameter. This value can only be changed when the VDI is not attached to a running VM. The caching behaviour is only affected by this flag for VHD-based VDIs that have one parent and no child VHDs. Moreover, caching only takes place when the host running the VM containing this VDI has a nominated SR for local caching.
-func (_class VDIClass) SetAllowCaching(sessionID SessionRef, self VDIRef, value bool) (_err error) {
+func (_class VDIClass) SetAllowCaching(ctx context.Context, sessionID SessionRef, self VDIRef, value bool) (_err error) {
 	_method := "VDI.set_allow_caching"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -433,12 +435,12 @@ func (_class VDIClass) SetAllowCaching(sessionID SessionRef, self VDIRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetOnBoot Set the value of the on_boot parameter. This value can only be changed when the VDI is not attached to a running VM.
-func (_class VDIClass) SetOnBoot(sessionID SessionRef, self VDIRef, value OnBoot) (_err error) {
+func (_class VDIClass) SetOnBoot(ctx context.Context, sessionID SessionRef, self VDIRef, value OnBoot) (_err error) {
 	_method := "VDI.set_on_boot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -452,12 +454,12 @@ func (_class VDIClass) SetOnBoot(sessionID SessionRef, self VDIRef, value OnBoot
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameDescription Set the name description of the VDI. This can only happen when its SR is currently attached.
-func (_class VDIClass) SetNameDescription(sessionID SessionRef, self VDIRef, value string) (_err error) {
+func (_class VDIClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self VDIRef, value string) (_err error) {
 	_method := "VDI.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -471,12 +473,12 @@ func (_class VDIClass) SetNameDescription(sessionID SessionRef, self VDIRef, val
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name label of the VDI. This can only happen when then its SR is currently attached.
-func (_class VDIClass) SetNameLabel(sessionID SessionRef, self VDIRef, value string) (_err error) {
+func (_class VDIClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self VDIRef, value string) (_err error) {
 	_method := "VDI.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -490,12 +492,12 @@ func (_class VDIClass) SetNameLabel(sessionID SessionRef, self VDIRef, value str
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetReadOnly Sets the VDI's read_only field
-func (_class VDIClass) SetReadOnly(sessionID SessionRef, self VDIRef, value bool) (_err error) {
+func (_class VDIClass) SetReadOnly(ctx context.Context, sessionID SessionRef, self VDIRef, value bool) (_err error) {
 	_method := "VDI.set_read_only"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -509,12 +511,12 @@ func (_class VDIClass) SetReadOnly(sessionID SessionRef, self VDIRef, value bool
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetSharable Sets the VDI's sharable field
-func (_class VDIClass) SetSharable(sessionID SessionRef, self VDIRef, value bool) (_err error) {
+func (_class VDIClass) SetSharable(ctx context.Context, sessionID SessionRef, self VDIRef, value bool) (_err error) {
 	_method := "VDI.set_sharable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -528,12 +530,12 @@ func (_class VDIClass) SetSharable(sessionID SessionRef, self VDIRef, value bool
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // Forget Removes a VDI record from the database
-func (_class VDIClass) Forget(sessionID SessionRef, vdi VDIRef) (_err error) {
+func (_class VDIClass) Forget(ctx context.Context, sessionID SessionRef, vdi VDIRef) (_err error) {
 	_method := "VDI.forget"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -543,7 +545,7 @@ func (_class VDIClass) Forget(sessionID SessionRef, vdi VDIRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg)
 	return
 }
 
@@ -554,7 +556,7 @@ func (_class VDIClass) Forget(sessionID SessionRef, vdi VDIRef) (_err error) {
 //	VDI_READONLY - The operation required write access but this VDI is read-only
 //	VDI_TOO_SMALL - The VDI is too small. Please resize it to at least the minimum size.
 //	VDI_NOT_SPARSE - The VDI is not stored using a sparse format. It is not possible to query and manipulate only the changed blocks (or 'block differences' or 'disk deltas') between two VDIs. Please select a VDI which uses a sparse-aware technology such as VHD.
-func (_class VDIClass) Copy(sessionID SessionRef, vdi VDIRef, sr SRRef, baseVdi VDIRef, intoVdi VDIRef) (_retval VDIRef, _err error) {
+func (_class VDIClass) Copy(ctx context.Context, sessionID SessionRef, vdi VDIRef, sr SRRef, baseVdi VDIRef, intoVdi VDIRef) (_retval VDIRef, _err error) {
 	_method := "VDI.copy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -576,7 +578,7 @@ func (_class VDIClass) Copy(sessionID SessionRef, vdi VDIRef, sr SRRef, baseVdi 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vdiArg, _srArg, _baseVdiArg, _intoVdiArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg, _srArg, _baseVdiArg, _intoVdiArg)
 	if _err != nil {
 		return
 	}
@@ -589,7 +591,7 @@ func (_class VDIClass) Copy(sessionID SessionRef, vdi VDIRef, sr SRRef, baseVdi 
 // Errors:
 //
 //	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-func (_class VDIClass) Update(sessionID SessionRef, vdi VDIRef) (_err error) {
+func (_class VDIClass) Update(ctx context.Context, sessionID SessionRef, vdi VDIRef) (_err error) {
 	_method := "VDI.update"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -599,7 +601,7 @@ func (_class VDIClass) Update(sessionID SessionRef, vdi VDIRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg)
 	return
 }
 
@@ -608,7 +610,7 @@ func (_class VDIClass) Update(sessionID SessionRef, vdi VDIRef) (_err error) {
 // Errors:
 //
 //	SR_OPERATION_NOT_SUPPORTED - The SR backend does not support the operation (check the SR's allowed operations)
-func (_class VDIClass) Introduce(sessionID SessionRef, uuid string, nameLabel string, nameDescription string, sr SRRef, atype VdiType, sharable bool, readOnly bool, otherConfig map[string]string, location string, xenstoreData map[string]string, smConfig map[string]string, managed bool, virtualSize int, physicalUtilisation int, metadataOfPool PoolRef, isASnapshot bool, snapshotTime time.Time, snapshotOf VDIRef) (_retval VDIRef, _err error) {
+func (_class VDIClass) Introduce(ctx context.Context, sessionID SessionRef, uuid string, nameLabel string, nameDescription string, sr SRRef, atype VdiType, sharable bool, readOnly bool, otherConfig map[string]string, location string, xenstoreData map[string]string, smConfig map[string]string, managed bool, virtualSize int, physicalUtilisation int, metadataOfPool PoolRef, isASnapshot bool, snapshotTime time.Time, snapshotOf VDIRef) (_retval VDIRef, _err error) {
 	_method := "VDI.introduce"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -686,7 +688,7 @@ func (_class VDIClass) Introduce(sessionID SessionRef, uuid string, nameLabel st
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg, _nameLabelArg, _nameDescriptionArg, _srArg, _atypeArg, _sharableArg, _readOnlyArg, _otherConfigArg, _locationArg, _xenstoreDataArg, _smConfigArg, _managedArg, _virtualSizeArg, _physicalUtilisationArg, _metadataOfPoolArg, _isASnapshotArg, _snapshotTimeArg, _snapshotOfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg, _nameLabelArg, _nameDescriptionArg, _srArg, _atypeArg, _sharableArg, _readOnlyArg, _otherConfigArg, _locationArg, _xenstoreDataArg, _smConfigArg, _managedArg, _virtualSizeArg, _physicalUtilisationArg, _metadataOfPoolArg, _isASnapshotArg, _snapshotTimeArg, _snapshotOfArg)
 	if _err != nil {
 		return
 	}
@@ -695,7 +697,7 @@ func (_class VDIClass) Introduce(sessionID SessionRef, uuid string, nameLabel st
 }
 
 // ResizeOnline Resize the VDI which may or may not be attached to running guests.
-func (_class VDIClass) ResizeOnline(sessionID SessionRef, vdi VDIRef, size int) (_err error) {
+func (_class VDIClass) ResizeOnline(ctx context.Context, sessionID SessionRef, vdi VDIRef, size int) (_err error) {
 	_method := "VDI.resize_online"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -709,12 +711,12 @@ func (_class VDIClass) ResizeOnline(sessionID SessionRef, vdi VDIRef, size int) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg, _sizeArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg, _sizeArg)
 	return
 }
 
 // Resize Resize the VDI.
-func (_class VDIClass) Resize(sessionID SessionRef, vdi VDIRef, size int) (_err error) {
+func (_class VDIClass) Resize(ctx context.Context, sessionID SessionRef, vdi VDIRef, size int) (_err error) {
 	_method := "VDI.resize"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -728,12 +730,12 @@ func (_class VDIClass) Resize(sessionID SessionRef, vdi VDIRef, size int) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _vdiArg, _sizeArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg, _sizeArg)
 	return
 }
 
 // Clone Take an exact copy of the VDI and return a reference to the new disk. If any driver_params are specified then these are passed through to the storage-specific substrate driver that implements the clone operation. NB the clone lives in the same Storage Repository as its parent.
-func (_class VDIClass) Clone(sessionID SessionRef, vdi VDIRef, driverParams map[string]string) (_retval VDIRef, _err error) {
+func (_class VDIClass) Clone(ctx context.Context, sessionID SessionRef, vdi VDIRef, driverParams map[string]string) (_retval VDIRef, _err error) {
 	_method := "VDI.clone"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -747,7 +749,7 @@ func (_class VDIClass) Clone(sessionID SessionRef, vdi VDIRef, driverParams map[
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vdiArg, _driverParamsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg, _driverParamsArg)
 	if _err != nil {
 		return
 	}
@@ -756,7 +758,7 @@ func (_class VDIClass) Clone(sessionID SessionRef, vdi VDIRef, driverParams map[
 }
 
 // Snapshot Take a read-only snapshot of the VDI, returning a reference to the snapshot. If any driver_params are specified then these are passed through to the storage-specific substrate driver that takes the snapshot. NB the snapshot lives in the same Storage Repository as its parent.
-func (_class VDIClass) Snapshot(sessionID SessionRef, vdi VDIRef, driverParams map[string]string) (_retval VDIRef, _err error) {
+func (_class VDIClass) Snapshot(ctx context.Context, sessionID SessionRef, vdi VDIRef, driverParams map[string]string) (_retval VDIRef, _err error) {
 	_method := "VDI.snapshot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -770,7 +772,7 @@ func (_class VDIClass) Snapshot(sessionID SessionRef, vdi VDIRef, driverParams m
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _vdiArg, _driverParamsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _vdiArg, _driverParamsArg)
 	if _err != nil {
 		return
 	}
@@ -779,7 +781,7 @@ func (_class VDIClass) Snapshot(sessionID SessionRef, vdi VDIRef, driverParams m
 }
 
 // RemoveTags Remove the given value from the tags field of the given VDI.  If the value is not in that Set, then do nothing.
-func (_class VDIClass) RemoveTags(sessionID SessionRef, self VDIRef, value string) (_err error) {
+func (_class VDIClass) RemoveTags(ctx context.Context, sessionID SessionRef, self VDIRef, value string) (_err error) {
 	_method := "VDI.remove_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -793,12 +795,12 @@ func (_class VDIClass) RemoveTags(sessionID SessionRef, self VDIRef, value strin
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // AddTags Add the given value to the tags field of the given VDI.  If the value is already in that Set, then do nothing.
-func (_class VDIClass) AddTags(sessionID SessionRef, self VDIRef, value string) (_err error) {
+func (_class VDIClass) AddTags(ctx context.Context, sessionID SessionRef, self VDIRef, value string) (_err error) {
 	_method := "VDI.add_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -812,12 +814,12 @@ func (_class VDIClass) AddTags(sessionID SessionRef, self VDIRef, value string) 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetTags Set the tags field of the given VDI.
-func (_class VDIClass) SetTags(sessionID SessionRef, self VDIRef, value []string) (_err error) {
+func (_class VDIClass) SetTags(ctx context.Context, sessionID SessionRef, self VDIRef, value []string) (_err error) {
 	_method := "VDI.set_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -831,12 +833,12 @@ func (_class VDIClass) SetTags(sessionID SessionRef, self VDIRef, value []string
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromSmConfig Remove the given key and its corresponding value from the sm_config field of the given VDI.  If the key is not in that Map, then do nothing.
-func (_class VDIClass) RemoveFromSmConfig(sessionID SessionRef, self VDIRef, key string) (_err error) {
+func (_class VDIClass) RemoveFromSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string) (_err error) {
 	_method := "VDI.remove_from_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -850,12 +852,12 @@ func (_class VDIClass) RemoveFromSmConfig(sessionID SessionRef, self VDIRef, key
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToSmConfig Add the given key-value pair to the sm_config field of the given VDI.
-func (_class VDIClass) AddToSmConfig(sessionID SessionRef, self VDIRef, key string, value string) (_err error) {
+func (_class VDIClass) AddToSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string, value string) (_err error) {
 	_method := "VDI.add_to_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -873,12 +875,12 @@ func (_class VDIClass) AddToSmConfig(sessionID SessionRef, self VDIRef, key stri
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetSmConfig Set the sm_config field of the given VDI.
-func (_class VDIClass) SetSmConfig(sessionID SessionRef, self VDIRef, value map[string]string) (_err error) {
+func (_class VDIClass) SetSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef, value map[string]string) (_err error) {
 	_method := "VDI.set_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -892,12 +894,12 @@ func (_class VDIClass) SetSmConfig(sessionID SessionRef, self VDIRef, value map[
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromXenstoreData Remove the given key and its corresponding value from the xenstore_data field of the given VDI.  If the key is not in that Map, then do nothing.
-func (_class VDIClass) RemoveFromXenstoreData(sessionID SessionRef, self VDIRef, key string) (_err error) {
+func (_class VDIClass) RemoveFromXenstoreData(ctx context.Context, sessionID SessionRef, self VDIRef, key string) (_err error) {
 	_method := "VDI.remove_from_xenstore_data"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -911,12 +913,12 @@ func (_class VDIClass) RemoveFromXenstoreData(sessionID SessionRef, self VDIRef,
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToXenstoreData Add the given key-value pair to the xenstore_data field of the given VDI.
-func (_class VDIClass) AddToXenstoreData(sessionID SessionRef, self VDIRef, key string, value string) (_err error) {
+func (_class VDIClass) AddToXenstoreData(ctx context.Context, sessionID SessionRef, self VDIRef, key string, value string) (_err error) {
 	_method := "VDI.add_to_xenstore_data"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -934,12 +936,12 @@ func (_class VDIClass) AddToXenstoreData(sessionID SessionRef, self VDIRef, key 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetXenstoreData Set the xenstore_data field of the given VDI.
-func (_class VDIClass) SetXenstoreData(sessionID SessionRef, self VDIRef, value map[string]string) (_err error) {
+func (_class VDIClass) SetXenstoreData(ctx context.Context, sessionID SessionRef, self VDIRef, value map[string]string) (_err error) {
 	_method := "VDI.set_xenstore_data"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -953,12 +955,12 @@ func (_class VDIClass) SetXenstoreData(sessionID SessionRef, self VDIRef, value 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given VDI.  If the key is not in that Map, then do nothing.
-func (_class VDIClass) RemoveFromOtherConfig(sessionID SessionRef, self VDIRef, key string) (_err error) {
+func (_class VDIClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string) (_err error) {
 	_method := "VDI.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -972,12 +974,12 @@ func (_class VDIClass) RemoveFromOtherConfig(sessionID SessionRef, self VDIRef, 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given VDI.
-func (_class VDIClass) AddToOtherConfig(sessionID SessionRef, self VDIRef, key string, value string) (_err error) {
+func (_class VDIClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self VDIRef, key string, value string) (_err error) {
 	_method := "VDI.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -995,12 +997,12 @@ func (_class VDIClass) AddToOtherConfig(sessionID SessionRef, self VDIRef, key s
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given VDI.
-func (_class VDIClass) SetOtherConfig(sessionID SessionRef, self VDIRef, value map[string]string) (_err error) {
+func (_class VDIClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self VDIRef, value map[string]string) (_err error) {
 	_method := "VDI.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1014,12 +1016,12 @@ func (_class VDIClass) SetOtherConfig(sessionID SessionRef, self VDIRef, value m
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetCbtEnabled Get the cbt_enabled field of the given VDI.
-func (_class VDIClass) GetCbtEnabled(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetCbtEnabled(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_cbt_enabled"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1029,7 +1031,7 @@ func (_class VDIClass) GetCbtEnabled(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1038,7 +1040,7 @@ func (_class VDIClass) GetCbtEnabled(sessionID SessionRef, self VDIRef) (_retval
 }
 
 // GetIsToolsIso Get the is_tools_iso field of the given VDI.
-func (_class VDIClass) GetIsToolsIso(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetIsToolsIso(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_is_tools_iso"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1048,7 +1050,7 @@ func (_class VDIClass) GetIsToolsIso(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1057,7 +1059,7 @@ func (_class VDIClass) GetIsToolsIso(sessionID SessionRef, self VDIRef) (_retval
 }
 
 // GetMetadataLatest Get the metadata_latest field of the given VDI.
-func (_class VDIClass) GetMetadataLatest(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetMetadataLatest(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_metadata_latest"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1067,7 +1069,7 @@ func (_class VDIClass) GetMetadataLatest(sessionID SessionRef, self VDIRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1076,7 +1078,7 @@ func (_class VDIClass) GetMetadataLatest(sessionID SessionRef, self VDIRef) (_re
 }
 
 // GetMetadataOfPool Get the metadata_of_pool field of the given VDI.
-func (_class VDIClass) GetMetadataOfPool(sessionID SessionRef, self VDIRef) (_retval PoolRef, _err error) {
+func (_class VDIClass) GetMetadataOfPool(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval PoolRef, _err error) {
 	_method := "VDI.get_metadata_of_pool"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1086,7 +1088,7 @@ func (_class VDIClass) GetMetadataOfPool(sessionID SessionRef, self VDIRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1095,7 +1097,7 @@ func (_class VDIClass) GetMetadataOfPool(sessionID SessionRef, self VDIRef) (_re
 }
 
 // GetOnBoot Get the on_boot field of the given VDI.
-func (_class VDIClass) GetOnBoot(sessionID SessionRef, self VDIRef) (_retval OnBoot, _err error) {
+func (_class VDIClass) GetOnBoot(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval OnBoot, _err error) {
 	_method := "VDI.get_on_boot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1105,7 +1107,7 @@ func (_class VDIClass) GetOnBoot(sessionID SessionRef, self VDIRef) (_retval OnB
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1114,7 +1116,7 @@ func (_class VDIClass) GetOnBoot(sessionID SessionRef, self VDIRef) (_retval OnB
 }
 
 // GetAllowCaching Get the allow_caching field of the given VDI.
-func (_class VDIClass) GetAllowCaching(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetAllowCaching(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_allow_caching"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1124,7 +1126,7 @@ func (_class VDIClass) GetAllowCaching(sessionID SessionRef, self VDIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1133,7 +1135,7 @@ func (_class VDIClass) GetAllowCaching(sessionID SessionRef, self VDIRef) (_retv
 }
 
 // GetTags Get the tags field of the given VDI.
-func (_class VDIClass) GetTags(sessionID SessionRef, self VDIRef) (_retval []string, _err error) {
+func (_class VDIClass) GetTags(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval []string, _err error) {
 	_method := "VDI.get_tags"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1143,7 +1145,7 @@ func (_class VDIClass) GetTags(sessionID SessionRef, self VDIRef) (_retval []str
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1152,7 +1154,7 @@ func (_class VDIClass) GetTags(sessionID SessionRef, self VDIRef) (_retval []str
 }
 
 // GetSnapshotTime Get the snapshot_time field of the given VDI.
-func (_class VDIClass) GetSnapshotTime(sessionID SessionRef, self VDIRef) (_retval time.Time, _err error) {
+func (_class VDIClass) GetSnapshotTime(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval time.Time, _err error) {
 	_method := "VDI.get_snapshot_time"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1162,7 +1164,7 @@ func (_class VDIClass) GetSnapshotTime(sessionID SessionRef, self VDIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1171,7 +1173,7 @@ func (_class VDIClass) GetSnapshotTime(sessionID SessionRef, self VDIRef) (_retv
 }
 
 // GetSnapshots Get the snapshots field of the given VDI.
-func (_class VDIClass) GetSnapshots(sessionID SessionRef, self VDIRef) (_retval []VDIRef, _err error) {
+func (_class VDIClass) GetSnapshots(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval []VDIRef, _err error) {
 	_method := "VDI.get_snapshots"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1181,7 +1183,7 @@ func (_class VDIClass) GetSnapshots(sessionID SessionRef, self VDIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1190,7 +1192,7 @@ func (_class VDIClass) GetSnapshots(sessionID SessionRef, self VDIRef) (_retval 
 }
 
 // GetSnapshotOf Get the snapshot_of field of the given VDI.
-func (_class VDIClass) GetSnapshotOf(sessionID SessionRef, self VDIRef) (_retval VDIRef, _err error) {
+func (_class VDIClass) GetSnapshotOf(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval VDIRef, _err error) {
 	_method := "VDI.get_snapshot_of"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1200,7 +1202,7 @@ func (_class VDIClass) GetSnapshotOf(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1209,7 +1211,7 @@ func (_class VDIClass) GetSnapshotOf(sessionID SessionRef, self VDIRef) (_retval
 }
 
 // GetIsASnapshot Get the is_a_snapshot field of the given VDI.
-func (_class VDIClass) GetIsASnapshot(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetIsASnapshot(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_is_a_snapshot"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1219,7 +1221,7 @@ func (_class VDIClass) GetIsASnapshot(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1228,7 +1230,7 @@ func (_class VDIClass) GetIsASnapshot(sessionID SessionRef, self VDIRef) (_retva
 }
 
 // GetSmConfig Get the sm_config field of the given VDI.
-func (_class VDIClass) GetSmConfig(sessionID SessionRef, self VDIRef) (_retval map[string]string, _err error) {
+func (_class VDIClass) GetSmConfig(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval map[string]string, _err error) {
 	_method := "VDI.get_sm_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1238,7 +1240,7 @@ func (_class VDIClass) GetSmConfig(sessionID SessionRef, self VDIRef) (_retval m
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1247,7 +1249,7 @@ func (_class VDIClass) GetSmConfig(sessionID SessionRef, self VDIRef) (_retval m
 }
 
 // GetXenstoreData Get the xenstore_data field of the given VDI.
-func (_class VDIClass) GetXenstoreData(sessionID SessionRef, self VDIRef) (_retval map[string]string, _err error) {
+func (_class VDIClass) GetXenstoreData(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval map[string]string, _err error) {
 	_method := "VDI.get_xenstore_data"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1257,7 +1259,7 @@ func (_class VDIClass) GetXenstoreData(sessionID SessionRef, self VDIRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1266,7 +1268,7 @@ func (_class VDIClass) GetXenstoreData(sessionID SessionRef, self VDIRef) (_retv
 }
 
 // GetParent Get the parent field of the given VDI.
-func (_class VDIClass) GetParent(sessionID SessionRef, self VDIRef) (_retval VDIRef, _err error) {
+func (_class VDIClass) GetParent(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval VDIRef, _err error) {
 	_method := "VDI.get_parent"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1276,7 +1278,7 @@ func (_class VDIClass) GetParent(sessionID SessionRef, self VDIRef) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1285,7 +1287,7 @@ func (_class VDIClass) GetParent(sessionID SessionRef, self VDIRef) (_retval VDI
 }
 
 // GetMissing Get the missing field of the given VDI.
-func (_class VDIClass) GetMissing(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetMissing(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_missing"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1295,7 +1297,7 @@ func (_class VDIClass) GetMissing(sessionID SessionRef, self VDIRef) (_retval bo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1304,7 +1306,7 @@ func (_class VDIClass) GetMissing(sessionID SessionRef, self VDIRef) (_retval bo
 }
 
 // GetManaged Get the managed field of the given VDI.
-func (_class VDIClass) GetManaged(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetManaged(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_managed"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1314,7 +1316,7 @@ func (_class VDIClass) GetManaged(sessionID SessionRef, self VDIRef) (_retval bo
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1323,7 +1325,7 @@ func (_class VDIClass) GetManaged(sessionID SessionRef, self VDIRef) (_retval bo
 }
 
 // GetLocation Get the location field of the given VDI.
-func (_class VDIClass) GetLocation(sessionID SessionRef, self VDIRef) (_retval string, _err error) {
+func (_class VDIClass) GetLocation(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval string, _err error) {
 	_method := "VDI.get_location"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1333,7 +1335,7 @@ func (_class VDIClass) GetLocation(sessionID SessionRef, self VDIRef) (_retval s
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1342,7 +1344,7 @@ func (_class VDIClass) GetLocation(sessionID SessionRef, self VDIRef) (_retval s
 }
 
 // GetStorageLock Get the storage_lock field of the given VDI.
-func (_class VDIClass) GetStorageLock(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetStorageLock(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_storage_lock"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1352,7 +1354,7 @@ func (_class VDIClass) GetStorageLock(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1361,7 +1363,7 @@ func (_class VDIClass) GetStorageLock(sessionID SessionRef, self VDIRef) (_retva
 }
 
 // GetOtherConfig Get the other_config field of the given VDI.
-func (_class VDIClass) GetOtherConfig(sessionID SessionRef, self VDIRef) (_retval map[string]string, _err error) {
+func (_class VDIClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval map[string]string, _err error) {
 	_method := "VDI.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1371,7 +1373,7 @@ func (_class VDIClass) GetOtherConfig(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1380,7 +1382,7 @@ func (_class VDIClass) GetOtherConfig(sessionID SessionRef, self VDIRef) (_retva
 }
 
 // GetReadOnly Get the read_only field of the given VDI.
-func (_class VDIClass) GetReadOnly(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetReadOnly(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_read_only"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1390,7 +1392,7 @@ func (_class VDIClass) GetReadOnly(sessionID SessionRef, self VDIRef) (_retval b
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1399,7 +1401,7 @@ func (_class VDIClass) GetReadOnly(sessionID SessionRef, self VDIRef) (_retval b
 }
 
 // GetSharable Get the sharable field of the given VDI.
-func (_class VDIClass) GetSharable(sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
+func (_class VDIClass) GetSharable(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval bool, _err error) {
 	_method := "VDI.get_sharable"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1409,7 +1411,7 @@ func (_class VDIClass) GetSharable(sessionID SessionRef, self VDIRef) (_retval b
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1418,7 +1420,7 @@ func (_class VDIClass) GetSharable(sessionID SessionRef, self VDIRef) (_retval b
 }
 
 // GetType Get the type field of the given VDI.
-func (_class VDIClass) GetType(sessionID SessionRef, self VDIRef) (_retval VdiType, _err error) {
+func (_class VDIClass) GetType(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval VdiType, _err error) {
 	_method := "VDI.get_type"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1428,7 +1430,7 @@ func (_class VDIClass) GetType(sessionID SessionRef, self VDIRef) (_retval VdiTy
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1437,7 +1439,7 @@ func (_class VDIClass) GetType(sessionID SessionRef, self VDIRef) (_retval VdiTy
 }
 
 // GetPhysicalUtilisation Get the physical_utilisation field of the given VDI.
-func (_class VDIClass) GetPhysicalUtilisation(sessionID SessionRef, self VDIRef) (_retval int, _err error) {
+func (_class VDIClass) GetPhysicalUtilisation(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval int, _err error) {
 	_method := "VDI.get_physical_utilisation"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1447,7 +1449,7 @@ func (_class VDIClass) GetPhysicalUtilisation(sessionID SessionRef, self VDIRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1456,7 +1458,7 @@ func (_class VDIClass) GetPhysicalUtilisation(sessionID SessionRef, self VDIRef)
 }
 
 // GetVirtualSize Get the virtual_size field of the given VDI.
-func (_class VDIClass) GetVirtualSize(sessionID SessionRef, self VDIRef) (_retval int, _err error) {
+func (_class VDIClass) GetVirtualSize(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval int, _err error) {
 	_method := "VDI.get_virtual_size"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1466,7 +1468,7 @@ func (_class VDIClass) GetVirtualSize(sessionID SessionRef, self VDIRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1475,7 +1477,7 @@ func (_class VDIClass) GetVirtualSize(sessionID SessionRef, self VDIRef) (_retva
 }
 
 // GetCrashDumps Get the crash_dumps field of the given VDI.
-func (_class VDIClass) GetCrashDumps(sessionID SessionRef, self VDIRef) (_retval []CrashdumpRef, _err error) {
+func (_class VDIClass) GetCrashDumps(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval []CrashdumpRef, _err error) {
 	_method := "VDI.get_crash_dumps"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1485,7 +1487,7 @@ func (_class VDIClass) GetCrashDumps(sessionID SessionRef, self VDIRef) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1494,7 +1496,7 @@ func (_class VDIClass) GetCrashDumps(sessionID SessionRef, self VDIRef) (_retval
 }
 
 // GetVBDs Get the VBDs field of the given VDI.
-func (_class VDIClass) GetVBDs(sessionID SessionRef, self VDIRef) (_retval []VBDRef, _err error) {
+func (_class VDIClass) GetVBDs(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval []VBDRef, _err error) {
 	_method := "VDI.get_VBDs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1504,7 +1506,7 @@ func (_class VDIClass) GetVBDs(sessionID SessionRef, self VDIRef) (_retval []VBD
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1513,7 +1515,7 @@ func (_class VDIClass) GetVBDs(sessionID SessionRef, self VDIRef) (_retval []VBD
 }
 
 // GetSR Get the SR field of the given VDI.
-func (_class VDIClass) GetSR(sessionID SessionRef, self VDIRef) (_retval SRRef, _err error) {
+func (_class VDIClass) GetSR(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval SRRef, _err error) {
 	_method := "VDI.get_SR"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1523,7 +1525,7 @@ func (_class VDIClass) GetSR(sessionID SessionRef, self VDIRef) (_retval SRRef, 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1532,7 +1534,7 @@ func (_class VDIClass) GetSR(sessionID SessionRef, self VDIRef) (_retval SRRef, 
 }
 
 // GetCurrentOperations Get the current_operations field of the given VDI.
-func (_class VDIClass) GetCurrentOperations(sessionID SessionRef, self VDIRef) (_retval map[string]VdiOperations, _err error) {
+func (_class VDIClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval map[string]VdiOperations, _err error) {
 	_method := "VDI.get_current_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1542,7 +1544,7 @@ func (_class VDIClass) GetCurrentOperations(sessionID SessionRef, self VDIRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1551,7 +1553,7 @@ func (_class VDIClass) GetCurrentOperations(sessionID SessionRef, self VDIRef) (
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given VDI.
-func (_class VDIClass) GetAllowedOperations(sessionID SessionRef, self VDIRef) (_retval []VdiOperations, _err error) {
+func (_class VDIClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval []VdiOperations, _err error) {
 	_method := "VDI.get_allowed_operations"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1561,7 +1563,7 @@ func (_class VDIClass) GetAllowedOperations(sessionID SessionRef, self VDIRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1570,7 +1572,7 @@ func (_class VDIClass) GetAllowedOperations(sessionID SessionRef, self VDIRef) (
 }
 
 // GetNameDescription Get the name/description field of the given VDI.
-func (_class VDIClass) GetNameDescription(sessionID SessionRef, self VDIRef) (_retval string, _err error) {
+func (_class VDIClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval string, _err error) {
 	_method := "VDI.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1580,7 +1582,7 @@ func (_class VDIClass) GetNameDescription(sessionID SessionRef, self VDIRef) (_r
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1589,7 +1591,7 @@ func (_class VDIClass) GetNameDescription(sessionID SessionRef, self VDIRef) (_r
 }
 
 // GetNameLabel Get the name/label field of the given VDI.
-func (_class VDIClass) GetNameLabel(sessionID SessionRef, self VDIRef) (_retval string, _err error) {
+func (_class VDIClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval string, _err error) {
 	_method := "VDI.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1599,7 +1601,7 @@ func (_class VDIClass) GetNameLabel(sessionID SessionRef, self VDIRef) (_retval 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1608,7 +1610,7 @@ func (_class VDIClass) GetNameLabel(sessionID SessionRef, self VDIRef) (_retval 
 }
 
 // GetUUID Get the uuid field of the given VDI.
-func (_class VDIClass) GetUUID(sessionID SessionRef, self VDIRef) (_retval string, _err error) {
+func (_class VDIClass) GetUUID(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval string, _err error) {
 	_method := "VDI.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1618,7 +1620,7 @@ func (_class VDIClass) GetUUID(sessionID SessionRef, self VDIRef) (_retval strin
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -1627,7 +1629,7 @@ func (_class VDIClass) GetUUID(sessionID SessionRef, self VDIRef) (_retval strin
 }
 
 // GetByNameLabel Get all the VDI instances with the given label.
-func (_class VDIClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []VDIRef, _err error) {
+func (_class VDIClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []VDIRef, _err error) {
 	_method := "VDI.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1637,7 +1639,7 @@ func (_class VDIClass) GetByNameLabel(sessionID SessionRef, label string) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -1646,7 +1648,7 @@ func (_class VDIClass) GetByNameLabel(sessionID SessionRef, label string) (_retv
 }
 
 // Destroy Destroy the specified VDI instance.
-func (_class VDIClass) Destroy(sessionID SessionRef, self VDIRef) (_err error) {
+func (_class VDIClass) Destroy(ctx context.Context, sessionID SessionRef, self VDIRef) (_err error) {
 	_method := "VDI.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1656,12 +1658,12 @@ func (_class VDIClass) Destroy(sessionID SessionRef, self VDIRef) (_err error) {
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new VDI instance, and return its handle. The constructor args are: name_label, name_description, SR*, virtual_size*, type*, sharable*, read_only*, other_config*, xenstore_data, sm_config, tags (* = non-optional).
-func (_class VDIClass) Create(sessionID SessionRef, args VDIRecord) (_retval VDIRef, _err error) {
+func (_class VDIClass) Create(ctx context.Context, sessionID SessionRef, args VDIRecord) (_retval VDIRef, _err error) {
 	_method := "VDI.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1671,7 +1673,7 @@ func (_class VDIClass) Create(sessionID SessionRef, args VDIRecord) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -1680,7 +1682,7 @@ func (_class VDIClass) Create(sessionID SessionRef, args VDIRecord) (_retval VDI
 }
 
 // GetByUUID Get a reference to the VDI instance with the specified UUID.
-func (_class VDIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VDIRef, _err error) {
+func (_class VDIClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval VDIRef, _err error) {
 	_method := "VDI.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1690,7 +1692,7 @@ func (_class VDIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -1699,7 +1701,7 @@ func (_class VDIClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VDI
 }
 
 // GetRecord Get a record containing the current state of the given VDI.
-func (_class VDIClass) GetRecord(sessionID SessionRef, self VDIRef) (_retval VDIRecord, _err error) {
+func (_class VDIClass) GetRecord(ctx context.Context, sessionID SessionRef, self VDIRef) (_retval VDIRecord, _err error) {
 	_method := "VDI.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -1709,7 +1711,7 @@ func (_class VDIClass) GetRecord(sessionID SessionRef, self VDIRef) (_retval VDI
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

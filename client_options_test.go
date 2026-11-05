@@ -26,7 +26,7 @@ func TestNewClientVerifiesTLSByDefault(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = client.APICall("some.method")
+	_, err = client.APICall(t.Context(), "some.method")
 
 	var certErr *tls.CertificateVerificationError
 	if !errors.As(err, &certErr) {
@@ -53,7 +53,7 @@ func TestNewClientTLSOptions(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			result, err := client.APICall("some.method")
+			result, err := client.APICall(t.Context(), "some.method")
 			if err != nil {
 				t.Fatalf("APICall: %v", err)
 			}

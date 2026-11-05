@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -59,13 +61,13 @@ type PIFMetricsClass struct {
 }
 
 // GetAllRecords Return a map of PIF_metrics references to PIF_metrics records for all PIF_metrics instances known to the system.
-func (_class PIFMetricsClass) GetAllRecords(sessionID SessionRef) (_retval map[PIFMetricsRef]PIFMetricsRecord, _err error) {
+func (_class PIFMetricsClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[PIFMetricsRef]PIFMetricsRecord, _err error) {
 	_method := "PIF_metrics.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -74,13 +76,13 @@ func (_class PIFMetricsClass) GetAllRecords(sessionID SessionRef) (_retval map[P
 }
 
 // GetAll Return a list of all the PIF_metrics instances known to the system.
-func (_class PIFMetricsClass) GetAll(sessionID SessionRef) (_retval []PIFMetricsRef, _err error) {
+func (_class PIFMetricsClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []PIFMetricsRef, _err error) {
 	_method := "PIF_metrics.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -89,7 +91,7 @@ func (_class PIFMetricsClass) GetAll(sessionID SessionRef) (_retval []PIFMetrics
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given PIF_metrics.  If the key is not in that Map, then do nothing.
-func (_class PIFMetricsClass) RemoveFromOtherConfig(sessionID SessionRef, self PIFMetricsRef, key string) (_err error) {
+func (_class PIFMetricsClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self PIFMetricsRef, key string) (_err error) {
 	_method := "PIF_metrics.remove_from_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -103,12 +105,12 @@ func (_class PIFMetricsClass) RemoveFromOtherConfig(sessionID SessionRef, self P
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg)
 	return
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given PIF_metrics.
-func (_class PIFMetricsClass) AddToOtherConfig(sessionID SessionRef, self PIFMetricsRef, key string, value string) (_err error) {
+func (_class PIFMetricsClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self PIFMetricsRef, key string, value string) (_err error) {
 	_method := "PIF_metrics.add_to_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -126,12 +128,12 @@ func (_class PIFMetricsClass) AddToOtherConfig(sessionID SessionRef, self PIFMet
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _keyArg, _valueArg)
 	return
 }
 
 // SetOtherConfig Set the other_config field of the given PIF_metrics.
-func (_class PIFMetricsClass) SetOtherConfig(sessionID SessionRef, self PIFMetricsRef, value map[string]string) (_err error) {
+func (_class PIFMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self PIFMetricsRef, value map[string]string) (_err error) {
 	_method := "PIF_metrics.set_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -145,12 +147,12 @@ func (_class PIFMetricsClass) SetOtherConfig(sessionID SessionRef, self PIFMetri
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetLldpNeighbor Get the lldp_neighbor field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetLldpNeighbor(sessionID SessionRef, self PIFMetricsRef) (_retval map[string]string, _err error) {
+func (_class PIFMetricsClass) GetLldpNeighbor(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval map[string]string, _err error) {
 	_method := "PIF_metrics.get_lldp_neighbor"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -160,7 +162,7 @@ func (_class PIFMetricsClass) GetLldpNeighbor(sessionID SessionRef, self PIFMetr
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -169,7 +171,7 @@ func (_class PIFMetricsClass) GetLldpNeighbor(sessionID SessionRef, self PIFMetr
 }
 
 // GetOtherConfig Get the other_config field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetOtherConfig(sessionID SessionRef, self PIFMetricsRef) (_retval map[string]string, _err error) {
+func (_class PIFMetricsClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval map[string]string, _err error) {
 	_method := "PIF_metrics.get_other_config"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -179,7 +181,7 @@ func (_class PIFMetricsClass) GetOtherConfig(sessionID SessionRef, self PIFMetri
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -188,7 +190,7 @@ func (_class PIFMetricsClass) GetOtherConfig(sessionID SessionRef, self PIFMetri
 }
 
 // GetLastUpdated Get the last_updated field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetLastUpdated(sessionID SessionRef, self PIFMetricsRef) (_retval time.Time, _err error) {
+func (_class PIFMetricsClass) GetLastUpdated(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval time.Time, _err error) {
 	_method := "PIF_metrics.get_last_updated"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -198,7 +200,7 @@ func (_class PIFMetricsClass) GetLastUpdated(sessionID SessionRef, self PIFMetri
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -207,7 +209,7 @@ func (_class PIFMetricsClass) GetLastUpdated(sessionID SessionRef, self PIFMetri
 }
 
 // GetPciBusPath Get the pci_bus_path field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetPciBusPath(sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
+func (_class PIFMetricsClass) GetPciBusPath(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
 	_method := "PIF_metrics.get_pci_bus_path"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -217,7 +219,7 @@ func (_class PIFMetricsClass) GetPciBusPath(sessionID SessionRef, self PIFMetric
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -226,7 +228,7 @@ func (_class PIFMetricsClass) GetPciBusPath(sessionID SessionRef, self PIFMetric
 }
 
 // GetDuplex Get the duplex field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetDuplex(sessionID SessionRef, self PIFMetricsRef) (_retval bool, _err error) {
+func (_class PIFMetricsClass) GetDuplex(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval bool, _err error) {
 	_method := "PIF_metrics.get_duplex"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -236,7 +238,7 @@ func (_class PIFMetricsClass) GetDuplex(sessionID SessionRef, self PIFMetricsRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -245,7 +247,7 @@ func (_class PIFMetricsClass) GetDuplex(sessionID SessionRef, self PIFMetricsRef
 }
 
 // GetSpeed Get the speed field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetSpeed(sessionID SessionRef, self PIFMetricsRef) (_retval int, _err error) {
+func (_class PIFMetricsClass) GetSpeed(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval int, _err error) {
 	_method := "PIF_metrics.get_speed"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -255,7 +257,7 @@ func (_class PIFMetricsClass) GetSpeed(sessionID SessionRef, self PIFMetricsRef)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -264,7 +266,7 @@ func (_class PIFMetricsClass) GetSpeed(sessionID SessionRef, self PIFMetricsRef)
 }
 
 // GetDeviceName Get the device_name field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetDeviceName(sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
+func (_class PIFMetricsClass) GetDeviceName(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
 	_method := "PIF_metrics.get_device_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -274,7 +276,7 @@ func (_class PIFMetricsClass) GetDeviceName(sessionID SessionRef, self PIFMetric
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -283,7 +285,7 @@ func (_class PIFMetricsClass) GetDeviceName(sessionID SessionRef, self PIFMetric
 }
 
 // GetDeviceID Get the device_id field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetDeviceID(sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
+func (_class PIFMetricsClass) GetDeviceID(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
 	_method := "PIF_metrics.get_device_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -293,7 +295,7 @@ func (_class PIFMetricsClass) GetDeviceID(sessionID SessionRef, self PIFMetricsR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -302,7 +304,7 @@ func (_class PIFMetricsClass) GetDeviceID(sessionID SessionRef, self PIFMetricsR
 }
 
 // GetVendorName Get the vendor_name field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetVendorName(sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
+func (_class PIFMetricsClass) GetVendorName(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
 	_method := "PIF_metrics.get_vendor_name"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -312,7 +314,7 @@ func (_class PIFMetricsClass) GetVendorName(sessionID SessionRef, self PIFMetric
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -321,7 +323,7 @@ func (_class PIFMetricsClass) GetVendorName(sessionID SessionRef, self PIFMetric
 }
 
 // GetVendorID Get the vendor_id field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetVendorID(sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
+func (_class PIFMetricsClass) GetVendorID(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
 	_method := "PIF_metrics.get_vendor_id"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -331,7 +333,7 @@ func (_class PIFMetricsClass) GetVendorID(sessionID SessionRef, self PIFMetricsR
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -340,7 +342,7 @@ func (_class PIFMetricsClass) GetVendorID(sessionID SessionRef, self PIFMetricsR
 }
 
 // GetCarrier Get the carrier field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetCarrier(sessionID SessionRef, self PIFMetricsRef) (_retval bool, _err error) {
+func (_class PIFMetricsClass) GetCarrier(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval bool, _err error) {
 	_method := "PIF_metrics.get_carrier"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -350,7 +352,7 @@ func (_class PIFMetricsClass) GetCarrier(sessionID SessionRef, self PIFMetricsRe
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -359,7 +361,7 @@ func (_class PIFMetricsClass) GetCarrier(sessionID SessionRef, self PIFMetricsRe
 }
 
 // GetIoWriteKbs Get the io/write_kbs field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetIoWriteKbs(sessionID SessionRef, self PIFMetricsRef) (_retval float64, _err error) {
+func (_class PIFMetricsClass) GetIoWriteKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval float64, _err error) {
 	_method := "PIF_metrics.get_io_write_kbs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -369,7 +371,7 @@ func (_class PIFMetricsClass) GetIoWriteKbs(sessionID SessionRef, self PIFMetric
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -378,7 +380,7 @@ func (_class PIFMetricsClass) GetIoWriteKbs(sessionID SessionRef, self PIFMetric
 }
 
 // GetIoReadKbs Get the io/read_kbs field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetIoReadKbs(sessionID SessionRef, self PIFMetricsRef) (_retval float64, _err error) {
+func (_class PIFMetricsClass) GetIoReadKbs(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval float64, _err error) {
 	_method := "PIF_metrics.get_io_read_kbs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -388,7 +390,7 @@ func (_class PIFMetricsClass) GetIoReadKbs(sessionID SessionRef, self PIFMetrics
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -397,7 +399,7 @@ func (_class PIFMetricsClass) GetIoReadKbs(sessionID SessionRef, self PIFMetrics
 }
 
 // GetUUID Get the uuid field of the given PIF_metrics.
-func (_class PIFMetricsClass) GetUUID(sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
+func (_class PIFMetricsClass) GetUUID(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval string, _err error) {
 	_method := "PIF_metrics.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -407,7 +409,7 @@ func (_class PIFMetricsClass) GetUUID(sessionID SessionRef, self PIFMetricsRef) 
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -416,7 +418,7 @@ func (_class PIFMetricsClass) GetUUID(sessionID SessionRef, self PIFMetricsRef) 
 }
 
 // GetByUUID Get a reference to the PIF_metrics instance with the specified UUID.
-func (_class PIFMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_retval PIFMetricsRef, _err error) {
+func (_class PIFMetricsClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval PIFMetricsRef, _err error) {
 	_method := "PIF_metrics.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -426,7 +428,7 @@ func (_class PIFMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -435,7 +437,7 @@ func (_class PIFMetricsClass) GetByUUID(sessionID SessionRef, uuid string) (_ret
 }
 
 // GetRecord Get a record containing the current state of the given PIF_metrics.
-func (_class PIFMetricsClass) GetRecord(sessionID SessionRef, self PIFMetricsRef) (_retval PIFMetricsRecord, _err error) {
+func (_class PIFMetricsClass) GetRecord(ctx context.Context, sessionID SessionRef, self PIFMetricsRef) (_retval PIFMetricsRecord, _err error) {
 	_method := "PIF_metrics.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -445,7 +447,7 @@ func (_class PIFMetricsClass) GetRecord(sessionID SessionRef, self PIFMetricsRef
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}

@@ -7,6 +7,7 @@
 package xenapi
 
 import (
+	"context"
 	"fmt"
 	"github.com/schankst/go-xen-api-client/xmlrpc"
 	"reflect"
@@ -14,6 +15,7 @@ import (
 	"time"
 )
 
+var _ = context.Background
 var _ = fmt.Errorf
 var _ = xmlrpc.NewClient
 var _ = reflect.TypeOf
@@ -50,13 +52,13 @@ type VMGroupClass struct {
 }
 
 // GetAllRecords Return a map of VM_group references to VM_group records for all VM_groups known to the system.
-func (_class VMGroupClass) GetAllRecords(sessionID SessionRef) (_retval map[VMGroupRef]VMGroupRecord, _err error) {
+func (_class VMGroupClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (_retval map[VMGroupRef]VMGroupRecord, _err error) {
 	_method := "VM_group.get_all_records"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -65,13 +67,13 @@ func (_class VMGroupClass) GetAllRecords(sessionID SessionRef) (_retval map[VMGr
 }
 
 // GetAll Return a list of all the VM_groups known to the system.
-func (_class VMGroupClass) GetAll(sessionID SessionRef) (_retval []VMGroupRef, _err error) {
+func (_class VMGroupClass) GetAll(ctx context.Context, sessionID SessionRef) (_retval []VMGroupRef, _err error) {
 	_method := "VM_group.get_all"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg)
 	if _err != nil {
 		return
 	}
@@ -80,7 +82,7 @@ func (_class VMGroupClass) GetAll(sessionID SessionRef) (_retval []VMGroupRef, _
 }
 
 // SetNameDescription Set the name/description field of the given VM_group.
-func (_class VMGroupClass) SetNameDescription(sessionID SessionRef, self VMGroupRef, value string) (_err error) {
+func (_class VMGroupClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self VMGroupRef, value string) (_err error) {
 	_method := "VM_group.set_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -94,12 +96,12 @@ func (_class VMGroupClass) SetNameDescription(sessionID SessionRef, self VMGroup
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // SetNameLabel Set the name/label field of the given VM_group.
-func (_class VMGroupClass) SetNameLabel(sessionID SessionRef, self VMGroupRef, value string) (_err error) {
+func (_class VMGroupClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self VMGroupRef, value string) (_err error) {
 	_method := "VM_group.set_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -113,12 +115,12 @@ func (_class VMGroupClass) SetNameLabel(sessionID SessionRef, self VMGroupRef, v
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg, _valueArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg, _valueArg)
 	return
 }
 
 // GetVMs Get the VMs field of the given VM_group.
-func (_class VMGroupClass) GetVMs(sessionID SessionRef, self VMGroupRef) (_retval []VMRef, _err error) {
+func (_class VMGroupClass) GetVMs(ctx context.Context, sessionID SessionRef, self VMGroupRef) (_retval []VMRef, _err error) {
 	_method := "VM_group.get_VMs"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -128,7 +130,7 @@ func (_class VMGroupClass) GetVMs(sessionID SessionRef, self VMGroupRef) (_retva
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -137,7 +139,7 @@ func (_class VMGroupClass) GetVMs(sessionID SessionRef, self VMGroupRef) (_retva
 }
 
 // GetPlacement Get the placement field of the given VM_group.
-func (_class VMGroupClass) GetPlacement(sessionID SessionRef, self VMGroupRef) (_retval PlacementPolicy, _err error) {
+func (_class VMGroupClass) GetPlacement(ctx context.Context, sessionID SessionRef, self VMGroupRef) (_retval PlacementPolicy, _err error) {
 	_method := "VM_group.get_placement"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -147,7 +149,7 @@ func (_class VMGroupClass) GetPlacement(sessionID SessionRef, self VMGroupRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -156,7 +158,7 @@ func (_class VMGroupClass) GetPlacement(sessionID SessionRef, self VMGroupRef) (
 }
 
 // GetNameDescription Get the name/description field of the given VM_group.
-func (_class VMGroupClass) GetNameDescription(sessionID SessionRef, self VMGroupRef) (_retval string, _err error) {
+func (_class VMGroupClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self VMGroupRef) (_retval string, _err error) {
 	_method := "VM_group.get_name_description"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -166,7 +168,7 @@ func (_class VMGroupClass) GetNameDescription(sessionID SessionRef, self VMGroup
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -175,7 +177,7 @@ func (_class VMGroupClass) GetNameDescription(sessionID SessionRef, self VMGroup
 }
 
 // GetNameLabel Get the name/label field of the given VM_group.
-func (_class VMGroupClass) GetNameLabel(sessionID SessionRef, self VMGroupRef) (_retval string, _err error) {
+func (_class VMGroupClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self VMGroupRef) (_retval string, _err error) {
 	_method := "VM_group.get_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -185,7 +187,7 @@ func (_class VMGroupClass) GetNameLabel(sessionID SessionRef, self VMGroupRef) (
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -194,7 +196,7 @@ func (_class VMGroupClass) GetNameLabel(sessionID SessionRef, self VMGroupRef) (
 }
 
 // GetUUID Get the uuid field of the given VM_group.
-func (_class VMGroupClass) GetUUID(sessionID SessionRef, self VMGroupRef) (_retval string, _err error) {
+func (_class VMGroupClass) GetUUID(ctx context.Context, sessionID SessionRef, self VMGroupRef) (_retval string, _err error) {
 	_method := "VM_group.get_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -204,7 +206,7 @@ func (_class VMGroupClass) GetUUID(sessionID SessionRef, self VMGroupRef) (_retv
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
@@ -213,7 +215,7 @@ func (_class VMGroupClass) GetUUID(sessionID SessionRef, self VMGroupRef) (_retv
 }
 
 // GetByNameLabel Get all the VM_group instances with the given label.
-func (_class VMGroupClass) GetByNameLabel(sessionID SessionRef, label string) (_retval []VMGroupRef, _err error) {
+func (_class VMGroupClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) (_retval []VMGroupRef, _err error) {
 	_method := "VM_group.get_by_name_label"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -223,7 +225,7 @@ func (_class VMGroupClass) GetByNameLabel(sessionID SessionRef, label string) (_
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _labelArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _labelArg)
 	if _err != nil {
 		return
 	}
@@ -232,7 +234,7 @@ func (_class VMGroupClass) GetByNameLabel(sessionID SessionRef, label string) (_
 }
 
 // Destroy Destroy the specified VM_group instance.
-func (_class VMGroupClass) Destroy(sessionID SessionRef, self VMGroupRef) (_err error) {
+func (_class VMGroupClass) Destroy(ctx context.Context, sessionID SessionRef, self VMGroupRef) (_err error) {
 	_method := "VM_group.destroy"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -242,12 +244,12 @@ func (_class VMGroupClass) Destroy(sessionID SessionRef, self VMGroupRef) (_err 
 	if _err != nil {
 		return
 	}
-	_, _err = _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_, _err = _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	return
 }
 
 // Create Create a new VM_group instance, and return its handle. The constructor args are: name_label, name_description, placement (* = non-optional).
-func (_class VMGroupClass) Create(sessionID SessionRef, args VMGroupRecord) (_retval VMGroupRef, _err error) {
+func (_class VMGroupClass) Create(ctx context.Context, sessionID SessionRef, args VMGroupRecord) (_retval VMGroupRef, _err error) {
 	_method := "VM_group.create"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -257,7 +259,7 @@ func (_class VMGroupClass) Create(sessionID SessionRef, args VMGroupRecord) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _argsArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _argsArg)
 	if _err != nil {
 		return
 	}
@@ -266,7 +268,7 @@ func (_class VMGroupClass) Create(sessionID SessionRef, args VMGroupRecord) (_re
 }
 
 // GetByUUID Get a reference to the VM_group instance with the specified UUID.
-func (_class VMGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retval VMGroupRef, _err error) {
+func (_class VMGroupClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (_retval VMGroupRef, _err error) {
 	_method := "VM_group.get_by_uuid"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -276,7 +278,7 @@ func (_class VMGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _uuidArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _uuidArg)
 	if _err != nil {
 		return
 	}
@@ -285,7 +287,7 @@ func (_class VMGroupClass) GetByUUID(sessionID SessionRef, uuid string) (_retval
 }
 
 // GetRecord Get a record containing the current state of the given VM_group.
-func (_class VMGroupClass) GetRecord(sessionID SessionRef, self VMGroupRef) (_retval VMGroupRecord, _err error) {
+func (_class VMGroupClass) GetRecord(ctx context.Context, sessionID SessionRef, self VMGroupRef) (_retval VMGroupRecord, _err error) {
 	_method := "VM_group.get_record"
 	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
 	if _err != nil {
@@ -295,7 +297,7 @@ func (_class VMGroupClass) GetRecord(sessionID SessionRef, self VMGroupRef) (_re
 	if _err != nil {
 		return
 	}
-	_result, _err := _class.client.APICall(_method, _sessionIDArg, _selfArg)
+	_result, _err := _class.client.APICall(ctx, _method, _sessionIDArg, _selfArg)
 	if _err != nil {
 		return
 	}
