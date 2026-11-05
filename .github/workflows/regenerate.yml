@@ -1,148 +1,153 @@
 name: Regenerate bindings
 
+# Weekly: regenerate from the upstream schema and error definitions, open
+# a PR, run test.yml on it, and merge, tag and release only if it passes.
+# The checks are called directly because PRs opened with GITHUB_TOKEN
+# don't trigger other workflows.
+
 on:
   schedule:
-    - cron: '0 6 * * 1' # weekly, Monday 06:00 UTC
-  workflow_dispatch: {}
+    - cron: '0 6 * * 1' # Monday 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Regenerate even if xenapi.json is unchanged
+        type: boolean
+        default: false
 
 permissions:
   contents: write
+  pull-requests: write
   issues: write
+
+concurrency:
+  group: regenerate
+  cancel-in-progress: false
 
 jobs:
   regenerate:
     runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.pr.outputs.branch }}
+      pr: ${{ steps.pr.outputs.pr }}
+      release: ${{ steps.pr.outputs.release }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v5
 
-      # The generators format their output with go/format, so generate with
-      # the same toolchain the gofmt check in test.yml uses.
-      - uses: actions/setup-go@v5
+      # Same toolchain as test.yml's gofmt check, since the generators
+      # format their output with go/format.
+      - uses: actions/setup-go@v6
         with:
           go-version: stable
 
-      # SchemaXAPIRelease is the single place the verified-against release is
-      # stated (see client.go); the docs deliberately point at it instead of
-      # repeating a number, because this workflow changes that number every
-      # time it runs. Runs on every invocation, including the ones where
-      # xenapi.json is unchanged and everything else is skipped - a literal
-      # creeping into the docs is a problem regardless of whether this week's
-      # schema moved, and putting it behind the "changed" gate below meant it
-      # was never exercised at all on a no-op run.
-      - name: Check docs don't hardcode the schema release
-        run: |
-          RELEASE=$(grep -oP '(?<=const SchemaXAPIRelease = ")[^"]+' client.go)
-          BASE=${RELEASE%-next}
-          if grep -nE "\b${BASE//./\\.}(-next)?\b" README.md MAINTAINING.md GOOD_TO_KNOW.md \
-               IMPORT_EXPORT.md PERFORMANCE.md UPDATES_AND_PATCHES.md LICENSING.md; then
-            echo "Docs hardcode the schema release ($RELEASE)."
-            echo "Point at xenapi.SchemaXAPIRelease instead - it changes on every run."
-            exit 1
-          fi
-
       - name: Fetch current xenapi.json
         id: fetch
+        env:
+          FORCE: ${{ inputs.force }}
         run: |
-          curl -sL -o xenapi.json.new https://raw.githubusercontent.com/xapi-project/xapi-project.github.io/master/_data/xenapi.json
-          if cmp -s xenapi.json xenapi.json.new; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+          curl -fsSL --retry 3 -o xenapi.json.new \
+            https://raw.githubusercontent.com/xapi-project/xapi-project.github.io/master/_data/xenapi.json
+          if cmp -s xenapi.json xenapi.json.new && [ "$FORCE" != "true" ]; then
             echo "xenapi.json unchanged, nothing to do"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
             mv xenapi.json.new xenapi.json
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Regenerate bindings
+      - name: Regenerate
         if: steps.fetch.outputs.changed == 'true'
         run: |
           rm -f *_gen.go
           go generate ./...
+          go run ./internal/cmd/generrors
+          go run ./internal/cmd/schemarelease
 
-      - name: Regenerate error.go from upstream error definitions
-        if: steps.fetch.outputs.changed == 'true'
-        run: go run ./internal/cmd/generrors
-
-      - name: Update SchemaXAPIRelease constant
-        if: steps.fetch.outputs.changed == 'true'
-        run: go run ./internal/cmd/schemarelease
-
-      - name: Build, vet, and test
-        if: steps.fetch.outputs.changed == 'true'
-        run: |
-          go build ./...
-          go vet ./...
-          go test -short ./...
-
-      - name: Commit, tag, push, and release
+      - name: Open pull request
+        id: pr
         if: steps.fetch.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          if git diff --quiet && git diff --cached --quiet; then
-            echo "regeneration produced no file changes; skipping commit"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "regeneration produced no changes"
             exit 0
           fi
+          release=$(grep -oP '(?<=const SchemaXAPIRelease = ")[^"]+' client.go)
+          branch="regenerate/${release}-${GITHUB_RUN_ID}"
 
-          RELEASE=$(grep -oP '(?<=const SchemaXAPIRelease = ")[^"]+' client.go)
-
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
           git add -A
-          git commit -m "Auto-regenerate bindings from updated xenapi.json (XAPI release ${RELEASE})"
+          git commit -m "Regenerate bindings from xenapi.json (XAPI release ${release})"
+          git push origin "$branch"
 
-          LATEST_TAG=$(git describe --tags --abbrev=0)
-          NEW_TAG=$(echo "$LATEST_TAG" | awk -F. '{ major = substr($1, 2); minor = $2 + 1; printf "v%s.%s.0", major, minor }')
+          pr=$(gh pr create --base main --head "$branch" \
+            --title "Regenerate bindings (XAPI release ${release})" \
+            --body "Automated regeneration from the upstream xenapi.json and error definitions. Merged by [this run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) once test.yml passes on the branch.")
+          {
+            echo "branch=$branch"
+            echo "pr=$pr"
+            echo "release=$release"
+          } >> "$GITHUB_OUTPUT"
 
-          git tag -a "$NEW_TAG" -m "$NEW_TAG
+  test:
+    needs: regenerate
+    if: needs.regenerate.outputs.pr != ''
+    uses: ./.github/workflows/test.yml
+    with:
+      ref: ${{ needs.regenerate.outputs.branch }}
 
-          Auto-regenerated from XAPI release ${RELEASE}."
+  release:
+    needs: [regenerate, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-          git push origin main
-          git push origin "$NEW_TAG"
+      - name: Merge, tag and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ needs.regenerate.outputs.pr }}
+          RELEASE: ${{ needs.regenerate.outputs.release }}
+        run: |
+          gh pr merge "$PR" --rebase --delete-branch
+          sha=$(gh pr view "$PR" --json mergeCommit -q .mergeCommit.oid)
+          git fetch origin main --tags
 
-          # One release per regeneration, so the release list matches the tag
-          # history. Gated on an actual schema change above, so no-op runs
-          # create nothing. Idempotent against re-runs.
-          cat > /tmp/release-notes.md <<EOF
-          Automated schema regeneration - no hand-written code change.
+          latest=$(git describe --tags --abbrev=0 "$sha")
+          tag=$(echo "$latest" | awk -F. '{ printf "v%s.%d.0", substr($1, 2), $2 + 1 }')
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$tag" -m "$tag" -m "Regenerated from XAPI release ${RELEASE}." "$sha"
+          git push origin "$tag"
+
+          gh release create "$tag" --verify-tag --latest \
+            --title "$tag - Regenerated bindings (XAPI ${RELEASE})" \
+            --notes "Automated schema regeneration ($PR), no hand-written code change.
 
           - xenapi.SchemaXAPIRelease: ${RELEASE}
-          - Generated bindings refreshed from xenapi.json.
 
-          **Full diff**: https://github.com/${GITHUB_REPOSITORY}/compare/${LATEST_TAG}...${NEW_TAG}
-          EOF
+          **Full diff**: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/compare/${latest}...${tag}"
 
-          if gh release view "$NEW_TAG" >/dev/null 2>&1; then
-            echo "release $NEW_TAG already exists; leaving it untouched"
-          else
-            gh release create "$NEW_TAG" \
-              --title "$NEW_TAG - Regenerated bindings (XAPI ${RELEASE})" \
-              --notes-file /tmp/release-notes.md \
-              --latest
-          fi
+  report-failure:
+    needs: [regenerate, test, release]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open an issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ needs.regenerate.outputs.pr }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "Automated regeneration failed (run ${GITHUB_RUN_ID})" \
+            --body "The bindings regeneration failed: $RUN
+          ${PR:+
+          The regenerated code is in $PR.}
 
-      - name: Open an issue if the run failed
-        if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `Automated regeneration failed (run ${context.runId})`,
-              body: [
-                'The scheduled bindings-regeneration workflow failed.',
-                '',
-                'Likely cause: xenapi.json introduced a new schema construct that ' +
-                'internal/cmd/genapi does not know how to map yet (the same kind of case ' +
-                'handled manually before for lifecycle/event-batch/option types) ' +
-                '- generation fails with a message naming the offending type ' +
-                'string, which needs a case added in goTypeForXenType, ' +
-                'funcPartialForXenType, and buildConverterFunc.',
-                '',
-                `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-              ].join('\n'),
-            })
+          A common cause is a new type construct in xenapi.json that internal/cmd/genapi can't map yet; generation then fails naming the type (see MAINTAINING.md)."

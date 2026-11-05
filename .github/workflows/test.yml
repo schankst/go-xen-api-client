@@ -6,12 +6,18 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch: {}
+  # regenerate.yml runs these checks on its branch before merging.
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
 
 permissions:
   contents: read
 
 concurrency:
-  group: tests-${{ github.ref }}
+  group: tests-${{ inputs.ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,9 +30,11 @@ jobs:
         go-version: ['1.25', 'stable']
     name: Go ${{ matrix.go-version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: ${{ matrix.go-version }}
 
@@ -49,9 +57,11 @@ jobs:
     runs-on: ubuntu-latest
     name: gofmt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: stable
 

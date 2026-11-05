@@ -62,38 +62,26 @@ from that, for consumers and for anyone editing this file by hand:
 
 ## Automated regeneration
 
-`.github/workflows/regenerate.yml` runs weekly (and on manual dispatch) and
-does the full regeneration below by itself:
+`.github/workflows/regenerate.yml` runs weekly, or manually; the `force`
+input regenerates even when `xenapi.json` is unchanged, e.g. after a
+generator change. It:
 
-1. Fetches the current `xenapi.json`; exits immediately if it's unchanged.
-2. Regenerates all `*_gen.go` files (`go generate ./...`) - enum parsing is
-   tolerant of unknown values by construction (see "Implementation
-   notes"), so this alone is enough; no separate patch step.
-3. Regenerates `error.go` from the upstream OCaml error definitions
-   (`go run ./internal/cmd/generrors`) — this source isn't part of `xenapi.json` at all
-   and would otherwise silently keep drifting (see "Implementation notes"
-   above).
-4. Updates the `SchemaXAPIRelease` constant (`go run ./internal/cmd/schemarelease`).
-5. Runs `go build`/`go vet`/`go test -short`. If any step fails, including
-   step 2 on an unrecognized schema construct, **the workflow fails
-   loudly and opens a GitHub issue** rather than pushing anything broken.
-6. On success: commits everything, bumps the minor version (e.g. `v0.1.0` ->
-   `v0.2.0`), tags, and pushes **and creates a matching GitHub release** — so
-   the release list stays in step with the tag history. The release is titled
-   after the new tag and XAPI release, its notes carry a compare link to the
-   previous tag, and its creation is idempotent (a re-run leaves an existing
-   release untouched instead of failing).
+1. Fetches the current `xenapi.json` and stops if it is unchanged.
+2. Regenerates the bindings (`go generate ./...`), `error.go`
+   (`go run ./internal/cmd/generrors`) and `SchemaXAPIRelease`
+   (`go run ./internal/cmd/schemarelease`).
+3. Commits the result to a `regenerate/<release>-<run>` branch and opens a PR.
+4. Runs `test.yml` on that branch (PRs opened by the workflow token don't
+   trigger it on their own).
+5. If the tests pass: merges the PR, tags the merge commit with the next minor
+   version (`v0.10.0` -> `v0.11.0`) and creates a GitHub release.
 
-The one thing this **can't** automate: if `xenapi.json` introduces a schema
-construct `internal/cmd/genapi` has never seen (the way `"an event batch"` or
-`"X option"` showed up in this fork's last manual regeneration), generation
-fails and the workflow stops — but teaching the generator that new construct
-still needs a human. That's an inherent limit, not a workflow bug: whether a
-brand-new type pattern is safe to map to `xmlrpc.Struct`, needs a real Go
-type, or something else entirely, is a judgment call the generator can't
-make for itself.
+If any step fails, the workflow opens an issue linking the run and the PR, if
+there is one. A schema construct the generator has never seen (as `"an event
+batch"` and `"X option"` once were) makes step 2 fail with the type's name;
+mapping it needs a human decision.
 
-All three commands also run locally from the repo root, independent of CI.
+All three commands also run locally from the repo root.
 
 ## Regenerating API after xenapi.json update (manual / what the tools above do)
 If XenAPI was updated, it is required to regenerate all of files with a new API description. In order to do that one needs to follow these steps:
