@@ -21,7 +21,7 @@
 // a fixed enum, and occasionally the schema introduces a shape this
 // generator has never seen (as happened with "an event batch", "<class>
 // record", and the "X option" pattern - see the case arms below). When
-// that happens, generation panics with "Unsupported XenAPI type: ..." or
+// that happens, generation fails with "Unsupported XenAPI type: ..." or
 // similar, naming the offending type string; teaching the generator that
 // new shape means adding a case to all three of goTypeForXenType,
 // funcPartialForXenType, and buildConverterFunc (and usually a matching
@@ -31,11 +31,13 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"go/format"
 	"io"
 	"maps"
 	"os"
+	"path/filepath"
 	"regexp"
 	"slices"
 	"strings"
@@ -837,14 +839,16 @@ type converterFunc struct {
 // tracking which enum names have already been emitted so a shared enum
 // (declared under more than one class) doesn't get a duplicate Go type.
 type apiGenerator struct {
+	outDir       string
 	classes      []*xapiClass
 	templates    *template.Template
 	converters   map[string]converterFunc
 	emittedEnums map[string]bool
 }
 
-func newAPIGenerator() apiGenerator {
+func newAPIGenerator(outDir string) apiGenerator {
 	return apiGenerator{
+		outDir:       outDir,
 		converters:   make(map[string]converterFunc),
 		emittedEnums: make(map[string]bool),
 	}
@@ -1123,7 +1127,7 @@ classLoop:
 
 // buildConverterFunc is the type-shape dispatcher: given any XenAPI type
 // string, it decides which build*ConverterFunc handles that shape and
-// delegates to it. This is the function that panics with "Unsupported
+// delegates to it. This is the function that fails with "Unsupported
 // XenAPI type"/"Unable to build type conversion function" when the
 // schema introduces a shape none of the case arms recognize - see the
 // file-level comment for what to do when that happens. Order matters
@@ -1224,7 +1228,7 @@ func writeGoFile(filename string, render func(w io.Writer) error) (err error) {
 func (generator *apiGenerator) generateClassAPI(class *xapiClass) (err error) {
 	apiFilename := fmt.Sprintf("%s_gen.go", strings.ToLower(class.Name))
 
-	return writeGoFile(apiFilename, func(out io.Writer) (err error) {
+	return writeGoFile(filepath.Join(generator.outDir, apiFilename), func(out io.Writer) (err error) {
 		err = generator.templates.ExecuteTemplate(out, "FileHeader", nil)
 		if err != nil {
 			return
@@ -1285,7 +1289,7 @@ func (generator *apiGenerator) generateClassAPI(class *xapiClass) (err error) {
 // diff between regenerations. Must run after every generateClassAPI call
 // - it only knows about converters that were actually requested.
 func (generator *apiGenerator) generateConverters() (err error) {
-	return writeGoFile("convert_gen.go", func(out io.Writer) (err error) {
+	return writeGoFile(filepath.Join(generator.outDir, "convert_gen.go"), func(out io.Writer) (err error) {
 		err = generator.templates.ExecuteTemplate(out, "FileHeader", nil)
 		if err != nil {
 			return
@@ -1306,7 +1310,7 @@ func (generator *apiGenerator) generateConverters() (err error) {
 // generateClient writes client_gen.go: the top-level Client struct and
 // its prepClient constructor helper, one field per class.
 func (generator *apiGenerator) generateClient() (err error) {
-	return writeGoFile("client_gen.go", func(out io.Writer) (err error) {
+	return writeGoFile(filepath.Join(generator.outDir, "client_gen.go"), func(out io.Writer) (err error) {
 		err = generator.templates.ExecuteTemplate(out, "FileHeader", nil)
 		if err != nil {
 			return
@@ -1318,13 +1322,13 @@ func (generator *apiGenerator) generateClient() (err error) {
 	})
 }
 
-// run is the whole generation pipeline, in order: load xenapi.json,
+// run is the whole generation pipeline, in order: load the schema,
 // prepare templates, generate every class's file (which along the way
 // populates generator.converters with whatever converters those classes
 // turned out to need), then generate convert_gen.go and client_gen.go
 // from what was accumulated.
-func (generator *apiGenerator) run() (err error) {
-	err = generator.loadXenAPI("xenapi.json")
+func (generator *apiGenerator) run(schemaPath string) (err error) {
+	err = generator.loadXenAPI(schemaPath)
 	if err != nil {
 		return
 	}
@@ -1350,14 +1354,17 @@ func (generator *apiGenerator) run() (err error) {
 	return
 }
 
-// main runs the generator against xenapi.json in the current directory,
-// writing *_gen.go/convert_gen.go/client_gen.go there too - run this via
-// `go generate` (see the //go:generate directive in client.go) or
-// `go run ./internal/cmd/genapi` from the repo root.
+// main generates the bindings from -schema into -out. The defaults match
+// `go generate` (see the //go:generate directive in client.go), which runs
+// it from the repo root.
 func main() {
-	generator := newAPIGenerator()
-	err := generator.run()
-	if err != nil {
-		panic(err)
+	schema := flag.String("schema", "xenapi.json", "path to the XenAPI schema")
+	out := flag.String("out", ".", "directory to write the generated files to")
+	flag.Parse()
+
+	generator := newAPIGenerator(*out)
+	if err := generator.run(*schema); err != nil {
+		fmt.Fprintln(os.Stderr, "genapi:", err)
+		os.Exit(1)
 	}
 }

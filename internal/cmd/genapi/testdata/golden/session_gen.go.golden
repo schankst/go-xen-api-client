@@ -1,0 +1,63 @@
+//
+// This file is generated. To change the content of this file, please do not
+// apply the change to this file because it will get overwritten. Instead,
+// change internal/cmd/genapi and run 'go generate'.
+//
+
+package xenapi
+
+import (
+	"fmt"
+	"github.com/schankst/go-xen-api-client/xmlrpc"
+	"reflect"
+	"strconv"
+	"time"
+)
+
+var _ = fmt.Errorf
+var _ = xmlrpc.NewClient
+var _ = reflect.TypeOf
+var _ = strconv.Atoi
+var _ = time.UTC
+
+type SessionRecord struct {
+	// uuid
+	UUID string
+}
+
+type SessionRef string
+
+// A session
+type SessionClass struct {
+	client *Client
+}
+
+// LoginWithPassword login with password
+func (_class SessionClass) LoginWithPassword(uname string, pwd string) (_retval SessionRef, _err error) {
+	_method := "session.login_with_password"
+	_unameArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "uname"), uname)
+	if _err != nil {
+		return
+	}
+	_pwdArg, _err := convertStringToXen(fmt.Sprintf("%s(%s)", _method, "pwd"), pwd)
+	if _err != nil {
+		return
+	}
+	_result, _err := _class.client.APICall(_method, _unameArg, _pwdArg)
+	if _err != nil {
+		return
+	}
+	_retval, _err = convertSessionRefToGo(_method+" -> ", _result.Value)
+	return
+}
+
+// Logout logout
+func (_class SessionClass) Logout(sessionID SessionRef) (_err error) {
+	_method := "session.logout"
+	_sessionIDArg, _err := convertSessionRefToXen(fmt.Sprintf("%s(%s)", _method, "session_id"), sessionID)
+	if _err != nil {
+		return
+	}
+	_, _err = _class.client.APICall(_method, _sessionIDArg)
+	return
+}

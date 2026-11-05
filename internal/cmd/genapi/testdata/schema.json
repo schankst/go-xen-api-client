@@ -1,0 +1,850 @@
+[
+ {
+  "name": "session",
+  "description": "A session",
+  "fields": [
+   {
+    "name": "uuid",
+    "description": "uuid",
+    "type": "string",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   }
+  ],
+  "messages": [
+   {
+    "name": "login_with_password",
+    "description": "login with password",
+    "result": [
+     "session ref",
+     ""
+    ],
+    "params": [
+     {
+      "type": "string",
+      "name": "uname",
+      "doc": "uname",
+      "required": true
+     },
+     {
+      "type": "string",
+      "name": "pwd",
+      "doc": "pwd",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "logout",
+    "description": "logout",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   }
+  ],
+  "enums": [],
+  "lifecycle": {
+   "state": "Published_s",
+   "transitions": [
+    {
+     "transition": "published",
+     "release": "rio",
+     "description": ""
+    }
+   ]
+  },
+  "tag": ""
+ },
+ {
+  "name": "thing",
+  "description": "A thing that exercises every type shape the generator supports",
+  "fields": [
+   {
+    "name": "uuid",
+    "description": "uuid",
+    "type": "string",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "count",
+    "description": "count",
+    "type": "int",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "ratio",
+    "description": "ratio",
+    "type": "float",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "enabled",
+    "description": "enabled",
+    "type": "bool",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "created",
+    "description": "created",
+    "type": "datetime",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "state",
+    "description": "state",
+    "type": "enum thing_state",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "states",
+    "description": "states",
+    "type": "enum thing_state set",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "tags",
+    "description": "tags",
+    "type": "string set",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "other_config",
+    "description": "other config",
+    "type": "(string -> string) map",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "by_state",
+    "description": "by state",
+    "type": "(enum thing_state -> int) map",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "parent",
+    "description": "parent",
+    "type": "thing ref",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "children",
+    "description": "children",
+    "type": "thing ref set",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "labels",
+    "description": "labels",
+    "type": "(thing ref -> string) map",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "nickname",
+    "description": "nickname",
+    "type": "string option",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "mode",
+    "description": "mode",
+    "type": "enum shared_mode",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   }
+  ],
+  "messages": [
+   {
+    "name": "get_record",
+    "description": "get record",
+    "result": [
+     "thing record",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "thing ref",
+      "name": "self",
+      "doc": "self",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "get_all_records",
+    "description": "get all records",
+    "result": [
+     "(thing ref -> thing record) map",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "set_state",
+    "description": "set state",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "thing ref",
+      "name": "self",
+      "doc": "self",
+      "required": true
+     },
+     {
+      "type": "enum thing_state",
+      "name": "value",
+      "doc": "value",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "set_tags",
+    "description": "set tags",
+    "result": [
+     "void",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "thing ref",
+      "name": "self",
+      "doc": "self",
+      "required": true
+     },
+     {
+      "type": "string set",
+      "name": "value",
+      "doc": "value",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "find_stat",
+    "description": "find stat",
+    "result": [
+     "thing record option",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "thing ref",
+      "name": "self",
+      "doc": "self",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "watch",
+    "description": "watch",
+    "result": [
+     "an event batch",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "string",
+      "name": "token",
+      "doc": "token",
+      "required": true
+     },
+     {
+      "type": "float",
+      "name": "timeout",
+      "doc": "timeout",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "snapshot",
+    "description": "snapshot",
+    "result": [
+     "<class> record",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "thing ref",
+      "name": "self",
+      "doc": "self",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   },
+   {
+    "name": "created_after",
+    "description": "created after",
+    "result": [
+     "thing ref set",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "datetime",
+      "name": "since",
+      "doc": "since",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   }
+  ],
+  "enums": [
+   {
+    "name": "thing_state",
+    "values": [
+     {
+      "name": "on",
+      "doc": "Switched on"
+     },
+     {
+      "name": "off",
+      "doc": "Switched off"
+     }
+    ]
+   },
+   {
+    "name": "shared_mode",
+    "values": [
+     {
+      "name": "fast",
+      "doc": "Fast mode"
+     },
+     {
+      "name": "safe",
+      "doc": "Safe mode"
+     }
+    ]
+   }
+  ],
+  "lifecycle": {
+   "state": "Published_s",
+   "transitions": [
+    {
+     "transition": "published",
+     "release": "rio",
+     "description": ""
+    }
+   ]
+  },
+  "tag": ""
+ },
+ {
+  "name": "VM_guest_os",
+  "description": "Shares an enum with thing and has an initialism-heavy name",
+  "fields": [
+   {
+    "name": "uuid",
+    "description": "uuid",
+    "type": "string",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "mode",
+    "description": "mode",
+    "type": "enum shared_mode",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   },
+   {
+    "name": "os_id",
+    "description": "os id",
+    "type": "int",
+    "qualifier": "RO/runtime",
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    }
+   }
+  ],
+  "messages": [
+   {
+    "name": "get_mode",
+    "description": "get mode",
+    "result": [
+     "enum shared_mode",
+     ""
+    ],
+    "params": [
+     {
+      "type": "session ref",
+      "name": "session_id",
+      "doc": "session id",
+      "required": true
+     },
+     {
+      "type": "VM_guest_os ref",
+      "name": "self",
+      "doc": "self",
+      "required": true
+     }
+    ],
+    "errors": [],
+    "roles": [
+     "pool-admin"
+    ],
+    "tag": "",
+    "lifecycle": {
+     "state": "Published_s",
+     "transitions": [
+      {
+       "transition": "published",
+       "release": "rio",
+       "description": ""
+      }
+     ]
+    },
+    "implicit": false
+   }
+  ],
+  "enums": [
+   {
+    "name": "shared_mode",
+    "values": [
+     {
+      "name": "fast",
+      "doc": "Fast mode"
+     },
+     {
+      "name": "safe",
+      "doc": "Safe mode"
+     }
+    ]
+   }
+  ],
+  "lifecycle": {
+   "state": "Published_s",
+   "transitions": [
+    {
+     "transition": "published",
+     "release": "rio",
+     "description": ""
+    }
+   ]
+  },
+  "tag": ""
+ }
+]

@@ -73,8 +73,8 @@ does the full regeneration below by itself:
    and would otherwise silently keep drifting (see "Implementation notes"
    above).
 4. Updates the `SchemaXAPIRelease` constant (`go run ./internal/cmd/schemarelease`).
-5. Runs `go build`/`go vet`/`go test -short`; if any fail, or if step 2
-   panics on an unrecognized schema construct, **the workflow fails
+5. Runs `go build`/`go vet`/`go test -short`. If any step fails, including
+   step 2 on an unrecognized schema construct, **the workflow fails
    loudly and opens a GitHub issue** rather than pushing anything broken.
 6. On success: commits everything, bumps the minor version (e.g. `v0.1.0` ->
    `v0.2.0`), tags, and pushes **and creates a matching GitHub release** — so
@@ -86,7 +86,7 @@ does the full regeneration below by itself:
 The one thing this **can't** automate: if `xenapi.json` introduces a schema
 construct `internal/cmd/genapi` has never seen (the way `"an event batch"` or
 `"X option"` showed up in this fork's last manual regeneration), generation
-panics and step 5 catches it — but teaching the generator that new construct
+fails and the workflow stops — but teaching the generator that new construct
 still needs a human. That's an inherent limit, not a workflow bug: whether a
 brand-new type pattern is safe to map to `xmlrpc.Struct`, needs a real Go
 type, or something else entirely, is a judgment call the generator can't
@@ -103,10 +103,21 @@ If XenAPI was updated, it is required to regenerate all of files with a new API 
   enum tolerance is baked into `convertEnumTypeToGoFuncTemplate`, so
   `convert_gen.go` comes out correct with no separate patch step.
 - If the schema introduced a new construct the generator doesn't know how to
-  map yet, generation panics with a message like `Unsupported XenAPI type: ...`
+  map yet, generation fails with a message like `Unsupported XenAPI type: ...`
   naming the offending type string — add a case for it in `goTypeForXenType`,
   `funcPartialForXenType`, and `buildConverterFunc` (see
   `internal/cmd/genapi`'s package comment and the existing cases for examples).
+
+## Generator tests
+
+`go test ./internal/cmd/genapi` covers the generator:
+
+- `TestGolden` generates from `testdata/schema.json`, a small schema that uses
+  every supported type shape, and compares the result with `testdata/golden`.
+  After an intended template change, run it with `-update` and review the
+  golden diff.
+- `TestCommittedBindingsUpToDate` fails if the committed `*_gen.go` files
+  don't match what the generator produces for the committed `xenapi.json`.
 
 ## Formatting of generated code
 Both generators render into memory and run the result through `go/format`
