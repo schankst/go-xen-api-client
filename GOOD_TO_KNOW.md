@@ -38,7 +38,7 @@ version) are **completely independent numbers from different code paths**
 
 A host can only join a pool if its `API_version_major`/`minor` **matches
 the pool master's exactly** - not "close enough", not "newer is fine".
-A mismatch is rejected outright with `ERR_POOL_JOINING_HOST_MUST_HAVE_SAME_API_VERSION`
+A mismatch is rejected outright with `ErrPoolJoiningHostMustHaveSameAPIVersion`
 (one of the constants in `error.go`).
 
 - Source: `assert_api_version_matches` in

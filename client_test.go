@@ -105,32 +105,32 @@ func TestAPICallErrorResponse(t *testing.T) {
 		{
 			name:        "no params",
 			description: stringArray("PERMISSION_DENIED"),
-			want:        Error{Code: ERR_PERMISSION_DENIED},
+			want:        Error{Code: ErrPermissionDenied},
 			wantString:  "xenapi: PERMISSION_DENIED",
 		},
 		{
 			name:        "two params",
 			description: stringArray("HANDLE_INVALID", "VM", "OpaqueRef:dead-vm"),
-			want:        Error{Code: ERR_HANDLE_INVALID, Params: []string{"VM", "OpaqueRef:dead-vm"}},
+			want:        Error{Code: ErrHandleInvalid, Params: []string{"VM", "OpaqueRef:dead-vm"}},
 			wantString:  `xenapi: HANDLE_INVALID ["VM" "OpaqueRef:dead-vm"]`,
 		},
 		{
 			name:        "three params",
 			description: stringArray("VM_BAD_POWER_STATE", "OpaqueRef:vm", "halted", "running"),
-			want:        Error{Code: ERR_VM_BAD_POWER_STATE, Params: []string{"OpaqueRef:vm", "halted", "running"}},
+			want:        Error{Code: ErrVMBadPowerState, Params: []string{"OpaqueRef:vm", "halted", "running"}},
 			wantString:  `xenapi: VM_BAD_POWER_STATE ["OpaqueRef:vm" "halted" "running"]`,
 		},
 		{
 			name:        "backend output with spaces and newlines",
 			description: stringArray("SR_BACKEND_FAILURE_47", "", "The SR is not available", "stderr line 1\nline 2"),
-			want:        Error{Code: "SR_BACKEND_FAILURE_47", Params: []string{"", "The SR is not available", "stderr line 1\nline 2"}},
+			want:        Error{Code: ErrorCode("SR_BACKEND_FAILURE_47"), Params: []string{"", "The SR is not available", "stderr line 1\nline 2"}},
 			wantString:  `xenapi: SR_BACKEND_FAILURE_47 ["" "The SR is not available" "stderr line 1\nline 2"]`,
 		},
 		{
 			name: "nil and non-string params are kept",
 			description: `<array><data><value><string>HANDLE_INVALID</string></value>` +
 				`<value></value><value><int>3</int></value></data></array>`,
-			want:       Error{Code: ERR_HANDLE_INVALID, Params: []string{"", "3"}},
+			want:       Error{Code: ErrHandleInvalid, Params: []string{"", "3"}},
 			wantString: `xenapi: HANDLE_INVALID ["" "3"]`,
 		},
 	}
@@ -215,5 +215,21 @@ func TestGeneratedMethodHonorsContext(t *testing.T) {
 	_, err := client.Session.LoginWithPassword(ctx, "root", "secret", "1.0", "test")
 	if !errors.Is(err, context.Canceled) {
 		t.Fatalf("LoginWithPassword with a canceled context: error = %v, want context.Canceled", err)
+	}
+}
+
+func TestErrorIs(t *testing.T) {
+	client := newTestClient(t, failureResponse(stringArray("HANDLE_INVALID", "VM", "OpaqueRef:x")))
+	_, err := client.APICall(t.Context(), "VM.get_record", "OpaqueRef:x")
+	wrapped := fmt.Errorf("looking up VM: %w", err)
+
+	if !errors.Is(wrapped, ErrHandleInvalid) {
+		t.Errorf("errors.Is(%v, ErrHandleInvalid) = false, want true", wrapped)
+	}
+	if errors.Is(wrapped, ErrPermissionDenied) {
+		t.Errorf("errors.Is(%v, ErrPermissionDenied) = true, want false", wrapped)
+	}
+	if !errors.Is(wrapped, ErrorCode("HANDLE_INVALID")) {
+		t.Error("errors.Is with an ErrorCode built from the wire string = false, want true")
 	}
 }
