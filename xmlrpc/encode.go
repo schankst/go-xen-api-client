@@ -4,7 +4,9 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
+	"math"
 	"reflect"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -63,8 +65,10 @@ func writeValueBody(b *strings.Builder, value any) error {
 		}
 	case int, int8, int16, int32, int64:
 		fmt.Fprintf(b, "<int>%d</int>", v)
-	case float32, float64:
-		fmt.Fprintf(b, "<double>%f</double>", v)
+	case float32:
+		return writeDouble(b, float64(v), 32)
+	case float64:
+		return writeDouble(b, v, 64)
 	case time.Time:
 		b.WriteString(`<dateTime.iso8601>`)
 		b.WriteString(v.Format("20060102T15:04:05"))
@@ -82,6 +86,18 @@ func writeValueBody(b *strings.Builder, value any) error {
 		}
 		return writeArray(b, rv)
 	}
+	return nil
+}
+
+// writeDouble writes the shortest decimal that parses back to v. XML-RPC
+// doubles have no exponent and no NaN or infinity.
+func writeDouble(b *strings.Builder, v float64, bitSize int) error {
+	if math.IsNaN(v) || math.IsInf(v, 0) {
+		return fmt.Errorf("xmlrpc: %v is not a valid XML-RPC double", v)
+	}
+	b.WriteString(`<double>`)
+	b.WriteString(strconv.FormatFloat(v, 'f', -1, bitSize))
+	b.WriteString(`</double>`)
 	return nil
 }
 
