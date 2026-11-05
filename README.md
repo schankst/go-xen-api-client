@@ -76,6 +76,7 @@ XAPI's version numbers.
 - [docs/xapi-notes.md](docs/xapi-notes.md): XenAPI behaviour worth knowing, and fetching at scale
 - [docs/import-export.md](docs/import-export.md): disk import/export and backups
 - [docs/updates.md](docs/updates.md): finding pending updates and patches
+- [docs/lifecycle.md](docs/lifecycle.md): removed, deprecated and experimental APIs
 - [MAINTAINING.md](MAINTAINING.md): how the code is generated and released
 - [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), [LICENSING.md](LICENSING.md)
 

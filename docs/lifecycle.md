@@ -1,0 +1,617 @@
+# API lifecycle
+
+Methods, fields and classes that XAPI removed, deprecated or only published as
+prototyped (experimental), as of `xenapi.SchemaXAPIRelease` 26.21.1. Removed
+APIs are still generated and work on hosts older than the release that removed
+them. Release code names are mapped to products per the
+[XAPI release list](https://xapi-project.github.io/xen-api/releases.html);
+newer releases only have XAPI version numbers.
+
+## Removed (127)
+
+Newest first.
+
+| Go | XenAPI | Deprecated in | Removed in | Reason |
+| --- | --- | --- | --- | --- |
+| `Host.ApplyRecommendedGuidances` | `host.apply_recommended_guidances` |  | `23.25.0` |  |
+| `Repository.GetUpToDate` | `Repository.get_up_to_date` | `23.18.0` | `23.18.0` | The up_to_date field of repository was removed |
+| `RepositoryRecord.UpToDate` | `Repository.up_to_date` | `23.18.0` | `23.18.0` | The up_to_date field of repository was removed |
+| `Pool.EnableSSLLegacy` | `pool.enable_ssl_legacy` | `dundee` (XenServer 7.0) | `stockholm` (Citrix Hypervisor 8.2) | Legacy SSL no longer supported |
+| `VM.SnapshotWithQuiesce` | `VM.snapshot_with_quiesce` | `quebec` (Citrix Hypervisor 8.1) | `quebec` (Citrix Hypervisor 8.1) | VSS support has been removed |
+| `VDI.ResizeOnline` | `VDI.resize_online` | `inverness` (XenServer 7.3) | `inverness` (XenServer 7.3) | Online VDI resize is not supported by any of the storage backends. |
+| `Host.ResetCPUFeatures` | `host.reset_cpu_features` | `dundee` (XenServer 7.0) | `dundee` (XenServer 7.0) | Manual CPU feature setting was removed |
+| `Host.SetCPUFeatures` | `host.set_cpu_features` | `dundee` (XenServer 7.0) | `dundee` (XenServer 7.0) | Manual CPU feature setting was removed |
+| `Host.LicenseApply` | `host.license_apply` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | Free licenses no longer handled by xapi |
+| `VM.GetIsSnapshotFromVMPP` | `VM.get_is_snapshot_from_vmpp` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VM.SetProtectionPolicy` | `VM.set_protection_policy` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.AddToAlarmConfig` | `VMPP.add_to_alarm_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.AddToArchiveSchedule` | `VMPP.add_to_archive_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.AddToArchiveTargetConfig` | `VMPP.add_to_archive_target_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.AddToBackupSchedule` | `VMPP.add_to_backup_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.ArchiveNow` | `VMPP.archive_now` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.Create` | `VMPP.create` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.Destroy` | `VMPP.destroy` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetAlarmConfig` | `VMPP.get_alarm_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetAlerts` | `VMPP.get_alerts` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetAll` | `VMPP.get_all` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetAllRecords` | `VMPP.get_all_records` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetArchiveFrequency` | `VMPP.get_archive_frequency` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetArchiveLastRunTime` | `VMPP.get_archive_last_run_time` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetArchiveSchedule` | `VMPP.get_archive_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetArchiveTargetConfig` | `VMPP.get_archive_target_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetArchiveTargetType` | `VMPP.get_archive_target_type` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetBackupFrequency` | `VMPP.get_backup_frequency` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetBackupLastRunTime` | `VMPP.get_backup_last_run_time` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetBackupRetentionValue` | `VMPP.get_backup_retention_value` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetBackupSchedule` | `VMPP.get_backup_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetBackupType` | `VMPP.get_backup_type` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetByNameLabel` | `VMPP.get_by_name_label` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetByUUID` | `VMPP.get_by_uuid` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetIsAlarmEnabled` | `VMPP.get_is_alarm_enabled` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetIsArchiveRunning` | `VMPP.get_is_archive_running` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetIsBackupRunning` | `VMPP.get_is_backup_running` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetIsPolicyEnabled` | `VMPP.get_is_policy_enabled` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetNameDescription` | `VMPP.get_name_description` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetNameLabel` | `VMPP.get_name_label` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetRecentAlerts` | `VMPP.get_recent_alerts` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetRecord` | `VMPP.get_record` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetUUID` | `VMPP.get_uuid` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.GetVMs` | `VMPP.get_VMs` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.ProtectNow` | `VMPP.protect_now` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.RemoveFromAlarmConfig` | `VMPP.remove_from_alarm_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.RemoveFromArchiveSchedule` | `VMPP.remove_from_archive_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.RemoveFromArchiveTargetConfig` | `VMPP.remove_from_archive_target_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.RemoveFromBackupSchedule` | `VMPP.remove_from_backup_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetAlarmConfig` | `VMPP.set_alarm_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetArchiveFrequency` | `VMPP.set_archive_frequency` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetArchiveLastRunTime` | `VMPP.set_archive_last_run_time` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetArchiveSchedule` | `VMPP.set_archive_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetArchiveTargetConfig` | `VMPP.set_archive_target_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetArchiveTargetType` | `VMPP.set_archive_target_type` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetBackupFrequency` | `VMPP.set_backup_frequency` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetBackupLastRunTime` | `VMPP.set_backup_last_run_time` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetBackupRetentionValue` | `VMPP.set_backup_retention_value` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetBackupSchedule` | `VMPP.set_backup_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetBackupType` | `VMPP.set_backup_type` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetIsAlarmEnabled` | `VMPP.set_is_alarm_enabled` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetIsPolicyEnabled` | `VMPP.set_is_policy_enabled` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetNameDescription` | `VMPP.set_name_description` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPP.SetNameLabel` | `VMPP.set_name_label` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.AlarmConfig` | `VMPP.alarm_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.ArchiveFrequency` | `VMPP.archive_frequency` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.ArchiveLastRunTime` | `VMPP.archive_last_run_time` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.ArchiveSchedule` | `VMPP.archive_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.ArchiveTargetConfig` | `VMPP.archive_target_config` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.ArchiveTargetType` | `VMPP.archive_target_type` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.BackupFrequency` | `VMPP.backup_frequency` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.BackupLastRunTime` | `VMPP.backup_last_run_time` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.BackupRetentionValue` | `VMPP.backup_retention_value` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.BackupSchedule` | `VMPP.backup_schedule` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.BackupType` | `VMPP.backup_type` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.IsAlarmEnabled` | `VMPP.is_alarm_enabled` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.IsArchiveRunning` | `VMPP.is_archive_running` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.IsBackupRunning` | `VMPP.is_backup_running` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.IsPolicyEnabled` | `VMPP.is_policy_enabled` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.NameDescription` | `VMPP.name_description` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.NameLabel` | `VMPP.name_label` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.RecentAlerts` | `VMPP.recent_alerts` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.UUID` | `VMPP.uuid` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPRecord.VMs` | `VMPP.VMs` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMRecord.IsSnapshotFromVMPP` | `VM.is_snapshot_from_vmpp` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `VMPPClass` | `VMPP` | `clearwater` (XenServer 6.2) | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `HostMetrics.GetMemoryFree` | `host_metrics.get_memory_free` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `PIFMetrics.GetIOReadKbs` | `PIF_metrics.get_io_read_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `PIFMetrics.GetIOWriteKbs` | `PIF_metrics.get_io_write_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VBD.GetMetrics` | `VBD.get_metrics` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VBDMetrics.AddToOtherConfig` | `VBD_metrics.add_to_other_config` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.GetAll` | `VBD_metrics.get_all` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.GetAllRecords` | `VBD_metrics.get_all_records` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.GetByUUID` | `VBD_metrics.get_by_uuid` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.GetIOReadKbs` | `VBD_metrics.get_io_read_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VBDMetrics.GetIOWriteKbs` | `VBD_metrics.get_io_write_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VBDMetrics.GetLastUpdated` | `VBD_metrics.get_last_updated` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.GetOtherConfig` | `VBD_metrics.get_other_config` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.GetRecord` | `VBD_metrics.get_record` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.RemoveFromOtherConfig` | `VBD_metrics.remove_from_other_config` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetrics.SetOtherConfig` | `VBD_metrics.set_other_config` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VIF.GetMetrics` | `VIF.get_metrics` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VIFMetrics.GetAll` | `VIF_metrics.get_all` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VIFMetrics.GetAllRecords` | `VIF_metrics.get_all_records` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VIFMetrics.GetByUUID` | `VIF_metrics.get_by_uuid` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VIFMetrics.GetIOReadKbs` | `VIF_metrics.get_io_read_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VIFMetrics.GetIOWriteKbs` | `VIF_metrics.get_io_write_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VIFMetrics.GetRecord` | `VIF_metrics.get_record` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VMMetrics.GetVCPUsUtilisation` | `VM_metrics.get_VCPUs_utilisation` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `HostMetricsRecord.MemoryFree` | `host_metrics.memory_free` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `PIFMetricsRecord.IOReadKbs` | `PIF_metrics.io_read_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `PIFMetricsRecord.IOWriteKbs` | `PIF_metrics.io_write_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VBDMetricsRecord.IOReadKbs` | `VBD_metrics.io_read_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VBDMetricsRecord.IOWriteKbs` | `VBD_metrics.io_write_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VBDMetricsRecord.LastUpdated` | `VBD_metrics.last_updated` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDMetricsRecord.OtherConfig` | `VBD_metrics.other_config` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VBDRecord.Metrics` | `VBD.metrics` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VIFMetricsRecord.IOReadKbs` | `VIF_metrics.io_read_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VIFMetricsRecord.IOWriteKbs` | `VIF_metrics.io_write_kbs` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled and replaced by RRDs |
+| `VIFRecord.Metrics` | `VIF.metrics` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VMMetricsRecord.VCPUsUtilisation` | `VM_metrics.VCPUs_utilisation` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VBDMetricsClass` | `VBD_metrics` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRD |
+| `VIFMetricsClass` | `VIF_metrics` | `tampa` (XenServer 6.1 (XCP 1.6)) | `tampa` (XenServer 6.1 (XCP 1.6)) | Disabled in favour of RRDs |
+| `VMGuestMetrics.GetMemory` | `VM_guest_metrics.get_memory` | `george` (XenServer 5.5) | `george` (XenServer 5.5) | Disabled in favour of the RRDs, to improve scalability |
+| `VMGuestMetricsRecord.Memory` | `VM_guest_metrics.memory` | `george` (XenServer 5.5) | `george` (XenServer 5.5) | Disabled in favour of the RRDs, to improve scalability |
+| `VMGuestMetrics.GetDisks` | `VM_guest_metrics.get_disks` | `orlando` (XenServer 5.0) | `orlando` (XenServer 5.0) | No data |
+| `VMGuestMetricsRecord.Disks` | `VM_guest_metrics.disks` | `orlando` (XenServer 5.0) | `orlando` (XenServer 5.0) | No data |
+
+## Deprecated (98)
+
+Newest first.
+
+| Go | XenAPI | Deprecated in | Reason |
+| --- | --- | --- | --- |
+| `Pool.InstallCACertificate` | `pool.install_ca_certificate` | `26.13.0` | Use Pool.install_trusted_certificate instead |
+| `Pool.UninstallCACertificate` | `pool.uninstall_ca_certificate` | `26.13.0` | Use Pool.uninstall_trusted_certificate instead |
+| `Certificate.GetFingerprint` | `Certificate.get_fingerprint` | `24.19.0` |  |
+| `CertificateRecord.Fingerprint` | `Certificate.fingerprint` | `24.19.0` |  |
+| `PGPU.DisableDom0Access` | `PGPU.disable_dom0_access` | `24.14.0` | Use PCI.disable_dom0_access instead. |
+| `PGPU.EnableDom0Access` | `PGPU.enable_dom0_access` | `24.14.0` | Use PCI.enable_dom0_access instead. |
+| `PGPU.GetDom0Access` | `PGPU.get_dom0_access` | `24.14.0` | Use PCI.get_dom0_access_status instead. |
+| `Pool.GetPolicyNoVendorDevice` | `pool.get_policy_no_vendor_device` | `24.14.0` | No longer considered by VM.create |
+| `Pool.SetPolicyNoVendorDevice` | `pool.set_policy_no_vendor_device` | `24.14.0` | No longer considered by VM.create |
+| `PGPURecord.Dom0Access` | `PGPU.dom0_access` | `24.14.0` | Use PCI.get_dom0_access_status instead. |
+| `PoolRecord.PolicyNoVendorDevice` | `pool.policy_no_vendor_device` | `24.14.0` | No longer considered by VM.create |
+| `Pool.SetUEFICertificates` | `pool.set_uefi_certificates` | `24.0.0` | use set_custom_uefi_certificates instead |
+| `Host.GetUEFICertificates` | `host.get_uefi_certificates` | `22.16.0` | Use Pool.uefi_certificates instead |
+| `Host.SetUEFICertificates` | `host.set_uefi_certificates` | `22.16.0` | Use Pool.set_uefi_certificates instead |
+| `HostRecord.UEFICertificates` | `host.uefi_certificates` | `22.16.0` | Use Pool.uefi_certificates instead |
+| `Pool.CertificateInstall` | `pool.certificate_install` | `1.290.0` | Use Pool.install_ca_certificate instead |
+| `Pool.CertificateList` | `pool.certificate_list` | `1.290.0` | Use openssl to inspect certificate |
+| `Pool.CertificateUninstall` | `pool.certificate_uninstall` | `1.290.0` | Use Pool.uninstall_ca_certificate instead |
+| `Pool.GetWLBVerifyCert` | `pool.get_wlb_verify_cert` | `1.290.0` | Deprecated: to enable TLS verification use Pool.enable_tls_verification instead |
+| `Pool.SetWLBVerifyCert` | `pool.set_wlb_verify_cert` | `1.290.0` | Deprecated: to enable TLS verification use Pool.enable_tls_verification instead |
+| `PoolRecord.WLBVerifyCert` | `pool.wlb_verify_cert` | `1.290.0` | Deprecated: to enable TLS verification use Pool.enable_tls_verification instead |
+| `Host.GetSSLLegacy` | `host.get_ssl_legacy` | `stockholm` (Citrix Hypervisor 8.2) | Legacy SSL no longer supported |
+| `Pool.DisableSSLLegacy` | `pool.disable_ssl_legacy` | `stockholm` (Citrix Hypervisor 8.2) | Legacy SSL no longer supported |
+| `HostRecord.SSLLegacy` | `host.ssl_legacy` | `stockholm` (Citrix Hypervisor 8.2) | Legacy SSL no longer supported |
+| `VM.GetHVMBootPolicy` | `VM.get_HVM_boot_policy` | `kolkata` (XenServer 7.5) | Replaced by VM.domain_type |
+| `VM.SetHVMBootPolicy` | `VM.set_HVM_boot_policy` | `kolkata` (XenServer 7.5) | Replaced by VM.set_domain_type |
+| `VMRecord.HVMBootPolicy` | `VM.HVM_boot_policy` | `kolkata` (XenServer 7.5) | Replaced by VM.domain_type |
+| `Crashdump.GetAll` | `crashdump.get_all` | `inverness` (XenServer 7.3) |  |
+| `Crashdump.GetAllRecords` | `crashdump.get_all_records` | `inverness` (XenServer 7.3) |  |
+| `Crashdump.GetByUUID` | `crashdump.get_by_uuid` | `inverness` (XenServer 7.3) |  |
+| `Crashdump.GetRecord` | `crashdump.get_record` | `inverness` (XenServer 7.3) |  |
+| `VM.GetBootRecord` | `VM.get_boot_record` | `inverness` (XenServer 7.3) | Use the current VM record/fields instead |
+| `CrashdumpClass` | `crashdump` | `inverness` (XenServer 7.3) |  |
+| `Pool.GetVswitchController` | `pool.get_vswitch_controller` | `falcon` (XenServer 7.2) | Deprecated: set the IP address of the vswitch controller in SDN_controller instead. |
+| `Pool.SetVswitchController` | `pool.set_vswitch_controller` | `falcon` (XenServer 7.2) | Deprecated: use 'SDN_controller.introduce' and 'SDN_controller.forget' instead. |
+| `PoolRecord.VswitchController` | `pool.vswitch_controller` | `falcon` (XenServer 7.2) | Deprecated: set the IP address of the vswitch controller in SDN_controller instead. |
+| `Host.GetPatches` | `host.get_patches` | `ely` (XenServer 7.1) |  |
+| `Host.RefreshPackInfo` | `host.refresh_pack_info` | `ely` (XenServer 7.1) | Use Pool_update.resync_host instead |
+| `HostPatch.GetAll` | `host_patch.get_all` | `ely` (XenServer 7.1) |  |
+| `HostPatch.GetAllRecords` | `host_patch.get_all_records` | `ely` (XenServer 7.1) |  |
+| `HostPatch.GetByNameLabel` | `host_patch.get_by_name_label` | `ely` (XenServer 7.1) |  |
+| `HostPatch.GetByUUID` | `host_patch.get_by_uuid` | `ely` (XenServer 7.1) |  |
+| `HostPatch.GetRecord` | `host_patch.get_record` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.Apply` | `pool_patch.apply` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.Clean` | `pool_patch.clean` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.CleanOnHost` | `pool_patch.clean_on_host` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.Destroy` | `pool_patch.destroy` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.GetAll` | `pool_patch.get_all` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.GetAllRecords` | `pool_patch.get_all_records` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.GetByNameLabel` | `pool_patch.get_by_name_label` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.GetByUUID` | `pool_patch.get_by_uuid` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.GetRecord` | `pool_patch.get_record` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.PoolApply` | `pool_patch.pool_apply` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.PoolClean` | `pool_patch.pool_clean` | `ely` (XenServer 7.1) |  |
+| `PoolPatch.Precheck` | `pool_patch.precheck` | `ely` (XenServer 7.1) |  |
+| `VDI.GetParent` | `VDI.get_parent` | `ely` (XenServer 7.1) | The field was never used. |
+| `HostRecord.Patches` | `host.patches` | `ely` (XenServer 7.1) |  |
+| `VDIRecord.Parent` | `VDI.parent` | `ely` (XenServer 7.1) | The field was never used. |
+| `HostPatchClass` | `host_patch` | `ely` (XenServer 7.1) |  |
+| `PoolPatchClass` | `pool_patch` | `ely` (XenServer 7.1) |  |
+| `VMGuestMetrics.GetPVDriversUpToDate` | `VM_guest_metrics.get_PV_drivers_up_to_date` | `dundee` (XenServer 7.0) | Deprecated in favour of PV_drivers_detected, and redefined in terms of it |
+| `VMGuestMetricsRecord.PVDriversUpToDate` | `VM_guest_metrics.PV_drivers_up_to_date` | `dundee` (XenServer 7.0) | Deprecated in favour of PV_drivers_detected, and redefined in terms of it |
+| `SM.GetCapabilities` | `SM.get_capabilities` | `clearwater` (XenServer 6.2) | Use SM.features instead |
+| `VM.GetProtectionPolicy` | `VM.get_protection_policy` | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `SMRecord.Capabilities` | `SM.capabilities` | `clearwater` (XenServer 6.2) | Use SM.features instead |
+| `VMRecord.ProtectionPolicy` | `VM.protection_policy` | `clearwater` (XenServer 6.2) | The VMPR feature was removed |
+| `Host.GetUncooperativeResidentVMs` | `host.get_uncooperative_resident_VMs` | `tampa` (XenServer 6.1 (XCP 1.6)) |  |
+| `VM.GetCooperative` | `VM.get_cooperative` | `tampa` (XenServer 6.1 (XCP 1.6)) |  |
+| `Event.Next` | `event.next` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `Event.Register` | `event.register` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `Event.Unregister` | `event.unregister` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `VM.GetHAAlwaysRun` | `VM.get_ha_always_run` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `VM.GetPCIBus` | `VM.get_PCI_bus` | `boston` (XenServer 6.0 (XCP 1.5)) | Field was never used |
+| `VM.SetHAAlwaysRun` | `VM.set_ha_always_run` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `VM.SetPCIBus` | `VM.set_PCI_bus` | `boston` (XenServer 6.0 (XCP 1.5)) | Field was never used |
+| `EventRecord.ObjUUID` | `event.obj_uuid` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `EventRecord.Timestamp` | `event.timestamp` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `VMRecord.HAAlwaysRun` | `VM.ha_always_run` | `boston` (XenServer 6.0 (XCP 1.5)) |  |
+| `VMRecord.PCIBus` | `VM.PCI_bus` | `boston` (XenServer 6.0 (XCP 1.5)) | Field was never used |
+| `HostCPU.GetAll` | `host_cpu.get_all` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) | Deprecated in favour of the Host.cpu_info field |
+| `HostCPU.GetAllRecords` | `host_cpu.get_all_records` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) | Deprecated in favour of the Host.cpu_info field |
+| `HostCPU.GetByUUID` | `host_cpu.get_by_uuid` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) | Deprecated in favour of the Host.cpu_info field |
+| `HostCPU.GetRecord` | `host_cpu.get_record` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) | Deprecated in favour of the Host.cpu_info field |
+| `VM.GetMemoryTarget` | `VM.get_memory_target` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) |  |
+| `VM.SetMemoryTargetLive` | `VM.set_memory_target_live` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) |  |
+| `VM.WaitMemoryTargetLive` | `VM.wait_memory_target_live` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) |  |
+| `VMRecord.MemoryTarget` | `VM.memory_target` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) |  |
+| `HostCPUClass` | `host_cpu` | `midnight-ride` (XenServer 5.6 (XCP 0.5)) | Deprecated in favour of the Host.cpu_info field |
+| `User.Create` | `user.create` | `george` (XenServer 5.5) | Deprecated in favor of subject |
+| `User.Destroy` | `user.destroy` | `george` (XenServer 5.5) | Deprecated in favor of subject |
+| `User.GetByUUID` | `user.get_by_uuid` | `george` (XenServer 5.5) | Deprecated in favor of subject |
+| `User.GetRecord` | `user.get_record` | `george` (XenServer 5.5) | Deprecated in favor of subject |
+| `UserClass` | `user` | `george` (XenServer 5.5) | Deprecated in favor of subject |
+| `HostPatch.Apply` | `host_patch.apply` | `miami` (XenServer 4.1) |  |
+| `HostPatch.Destroy` | `host_patch.destroy` | `miami` (XenServer 4.1) |  |
+| `PIF.CreateVLAN` | `PIF.create_VLAN` | `miami` (XenServer 4.1) | Replaced by VLAN.create |
+| `PIF.Destroy` | `PIF.destroy` | `miami` (XenServer 4.1) | Replaced by VLAN.destroy and Bond.destroy |
+| `SR.Make` | `SR.make` | `miami` (XenServer 4.1) | Use SR.create instead |
+
+## Experimental (363)
+
+Newest first.
+
+| Go | XenAPI | Prototyped in |
+| --- | --- | --- |
+| `PIF.GetLLDPMode` | `PIF.get_lldp_mode` | `26.21.1` |
+| `PIF.SetLLDPMode` | `PIF.set_lldp_mode` | `26.21.1` |
+| `PIFMetrics.GetLLDPNeighbor` | `PIF_metrics.get_lldp_neighbor` | `26.21.1` |
+| `Pool.GetLLDPEnabled` | `pool.get_lldp_enabled` | `26.21.1` |
+| `Pool.GetLLDPMulticastAddress` | `pool.get_lldp_multicast_address` | `26.21.1` |
+| `Pool.SetLLDPEnabled` | `pool.set_lldp_enabled` | `26.21.1` |
+| `Pool.SetLLDPMulticastAddress` | `pool.set_lldp_multicast_address` | `26.21.1` |
+| `PIFMetricsRecord.LLDPNeighbor` | `PIF_metrics.lldp_neighbor` | `26.21.1` |
+| `PIFRecord.LLDPMode` | `PIF.lldp_mode` | `26.21.1` |
+| `PoolRecord.LLDPEnabled` | `pool.lldp_enabled` | `26.21.1` |
+| `PoolRecord.LLDPMulticastAddress` | `pool.lldp_multicast_address` | `26.21.1` |
+| `Caller.AddGroup` | `Caller.add_group` | `26.17.0` |
+| `Caller.Create` | `Caller.create` | `26.17.0` |
+| `Caller.Destroy` | `Caller.destroy` | `26.17.0` |
+| `Caller.GetAll` | `Caller.get_all` | `26.17.0` |
+| `Caller.GetAllRecords` | `Caller.get_all_records` | `26.17.0` |
+| `Caller.GetAutoRegistered` | `Caller.get_auto_registered` | `26.17.0` |
+| `Caller.GetByNameLabel` | `Caller.get_by_name_label` | `26.17.0` |
+| `Caller.GetByUUID` | `Caller.get_by_uuid` | `26.17.0` |
+| `Caller.GetClientIP` | `Caller.get_client_ip` | `26.17.0` |
+| `Caller.GetGroups` | `Caller.get_groups` | `26.17.0` |
+| `Caller.GetLastAccess` | `Caller.get_last_access` | `26.17.0` |
+| `Caller.GetNameDescription` | `Caller.get_name_description` | `26.17.0` |
+| `Caller.GetNameLabel` | `Caller.get_name_label` | `26.17.0` |
+| `Caller.GetRateLimit` | `Caller.get_rate_limit` | `26.17.0` |
+| `Caller.GetRecord` | `Caller.get_record` | `26.17.0` |
+| `Caller.GetUUID` | `Caller.get_uuid` | `26.17.0` |
+| `Caller.GetUserAgent` | `Caller.get_user_agent` | `26.17.0` |
+| `Caller.QueryAllUsage` | `Caller.query_all_usage` | `26.17.0` |
+| `Caller.RemoveGroup` | `Caller.remove_group` | `26.17.0` |
+| `Caller.SetNameDescription` | `Caller.set_name_description` | `26.17.0` |
+| `Caller.SetNameLabel` | `Caller.set_name_label` | `26.17.0` |
+| `RateLimit.AddCaller` | `Rate_limit.add_caller` | `26.17.0` |
+| `RateLimit.Create` | `Rate_limit.create` | `26.17.0` |
+| `RateLimit.Destroy` | `Rate_limit.destroy` | `26.17.0` |
+| `RateLimit.GetAll` | `Rate_limit.get_all` | `26.17.0` |
+| `RateLimit.GetAllRecords` | `Rate_limit.get_all_records` | `26.17.0` |
+| `RateLimit.GetBurstSize` | `Rate_limit.get_burst_size` | `26.17.0` |
+| `RateLimit.GetByNameLabel` | `Rate_limit.get_by_name_label` | `26.17.0` |
+| `RateLimit.GetByUUID` | `Rate_limit.get_by_uuid` | `26.17.0` |
+| `RateLimit.GetCallers` | `Rate_limit.get_callers` | `26.17.0` |
+| `RateLimit.GetFillRate` | `Rate_limit.get_fill_rate` | `26.17.0` |
+| `RateLimit.GetNameDescription` | `Rate_limit.get_name_description` | `26.17.0` |
+| `RateLimit.GetNameLabel` | `Rate_limit.get_name_label` | `26.17.0` |
+| `RateLimit.GetRecord` | `Rate_limit.get_record` | `26.17.0` |
+| `RateLimit.GetUUID` | `Rate_limit.get_uuid` | `26.17.0` |
+| `RateLimit.RemoveCaller` | `Rate_limit.remove_caller` | `26.17.0` |
+| `RateLimit.SetBurstSize` | `Rate_limit.set_burst_size` | `26.17.0` |
+| `RateLimit.SetFillRate` | `Rate_limit.set_fill_rate` | `26.17.0` |
+| `RateLimit.SetNameDescription` | `Rate_limit.set_name_description` | `26.17.0` |
+| `RateLimit.SetNameLabel` | `Rate_limit.set_name_label` | `26.17.0` |
+| `VIF.AddTrunks` | `VIF.add_trunks` | `26.17.0` |
+| `VIF.GetTrunks` | `VIF.get_trunks` | `26.17.0` |
+| `VIF.RemoveTrunks` | `VIF.remove_trunks` | `26.17.0` |
+| `VIF.SetTrunks` | `VIF.set_trunks` | `26.17.0` |
+| `CallerRecord.AutoRegistered` | `Caller.auto_registered` | `26.17.0` |
+| `CallerRecord.ClientIP` | `Caller.client_ip` | `26.17.0` |
+| `CallerRecord.Groups` | `Caller.groups` | `26.17.0` |
+| `CallerRecord.LastAccess` | `Caller.last_access` | `26.17.0` |
+| `CallerRecord.NameDescription` | `Caller.name_description` | `26.17.0` |
+| `CallerRecord.NameLabel` | `Caller.name_label` | `26.17.0` |
+| `CallerRecord.RateLimit` | `Caller.rate_limit` | `26.17.0` |
+| `CallerRecord.UUID` | `Caller.uuid` | `26.17.0` |
+| `CallerRecord.UserAgent` | `Caller.user_agent` | `26.17.0` |
+| `RateLimitRecord.BurstSize` | `Rate_limit.burst_size` | `26.17.0` |
+| `RateLimitRecord.Callers` | `Rate_limit.callers` | `26.17.0` |
+| `RateLimitRecord.FillRate` | `Rate_limit.fill_rate` | `26.17.0` |
+| `RateLimitRecord.NameDescription` | `Rate_limit.name_description` | `26.17.0` |
+| `RateLimitRecord.NameLabel` | `Rate_limit.name_label` | `26.17.0` |
+| `RateLimitRecord.UUID` | `Rate_limit.uuid` | `26.17.0` |
+| `VIFRecord.Trunks` | `VIF.trunks` | `26.17.0` |
+| `CallerClass` | `Caller` | `26.17.0` |
+| `RateLimitClass` | `Rate_limit` | `26.17.0` |
+| `Pool.GetAutoUpdateVMSecurebootCertificates` | `pool.get_auto_update_vm_secureboot_certificates` | `26.16.1` |
+| `Pool.SetAutoUpdateVMSecurebootCertificates` | `pool.set_auto_update_vm_secureboot_certificates` | `26.16.1` |
+| `PoolRecord.AutoUpdateVMSecurebootCertificates` | `pool.auto_update_vm_secureboot_certificates` | `26.16.1` |
+| `Pool.SyncTrustedCertificatesFrom` | `pool.sync_trusted_certificates_from` | `26.16.0` |
+| `VDI.Revert` | `VDI.revert` | `26.16.0` |
+| `Caller.QueryCallCount` | `Caller.query_call_count` | `26.15.0` |
+| `Caller.QueryGroupCallCount` | `Caller.query_group_call_count` | `26.15.0` |
+| `Caller.QueryGroupTokenUsage` | `Caller.query_group_token_usage` | `26.15.0` |
+| `Caller.QueryTokenUsage` | `Caller.query_token_usage` | `26.15.0` |
+| `SM.GetSupportedImageFormats` | `SM.get_supported_image_formats` | `26.15.0` |
+| `SMRecord.SupportedImageFormats` | `SM.supported_image_formats` | `26.15.0` |
+| `VM.GetSecurebootCertificatesState` | `VM.get_secureboot_certificates_state` | `26.14.0` |
+| `VM.UpdateSecurebootCertificatesOnBoot` | `VM.update_secureboot_certificates_on_boot` | `26.14.0` |
+| `VMRecord.SecurebootCertificatesState` | `VM.secureboot_certificates_state` | `26.14.0` |
+| `Certificate.GetPurpose` | `Certificate.get_purpose` | `26.13.0` |
+| `Pool.InstallTrustedCertificate` | `pool.install_trusted_certificate` | `26.13.0` |
+| `Pool.UninstallTrustedCertificate` | `pool.uninstall_trusted_certificate` | `26.13.0` |
+| `CertificateRecord.Purpose` | `Certificate.purpose` | `26.13.0` |
+| `Message.DestroyAll` | `message.destroy_all` | `26.6.0` |
+| `VMMetrics.GetNUMANodeMemory` | `VM_metrics.get_numa_node_memory` | `26.2.0` |
+| `VMMetrics.GetNUMANodes` | `VM_metrics.get_numa_nodes` | `26.2.0` |
+| `VMMetrics.GetNUMAOptimised` | `VM_metrics.get_numa_optimised` | `26.2.0` |
+| `VMMetricsRecord.NUMANodeMemory` | `VM_metrics.numa_node_memory` | `26.2.0` |
+| `VMMetricsRecord.NUMANodes` | `VM_metrics.numa_nodes` | `26.2.0` |
+| `VMMetricsRecord.NUMAOptimised` | `VM_metrics.numa_optimised` | `26.2.0` |
+| `Pool.GetLimitConsoleSessions` | `pool.get_limit_console_sessions` | `26.1.0` |
+| `Pool.GetVMConsoleIdleTimeout` | `pool.get_vm_console_idle_timeout` | `26.1.0` |
+| `Pool.SetLimitConsoleSessions` | `pool.set_limit_console_sessions` | `26.1.0` |
+| `Pool.SetVMConsoleIdleTimeout` | `pool.set_vm_console_idle_timeout` | `26.1.0` |
+| `PoolRecord.LimitConsoleSessions` | `pool.limit_console_sessions` | `26.1.0` |
+| `PoolRecord.VMConsoleIdleTimeout` | `pool.vm_console_idle_timeout` | `26.1.0` |
+| `Host.GetMaxCstate` | `host.get_max_cstate` | `26.0.0` |
+| `Host.GetNTPCustomServers` | `host.get_ntp_custom_servers` | `26.0.0` |
+| `Host.GetNTPMode` | `host.get_ntp_mode` | `26.0.0` |
+| `Host.GetNTPServersStatus` | `host.get_ntp_servers_status` | `26.0.0` |
+| `Host.GetNTPSynchronized` | `host.get_ntp_synchronized` | `26.0.0` |
+| `Host.GetTimezone` | `host.get_timezone` | `26.0.0` |
+| `Host.ListTimezones` | `host.list_timezones` | `26.0.0` |
+| `Host.SetMaxCstate` | `host.set_max_cstate` | `26.0.0` |
+| `Host.SetNTPCustomServers` | `host.set_ntp_custom_servers` | `26.0.0` |
+| `Host.SetNTPMode` | `host.set_ntp_mode` | `26.0.0` |
+| `Host.SetServertime` | `host.set_servertime` | `26.0.0` |
+| `Host.SetTimezone` | `host.set_timezone` | `26.0.0` |
+| `HostRecord.MaxCstate` | `host.max_cstate` | `26.0.0` |
+| `HostRecord.NTPCustomServers` | `host.ntp_custom_servers` | `26.0.0` |
+| `HostRecord.NTPMode` | `host.ntp_mode` | `26.0.0` |
+| `HostRecord.Timezone` | `host.timezone` | `26.0.0` |
+| `Host.GetTrackedUserAgents` | `host.get_tracked_user_agents` | `25.34.0` |
+| `Host.GetSecureBoot` | `host.get_secure_boot` | `25.31.0` |
+| `HostRecord.SecureBoot` | `host.secure_boot` | `25.31.0` |
+| `Host.GetSSHAutoMode` | `host.get_ssh_auto_mode` | `25.27.0` |
+| `Host.SetSSHAutoMode` | `host.set_ssh_auto_mode` | `25.27.0` |
+| `Pool.SetSSHAutoMode` | `pool.set_ssh_auto_mode` | `25.27.0` |
+| `HostRecord.SSHAutoMode` | `host.ssh_auto_mode` | `25.27.0` |
+| `VM.Sysprep` | `VM.sysprep` | `25.24.0` |
+| `VM.CallHostPlugin` | `VM.call_host_plugin` | `25.22.0` |
+| `Host.GetConsoleIdleTimeout` | `host.get_console_idle_timeout` | `25.21.0` |
+| `Host.GetSSHEnabled` | `host.get_ssh_enabled` | `25.21.0` |
+| `Host.GetSSHEnabledTimeout` | `host.get_ssh_enabled_timeout` | `25.21.0` |
+| `Host.GetSSHExpiry` | `host.get_ssh_expiry` | `25.21.0` |
+| `Host.SetConsoleIdleTimeout` | `host.set_console_idle_timeout` | `25.21.0` |
+| `Host.SetSSHEnabledTimeout` | `host.set_ssh_enabled_timeout` | `25.21.0` |
+| `Pool.SetConsoleIdleTimeout` | `pool.set_console_idle_timeout` | `25.21.0` |
+| `Pool.SetSSHEnabledTimeout` | `pool.set_ssh_enabled_timeout` | `25.21.0` |
+| `HostRecord.ConsoleIdleTimeout` | `host.console_idle_timeout` | `25.21.0` |
+| `HostRecord.SSHEnabled` | `host.ssh_enabled` | `25.21.0` |
+| `HostRecord.SSHEnabledTimeout` | `host.ssh_enabled_timeout` | `25.21.0` |
+| `HostRecord.SSHExpiry` | `host.ssh_expiry` | `25.21.0` |
+| `Cluster.GetExpectedHosts` | `Cluster.get_expected_hosts` | `25.17.0` |
+| `ClusterRecord.ExpectedHosts` | `Cluster.expected_hosts` | `25.17.0` |
+| `Pool.GetHARebootVMOnInternalShutdown` | `pool.get_ha_reboot_vm_on_internal_shutdown` | `25.16.0` |
+| `Pool.SetHARebootVMOnInternalShutdown` | `pool.set_ha_reboot_vm_on_internal_shutdown` | `25.16.0` |
+| `PoolRecord.HARebootVMOnInternalShutdown` | `pool.ha_reboot_vm_on_internal_shutdown` | `25.16.0` |
+| `VMGuestMetrics.GetServices` | `VM_guest_metrics.get_services` | `25.15.0` |
+| `VMGuestMetricsRecord.Services` | `VM_guest_metrics.services` | `25.15.0` |
+| `Host.DisableSSH` | `host.disable_ssh` | `25.13.0` |
+| `Host.EnableSSH` | `host.enable_ssh` | `25.13.0` |
+| `Pool.DisableSSH` | `pool.disable_ssh` | `25.13.0` |
+| `Pool.EnableSSH` | `pool.enable_ssh` | `25.13.0` |
+| `Task.AddToOtherConfig` | `task.add_to_other_config` | `25.8.0` |
+| `Task.RemoveFromOtherConfig` | `task.remove_from_other_config` | `25.8.0` |
+| `Task.SetOtherConfig` | `task.set_other_config` | `25.8.0` |
+| `Repository.GetCertificate` | `Repository.get_certificate` | `25.7.0` |
+| `Repository.IntroduceRemotePool` | `Repository.introduce_remote_pool` | `25.7.0` |
+| `RepositoryRecord.Certificate` | `Repository.certificate` | `25.7.0` |
+| `Pool.AddToLicenseServer` | `pool.add_to_license_server` | `25.6.0` |
+| `Pool.GetLicenseServer` | `pool.get_license_server` | `25.6.0` |
+| `Pool.RemoveFromLicenseServer` | `pool.remove_from_license_server` | `25.6.0` |
+| `Pool.SetLicenseServer` | `pool.set_license_server` | `25.6.0` |
+| `PoolRecord.LicenseServer` | `pool.license_server` | `25.6.0` |
+| `DriverVariant.GetAll` | `Driver_variant.get_all` | `25.2.0` |
+| `DriverVariant.GetAllRecords` | `Driver_variant.get_all_records` | `25.2.0` |
+| `DriverVariant.GetByUUID` | `Driver_variant.get_by_uuid` | `25.2.0` |
+| `DriverVariant.GetDriver` | `Driver_variant.get_driver` | `25.2.0` |
+| `DriverVariant.GetHardwarePresent` | `Driver_variant.get_hardware_present` | `25.2.0` |
+| `DriverVariant.GetName` | `Driver_variant.get_name` | `25.2.0` |
+| `DriverVariant.GetPriority` | `Driver_variant.get_priority` | `25.2.0` |
+| `DriverVariant.GetRecord` | `Driver_variant.get_record` | `25.2.0` |
+| `DriverVariant.GetStatus` | `Driver_variant.get_status` | `25.2.0` |
+| `DriverVariant.GetUUID` | `Driver_variant.get_uuid` | `25.2.0` |
+| `DriverVariant.GetVersion` | `Driver_variant.get_version` | `25.2.0` |
+| `DriverVariant.Select` | `Driver_variant.select` | `25.2.0` |
+| `Host.RescanDrivers` | `host.rescan_drivers` | `25.2.0` |
+| `HostDriver.Deselect` | `Host_driver.deselect` | `25.2.0` |
+| `HostDriver.GetActiveVariant` | `Host_driver.get_active_variant` | `25.2.0` |
+| `HostDriver.GetAll` | `Host_driver.get_all` | `25.2.0` |
+| `HostDriver.GetAllRecords` | `Host_driver.get_all_records` | `25.2.0` |
+| `HostDriver.GetByUUID` | `Host_driver.get_by_uuid` | `25.2.0` |
+| `HostDriver.GetDescription` | `Host_driver.get_description` | `25.2.0` |
+| `HostDriver.GetFriendlyName` | `Host_driver.get_friendly_name` | `25.2.0` |
+| `HostDriver.GetHost` | `Host_driver.get_host` | `25.2.0` |
+| `HostDriver.GetInfo` | `Host_driver.get_info` | `25.2.0` |
+| `HostDriver.GetName` | `Host_driver.get_name` | `25.2.0` |
+| `HostDriver.GetRecord` | `Host_driver.get_record` | `25.2.0` |
+| `HostDriver.GetSelectedVariant` | `Host_driver.get_selected_variant` | `25.2.0` |
+| `HostDriver.GetType` | `Host_driver.get_type` | `25.2.0` |
+| `HostDriver.GetUUID` | `Host_driver.get_uuid` | `25.2.0` |
+| `HostDriver.GetVariants` | `Host_driver.get_variants` | `25.2.0` |
+| `HostDriver.Rescan` | `Host_driver.rescan` | `25.2.0` |
+| `HostDriver.Select` | `Host_driver.select` | `25.2.0` |
+| `DriverVariantRecord.Driver` | `Driver_variant.driver` | `25.2.0` |
+| `DriverVariantRecord.HardwarePresent` | `Driver_variant.hardware_present` | `25.2.0` |
+| `DriverVariantRecord.Name` | `Driver_variant.name` | `25.2.0` |
+| `DriverVariantRecord.Priority` | `Driver_variant.priority` | `25.2.0` |
+| `DriverVariantRecord.Status` | `Driver_variant.status` | `25.2.0` |
+| `DriverVariantRecord.UUID` | `Driver_variant.uuid` | `25.2.0` |
+| `DriverVariantRecord.Version` | `Driver_variant.version` | `25.2.0` |
+| `HostDriverRecord.ActiveVariant` | `Host_driver.active_variant` | `25.2.0` |
+| `HostDriverRecord.Description` | `Host_driver.description` | `25.2.0` |
+| `HostDriverRecord.FriendlyName` | `Host_driver.friendly_name` | `25.2.0` |
+| `HostDriverRecord.Host` | `Host_driver.host` | `25.2.0` |
+| `HostDriverRecord.Info` | `Host_driver.info` | `25.2.0` |
+| `HostDriverRecord.Name` | `Host_driver.name` | `25.2.0` |
+| `HostDriverRecord.SelectedVariant` | `Host_driver.selected_variant` | `25.2.0` |
+| `HostDriverRecord.Type` | `Host_driver.type` | `25.2.0` |
+| `HostDriverRecord.UUID` | `Host_driver.uuid` | `25.2.0` |
+| `HostDriverRecord.Variants` | `Host_driver.variants` | `25.2.0` |
+| `DriverVariantClass` | `Driver_variant` | `25.2.0` |
+| `HostDriverClass` | `Host_driver` | `25.2.0` |
+| `Pool.GetExtAuthCacheEnabled` | `pool.get_ext_auth_cache_enabled` | `24.31.0` |
+| `Pool.GetExtAuthCacheExpiry` | `pool.get_ext_auth_cache_expiry` | `24.31.0` |
+| `Pool.GetExtAuthCacheSize` | `pool.get_ext_auth_cache_size` | `24.31.0` |
+| `Pool.SetExtAuthCacheEnabled` | `pool.set_ext_auth_cache_enabled` | `24.31.0` |
+| `Pool.SetExtAuthCacheExpiry` | `pool.set_ext_auth_cache_expiry` | `24.31.0` |
+| `Pool.SetExtAuthCacheSize` | `pool.set_ext_auth_cache_size` | `24.31.0` |
+| `PoolRecord.ExtAuthCacheEnabled` | `pool.ext_auth_cache_enabled` | `24.31.0` |
+| `PoolRecord.ExtAuthCacheExpiry` | `pool.ext_auth_cache_expiry` | `24.31.0` |
+| `PoolRecord.ExtAuthCacheSize` | `pool.ext_auth_cache_size` | `24.31.0` |
+| `VMGuestMetrics.GetNetbiosName` | `VM_guest_metrics.get_netbios_name` | `24.28.0` |
+| `VMGuestMetricsRecord.NetbiosName` | `VM_guest_metrics.netbios_name` | `24.28.0` |
+| `Repository.GetOrigin` | `Repository.get_origin` | `24.23.0` |
+| `Repository.IntroduceBundle` | `Repository.introduce_bundle` | `24.23.0` |
+| `RepositoryRecord.Origin` | `Repository.origin` | `24.23.0` |
+| `Certificate.GetFingerprintSHA1` | `Certificate.get_fingerprint_sha1` | `24.20.0` |
+| `Certificate.GetFingerprintSha256` | `Certificate.get_fingerprint_sha256` | `24.20.0` |
+| `CertificateRecord.FingerprintSHA1` | `Certificate.fingerprint_sha1` | `24.20.0` |
+| `CertificateRecord.FingerprintSha256` | `Certificate.fingerprint_sha256` | `24.20.0` |
+| `Pool.GetRecommendations` | `pool.get_recommendations` | `24.19.1` |
+| `VM.GetGroups` | `VM.get_groups` | `24.19.1` |
+| `VM.SetGroups` | `VM.set_groups` | `24.19.1` |
+| `VMGroup.Create` | `VM_group.create` | `24.19.1` |
+| `VMGroup.Destroy` | `VM_group.destroy` | `24.19.1` |
+| `VMGroup.GetAll` | `VM_group.get_all` | `24.19.1` |
+| `VMGroup.GetAllRecords` | `VM_group.get_all_records` | `24.19.1` |
+| `VMGroup.GetByNameLabel` | `VM_group.get_by_name_label` | `24.19.1` |
+| `VMGroup.GetByUUID` | `VM_group.get_by_uuid` | `24.19.1` |
+| `VMGroup.GetPlacement` | `VM_group.get_placement` | `24.19.1` |
+| `VMGroup.GetRecord` | `VM_group.get_record` | `24.19.1` |
+| `VMGroup.GetVMs` | `VM_group.get_VMs` | `24.19.1` |
+| `PoolRecord.Recommendations` | `pool.recommendations` | `24.19.1` |
+| `VMGroupRecord.Placement` | `VM_group.placement` | `24.19.1` |
+| `VMGroupRecord.VMs` | `VM_group.VMs` | `24.19.1` |
+| `VMRecord.Groups` | `VM.groups` | `24.19.1` |
+| `VMGroupClass` | `VM_group` | `24.19.1` |
+| `Pool.GetGuestSecurebootReadiness` | `pool.get_guest_secureboot_readiness` | `24.17.0` |
+| `VM.GetSecurebootReadiness` | `VM.get_secureboot_readiness` | `24.17.0` |
+| `VM.SetUEFIMode` | `VM.set_uefi_mode` | `24.17.0` |
+| `Cluster.GetClusterStackVersion` | `Cluster.get_cluster_stack_version` | `24.15.0` |
+| `ClusterRecord.ClusterStackVersion` | `Cluster.cluster_stack_version` | `24.15.0` |
+| `PCI.DisableDom0Access` | `PCI.disable_dom0_access` | `24.14.0` |
+| `PCI.EnableDom0Access` | `PCI.enable_dom0_access` | `24.14.0` |
+| `PCI.GetDom0AccessStatus` | `PCI.get_dom0_access_status` | `24.14.0` |
+| `Host.EmergencyClearMandatoryGuidance` | `host.emergency_clear_mandatory_guidance` | `24.10.0` |
+| `Host.GetLastUpdateHash` | `host.get_last_update_hash` | `24.10.0` |
+| `Host.GetPendingGuidancesFull` | `host.get_pending_guidances_full` | `24.10.0` |
+| `Host.GetPendingGuidancesRecommended` | `host.get_pending_guidances_recommended` | `24.10.0` |
+| `VM.GetPendingGuidancesFull` | `VM.get_pending_guidances_full` | `24.10.0` |
+| `VM.GetPendingGuidancesRecommended` | `VM.get_pending_guidances_recommended` | `24.10.0` |
+| `HostRecord.LastUpdateHash` | `host.last_update_hash` | `24.10.0` |
+| `HostRecord.PendingGuidancesFull` | `host.pending_guidances_full` | `24.10.0` |
+| `HostRecord.PendingGuidancesRecommended` | `host.pending_guidances_recommended` | `24.10.0` |
+| `VMRecord.PendingGuidancesFull` | `VM.pending_guidances_full` | `24.10.0` |
+| `VMRecord.PendingGuidancesRecommended` | `VM.pending_guidances_recommended` | `24.10.0` |
+| `Cluster.GetIsQuorate` | `Cluster.get_is_quorate` | `24.3.0` |
+| `Cluster.GetLiveHosts` | `Cluster.get_live_hosts` | `24.3.0` |
+| `Cluster.GetQuorum` | `Cluster.get_quorum` | `24.3.0` |
+| `ClusterHost.GetLastUpdateLive` | `Cluster_host.get_last_update_live` | `24.3.0` |
+| `ClusterHost.GetLive` | `Cluster_host.get_live` | `24.3.0` |
+| `ClusterHostRecord.LastUpdateLive` | `Cluster_host.last_update_live` | `24.3.0` |
+| `ClusterHostRecord.Live` | `Cluster_host.live` | `24.3.0` |
+| `ClusterRecord.IsQuorate` | `Cluster.is_quorate` | `24.3.0` |
+| `ClusterRecord.LiveHosts` | `Cluster.live_hosts` | `24.3.0` |
+| `ClusterRecord.Quorum` | `Cluster.quorum` | `24.3.0` |
+| `Host.GetNUMAAffinityPolicy` | `host.get_numa_affinity_policy` | `24.0.0` |
+| `Host.SetNUMAAffinityPolicy` | `host.set_numa_affinity_policy` | `24.0.0` |
+| `Pool.GetCustomUEFICertificates` | `pool.get_custom_uefi_certificates` | `24.0.0` |
+| `Pool.SetCustomUEFICertificates` | `pool.set_custom_uefi_certificates` | `24.0.0` |
+| `HostRecord.NUMAAffinityPolicy` | `host.numa_affinity_policy` | `24.0.0` |
+| `PoolRecord.CustomUEFICertificates` | `pool.custom_uefi_certificates` | `24.0.0` |
+| `VM.RestartDeviceModels` | `VM.restart_device_models` | `23.30.0` |
+| `Pool.GetExtAuthMaxThreads` | `pool.get_ext_auth_max_threads` | `23.27.0` |
+| `Pool.GetLocalAuthMaxThreads` | `pool.get_local_auth_max_threads` | `23.27.0` |
+| `Pool.SetExtAuthMaxThreads` | `pool.set_ext_auth_max_threads` | `23.27.0` |
+| `Pool.SetLocalAuthMaxThreads` | `pool.set_local_auth_max_threads` | `23.27.0` |
+| `PoolRecord.ExtAuthMaxThreads` | `pool.ext_auth_max_threads` | `23.27.0` |
+| `PoolRecord.LocalAuthMaxThreads` | `pool.local_auth_max_threads` | `23.27.0` |
+| `Host.GetLatestSyncedUpdatesApplied` | `host.get_latest_synced_updates_applied` | `23.18.0` |
+| `Pool.ConfigureUpdateSync` | `pool.configure_update_sync` | `23.18.0` |
+| `Pool.GetLastUpdateSync` | `pool.get_last_update_sync` | `23.18.0` |
+| `Pool.GetUpdateSyncDay` | `pool.get_update_sync_day` | `23.18.0` |
+| `Pool.GetUpdateSyncEnabled` | `pool.get_update_sync_enabled` | `23.18.0` |
+| `Pool.GetUpdateSyncFrequency` | `pool.get_update_sync_frequency` | `23.18.0` |
+| `Pool.SetUpdateSyncEnabled` | `pool.set_update_sync_enabled` | `23.18.0` |
+| `HostRecord.LatestSyncedUpdatesApplied` | `host.latest_synced_updates_applied` | `23.18.0` |
+| `PoolRecord.LastUpdateSync` | `pool.last_update_sync` | `23.18.0` |
+| `PoolRecord.UpdateSyncDay` | `pool.update_sync_day` | `23.18.0` |
+| `PoolRecord.UpdateSyncEnabled` | `pool.update_sync_enabled` | `23.18.0` |
+| `PoolRecord.UpdateSyncFrequency` | `pool.update_sync_frequency` | `23.18.0` |
+| `Observer.Create` | `Observer.create` | `23.14.0` |
+| `Observer.Destroy` | `Observer.destroy` | `23.14.0` |
+| `Observer.GetAll` | `Observer.get_all` | `23.14.0` |
+| `Observer.GetAllRecords` | `Observer.get_all_records` | `23.14.0` |
+| `Observer.GetAttributes` | `Observer.get_attributes` | `23.14.0` |
+| `Observer.GetByNameLabel` | `Observer.get_by_name_label` | `23.14.0` |
+| `Observer.GetByUUID` | `Observer.get_by_uuid` | `23.14.0` |
+| `Observer.GetComponents` | `Observer.get_components` | `23.14.0` |
+| `Observer.GetEnabled` | `Observer.get_enabled` | `23.14.0` |
+| `Observer.GetEndpoints` | `Observer.get_endpoints` | `23.14.0` |
+| `Observer.GetHosts` | `Observer.get_hosts` | `23.14.0` |
+| `Observer.GetRecord` | `Observer.get_record` | `23.14.0` |
+| `Observer.GetUUID` | `Observer.get_uuid` | `23.14.0` |
+| `Observer.SetAttributes` | `Observer.set_attributes` | `23.14.0` |
+| `Observer.SetComponents` | `Observer.set_components` | `23.14.0` |
+| `Observer.SetEnabled` | `Observer.set_enabled` | `23.14.0` |
+| `Observer.SetEndpoints` | `Observer.set_endpoints` | `23.14.0` |
+| `Observer.SetHosts` | `Observer.set_hosts` | `23.14.0` |
+| `ObserverRecord.Attributes` | `Observer.attributes` | `23.14.0` |
+| `ObserverRecord.Components` | `Observer.components` | `23.14.0` |
+| `ObserverRecord.Enabled` | `Observer.enabled` | `23.14.0` |
+| `ObserverRecord.Endpoints` | `Observer.endpoints` | `23.14.0` |
+| `ObserverRecord.Hosts` | `Observer.hosts` | `23.14.0` |
+| `ObserverRecord.UUID` | `Observer.uuid` | `23.14.0` |
+| `ObserverClass` | `Observer` | `23.14.0` |
+| `Pool.GetTelemetryFrequency` | `pool.get_telemetry_frequency` | `23.9.0` |
+| `Pool.GetTelemetryNextCollection` | `pool.get_telemetry_next_collection` | `23.9.0` |
+| `Pool.GetTelemetryUUID` | `pool.get_telemetry_uuid` | `23.9.0` |
+| `Pool.ResetTelemetryUUID` | `pool.reset_telemetry_uuid` | `23.9.0` |
+| `Pool.SetTelemetryNextCollection` | `pool.set_telemetry_next_collection` | `23.9.0` |
+| `PoolRecord.TelemetryFrequency` | `pool.telemetry_frequency` | `23.9.0` |
+| `PoolRecord.TelemetryNextCollection` | `pool.telemetry_next_collection` | `23.9.0` |
+| `PoolRecord.TelemetryUUID` | `pool.telemetry_uuid` | `23.9.0` |
+| `VM.GetActionsAfterSoftreboot` | `VM.get_actions_after_softreboot` | `23.1.0` |
+| `VM.SetActionsAfterSoftreboot` | `VM.set_actions_after_softreboot` | `23.1.0` |
+| `VMRecord.ActionsAfterSoftreboot` | `VM.actions_after_softreboot` | `23.1.0` |
+| `Pool.GetMigrationCompression` | `pool.get_migration_compression` | `22.33.0` |
+| `Pool.SetMigrationCompression` | `pool.set_migration_compression` | `22.33.0` |
+| `PoolRecord.MigrationCompression` | `pool.migration_compression` | `22.33.0` |
+| `Host.GetHTTPSOnly` | `host.get_https_only` | `22.27.0` |
+| `Host.SetHTTPSOnly` | `host.set_https_only` | `22.27.0` |
+| `Pool.SetHTTPSOnly` | `pool.set_https_only` | `22.27.0` |
+| `HostRecord.HTTPSOnly` | `host.https_only` | `22.27.0` |
+| `VTPM.Create` | `VTPM.create` | `22.26.0` |
+| `VTPM.Destroy` | `VTPM.destroy` | `22.26.0` |
+| `VTPM.GetAll` | `VTPM.get_all` | `22.26.0` |
+| `VTPM.GetAllRecords` | `VTPM.get_all_records` | `22.26.0` |
+| `VTPM.GetByUUID` | `VTPM.get_by_uuid` | `22.26.0` |
+| `VTPM.GetIsProtected` | `VTPM.get_is_protected` | `22.26.0` |
+| `VTPM.GetIsUnique` | `VTPM.get_is_unique` | `22.26.0` |
+| `VTPM.GetPersistenceBackend` | `VTPM.get_persistence_backend` | `22.26.0` |
+| `VTPM.GetRecord` | `VTPM.get_record` | `22.26.0` |
+| `VTPMRecord.IsProtected` | `VTPM.is_protected` | `22.26.0` |
+| `VTPMRecord.IsUnique` | `VTPM.is_unique` | `22.26.0` |
+| `VTPMRecord.PersistenceBackend` | `VTPM.persistence_backend` | `22.26.0` |
+| `VTPMClass` | `VTPM` | `22.26.0` |
+| `Host.GetLastSoftwareUpdate` | `host.get_last_software_update` | `22.20.0` |
+| `HostRecord.LastSoftwareUpdate` | `host.last_software_update` | `22.20.0` |
+| `Message.DestroyMany` | `message.destroy_many` | `22.19.0` |
+| `Repository.GetGpgkeyPath` | `Repository.get_gpgkey_path` | `22.12.0` |
+| `Repository.SetGpgkeyPath` | `Repository.set_gpgkey_path` | `22.12.0` |
+| `RepositoryRecord.GpgkeyPath` | `Repository.gpgkey_path` | `22.12.0` |
