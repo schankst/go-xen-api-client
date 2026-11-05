@@ -46,8 +46,9 @@ typo upstream); those carry a `// The wire value is "..."` comment. Never
 
 ## Automated regeneration
 
-`.github/workflows/regenerate.yml` runs weekly, or manually (`force`
-regenerates even if `xenapi.json` is unchanged). It regenerates on a
-`regenerate/<release>-<run>` branch, opens a PR, runs `test.yml` on it, and
-only if that passes merges the PR, tags the next minor version and creates a
-release. On failure it opens an issue.
+`.github/workflows/regenerate.yml` runs weekly, or manually. It fetches both
+sources, regenerates everything and stops if nothing changed. Otherwise it
+commits to a `regenerate/<release>-<run>` branch, opens a PR (closing older
+open ones), runs `test.yml` on it, and only if that passes merges the PR,
+tags the next minor version and creates a release. On failure it opens an
+issue.

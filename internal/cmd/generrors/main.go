@@ -12,6 +12,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/schankst/go-xen-api-client/internal/naming"
 )
@@ -33,12 +34,13 @@ type ordEntry struct {
 }
 
 func fetchSource() (io.ReadCloser, error) {
-	resp, err := http.Get(sourceURL)
+	client := &http.Client{Timeout: 2 * time.Minute}
+	resp, err := client.Get(sourceURL)
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		resp.Body.Close()
+		_ = resp.Body.Close()
 		return nil, fmt.Errorf("unexpected status %s fetching %s", resp.Status, sourceURL)
 	}
 	return resp.Body, nil
