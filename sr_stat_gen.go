@@ -2,20 +2,20 @@
 
 package xenapi
 
-type SrHealth string
+type SRHealth string
 
 const (
 	// Storage is fully available
-	SrHealthHealthy SrHealth = "healthy"
+	SRHealthHealthy SRHealth = "healthy"
 	// Storage is busy recovering, for example, rebuilding mirrors.
-	SrHealthRecovering SrHealth = "recovering"
+	SRHealthRecovering SRHealth = "recovering"
 	// Storage is unreachable but may be recoverable with admin intervention
-	SrHealthUnreachable SrHealth = "unreachable"
+	SRHealthUnreachable SRHealth = "unreachable"
 	// Storage is unavailable, a host reboot will be required
-	SrHealthUnavailable SrHealth = "unavailable"
+	SRHealthUnavailable SRHealth = "unavailable"
 )
 
-type SrStatRecord struct {
+type SRStatRecord struct {
 	// Uuid that uniquely identifies this SR, if one is available.
 	UUID string
 	// Short, human-readable label for the SR.
@@ -29,12 +29,12 @@ type SrStatRecord struct {
 	// Indicates whether the SR uses clustered local storage.
 	Clustered bool
 	// The health status of the SR.
-	Health SrHealth
+	Health SRHealth
 }
 
-type SrStatRef string
+type SRStatRef string
 
 // A set of high-level properties associated with an SR.
-type SrStatClass struct {
+type SRStatClass struct {
 	client *Client
 }

@@ -13,11 +13,11 @@ type VBDMetricsRecord struct {
 	// Read bandwidth (KiB/s)
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-	IoReadKbs float64
+	IOReadKbs float64
 	// Write bandwidth (KiB/s)
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-	IoWriteKbs float64
+	IOWriteKbs float64
 	// Time at which this information was last updated
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
@@ -89,17 +89,17 @@ func (c VBDMetricsClass) GetLastUpdated(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_last_updated", toTime, string(sessionID), string(self))
 }
 
-// GetIoWriteKbs Get the io/write_kbs field of the given VBD_metrics.
+// GetIOWriteKbs Get the io/write_kbs field of the given VBD_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-func (c VBDMetricsClass) GetIoWriteKbs(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (float64, error) {
+func (c VBDMetricsClass) GetIOWriteKbs(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_io_write_kbs", toValue[float64], string(sessionID), string(self))
 }
 
-// GetIoReadKbs Get the io/read_kbs field of the given VBD_metrics.
+// GetIOReadKbs Get the io/read_kbs field of the given VBD_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-func (c VBDMetricsClass) GetIoReadKbs(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (float64, error) {
+func (c VBDMetricsClass) GetIOReadKbs(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_io_read_kbs", toValue[float64], string(sessionID), string(self))
 }
 

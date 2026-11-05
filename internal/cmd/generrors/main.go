@@ -157,7 +157,7 @@ func render(entries []ordEntry) (src []byte, divergent int, err error) {
 	plain := false // whether the last block takes further plain entries
 	seen := map[string]string{}
 	for _, e := range entries {
-		name := "Err" + naming.SnakeToCamelXenAPI(e.name)
+		name := "Err" + naming.SnakeToCamel(e.name)
 		if prev, dup := seen[name]; dup {
 			return nil, 0, fmt.Errorf("%s and %s both map to %s", prev, e.name, name)
 		}

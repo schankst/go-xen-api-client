@@ -93,24 +93,24 @@ type DomainType string
 
 const (
 	// HVM; Fully Virtualised
-	DomainTypeHvm DomainType = "hvm"
+	DomainTypeHVM DomainType = "hvm"
 	// PV: Paravirtualised
-	DomainTypePv DomainType = "pv"
+	DomainTypePV DomainType = "pv"
 	// PV inside a PVH container
-	DomainTypePvInPvh DomainType = "pv_in_pvh"
+	DomainTypePVInPVH DomainType = "pv_in_pvh"
 	// PVH
-	DomainTypePvh DomainType = "pvh"
+	DomainTypePVH DomainType = "pvh"
 	// Not specified or unknown domain type
 	DomainTypeUnspecified DomainType = "unspecified"
 )
 
-type VMUefiMode string
+type VMUEFIMode string
 
 const (
 	// clears a VM's EFI variables related to Secure Boot and places it into Setup Mode
-	VMUefiModeSetup VMUefiMode = "setup"
+	VMUEFIModeSetup VMUEFIMode = "setup"
 	// resets a VM's EFI variables related to Secure Boot to the defaults, placing it into User Mode
-	VMUefiModeUser VMUefiMode = "user"
+	VMUEFIModeUser VMUEFIMode = "user"
 )
 
 type VMSecurebootReadiness string
@@ -232,7 +232,7 @@ const (
 	// refers to the act of uninstalling the VM
 	VMOperationsDestroy VMOperations = "destroy"
 	// Creating and adding a VTPM to this VM
-	VMOperationsCreateVtpm VMOperations = "create_vtpm"
+	VMOperationsCreateVTPM VMOperations = "create_vtpm"
 	// Performing a Windows sysprep on this VM
 	VMOperationsSysprep VMOperations = "sysprep"
 )
@@ -355,9 +355,9 @@ type VMRecord struct {
 	// if true then the system will attempt to keep the VM running as much as possible.
 	//
 	// Deprecated: Deprecated in XAPI release boston.
-	HaAlwaysRun bool
+	HAAlwaysRun bool
 	// has possible values: "best-effort" meaning "try to restart this VM if possible but don't consider the Pool to be overcommitted if this is not possible"; "restart" meaning "this VM should be restarted"; "" meaning "do not try to restart this VM"
-	HaRestartPriority string
+	HARestartPriority string
 	// true if this is a snapshot. Snapshotted VMs can never be started, they are used only for cloning other VMs
 	IsASnapshot bool
 	// Ref pointing to the VM this snapshot is of.
@@ -383,7 +383,7 @@ type VMRecord struct {
 	// List pointing to all the children of this VM
 	Children []VMRef
 	// BIOS strings
-	BiosStrings map[string]string
+	BIOSStrings map[string]string
 	// Ref pointing to a protection policy for this VM
 	//
 	// Deprecated: Deprecated in XAPI release clearwater. The VMPR feature was removed.
@@ -391,11 +391,11 @@ type VMRecord struct {
 	// true if this snapshot was created by the protection policy
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-	IsSnapshotFromVmpp bool
+	IsSnapshotFromVMPP bool
 	// Ref pointing to a snapshot schedule for this VM
 	SnapshotSchedule VMSSRef
 	// true if this snapshot was created by the snapshot schedule
-	IsVmssSnapshot bool
+	IsVMSSSnapshot bool
 	// the appliance to which this VM belongs
 	Appliance VMApplianceRef
 	// The delay to wait before proceeding to the next order in the startup sequence (seconds)
@@ -540,10 +540,10 @@ func (c VMClass) GetSecurebootReadiness(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "VM.get_secureboot_readiness", toString[VMSecurebootReadiness], string(sessionID), string(self))
 }
 
-// SetUefiMode Set the UEFI mode of a VM
+// SetUEFIMode Set the UEFI mode of a VM
 //
 // Experimental: prototyped in XAPI release 24.17.0; it may change or be removed.
-func (c VMClass) SetUefiMode(ctx context.Context, sessionID SessionRef, self VMRef, mode VMUefiMode) (string, error) {
+func (c VMClass) SetUEFIMode(ctx context.Context, sessionID SessionRef, self VMRef, mode VMUEFIMode) (string, error) {
 	return callAndConvert(ctx, c.client, "VM.set_uefi_mode", toValue[string], string(sessionID), string(self), string(mode))
 }
 
@@ -695,25 +695,25 @@ func (c VMClass) SetProtectionPolicy(ctx context.Context, sessionID SessionRef, 
 	return err
 }
 
-// CopyBiosStrings Copy the BIOS strings from the given host to this VM
-func (c VMClass) CopyBiosStrings(ctx context.Context, sessionID SessionRef, vm VMRef, host HostRef) error {
+// CopyBIOSStrings Copy the BIOS strings from the given host to this VM
+func (c VMClass) CopyBIOSStrings(ctx context.Context, sessionID SessionRef, vm VMRef, host HostRef) error {
 	_, err := c.client.APICall(ctx, "VM.copy_bios_strings", string(sessionID), string(vm), string(host))
 	return err
 }
 
-// SetBiosStrings Set custom BIOS strings to this VM. VM will be given a default set of BIOS strings, only some of which can be overridden by the supplied values. Allowed keys are: 'bios-vendor', 'bios-version', 'system-manufacturer', 'system-product-name', 'system-version', 'system-serial-number', 'enclosure-asset-tag', 'baseboard-manufacturer', 'baseboard-product-name', 'baseboard-version', 'baseboard-serial-number', 'baseboard-asset-tag', 'baseboard-location-in-chassis', 'enclosure-asset-tag'
+// SetBIOSStrings Set custom BIOS strings to this VM. VM will be given a default set of BIOS strings, only some of which can be overridden by the supplied values. Allowed keys are: 'bios-vendor', 'bios-version', 'system-manufacturer', 'system-product-name', 'system-version', 'system-serial-number', 'enclosure-asset-tag', 'baseboard-manufacturer', 'baseboard-product-name', 'baseboard-version', 'baseboard-serial-number', 'baseboard-asset-tag', 'baseboard-location-in-chassis', 'enclosure-asset-tag'
 //
 // Errors:
 //
 //	VM_BIOS_STRINGS_ALREADY_SET - The BIOS strings for this VM have already been set and cannot be changed.
 //	INVALID_VALUE - The value given is invalid
-func (c VMClass) SetBiosStrings(ctx context.Context, sessionID SessionRef, self VMRef, value map[string]string) error {
+func (c VMClass) SetBIOSStrings(ctx context.Context, sessionID SessionRef, self VMRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VM.set_bios_strings", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
-// RetrieveWlbRecommendations Returns mapping of hosts to ratings, indicating the suitability of starting the VM at that location according to wlb. Rating is replaced with an error if the VM cannot boot there.
-func (c VMClass) RetrieveWlbRecommendations(ctx context.Context, sessionID SessionRef, vm VMRef) (map[HostRef][]string, error) {
+// RetrieveWLBRecommendations Returns mapping of hosts to ratings, indicating the suitability of starting the VM at that location according to wlb. Rating is replaced with an error if the VM cannot boot there.
+func (c VMClass) RetrieveWLBRecommendations(ctx context.Context, sessionID SessionRef, vm VMRef) (map[HostRef][]string, error) {
 	return callAndConvert(ctx, c.client, "VM.retrieve_wlb_recommendations", convertHostRefToStringSetMapToGo, string(sessionID), string(vm))
 }
 
@@ -961,16 +961,16 @@ func (c VMClass) ComputeMemoryOverhead(ctx context.Context, sessionID SessionRef
 	return callAndConvert(ctx, c.client, "VM.compute_memory_overhead", toInt, string(sessionID), string(vm))
 }
 
-// SetHaAlwaysRun Set the value of the ha_always_run
+// SetHAAlwaysRun Set the value of the ha_always_run
 //
 // Deprecated: Deprecated in XAPI release boston.
-func (c VMClass) SetHaAlwaysRun(ctx context.Context, sessionID SessionRef, self VMRef, value bool) error {
+func (c VMClass) SetHAAlwaysRun(ctx context.Context, sessionID SessionRef, self VMRef, value bool) error {
 	_, err := c.client.APICall(ctx, "VM.set_ha_always_run", string(sessionID), string(self), value)
 	return err
 }
 
-// SetHaRestartPriority Set the value of the ha_restart_priority field
-func (c VMClass) SetHaRestartPriority(ctx context.Context, sessionID SessionRef, self VMRef, value string) error {
+// SetHARestartPriority Set the value of the ha_restart_priority field
+func (c VMClass) SetHARestartPriority(ctx context.Context, sessionID SessionRef, self VMRef, value string) error {
 	_, err := c.client.APICall(ctx, "VM.set_ha_restart_priority", string(sessionID), string(self), value)
 	return err
 }
@@ -1278,8 +1278,8 @@ func (c VMClass) SnapshotWithQuiesce(ctx context.Context, sessionID SessionRef, 
 //	VM_BAD_POWER_STATE - You attempted an operation on a VM that was not in an appropriate power state at the time; for example, you attempted to start a VM that was already running. The parameters returned are the VM's handle, and the expected and actual VM state at the time of the call.
 //	SR_FULL - The SR is full. Requested new size exceeds the maximum size
 //	OPERATION_NOT_ALLOWED - You attempted an operation that was not allowed.
-func (c VMClass) Snapshot(ctx context.Context, sessionID SessionRef, vm VMRef, newName string, ignoreVdis []VDIRef) (VMRef, error) {
-	return callAndConvert(ctx, c.client, "VM.snapshot", toString[VMRef], string(sessionID), string(vm), newName, convertVDIRefSetToXen(ignoreVdis))
+func (c VMClass) Snapshot(ctx context.Context, sessionID SessionRef, vm VMRef, newName string, ignoreVDIs []VDIRef) (VMRef, error) {
+	return callAndConvert(ctx, c.client, "VM.snapshot", toString[VMRef], string(sessionID), string(vm), newName, convertVDIRefSetToXen(ignoreVDIs))
 }
 
 // SetHardwarePlatformVersion Set the hardware_platform_version field of the given VM.
@@ -1574,8 +1574,8 @@ func (c VMClass) GetAppliance(ctx context.Context, sessionID SessionRef, self VM
 	return callAndConvert(ctx, c.client, "VM.get_appliance", toString[VMApplianceRef], string(sessionID), string(self))
 }
 
-// GetIsVmssSnapshot Get the is_vmss_snapshot field of the given VM.
-func (c VMClass) GetIsVmssSnapshot(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
+// GetIsVMSSSnapshot Get the is_vmss_snapshot field of the given VM.
+func (c VMClass) GetIsVMSSSnapshot(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM.get_is_vmss_snapshot", toValue[bool], string(sessionID), string(self))
 }
 
@@ -1584,10 +1584,10 @@ func (c VMClass) GetSnapshotSchedule(ctx context.Context, sessionID SessionRef, 
 	return callAndConvert(ctx, c.client, "VM.get_snapshot_schedule", toString[VMSSRef], string(sessionID), string(self))
 }
 
-// GetIsSnapshotFromVmpp Get the is_snapshot_from_vmpp field of the given VM.
+// GetIsSnapshotFromVMPP Get the is_snapshot_from_vmpp field of the given VM.
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMClass) GetIsSnapshotFromVmpp(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
+func (c VMClass) GetIsSnapshotFromVMPP(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM.get_is_snapshot_from_vmpp", toValue[bool], string(sessionID), string(self))
 }
 
@@ -1598,8 +1598,8 @@ func (c VMClass) GetProtectionPolicy(ctx context.Context, sessionID SessionRef, 
 	return callAndConvert(ctx, c.client, "VM.get_protection_policy", toString[VMPPRef], string(sessionID), string(self))
 }
 
-// GetBiosStrings Get the bios_strings field of the given VM.
-func (c VMClass) GetBiosStrings(ctx context.Context, sessionID SessionRef, self VMRef) (map[string]string, error) {
+// GetBIOSStrings Get the bios_strings field of the given VM.
+func (c VMClass) GetBIOSStrings(ctx context.Context, sessionID SessionRef, self VMRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VM.get_bios_strings", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
@@ -1663,15 +1663,15 @@ func (c VMClass) GetIsASnapshot(ctx context.Context, sessionID SessionRef, self 
 	return callAndConvert(ctx, c.client, "VM.get_is_a_snapshot", toValue[bool], string(sessionID), string(self))
 }
 
-// GetHaRestartPriority Get the ha_restart_priority field of the given VM.
-func (c VMClass) GetHaRestartPriority(ctx context.Context, sessionID SessionRef, self VMRef) (string, error) {
+// GetHARestartPriority Get the ha_restart_priority field of the given VM.
+func (c VMClass) GetHARestartPriority(ctx context.Context, sessionID SessionRef, self VMRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VM.get_ha_restart_priority", toValue[string], string(sessionID), string(self))
 }
 
-// GetHaAlwaysRun Get the ha_always_run field of the given VM.
+// GetHAAlwaysRun Get the ha_always_run field of the given VM.
 //
 // Deprecated: Deprecated in XAPI release boston.
-func (c VMClass) GetHaAlwaysRun(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
+func (c VMClass) GetHAAlwaysRun(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM.get_ha_always_run", toValue[bool], string(sessionID), string(self))
 }
 

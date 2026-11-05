@@ -6,54 +6,54 @@ import (
 	"context"
 )
 
-type VbdOperations string
+type VBDOperations string
 
 const (
 	// Attempting to attach this VBD to a VM
-	VbdOperationsAttach VbdOperations = "attach"
+	VBDOperationsAttach VBDOperations = "attach"
 	// Attempting to eject the media from this VBD
-	VbdOperationsEject VbdOperations = "eject"
+	VBDOperationsEject VBDOperations = "eject"
 	// Attempting to insert new media into this VBD
-	VbdOperationsInsert VbdOperations = "insert"
+	VBDOperationsInsert VBDOperations = "insert"
 	// Attempting to hotplug this VBD
-	VbdOperationsPlug VbdOperations = "plug"
+	VBDOperationsPlug VBDOperations = "plug"
 	// Attempting to hot unplug this VBD
-	VbdOperationsUnplug VbdOperations = "unplug"
+	VBDOperationsUnplug VBDOperations = "unplug"
 	// Attempting to forcibly unplug this VBD
-	VbdOperationsUnplugForce VbdOperations = "unplug_force"
+	VBDOperationsUnplugForce VBDOperations = "unplug_force"
 	// Attempting to pause a block device backend
-	VbdOperationsPause VbdOperations = "pause"
+	VBDOperationsPause VBDOperations = "pause"
 	// Attempting to unpause a block device backend
-	VbdOperationsUnpause VbdOperations = "unpause"
+	VBDOperationsUnpause VBDOperations = "unpause"
 )
 
-type VbdType string
+type VBDType string
 
 const (
 	// VBD will appear to guest as CD
-	VbdTypeCD VbdType = "CD"
+	VBDTypeCD VBDType = "CD"
 	// VBD will appear to guest as disk
-	VbdTypeDisk VbdType = "Disk"
+	VBDTypeDisk VBDType = "Disk"
 	// VBD will appear as a floppy
-	VbdTypeFloppy VbdType = "Floppy"
+	VBDTypeFloppy VBDType = "Floppy"
 )
 
-type VbdMode string
+type VBDMode string
 
 const (
 	// only read-only access will be allowed
-	VbdModeRO VbdMode = "RO"
+	VBDModeRO VBDMode = "RO"
 	// read-write access will be allowed
-	VbdModeRW VbdMode = "RW"
+	VBDModeRW VBDMode = "RW"
 )
 
 type VBDRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
-	AllowedOperations []VbdOperations
+	AllowedOperations []VBDOperations
 	// links each of the running tasks using this object (by reference) to a current_operation enum which describes the nature of the task.
-	CurrentOperations map[string]VbdOperations
+	CurrentOperations map[string]VBDOperations
 	// the virtual machine
 	VM VMRef
 	// the virtual disk
@@ -65,9 +65,9 @@ type VBDRecord struct {
 	// true if this VBD is bootable
 	Bootable bool
 	// the mode the VBD should be mounted with
-	Mode VbdMode
+	Mode VBDMode
 	// how the VBD will appear to the guest (for example, disk or CD)
-	Type VbdType
+	Type VBDType
 	// true if this VBD will support hot-unplug
 	Unpluggable bool
 	// true if a storage level lock was acquired
@@ -85,11 +85,11 @@ type VBDRecord struct {
 	// Device runtime properties
 	RuntimeProperties map[string]string
 	// QoS algorithm to use
-	QosAlgorithmType string
+	QoSAlgorithmType string
 	// parameters for chosen QoS algorithm
-	QosAlgorithmParams map[string]string
+	QoSAlgorithmParams map[string]string
 	// supported QoS algorithms for this VBD
-	QosSupportedAlgorithms []string
+	QoSSupportedAlgorithms []string
 	// metrics associated with this VBD
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
@@ -114,7 +114,7 @@ func (c VBDClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VBDRef, e
 }
 
 // SetMode Sets the mode of the VBD. The power_state of the VM must be halted.
-func (c VBDClass) SetMode(ctx context.Context, sessionID SessionRef, self VBDRef, value VbdMode) error {
+func (c VBDClass) SetMode(ctx context.Context, sessionID SessionRef, self VBDRef, value VBDMode) error {
 	_, err := c.client.APICall(ctx, "VBD.set_mode", string(sessionID), string(self), string(value))
 	return err
 }
@@ -170,26 +170,26 @@ func (c VBDClass) Eject(ctx context.Context, sessionID SessionRef, vbd VBDRef) e
 	return err
 }
 
-// RemoveFromQosAlgorithmParams Remove the given key and its corresponding value from the qos/algorithm_params field of the given VBD.  If the key is not in that Map, then do nothing.
-func (c VBDClass) RemoveFromQosAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef, key string) error {
+// RemoveFromQoSAlgorithmParams Remove the given key and its corresponding value from the qos/algorithm_params field of the given VBD.  If the key is not in that Map, then do nothing.
+func (c VBDClass) RemoveFromQoSAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef, key string) error {
 	_, err := c.client.APICall(ctx, "VBD.remove_from_qos_algorithm_params", string(sessionID), string(self), key)
 	return err
 }
 
-// AddToQosAlgorithmParams Add the given key-value pair to the qos/algorithm_params field of the given VBD.
-func (c VBDClass) AddToQosAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef, key string, value string) error {
+// AddToQoSAlgorithmParams Add the given key-value pair to the qos/algorithm_params field of the given VBD.
+func (c VBDClass) AddToQoSAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "VBD.add_to_qos_algorithm_params", string(sessionID), string(self), key, value)
 	return err
 }
 
-// SetQosAlgorithmParams Set the qos/algorithm_params field of the given VBD.
-func (c VBDClass) SetQosAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef, value map[string]string) error {
+// SetQoSAlgorithmParams Set the qos/algorithm_params field of the given VBD.
+func (c VBDClass) SetQoSAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VBD.set_qos_algorithm_params", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
-// SetQosAlgorithmType Set the qos/algorithm_type field of the given VBD.
-func (c VBDClass) SetQosAlgorithmType(ctx context.Context, sessionID SessionRef, self VBDRef, value string) error {
+// SetQoSAlgorithmType Set the qos/algorithm_type field of the given VBD.
+func (c VBDClass) SetQoSAlgorithmType(ctx context.Context, sessionID SessionRef, self VBDRef, value string) error {
 	_, err := c.client.APICall(ctx, "VBD.set_qos_algorithm_type", string(sessionID), string(self), value)
 	return err
 }
@@ -219,7 +219,7 @@ func (c VBDClass) SetUnpluggable(ctx context.Context, sessionID SessionRef, self
 }
 
 // SetType Set the type field of the given VBD.
-func (c VBDClass) SetType(ctx context.Context, sessionID SessionRef, self VBDRef, value VbdType) error {
+func (c VBDClass) SetType(ctx context.Context, sessionID SessionRef, self VBDRef, value VBDType) error {
 	_, err := c.client.APICall(ctx, "VBD.set_type", string(sessionID), string(self), string(value))
 	return err
 }
@@ -243,18 +243,18 @@ func (c VBDClass) GetMetrics(ctx context.Context, sessionID SessionRef, self VBD
 	return callAndConvert(ctx, c.client, "VBD.get_metrics", toString[VBDMetricsRef], string(sessionID), string(self))
 }
 
-// GetQosSupportedAlgorithms Get the qos/supported_algorithms field of the given VBD.
-func (c VBDClass) GetQosSupportedAlgorithms(ctx context.Context, sessionID SessionRef, self VBDRef) ([]string, error) {
+// GetQoSSupportedAlgorithms Get the qos/supported_algorithms field of the given VBD.
+func (c VBDClass) GetQoSSupportedAlgorithms(ctx context.Context, sessionID SessionRef, self VBDRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "VBD.get_qos_supported_algorithms", convertStringSetToGo, string(sessionID), string(self))
 }
 
-// GetQosAlgorithmParams Get the qos/algorithm_params field of the given VBD.
-func (c VBDClass) GetQosAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef) (map[string]string, error) {
+// GetQoSAlgorithmParams Get the qos/algorithm_params field of the given VBD.
+func (c VBDClass) GetQoSAlgorithmParams(ctx context.Context, sessionID SessionRef, self VBDRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VBD.get_qos_algorithm_params", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
-// GetQosAlgorithmType Get the qos/algorithm_type field of the given VBD.
-func (c VBDClass) GetQosAlgorithmType(ctx context.Context, sessionID SessionRef, self VBDRef) (string, error) {
+// GetQoSAlgorithmType Get the qos/algorithm_type field of the given VBD.
+func (c VBDClass) GetQoSAlgorithmType(ctx context.Context, sessionID SessionRef, self VBDRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VBD.get_qos_algorithm_type", toValue[string], string(sessionID), string(self))
 }
 
@@ -299,13 +299,13 @@ func (c VBDClass) GetUnpluggable(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetType Get the type field of the given VBD.
-func (c VBDClass) GetType(ctx context.Context, sessionID SessionRef, self VBDRef) (VbdType, error) {
-	return callAndConvert(ctx, c.client, "VBD.get_type", toString[VbdType], string(sessionID), string(self))
+func (c VBDClass) GetType(ctx context.Context, sessionID SessionRef, self VBDRef) (VBDType, error) {
+	return callAndConvert(ctx, c.client, "VBD.get_type", toString[VBDType], string(sessionID), string(self))
 }
 
 // GetMode Get the mode field of the given VBD.
-func (c VBDClass) GetMode(ctx context.Context, sessionID SessionRef, self VBDRef) (VbdMode, error) {
-	return callAndConvert(ctx, c.client, "VBD.get_mode", toString[VbdMode], string(sessionID), string(self))
+func (c VBDClass) GetMode(ctx context.Context, sessionID SessionRef, self VBDRef) (VBDMode, error) {
+	return callAndConvert(ctx, c.client, "VBD.get_mode", toString[VBDMode], string(sessionID), string(self))
 }
 
 // GetBootable Get the bootable field of the given VBD.
@@ -334,13 +334,13 @@ func (c VBDClass) GetVM(ctx context.Context, sessionID SessionRef, self VBDRef) 
 }
 
 // GetCurrentOperations Get the current_operations field of the given VBD.
-func (c VBDClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VBDRef) (map[string]VbdOperations, error) {
-	return callAndConvert(ctx, c.client, "VBD.get_current_operations", convertStringToEnumVbdOperationsMapToGo, string(sessionID), string(self))
+func (c VBDClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VBDRef) (map[string]VBDOperations, error) {
+	return callAndConvert(ctx, c.client, "VBD.get_current_operations", convertStringToEnumVBDOperationsMapToGo, string(sessionID), string(self))
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given VBD.
-func (c VBDClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VBDRef) ([]VbdOperations, error) {
-	return callAndConvert(ctx, c.client, "VBD.get_allowed_operations", convertEnumVbdOperationsSetToGo, string(sessionID), string(self))
+func (c VBDClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VBDRef) ([]VBDOperations, error) {
+	return callAndConvert(ctx, c.client, "VBD.get_allowed_operations", convertEnumVBDOperationsSetToGo, string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given VBD.

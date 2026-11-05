@@ -13,11 +13,11 @@ type VIFMetricsRecord struct {
 	// Read bandwidth (KiB/s)
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-	IoReadKbs float64
+	IOReadKbs float64
 	// Write bandwidth (KiB/s)
 	//
 	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-	IoWriteKbs float64
+	IOWriteKbs float64
 	// Time at which this information was last updated
 	LastUpdated time.Time
 	// additional configuration
@@ -75,17 +75,17 @@ func (c VIFMetricsClass) GetLastUpdated(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_last_updated", toTime, string(sessionID), string(self))
 }
 
-// GetIoWriteKbs Get the io/write_kbs field of the given VIF_metrics.
+// GetIOWriteKbs Get the io/write_kbs field of the given VIF_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-func (c VIFMetricsClass) GetIoWriteKbs(ctx context.Context, sessionID SessionRef, self VIFMetricsRef) (float64, error) {
+func (c VIFMetricsClass) GetIOWriteKbs(ctx context.Context, sessionID SessionRef, self VIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_io_write_kbs", toValue[float64], string(sessionID), string(self))
 }
 
-// GetIoReadKbs Get the io/read_kbs field of the given VIF_metrics.
+// GetIOReadKbs Get the io/read_kbs field of the given VIF_metrics.
 //
 // Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
-func (c VIFMetricsClass) GetIoReadKbs(ctx context.Context, sessionID SessionRef, self VIFMetricsRef) (float64, error) {
+func (c VIFMetricsClass) GetIOReadKbs(ctx context.Context, sessionID SessionRef, self VIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_io_read_kbs", toValue[float64], string(sessionID), string(self))
 }
 

@@ -12,9 +12,9 @@ const (
 	// VT100 terminal
 	ConsoleProtocolVt100 ConsoleProtocol = "vt100"
 	// Remote FrameBuffer protocol (as used in VNC)
-	ConsoleProtocolRfb ConsoleProtocol = "rfb"
+	ConsoleProtocolRFB ConsoleProtocol = "rfb"
 	// Remote Desktop Protocol
-	ConsoleProtocolRdp ConsoleProtocol = "rdp"
+	ConsoleProtocolRDP ConsoleProtocol = "rdp"
 )
 
 type ConsoleRecord struct {

@@ -6,27 +6,27 @@ import (
 	"context"
 )
 
-type VtpmOperations string
+type VTPMOperations string
 
 const (
 	// Destroy a VTPM
-	VtpmOperationsDestroy VtpmOperations = "destroy"
+	VTPMOperationsDestroy VTPMOperations = "destroy"
 )
 
 type PersistenceBackend string
 
 const (
 	// This VTPM is persisted in XAPI's DB
-	PersistenceBackendXapi PersistenceBackend = "xapi"
+	PersistenceBackendXAPI PersistenceBackend = "xapi"
 )
 
 type VTPMRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
-	AllowedOperations []VtpmOperations
+	AllowedOperations []VTPMOperations
 	// links each of the running tasks using this object (by reference) to a current_operation enum which describes the nature of the task.
-	CurrentOperations map[string]VtpmOperations
+	CurrentOperations map[string]VTPMOperations
 	// The virtual machine the TPM is attached to
 	VM VMRef
 	// The domain where the backend is located (unused)
@@ -115,13 +115,13 @@ func (c VTPMClass) GetVM(ctx context.Context, sessionID SessionRef, self VTPMRef
 }
 
 // GetCurrentOperations Get the current_operations field of the given VTPM.
-func (c VTPMClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VTPMRef) (map[string]VtpmOperations, error) {
-	return callAndConvert(ctx, c.client, "VTPM.get_current_operations", convertStringToEnumVtpmOperationsMapToGo, string(sessionID), string(self))
+func (c VTPMClass) GetCurrentOperations(ctx context.Context, sessionID SessionRef, self VTPMRef) (map[string]VTPMOperations, error) {
+	return callAndConvert(ctx, c.client, "VTPM.get_current_operations", convertStringToEnumVTPMOperationsMapToGo, string(sessionID), string(self))
 }
 
 // GetAllowedOperations Get the allowed_operations field of the given VTPM.
-func (c VTPMClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VTPMRef) ([]VtpmOperations, error) {
-	return callAndConvert(ctx, c.client, "VTPM.get_allowed_operations", convertEnumVtpmOperationsSetToGo, string(sessionID), string(self))
+func (c VTPMClass) GetAllowedOperations(ctx context.Context, sessionID SessionRef, self VTPMRef) ([]VTPMOperations, error) {
+	return callAndConvert(ctx, c.client, "VTPM.get_allowed_operations", convertEnumVTPMOperationsSetToGo, string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given VTPM.

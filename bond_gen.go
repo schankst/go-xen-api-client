@@ -10,11 +10,11 @@ type BondMode string
 
 const (
 	// Source-level balancing
-	BondModeBalanceSlb BondMode = "balance-slb"
+	BondModeBalanceSLB BondMode = "balance-slb"
 	// Active/passive bonding: only one NIC is carrying traffic
 	BondModeActiveBackup BondMode = "active-backup"
 	// Link aggregation control protocol
-	BondModeLacp BondMode = "lacp"
+	BondModeLACP BondMode = "lacp"
 )
 
 type BondRecord struct {
@@ -35,7 +35,7 @@ type BondRecord struct {
 	// Number of links up in this bond
 	LinksUp int
 	// true if the MAC was taken from the primary member when the bond was created, and false if the client specified the MAC
-	AutoUpdateMac bool
+	AutoUpdateMAC bool
 }
 
 type BondRef string
@@ -96,8 +96,8 @@ func (c BondClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, sel
 	return err
 }
 
-// GetAutoUpdateMac Get the auto_update_mac field of the given Bond.
-func (c BondClass) GetAutoUpdateMac(ctx context.Context, sessionID SessionRef, self BondRef) (bool, error) {
+// GetAutoUpdateMAC Get the auto_update_mac field of the given Bond.
+func (c BondClass) GetAutoUpdateMAC(ctx context.Context, sessionID SessionRef, self BondRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "Bond.get_auto_update_mac", toValue[bool], string(sessionID), string(self))
 }
 

@@ -11,9 +11,9 @@ type PoolAllowedOperations string
 
 const (
 	// Indicates this pool is in the process of enabling HA
-	PoolAllowedOperationsHaEnable PoolAllowedOperations = "ha_enable"
+	PoolAllowedOperationsHAEnable PoolAllowedOperations = "ha_enable"
 	// Indicates this pool is in the process of disabling HA
-	PoolAllowedOperationsHaDisable PoolAllowedOperations = "ha_disable"
+	PoolAllowedOperationsHADisable PoolAllowedOperations = "ha_disable"
 	// Indicates this pool is in the process of creating a cluster
 	PoolAllowedOperationsClusterCreate PoolAllowedOperations = "cluster_create"
 	// Indicates this pool is in the process of changing coordinator
@@ -35,13 +35,13 @@ const (
 	// Indicates this pool is exchanging internal certificates with a new joiner
 	PoolAllowedOperationsExchangeCertificatesOnJoin PoolAllowedOperations = "exchange_certificates_on_join"
 	// Indicates this pool is exchanging ca certificates with a new joiner
-	PoolAllowedOperationsExchangeCaCertificatesOnJoin PoolAllowedOperations = "exchange_ca_certificates_on_join"
+	PoolAllowedOperationsExchangeCACertificatesOnJoin PoolAllowedOperations = "exchange_ca_certificates_on_join"
 	// Indicates the primary host is sending its certificates to another host
 	PoolAllowedOperationsCopyPrimaryHostCerts PoolAllowedOperations = "copy_primary_host_certs"
 	// Ejection of a host from the pool is under way
 	PoolAllowedOperationsEject PoolAllowedOperations = "eject"
 	// Indicates this pool is exchanging CRLs with a new joiner
-	PoolAllowedOperationsExchangeCrlsOnJoin PoolAllowedOperations = "exchange_crls_on_join"
+	PoolAllowedOperationsExchangeCRLsOnJoin PoolAllowedOperations = "exchange_crls_on_join"
 )
 
 type TelemetryFrequency string
@@ -55,15 +55,15 @@ const (
 	TelemetryFrequencyMonthly TelemetryFrequency = "monthly"
 )
 
-type LldpMulticastAddress string
+type LLDPMulticastAddress string
 
 const (
 	// Nearest bridge group address (MAC 01:80:C2:00:00:0E). LLDP frames reach only the immediate neighbor on the physical link.
-	LldpMulticastAddressNearestbridge LldpMulticastAddress = "nearestbridge"
+	LLDPMulticastAddressNearestbridge LLDPMulticastAddress = "nearestbridge"
 	// Nearest non-TPMR (Two-Port MAC Relay) bridge group address (MAC 01:80:C2:00:00:03).
-	LldpMulticastAddressNearestnontpmrbridge LldpMulticastAddress = "nearestnontpmrbridge"
+	LLDPMulticastAddressNearestnontpmrbridge LLDPMulticastAddress = "nearestnontpmrbridge"
 	// Nearest customer bridge group address (MAC 01:80:C2:00:00:00).
-	LldpMulticastAddressNearestcustomerbridge LldpMulticastAddress = "nearestcustomerbridge"
+	LLDPMulticastAddressNearestcustomerbridge LLDPMulticastAddress = "nearestcustomerbridge"
 )
 
 type UpdateSyncFrequency string
@@ -92,7 +92,7 @@ const (
 	// Trusted certificates that are for licensing purpose.
 	CertificatePurposeLicensing CertificatePurpose = "licensing"
 	// Trusted certificates that are for LDAPS connections to external authentication services.
-	CertificatePurposeLdaps CertificatePurpose = "ldaps"
+	CertificatePurposeLDAPS CertificatePurpose = "ldaps"
 )
 
 type PoolRecord struct {
@@ -113,41 +113,41 @@ type PoolRecord struct {
 	// additional configuration
 	OtherConfig map[string]string
 	// true if HA is enabled on the pool, false otherwise
-	HaEnabled bool
+	HAEnabled bool
 	// The current HA configuration
-	HaConfiguration map[string]string
+	HAConfiguration map[string]string
 	// HA statefile VDIs in use
-	HaStatefiles []string
+	HAStatefiles []string
 	// Number of host failures to tolerate before the Pool is declared to be overcommitted
-	HaHostFailuresToTolerate int
+	HAHostFailuresToTolerate int
 	// Number of future host failures we have managed to find a plan for. Once this reaches zero any future host failures will cause the failure of protected VMs.
-	HaPlanExistsFor int
+	HAPlanExistsFor int
 	// If set to false then operations which would cause the Pool to become overcommitted will be blocked.
-	HaAllowOvercommit bool
+	HAAllowOvercommit bool
 	// True if the Pool is considered to be overcommitted i.e. if there exist insufficient physical resources to tolerate the configured number of host failures
-	HaOvercommitted bool
+	HAOvercommitted bool
 	// Binary blobs associated with this pool
 	Blobs map[string]BlobRef
 	// user-specified tags for categorization purposes
 	Tags []string
 	// gui-specific configuration for pool
-	GuiConfig map[string]string
+	GUIConfig map[string]string
 	// Configuration for the automatic health check feature
 	HealthCheckConfig map[string]string
 	// Url for the configured workload balancing host
-	WlbURL string
+	WLBURL string
 	// Username for accessing the workload balancing host
-	WlbUsername string
+	WLBUsername string
 	// true if workload balancing is enabled on the pool, false otherwise
-	WlbEnabled bool
+	WLBEnabled bool
 	// true if communication with the WLB server should enforce TLS certificate verification.
 	//
 	// Deprecated: Deprecated in XAPI release 1.290.0. Deprecated: to enable TLS verification use Pool.enable_tls_verification instead.
-	WlbVerifyCert bool
+	WLBVerifyCert bool
 	// true a redo-log is to be used other than when HA is enabled, false otherwise
 	RedoLogEnabled bool
 	// indicates the VDI to use for the redo-log other than when HA is enabled
-	RedoLogVdi VDIRef
+	RedoLogVDI VDIRef
 	// address of the vswitch controller
 	//
 	// Deprecated: Deprecated in XAPI release falcon. Deprecated: set the IP address of the vswitch controller in SDN_controller instead.
@@ -157,7 +157,7 @@ type PoolRecord struct {
 	// The set of currently known metadata VDIs for this pool
 	MetadataVDIs []VDIRef
 	// The HA cluster stack that is currently in use. Only valid when HA is enabled.
-	HaClusterStack string
+	HAClusterStack string
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
 	AllowedOperations []PoolAllowedOperations
 	// links each of the running tasks using this object (by reference) to a current_operation enum which describes the nature of the task.
@@ -173,15 +173,15 @@ type PoolRecord struct {
 	// The pool-wide flag to show if the live patching feauture is disabled or not.
 	LivePatchingDisabled bool
 	// true if IGMP snooping is enabled in the pool, false otherwise.
-	IgmpSnoopingEnabled bool
+	IGMPSnoopingEnabled bool
 	// The UEFI certificates allowing Secure Boot
-	UefiCertificates string
+	UEFICertificates string
 	// Custom UEFI certificates allowing Secure Boot
 	//
 	// Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
-	CustomUefiCertificates string
+	CustomUEFICertificates string
 	// True if either a PSR is running or we are waiting for a PSR to be re-run
-	IsPsrPending bool
+	IsPSRPending bool
 	// True iff TLS certificate verification is enabled
 	TLSVerificationEnabled bool
 	// The set of currently enabled repositories
@@ -261,7 +261,7 @@ type PoolRecord struct {
 	// Indicates whether an HA-protected VM that is shut down from inside (not through the API) should be automatically rebooted when HA is enabled
 	//
 	// Experimental: prototyped in XAPI release 25.16.0; it may change or be removed.
-	HaRebootVMOnInternalShutdown bool
+	HARebootVMOnInternalShutdown bool
 	// When true, only one console connection per VM/host in the pool is accepted. Otherwise every connection for a VM/host's console is accepted. Note: when true, connection attempts via websocket will be rejected.
 	//
 	// Experimental: prototyped in XAPI release 26.1.0; it may change or be removed.
@@ -277,11 +277,11 @@ type PoolRecord struct {
 	// When true, LLDP is enabled on the NIC associated with each managed physical PIF on every host in the pool. When false, it is disabled. However, it can be overridden by PIF.lldp_mode settings when mode is not inherited. LLDP receiving and advertising are always enabled or disabled together.
 	//
 	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-	LldpEnabled bool
+	LLDPEnabled bool
 	// The multicast MAC address used for LLDP advertising. To apply a change, use pool.set_lldp_enabled(with force=true).
 	//
 	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-	LldpMulticastAddress LldpMulticastAddress
+	LLDPMulticastAddress LLDPMulticastAddress
 }
 
 type PoolRef string
@@ -451,18 +451,18 @@ func (c PoolClass) SetHTTPSOnly(ctx context.Context, sessionID SessionRef, self 
 	return err
 }
 
-// SetCustomUefiCertificates Set custom UEFI certificates for a pool and all its hosts. Need `allow-custom-uefi-certs` set to true in conf. If empty: default back to Pool.uefi_certificates
+// SetCustomUEFICertificates Set custom UEFI certificates for a pool and all its hosts. Need `allow-custom-uefi-certs` set to true in conf. If empty: default back to Pool.uefi_certificates
 //
 // Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
-func (c PoolClass) SetCustomUefiCertificates(ctx context.Context, sessionID SessionRef, self PoolRef, value string) error {
+func (c PoolClass) SetCustomUEFICertificates(ctx context.Context, sessionID SessionRef, self PoolRef, value string) error {
 	_, err := c.client.APICall(ctx, "pool.set_custom_uefi_certificates", string(sessionID), string(self), value)
 	return err
 }
 
-// SetUefiCertificates Set the UEFI certificates for a pool and all its hosts. Deprecated: use set_custom_uefi_certificates instead
+// SetUEFICertificates Set the UEFI certificates for a pool and all its hosts. Deprecated: use set_custom_uefi_certificates instead
 //
 // Deprecated: Deprecated in XAPI release 24.0.0. Use set_custom_uefi_certificates instead.
-func (c PoolClass) SetUefiCertificates(ctx context.Context, sessionID SessionRef, self PoolRef, value string) error {
+func (c PoolClass) SetUEFICertificates(ctx context.Context, sessionID SessionRef, self PoolRef, value string) error {
 	_, err := c.client.APICall(ctx, "pool.set_uefi_certificates", string(sessionID), string(self), value)
 	return err
 }
@@ -550,32 +550,32 @@ func (c PoolClass) HasExtension(ctx context.Context, sessionID SessionRef, self 
 	return callAndConvert(ctx, c.client, "pool.has_extension", toValue[bool], string(sessionID), string(self), name)
 }
 
-// SetLldpEnabled Enable or disable LLDP on the NIC of every managed physical PIF in the pool, then apply the change by re-plugging the affected PIFs.
+// SetLLDPEnabled Enable or disable LLDP on the NIC of every managed physical PIF in the pool, then apply the change by re-plugging the affected PIFs.
 //
 // Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-func (c PoolClass) SetLldpEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool, force bool) error {
+func (c PoolClass) SetLLDPEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool, force bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_lldp_enabled", string(sessionID), string(self), value, force)
 	return err
 }
 
-// SetIgmpSnoopingEnabled Enable or disable IGMP Snooping on the pool.
-func (c PoolClass) SetIgmpSnoopingEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
+// SetIGMPSnoopingEnabled Enable or disable IGMP Snooping on the pool.
+func (c PoolClass) SetIGMPSnoopingEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_igmp_snooping_enabled", string(sessionID), string(self), value)
 	return err
 }
 
-// DisableSslLegacy Sets ssl_legacy false on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
+// DisableSSLLegacy Sets ssl_legacy false on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
 //
 // Deprecated: Deprecated in XAPI release stockholm. Legacy SSL no longer supported.
-func (c PoolClass) DisableSslLegacy(ctx context.Context, sessionID SessionRef, self PoolRef) error {
+func (c PoolClass) DisableSSLLegacy(ctx context.Context, sessionID SessionRef, self PoolRef) error {
 	_, err := c.client.APICall(ctx, "pool.disable_ssl_legacy", string(sessionID), string(self))
 	return err
 }
 
-// EnableSslLegacy Sets ssl_legacy true on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
+// EnableSSLLegacy Sets ssl_legacy true on each host, pool coordinator last. See Host.ssl_legacy and Host.set_ssl_legacy.
 //
 // Deprecated: Removed in XAPI release stockholm. Legacy SSL no longer supported.
-func (c PoolClass) EnableSslLegacy(ctx context.Context, sessionID SessionRef, self PoolRef) error {
+func (c PoolClass) EnableSSLLegacy(ctx context.Context, sessionID SessionRef, self PoolRef) error {
 	_, err := c.client.APICall(ctx, "pool.enable_ssl_legacy", string(sessionID), string(self))
 	return err
 }
@@ -640,35 +640,35 @@ func (c PoolClass) CertificateSync(ctx context.Context, sessionID SessionRef) er
 	return err
 }
 
-// CrlList List the names of all installed TLS CA-issued Certificate Revocation Lists.
-func (c PoolClass) CrlList(ctx context.Context, sessionID SessionRef) ([]string, error) {
+// CRLList List the names of all installed TLS CA-issued Certificate Revocation Lists.
+func (c PoolClass) CRLList(ctx context.Context, sessionID SessionRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "pool.crl_list", convertStringSetToGo, string(sessionID))
 }
 
-// CrlUninstall Remove a pool-wide TLS CA-issued Certificate Revocation List.
-func (c PoolClass) CrlUninstall(ctx context.Context, sessionID SessionRef, name string) error {
+// CRLUninstall Remove a pool-wide TLS CA-issued Certificate Revocation List.
+func (c PoolClass) CRLUninstall(ctx context.Context, sessionID SessionRef, name string) error {
 	_, err := c.client.APICall(ctx, "pool.crl_uninstall", string(sessionID), name)
 	return err
 }
 
-// CrlInstall Install a TLS CA-issued Certificate Revocation List, pool-wide.
-func (c PoolClass) CrlInstall(ctx context.Context, sessionID SessionRef, name string, cert string) error {
+// CRLInstall Install a TLS CA-issued Certificate Revocation List, pool-wide.
+func (c PoolClass) CRLInstall(ctx context.Context, sessionID SessionRef, name string, cert string) error {
 	_, err := c.client.APICall(ctx, "pool.crl_install", string(sessionID), name, cert)
 	return err
 }
 
-// UninstallCaCertificate Remove a pool-wide TLS CA certificate.
+// UninstallCACertificate Remove a pool-wide TLS CA certificate.
 //
 // Deprecated: Deprecated in XAPI release 26.13.0. Use Pool.uninstall_trusted_certificate instead.
-func (c PoolClass) UninstallCaCertificate(ctx context.Context, sessionID SessionRef, name string, force bool) error {
+func (c PoolClass) UninstallCACertificate(ctx context.Context, sessionID SessionRef, name string, force bool) error {
 	_, err := c.client.APICall(ctx, "pool.uninstall_ca_certificate", string(sessionID), name, force)
 	return err
 }
 
-// InstallCaCertificate Install a TLS CA certificate, pool-wide.
+// InstallCACertificate Install a TLS CA certificate, pool-wide.
 //
 // Deprecated: Deprecated in XAPI release 26.13.0. Use Pool.install_trusted_certificate instead.
-func (c PoolClass) InstallCaCertificate(ctx context.Context, sessionID SessionRef, name string, cert string) error {
+func (c PoolClass) InstallCACertificate(ctx context.Context, sessionID SessionRef, name string, cert string) error {
 	_, err := c.client.APICall(ctx, "pool.install_ca_certificate", string(sessionID), name, cert)
 	return err
 }
@@ -701,30 +701,30 @@ func (c PoolClass) SendTestPost(ctx context.Context, sessionID SessionRef, host 
 	return callAndConvert(ctx, c.client, "pool.send_test_post", toValue[string], string(sessionID), host, fromInt(port), body)
 }
 
-// RetrieveWlbRecommendations Retrieves vm migrate recommendations for the pool from the workload balancing server
-func (c PoolClass) RetrieveWlbRecommendations(ctx context.Context, sessionID SessionRef) (map[VMRef][]string, error) {
+// RetrieveWLBRecommendations Retrieves vm migrate recommendations for the pool from the workload balancing server
+func (c PoolClass) RetrieveWLBRecommendations(ctx context.Context, sessionID SessionRef) (map[VMRef][]string, error) {
 	return callAndConvert(ctx, c.client, "pool.retrieve_wlb_recommendations", convertVMRefToStringSetMapToGo, string(sessionID))
 }
 
-// RetrieveWlbConfiguration Retrieves the pool optimization criteria from the workload balancing server
-func (c PoolClass) RetrieveWlbConfiguration(ctx context.Context, sessionID SessionRef) (map[string]string, error) {
+// RetrieveWLBConfiguration Retrieves the pool optimization criteria from the workload balancing server
+func (c PoolClass) RetrieveWLBConfiguration(ctx context.Context, sessionID SessionRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "pool.retrieve_wlb_configuration", convertStringToStringMapToGo, string(sessionID))
 }
 
-// SendWlbConfiguration Sets the pool optimization criteria for the workload balancing server
-func (c PoolClass) SendWlbConfiguration(ctx context.Context, sessionID SessionRef, config map[string]string) error {
+// SendWLBConfiguration Sets the pool optimization criteria for the workload balancing server
+func (c PoolClass) SendWLBConfiguration(ctx context.Context, sessionID SessionRef, config map[string]string) error {
 	_, err := c.client.APICall(ctx, "pool.send_wlb_configuration", string(sessionID), convertStringToStringMapToXen(config))
 	return err
 }
 
-// DeconfigureWlb Permanently deconfigures workload balancing monitoring on this pool
-func (c PoolClass) DeconfigureWlb(ctx context.Context, sessionID SessionRef) error {
+// DeconfigureWLB Permanently deconfigures workload balancing monitoring on this pool
+func (c PoolClass) DeconfigureWLB(ctx context.Context, sessionID SessionRef) error {
 	_, err := c.client.APICall(ctx, "pool.deconfigure_wlb", string(sessionID))
 	return err
 }
 
-// InitializeWlb Initializes workload balancing monitoring on this pool with the specified wlb server
-func (c PoolClass) InitializeWlb(ctx context.Context, sessionID SessionRef, wlbURL string, wlbUsername string, wlbPassword string, xenserverUsername string, xenserverPassword string) error {
+// InitializeWLB Initializes workload balancing monitoring on this pool with the specified wlb server
+func (c PoolClass) InitializeWLB(ctx context.Context, sessionID SessionRef, wlbURL string, wlbUsername string, wlbPassword string, xenserverUsername string, xenserverPassword string) error {
 	_, err := c.client.APICall(ctx, "pool.initialize_wlb", string(sessionID), wlbURL, wlbUsername, wlbPassword, xenserverUsername, xenserverPassword)
 	return err
 }
@@ -735,8 +735,8 @@ func (c PoolClass) DetectNonhomogeneousExternalAuth(ctx context.Context, session
 	return err
 }
 
-// ExternalAuthSetLdaps This call enables or disables LDAPS for external authentication on all hosts in the pool
-func (c PoolClass) ExternalAuthSetLdaps(ctx context.Context, sessionID SessionRef, pool PoolRef, ldaps bool, force bool) error {
+// ExternalAuthSetLDAPS This call enables or disables LDAPS for external authentication on all hosts in the pool
+func (c PoolClass) ExternalAuthSetLDAPS(ctx context.Context, sessionID SessionRef, pool PoolRef, ldaps bool, force bool) error {
 	_, err := c.client.APICall(ctx, "pool.external_auth_set_ldaps", string(sessionID), string(pool), ldaps, force)
 	return err
 }
@@ -758,34 +758,34 @@ func (c PoolClass) CreateNewBlob(ctx context.Context, sessionID SessionRef, pool
 	return callAndConvert(ctx, c.client, "pool.create_new_blob", toString[BlobRef], string(sessionID), string(pool), name, mimeType, public)
 }
 
-// SetHaHostFailuresToTolerate Set the maximum number of host failures to consider in the HA VM restart planner
-func (c PoolClass) SetHaHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
+// SetHAHostFailuresToTolerate Set the maximum number of host failures to consider in the HA VM restart planner
+func (c PoolClass) SetHAHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef, value int) error {
 	_, err := c.client.APICall(ctx, "pool.set_ha_host_failures_to_tolerate", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
-// HaComputeVMFailoverPlan Return a VM failover plan assuming a given subset of hosts fail
-func (c PoolClass) HaComputeVMFailoverPlan(ctx context.Context, sessionID SessionRef, failedHosts []HostRef, failedVms []VMRef) (map[VMRef]map[string]string, error) {
-	return callAndConvert(ctx, c.client, "pool.ha_compute_vm_failover_plan", convertVMRefToStringToStringMapMapToGo, string(sessionID), convertHostRefSetToXen(failedHosts), convertVMRefSetToXen(failedVms))
+// HAComputeVMFailoverPlan Return a VM failover plan assuming a given subset of hosts fail
+func (c PoolClass) HAComputeVMFailoverPlan(ctx context.Context, sessionID SessionRef, failedHosts []HostRef, failedVMs []VMRef) (map[VMRef]map[string]string, error) {
+	return callAndConvert(ctx, c.client, "pool.ha_compute_vm_failover_plan", convertVMRefToStringToStringMapMapToGo, string(sessionID), convertHostRefSetToXen(failedHosts), convertVMRefSetToXen(failedVMs))
 }
 
-// HaComputeHypotheticalMaxHostFailuresToTolerate Returns the maximum number of host failures we could tolerate before we would be unable to restart the provided VMs
-func (c PoolClass) HaComputeHypotheticalMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, configuration map[VMRef]string) (int, error) {
+// HAComputeHypotheticalMaxHostFailuresToTolerate Returns the maximum number of host failures we could tolerate before we would be unable to restart the provided VMs
+func (c PoolClass) HAComputeHypotheticalMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, configuration map[VMRef]string) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.ha_compute_hypothetical_max_host_failures_to_tolerate", toInt, string(sessionID), convertVMRefToStringMapToXen(configuration))
 }
 
-// HaComputeMaxHostFailuresToTolerate Returns the maximum number of host failures we could tolerate before we would be unable to restart configured VMs
-func (c PoolClass) HaComputeMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef) (int, error) {
+// HAComputeMaxHostFailuresToTolerate Returns the maximum number of host failures we could tolerate before we would be unable to restart configured VMs
+func (c PoolClass) HAComputeMaxHostFailuresToTolerate(ctx context.Context, sessionID SessionRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.ha_compute_max_host_failures_to_tolerate", toInt, string(sessionID))
 }
 
-// HaFailoverPlanExists Returns true if a VM failover plan exists for up to 'n' host failures
-func (c PoolClass) HaFailoverPlanExists(ctx context.Context, sessionID SessionRef, n int) (bool, error) {
+// HAFailoverPlanExists Returns true if a VM failover plan exists for up to 'n' host failures
+func (c PoolClass) HAFailoverPlanExists(ctx context.Context, sessionID SessionRef, n int) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.ha_failover_plan_exists", toValue[bool], string(sessionID), fromInt(n))
 }
 
-// HaPreventRestartsFor When this call returns the VM restart logic will not run for the requested number of seconds. If the argument is zero then the restart thread is immediately unblocked
-func (c PoolClass) HaPreventRestartsFor(ctx context.Context, sessionID SessionRef, seconds int) error {
+// HAPreventRestartsFor When this call returns the VM restart logic will not run for the requested number of seconds. If the argument is zero then the restart thread is immediately unblocked
+func (c PoolClass) HAPreventRestartsFor(ctx context.Context, sessionID SessionRef, seconds int) error {
 	_, err := c.client.APICall(ctx, "pool.ha_prevent_restarts_for", string(sessionID), fromInt(seconds))
 	return err
 }
@@ -802,15 +802,15 @@ func (c PoolClass) SyncDatabase(ctx context.Context, sessionID SessionRef) error
 	return err
 }
 
-// DisableHa Turn off High Availability mode
-func (c PoolClass) DisableHa(ctx context.Context, sessionID SessionRef) error {
+// DisableHA Turn off High Availability mode
+func (c PoolClass) DisableHA(ctx context.Context, sessionID SessionRef) error {
 	_, err := c.client.APICall(ctx, "pool.disable_ha", string(sessionID))
 	return err
 }
 
-// EnableHa Turn on High Availability mode
-func (c PoolClass) EnableHa(ctx context.Context, sessionID SessionRef, heartbeatSrs []SRRef, configuration map[string]string) error {
-	_, err := c.client.APICall(ctx, "pool.enable_ha", string(sessionID), convertSRRefSetToXen(heartbeatSrs), convertStringToStringMapToXen(configuration))
+// EnableHA Turn on High Availability mode
+func (c PoolClass) EnableHA(ctx context.Context, sessionID SessionRef, heartbeatSRs []SRRef, configuration map[string]string) error {
+	_, err := c.client.APICall(ctx, "pool.enable_ha", string(sessionID), convertSRRefSetToXen(heartbeatSRs), convertStringToStringMapToXen(configuration))
 	return err
 }
 
@@ -886,10 +886,10 @@ func (c PoolClass) Join(ctx context.Context, sessionID SessionRef, masterAddress
 	return err
 }
 
-// SetLldpMulticastAddress Set the lldp_multicast_address field of the given pool.
+// SetLLDPMulticastAddress Set the lldp_multicast_address field of the given pool.
 //
 // Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-func (c PoolClass) SetLldpMulticastAddress(ctx context.Context, sessionID SessionRef, self PoolRef, value LldpMulticastAddress) error {
+func (c PoolClass) SetLLDPMulticastAddress(ctx context.Context, sessionID SessionRef, self PoolRef, value LLDPMulticastAddress) error {
 	_, err := c.client.APICall(ctx, "pool.set_lldp_multicast_address", string(sessionID), string(self), string(value))
 	return err
 }
@@ -918,10 +918,10 @@ func (c PoolClass) SetLimitConsoleSessions(ctx context.Context, sessionID Sessio
 	return err
 }
 
-// SetHaRebootVMOnInternalShutdown Set the ha_reboot_vm_on_internal_shutdown field of the given pool.
+// SetHARebootVMOnInternalShutdown Set the ha_reboot_vm_on_internal_shutdown field of the given pool.
 //
 // Experimental: prototyped in XAPI release 25.16.0; it may change or be removed.
-func (c PoolClass) SetHaRebootVMOnInternalShutdown(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
+func (c PoolClass) SetHARebootVMOnInternalShutdown(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_ha_reboot_vm_on_internal_shutdown", string(sessionID), string(self), value)
 	return err
 }
@@ -964,8 +964,8 @@ func (c PoolClass) SetMigrationCompression(ctx context.Context, sessionID Sessio
 	return err
 }
 
-// SetIsPsrPending Set the is_psr_pending field of the given pool.
-func (c PoolClass) SetIsPsrPending(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
+// SetIsPSRPending Set the is_psr_pending field of the given pool.
+func (c PoolClass) SetIsPSRPending(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_is_psr_pending", string(sessionID), string(self), value)
 	return err
 }
@@ -984,16 +984,16 @@ func (c PoolClass) SetPolicyNoVendorDevice(ctx context.Context, sessionID Sessio
 	return err
 }
 
-// SetWlbVerifyCert Set the wlb_verify_cert field of the given pool.
+// SetWLBVerifyCert Set the wlb_verify_cert field of the given pool.
 //
 // Deprecated: Deprecated in XAPI release 1.290.0. Deprecated: to enable TLS verification use Pool.enable_tls_verification instead.
-func (c PoolClass) SetWlbVerifyCert(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
+func (c PoolClass) SetWLBVerifyCert(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_wlb_verify_cert", string(sessionID), string(self), value)
 	return err
 }
 
-// SetWlbEnabled Set the wlb_enabled field of the given pool.
-func (c PoolClass) SetWlbEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
+// SetWLBEnabled Set the wlb_enabled field of the given pool.
+func (c PoolClass) SetWLBEnabled(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_wlb_enabled", string(sessionID), string(self), value)
 	return err
 }
@@ -1016,20 +1016,20 @@ func (c PoolClass) SetHealthCheckConfig(ctx context.Context, sessionID SessionRe
 	return err
 }
 
-// RemoveFromGuiConfig Remove the given key and its corresponding value from the gui_config field of the given pool.  If the key is not in that Map, then do nothing.
-func (c PoolClass) RemoveFromGuiConfig(ctx context.Context, sessionID SessionRef, self PoolRef, key string) error {
+// RemoveFromGUIConfig Remove the given key and its corresponding value from the gui_config field of the given pool.  If the key is not in that Map, then do nothing.
+func (c PoolClass) RemoveFromGUIConfig(ctx context.Context, sessionID SessionRef, self PoolRef, key string) error {
 	_, err := c.client.APICall(ctx, "pool.remove_from_gui_config", string(sessionID), string(self), key)
 	return err
 }
 
-// AddToGuiConfig Add the given key-value pair to the gui_config field of the given pool.
-func (c PoolClass) AddToGuiConfig(ctx context.Context, sessionID SessionRef, self PoolRef, key string, value string) error {
+// AddToGUIConfig Add the given key-value pair to the gui_config field of the given pool.
+func (c PoolClass) AddToGUIConfig(ctx context.Context, sessionID SessionRef, self PoolRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "pool.add_to_gui_config", string(sessionID), string(self), key, value)
 	return err
 }
 
-// SetGuiConfig Set the gui_config field of the given pool.
-func (c PoolClass) SetGuiConfig(ctx context.Context, sessionID SessionRef, self PoolRef, value map[string]string) error {
+// SetGUIConfig Set the gui_config field of the given pool.
+func (c PoolClass) SetGUIConfig(ctx context.Context, sessionID SessionRef, self PoolRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "pool.set_gui_config", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
@@ -1052,8 +1052,8 @@ func (c PoolClass) SetTags(ctx context.Context, sessionID SessionRef, self PoolR
 	return err
 }
 
-// SetHaAllowOvercommit Set the ha_allow_overcommit field of the given pool.
-func (c PoolClass) SetHaAllowOvercommit(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
+// SetHAAllowOvercommit Set the ha_allow_overcommit field of the given pool.
+func (c PoolClass) SetHAAllowOvercommit(ctx context.Context, sessionID SessionRef, self PoolRef, value bool) error {
 	_, err := c.client.APICall(ctx, "pool.set_ha_allow_overcommit", string(sessionID), string(self), value)
 	return err
 }
@@ -1106,17 +1106,17 @@ func (c PoolClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self 
 	return err
 }
 
-// GetLldpMulticastAddress Get the lldp_multicast_address field of the given pool.
+// GetLLDPMulticastAddress Get the lldp_multicast_address field of the given pool.
 //
 // Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-func (c PoolClass) GetLldpMulticastAddress(ctx context.Context, sessionID SessionRef, self PoolRef) (LldpMulticastAddress, error) {
-	return callAndConvert(ctx, c.client, "pool.get_lldp_multicast_address", toString[LldpMulticastAddress], string(sessionID), string(self))
+func (c PoolClass) GetLLDPMulticastAddress(ctx context.Context, sessionID SessionRef, self PoolRef) (LLDPMulticastAddress, error) {
+	return callAndConvert(ctx, c.client, "pool.get_lldp_multicast_address", toString[LLDPMulticastAddress], string(sessionID), string(self))
 }
 
-// GetLldpEnabled Get the lldp_enabled field of the given pool.
+// GetLLDPEnabled Get the lldp_enabled field of the given pool.
 //
 // Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-func (c PoolClass) GetLldpEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+func (c PoolClass) GetLLDPEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_lldp_enabled", toValue[bool], string(sessionID), string(self))
 }
 
@@ -1141,10 +1141,10 @@ func (c PoolClass) GetLimitConsoleSessions(ctx context.Context, sessionID Sessio
 	return callAndConvert(ctx, c.client, "pool.get_limit_console_sessions", toValue[bool], string(sessionID), string(self))
 }
 
-// GetHaRebootVMOnInternalShutdown Get the ha_reboot_vm_on_internal_shutdown field of the given pool.
+// GetHARebootVMOnInternalShutdown Get the ha_reboot_vm_on_internal_shutdown field of the given pool.
 //
 // Experimental: prototyped in XAPI release 25.16.0; it may change or be removed.
-func (c PoolClass) GetHaRebootVMOnInternalShutdown(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+func (c PoolClass) GetHARebootVMOnInternalShutdown(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_reboot_vm_on_internal_shutdown", toValue[bool], string(sessionID), string(self))
 }
 
@@ -1293,25 +1293,25 @@ func (c PoolClass) GetTLSVerificationEnabled(ctx context.Context, sessionID Sess
 	return callAndConvert(ctx, c.client, "pool.get_tls_verification_enabled", toValue[bool], string(sessionID), string(self))
 }
 
-// GetIsPsrPending Get the is_psr_pending field of the given pool.
-func (c PoolClass) GetIsPsrPending(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+// GetIsPSRPending Get the is_psr_pending field of the given pool.
+func (c PoolClass) GetIsPSRPending(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_is_psr_pending", toValue[bool], string(sessionID), string(self))
 }
 
-// GetCustomUefiCertificates Get the custom_uefi_certificates field of the given pool.
+// GetCustomUEFICertificates Get the custom_uefi_certificates field of the given pool.
 //
 // Experimental: prototyped in XAPI release 24.0.0; it may change or be removed.
-func (c PoolClass) GetCustomUefiCertificates(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
+func (c PoolClass) GetCustomUEFICertificates(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_custom_uefi_certificates", toValue[string], string(sessionID), string(self))
 }
 
-// GetUefiCertificates Get the uefi_certificates field of the given pool.
-func (c PoolClass) GetUefiCertificates(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
+// GetUEFICertificates Get the uefi_certificates field of the given pool.
+func (c PoolClass) GetUEFICertificates(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_uefi_certificates", toValue[string], string(sessionID), string(self))
 }
 
-// GetIgmpSnoopingEnabled Get the igmp_snooping_enabled field of the given pool.
-func (c PoolClass) GetIgmpSnoopingEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+// GetIGMPSnoopingEnabled Get the igmp_snooping_enabled field of the given pool.
+func (c PoolClass) GetIGMPSnoopingEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_igmp_snooping_enabled", toValue[bool], string(sessionID), string(self))
 }
 
@@ -1347,8 +1347,8 @@ func (c PoolClass) GetAllowedOperations(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "pool.get_allowed_operations", convertEnumPoolAllowedOperationsSetToGo, string(sessionID), string(self))
 }
 
-// GetHaClusterStack Get the ha_cluster_stack field of the given pool.
-func (c PoolClass) GetHaClusterStack(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
+// GetHAClusterStack Get the ha_cluster_stack field of the given pool.
+func (c PoolClass) GetHAClusterStack(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_cluster_stack", toValue[string], string(sessionID), string(self))
 }
 
@@ -1369,8 +1369,8 @@ func (c PoolClass) GetVswitchController(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "pool.get_vswitch_controller", toValue[string], string(sessionID), string(self))
 }
 
-// GetRedoLogVdi Get the redo_log_vdi field of the given pool.
-func (c PoolClass) GetRedoLogVdi(ctx context.Context, sessionID SessionRef, self PoolRef) (VDIRef, error) {
+// GetRedoLogVDI Get the redo_log_vdi field of the given pool.
+func (c PoolClass) GetRedoLogVDI(ctx context.Context, sessionID SessionRef, self PoolRef) (VDIRef, error) {
 	return callAndConvert(ctx, c.client, "pool.get_redo_log_vdi", toString[VDIRef], string(sessionID), string(self))
 }
 
@@ -1379,25 +1379,25 @@ func (c PoolClass) GetRedoLogEnabled(ctx context.Context, sessionID SessionRef, 
 	return callAndConvert(ctx, c.client, "pool.get_redo_log_enabled", toValue[bool], string(sessionID), string(self))
 }
 
-// GetWlbVerifyCert Get the wlb_verify_cert field of the given pool.
+// GetWLBVerifyCert Get the wlb_verify_cert field of the given pool.
 //
 // Deprecated: Deprecated in XAPI release 1.290.0. Deprecated: to enable TLS verification use Pool.enable_tls_verification instead.
-func (c PoolClass) GetWlbVerifyCert(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+func (c PoolClass) GetWLBVerifyCert(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_wlb_verify_cert", toValue[bool], string(sessionID), string(self))
 }
 
-// GetWlbEnabled Get the wlb_enabled field of the given pool.
-func (c PoolClass) GetWlbEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+// GetWLBEnabled Get the wlb_enabled field of the given pool.
+func (c PoolClass) GetWLBEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_wlb_enabled", toValue[bool], string(sessionID), string(self))
 }
 
-// GetWlbUsername Get the wlb_username field of the given pool.
-func (c PoolClass) GetWlbUsername(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
+// GetWLBUsername Get the wlb_username field of the given pool.
+func (c PoolClass) GetWLBUsername(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_wlb_username", toValue[string], string(sessionID), string(self))
 }
 
-// GetWlbURL Get the wlb_url field of the given pool.
-func (c PoolClass) GetWlbURL(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
+// GetWLBURL Get the wlb_url field of the given pool.
+func (c PoolClass) GetWLBURL(ctx context.Context, sessionID SessionRef, self PoolRef) (string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_wlb_url", toValue[string], string(sessionID), string(self))
 }
 
@@ -1406,8 +1406,8 @@ func (c PoolClass) GetHealthCheckConfig(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "pool.get_health_check_config", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
-// GetGuiConfig Get the gui_config field of the given pool.
-func (c PoolClass) GetGuiConfig(ctx context.Context, sessionID SessionRef, self PoolRef) (map[string]string, error) {
+// GetGUIConfig Get the gui_config field of the given pool.
+func (c PoolClass) GetGUIConfig(ctx context.Context, sessionID SessionRef, self PoolRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_gui_config", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
@@ -1421,38 +1421,38 @@ func (c PoolClass) GetBlobs(ctx context.Context, sessionID SessionRef, self Pool
 	return callAndConvert(ctx, c.client, "pool.get_blobs", convertStringToBlobRefMapToGo, string(sessionID), string(self))
 }
 
-// GetHaOvercommitted Get the ha_overcommitted field of the given pool.
-func (c PoolClass) GetHaOvercommitted(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+// GetHAOvercommitted Get the ha_overcommitted field of the given pool.
+func (c PoolClass) GetHAOvercommitted(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_overcommitted", toValue[bool], string(sessionID), string(self))
 }
 
-// GetHaAllowOvercommit Get the ha_allow_overcommit field of the given pool.
-func (c PoolClass) GetHaAllowOvercommit(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+// GetHAAllowOvercommit Get the ha_allow_overcommit field of the given pool.
+func (c PoolClass) GetHAAllowOvercommit(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_allow_overcommit", toValue[bool], string(sessionID), string(self))
 }
 
-// GetHaPlanExistsFor Get the ha_plan_exists_for field of the given pool.
-func (c PoolClass) GetHaPlanExistsFor(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+// GetHAPlanExistsFor Get the ha_plan_exists_for field of the given pool.
+func (c PoolClass) GetHAPlanExistsFor(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_plan_exists_for", toInt, string(sessionID), string(self))
 }
 
-// GetHaHostFailuresToTolerate Get the ha_host_failures_to_tolerate field of the given pool.
-func (c PoolClass) GetHaHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
+// GetHAHostFailuresToTolerate Get the ha_host_failures_to_tolerate field of the given pool.
+func (c PoolClass) GetHAHostFailuresToTolerate(ctx context.Context, sessionID SessionRef, self PoolRef) (int, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_host_failures_to_tolerate", toInt, string(sessionID), string(self))
 }
 
-// GetHaStatefiles Get the ha_statefiles field of the given pool.
-func (c PoolClass) GetHaStatefiles(ctx context.Context, sessionID SessionRef, self PoolRef) ([]string, error) {
+// GetHAStatefiles Get the ha_statefiles field of the given pool.
+func (c PoolClass) GetHAStatefiles(ctx context.Context, sessionID SessionRef, self PoolRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_statefiles", convertStringSetToGo, string(sessionID), string(self))
 }
 
-// GetHaConfiguration Get the ha_configuration field of the given pool.
-func (c PoolClass) GetHaConfiguration(ctx context.Context, sessionID SessionRef, self PoolRef) (map[string]string, error) {
+// GetHAConfiguration Get the ha_configuration field of the given pool.
+func (c PoolClass) GetHAConfiguration(ctx context.Context, sessionID SessionRef, self PoolRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_configuration", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
-// GetHaEnabled Get the ha_enabled field of the given pool.
-func (c PoolClass) GetHaEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
+// GetHAEnabled Get the ha_enabled field of the given pool.
+func (c PoolClass) GetHAEnabled(ctx context.Context, sessionID SessionRef, self PoolRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "pool.get_ha_enabled", toValue[bool], string(sessionID), string(self))
 }
 

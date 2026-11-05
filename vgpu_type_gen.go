@@ -6,19 +6,19 @@ import (
 	"context"
 )
 
-type VgpuTypeImplementation string
+type VGPUTypeImplementation string
 
 const (
 	// Pass through an entire physical GPU to a guest
-	VgpuTypeImplementationPassthrough VgpuTypeImplementation = "passthrough"
+	VGPUTypeImplementationPassthrough VGPUTypeImplementation = "passthrough"
 	// vGPU using NVIDIA hardware
-	VgpuTypeImplementationNvidia VgpuTypeImplementation = "nvidia"
+	VGPUTypeImplementationNvidia VGPUTypeImplementation = "nvidia"
 	// vGPU using NVIDIA hardware with SR-IOV
-	VgpuTypeImplementationNvidiaSriov VgpuTypeImplementation = "nvidia_sriov"
+	VGPUTypeImplementationNvidiaSRIOV VGPUTypeImplementation = "nvidia_sriov"
 	// vGPU using Intel GVT-g
-	VgpuTypeImplementationGvtG VgpuTypeImplementation = "gvt_g"
+	VGPUTypeImplementationGVTG VGPUTypeImplementation = "gvt_g"
 	// vGPU using AMD MxGPU
-	VgpuTypeImplementationMxgpu VgpuTypeImplementation = "mxgpu"
+	VGPUTypeImplementationMxGPU VGPUTypeImplementation = "mxgpu"
 )
 
 type VGPUTypeRecord struct {
@@ -47,7 +47,7 @@ type VGPUTypeRecord struct {
 	// List of GPU groups in which at least one have this VGPU type enabled
 	EnabledOnGPUGroups []GPUGroupRef
 	// The internal implementation of this VGPU type
-	Implementation VgpuTypeImplementation
+	Implementation VGPUTypeImplementation
 	// Key used to identify VGPU types and avoid creating duplicates - this field is used internally and not intended for interpretation by API clients
 	Identifier string
 	// Indicates whether VGPUs of this type should be considered experimental
@@ -89,8 +89,8 @@ func (c VGPUTypeClass) GetIdentifier(ctx context.Context, sessionID SessionRef, 
 }
 
 // GetImplementation Get the implementation field of the given VGPU_type.
-func (c VGPUTypeClass) GetImplementation(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (VgpuTypeImplementation, error) {
-	return callAndConvert(ctx, c.client, "VGPU_type.get_implementation", toString[VgpuTypeImplementation], string(sessionID), string(self))
+func (c VGPUTypeClass) GetImplementation(ctx context.Context, sessionID SessionRef, self VGPUTypeRef) (VGPUTypeImplementation, error) {
+	return callAndConvert(ctx, c.client, "VGPU_type.get_implementation", toString[VGPUTypeImplementation], string(sessionID), string(self))
 }
 
 // GetEnabledOnGPUGroups Get the enabled_on_GPU_groups field of the given VGPU_type.

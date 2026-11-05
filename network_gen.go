@@ -26,9 +26,9 @@ type NetworkPurpose string
 
 const (
 	// Network Block Device service using TLS
-	NetworkPurposeNbd NetworkPurpose = "nbd"
+	NetworkPurposeNBD NetworkPurpose = "nbd"
 	// Network Block Device service without integrity or confidentiality: NOT RECOMMENDED
-	NetworkPurposeInsecureNbd NetworkPurpose = "insecure_nbd"
+	NetworkPurposeInsecureNBD NetworkPurpose = "insecure_nbd"
 )
 
 type NetworkRecord struct {
@@ -61,7 +61,7 @@ type NetworkRecord struct {
 	// The network will use this value to determine the behaviour of all VIFs where locking_mode = default
 	DefaultLockingMode NetworkDefaultLockingMode
 	// The IP addresses assigned to VIFs on networks that have active xapi-managed DHCP
-	AssignedIps map[VIFRef]string
+	AssignedIPs map[VIFRef]string
 	// Set of purposes for which the server will use this network
 	Purpose []NetworkPurpose
 }
@@ -169,8 +169,8 @@ func (c NetworkClass) GetPurpose(ctx context.Context, sessionID SessionRef, self
 	return callAndConvert(ctx, c.client, "network.get_purpose", convertEnumNetworkPurposeSetToGo, string(sessionID), string(self))
 }
 
-// GetAssignedIps Get the assigned_ips field of the given network.
-func (c NetworkClass) GetAssignedIps(ctx context.Context, sessionID SessionRef, self NetworkRef) (map[VIFRef]string, error) {
+// GetAssignedIPs Get the assigned_ips field of the given network.
+func (c NetworkClass) GetAssignedIPs(ctx context.Context, sessionID SessionRef, self NetworkRef) (map[VIFRef]string, error) {
 	return callAndConvert(ctx, c.client, "network.get_assigned_ips", convertVIFRefToStringMapToGo, string(sessionID), string(self))
 }
 

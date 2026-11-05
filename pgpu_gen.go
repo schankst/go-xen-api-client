@@ -28,7 +28,7 @@ type PGPURecord struct {
 	// The accessibility of this device from dom0
 	//
 	// Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.get_dom0_access_status instead.
-	Dom0Access PciDom0Access
+	Dom0Access PCIDom0Access
 	// Is this device the system display device
 	IsSystemDisplayDevice bool
 	// PGPU metadata to determine whether a VGPU can migrate between two PGPUs
@@ -55,15 +55,15 @@ func (c PGPUClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PGPURef,
 // DisableDom0Access
 //
 // Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.disable_dom0_access instead.
-func (c PGPUClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PciDom0Access, error) {
-	return callAndConvert(ctx, c.client, "PGPU.disable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
+func (c PGPUClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PCIDom0Access, error) {
+	return callAndConvert(ctx, c.client, "PGPU.disable_dom0_access", toString[PCIDom0Access], string(sessionID), string(self))
 }
 
 // EnableDom0Access
 //
 // Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.enable_dom0_access instead.
-func (c PGPUClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PciDom0Access, error) {
-	return callAndConvert(ctx, c.client, "PGPU.enable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
+func (c PGPUClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PCIDom0Access, error) {
+	return callAndConvert(ctx, c.client, "PGPU.enable_dom0_access", toString[PCIDom0Access], string(sessionID), string(self))
 }
 
 // GetRemainingCapacity
@@ -126,8 +126,8 @@ func (c PGPUClass) GetIsSystemDisplayDevice(ctx context.Context, sessionID Sessi
 // GetDom0Access Get the dom0_access field of the given PGPU.
 //
 // Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.get_dom0_access_status instead.
-func (c PGPUClass) GetDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PciDom0Access, error) {
-	return callAndConvert(ctx, c.client, "PGPU.get_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
+func (c PGPUClass) GetDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PCIDom0Access, error) {
+	return callAndConvert(ctx, c.client, "PGPU.get_dom0_access", toString[PCIDom0Access], string(sessionID), string(self))
 }
 
 // GetSupportedVGPUMaxCapacities Get the supported_VGPU_max_capacities field of the given PGPU.

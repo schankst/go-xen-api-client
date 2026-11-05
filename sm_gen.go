@@ -12,7 +12,7 @@ const (
 	// Plain disk image
 	ImageFormatTypeRaw ImageFormatType = "raw"
 	// Virtual Hard Disk
-	ImageFormatTypeVhd ImageFormatType = "vhd"
+	ImageFormatTypeVHD ImageFormatType = "vhd"
 	// Qemu Copy-On-Write version 2
 	ImageFormatTypeQcow2 ImageFormatType = "qcow2"
 )

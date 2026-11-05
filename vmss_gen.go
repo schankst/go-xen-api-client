@@ -7,26 +7,26 @@ import (
 	"time"
 )
 
-type VmssFrequency string
+type VMSSFrequency string
 
 const (
 	// Hourly snapshots
-	VmssFrequencyHourly VmssFrequency = "hourly"
+	VMSSFrequencyHourly VMSSFrequency = "hourly"
 	// Daily snapshots
-	VmssFrequencyDaily VmssFrequency = "daily"
+	VMSSFrequencyDaily VMSSFrequency = "daily"
 	// Weekly snapshots
-	VmssFrequencyWeekly VmssFrequency = "weekly"
+	VMSSFrequencyWeekly VMSSFrequency = "weekly"
 )
 
-type VmssType string
+type VMSSType string
 
 const (
 	// The snapshot is a disk snapshot
-	VmssTypeSnapshot VmssType = "snapshot"
+	VMSSTypeSnapshot VMSSType = "snapshot"
 	// The snapshot is a checkpoint
-	VmssTypeCheckpoint VmssType = "checkpoint"
+	VMSSTypeCheckpoint VMSSType = "checkpoint"
 	// Support for VSS has been removed.
-	VmssTypeSnapshotWithQuiesce VmssType = "snapshot_with_quiesce"
+	VMSSTypeSnapshotWithQuiesce VMSSType = "snapshot_with_quiesce"
 )
 
 type VMSSRecord struct {
@@ -39,11 +39,11 @@ type VMSSRecord struct {
 	// enable or disable this snapshot schedule
 	Enabled bool
 	// type of the snapshot schedule
-	Type VmssType
+	Type VMSSType
 	// maximum number of snapshots that should be stored at any time
 	RetainedSnapshots int
 	// frequency of taking snapshot from snapshot schedule
-	Frequency VmssFrequency
+	Frequency VMSSFrequency
 	// schedule of the snapshot containing 'hour', 'min', 'days'. Date/time-related information is in Local Timezone
 	Schedule map[string]string
 	// time of the last snapshot
@@ -70,7 +70,7 @@ func (c VMSSClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VMSSRef,
 }
 
 // SetType
-func (c VMSSClass) SetType(ctx context.Context, sessionID SessionRef, self VMSSRef, value VmssType) error {
+func (c VMSSClass) SetType(ctx context.Context, sessionID SessionRef, self VMSSRef, value VMSSType) error {
 	_, err := c.client.APICall(ctx, "VMSS.set_type", string(sessionID), string(self), string(value))
 	return err
 }
@@ -100,7 +100,7 @@ func (c VMSSClass) SetSchedule(ctx context.Context, sessionID SessionRef, self V
 }
 
 // SetFrequency Set the value of the frequency field
-func (c VMSSClass) SetFrequency(ctx context.Context, sessionID SessionRef, self VMSSRef, value VmssFrequency) error {
+func (c VMSSClass) SetFrequency(ctx context.Context, sessionID SessionRef, self VMSSRef, value VMSSFrequency) error {
 	_, err := c.client.APICall(ctx, "VMSS.set_frequency", string(sessionID), string(self), string(value))
 	return err
 }
@@ -150,8 +150,8 @@ func (c VMSSClass) GetSchedule(ctx context.Context, sessionID SessionRef, self V
 }
 
 // GetFrequency Get the frequency field of the given VMSS.
-func (c VMSSClass) GetFrequency(ctx context.Context, sessionID SessionRef, self VMSSRef) (VmssFrequency, error) {
-	return callAndConvert(ctx, c.client, "VMSS.get_frequency", toString[VmssFrequency], string(sessionID), string(self))
+func (c VMSSClass) GetFrequency(ctx context.Context, sessionID SessionRef, self VMSSRef) (VMSSFrequency, error) {
+	return callAndConvert(ctx, c.client, "VMSS.get_frequency", toString[VMSSFrequency], string(sessionID), string(self))
 }
 
 // GetRetainedSnapshots Get the retained_snapshots field of the given VMSS.
@@ -160,8 +160,8 @@ func (c VMSSClass) GetRetainedSnapshots(ctx context.Context, sessionID SessionRe
 }
 
 // GetType Get the type field of the given VMSS.
-func (c VMSSClass) GetType(ctx context.Context, sessionID SessionRef, self VMSSRef) (VmssType, error) {
-	return callAndConvert(ctx, c.client, "VMSS.get_type", toString[VmssType], string(sessionID), string(self))
+func (c VMSSClass) GetType(ctx context.Context, sessionID SessionRef, self VMSSRef) (VMSSType, error) {
+	return callAndConvert(ctx, c.client, "VMSS.get_type", toString[VMSSType], string(sessionID), string(self))
 }
 
 // GetEnabled Get the enabled field of the given VMSS.

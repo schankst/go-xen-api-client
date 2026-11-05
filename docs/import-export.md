@@ -85,7 +85,7 @@ session, err := client.Session.LoginWithPassword(ctx, user, pass, "1.0", "import
 defer client.Session.Logout(ctx, session)
 
 vdi, err := client.VDI.Create(ctx, session, xenapi.VDIRecord{
-    NameLabel: "imported", SR: srRef, VirtualSize: size, Type: xenapi.VdiTypeUser,
+    NameLabel: "imported", SR: srRef, VirtualSize: size, Type: xenapi.VDITypeUser,
 })
 task, err := client.Task.Create(ctx, session, "import", "")
 f, err := os.Open("disk.raw") // exactly size bytes
@@ -135,7 +135,7 @@ XAPI has no scheduler, retention or catalog. It provides the primitives.
 | Snapshot with RAM (running VM) | `VM.Checkpoint` |
 | Roll back / list / delete | `VM.Revert`, `VM.GetSnapshots`, `VM.Destroy` |
 | Disk snapshot / clone | `VDI.Snapshot`, `VDI.Clone`, `VDI.Copy` |
-| Changed-block tracking | `VDI.EnableCbt`, `VDI.ListChangedBlocks`, `VDI.GetNbdInfo` |
+| Changed-block tracking | `VDI.EnableCBT`, `VDI.ListChangedBlocks`, `VDI.GetNBDInfo` |
 | Disaster recovery | `VM.AssertCanBeRecovered`, `VM.Recover` |
 | Whole VM (XVA) | `GET /export?uuid=<vm>` |
 | VM metadata only | `GET /export_metadata?uuid=<vm>` |
@@ -170,7 +170,7 @@ Caveats:
 
 Incremental: enable CBT, take two snapshots, get the changed-block bitmap
 with `VDI.ListChangedBlocks(from, to)` and read those blocks over NBD
-(`VDI.GetNbdInfo`). Chain management and pruning are yours to build.
+(`VDI.GetNBDInfo`). Chain management and pruning are yours to build.
 
 ## Version compatibility
 

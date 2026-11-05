@@ -6,20 +6,20 @@ import (
 	"context"
 )
 
-type SriovConfigurationMode string
+type SRIOVConfigurationMode string
 
 const (
 	// Configure network sriov by sysfs, do not need reboot
-	SriovConfigurationModeSysfs SriovConfigurationMode = "sysfs"
+	SRIOVConfigurationModeSysfs SRIOVConfigurationMode = "sysfs"
 	// Configure network sriov by modprobe, need reboot
-	SriovConfigurationModeModprobe SriovConfigurationMode = "modprobe"
+	SRIOVConfigurationModeModprobe SRIOVConfigurationMode = "modprobe"
 	// Configure network sriov manually
-	SriovConfigurationModeManual SriovConfigurationMode = "manual"
+	SRIOVConfigurationModeManual SRIOVConfigurationMode = "manual"
 	// Unknown mode
-	SriovConfigurationModeUnknown SriovConfigurationMode = "unknown"
+	SRIOVConfigurationModeUnknown SRIOVConfigurationMode = "unknown"
 )
 
-type NetworkSriovRecord struct {
+type NetworkSRIOVRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// The PIF that has SR-IOV enabled
@@ -29,73 +29,73 @@ type NetworkSriovRecord struct {
 	// Indicates whether the host need to be rebooted before SR-IOV is enabled on the physical PIF
 	RequiresReboot bool
 	// The mode for configure network sriov
-	ConfigurationMode SriovConfigurationMode
+	ConfigurationMode SRIOVConfigurationMode
 }
 
-type NetworkSriovRef string
+type NetworkSRIOVRef string
 
 // network-sriov which connects logical pif and physical pif
-type NetworkSriovClass struct {
+type NetworkSRIOVClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of network_sriov references to network_sriov records for all network_sriovs known to the system.
-func (c NetworkSriovClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[NetworkSriovRef]NetworkSriovRecord, error) {
-	return callAndConvert(ctx, c.client, "network_sriov.get_all_records", convertNetworkSriovRefToNetworkSriovRecordMapToGo, string(sessionID))
+func (c NetworkSRIOVClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[NetworkSRIOVRef]NetworkSRIOVRecord, error) {
+	return callAndConvert(ctx, c.client, "network_sriov.get_all_records", convertNetworkSRIOVRefToNetworkSRIOVRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the network_sriovs known to the system.
-func (c NetworkSriovClass) GetAll(ctx context.Context, sessionID SessionRef) ([]NetworkSriovRef, error) {
-	return callAndConvert(ctx, c.client, "network_sriov.get_all", convertNetworkSriovRefSetToGo, string(sessionID))
+func (c NetworkSRIOVClass) GetAll(ctx context.Context, sessionID SessionRef) ([]NetworkSRIOVRef, error) {
+	return callAndConvert(ctx, c.client, "network_sriov.get_all", convertNetworkSRIOVRefSetToGo, string(sessionID))
 }
 
 // GetRemainingCapacity Get the number of free SR-IOV VFs on the associated PIF
-func (c NetworkSriovClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (int, error) {
+func (c NetworkSRIOVClass) GetRemainingCapacity(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (int, error) {
 	return callAndConvert(ctx, c.client, "network_sriov.get_remaining_capacity", toInt, string(sessionID), string(self))
 }
 
 // Destroy Disable SR-IOV on the specific PIF. It will destroy the network-sriov and the logical PIF accordingly.
-func (c NetworkSriovClass) Destroy(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) error {
+func (c NetworkSRIOVClass) Destroy(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) error {
 	_, err := c.client.APICall(ctx, "network_sriov.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Enable SR-IOV on the specific PIF. It will create a network-sriov based on the specific PIF and automatically create a logical PIF to connect the specific network.
-func (c NetworkSriovClass) Create(ctx context.Context, sessionID SessionRef, pif PIFRef, network NetworkRef) (NetworkSriovRef, error) {
-	return callAndConvert(ctx, c.client, "network_sriov.create", toString[NetworkSriovRef], string(sessionID), string(pif), string(network))
+func (c NetworkSRIOVClass) Create(ctx context.Context, sessionID SessionRef, pif PIFRef, network NetworkRef) (NetworkSRIOVRef, error) {
+	return callAndConvert(ctx, c.client, "network_sriov.create", toString[NetworkSRIOVRef], string(sessionID), string(pif), string(network))
 }
 
 // GetConfigurationMode Get the configuration_mode field of the given network_sriov.
-func (c NetworkSriovClass) GetConfigurationMode(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (SriovConfigurationMode, error) {
-	return callAndConvert(ctx, c.client, "network_sriov.get_configuration_mode", toString[SriovConfigurationMode], string(sessionID), string(self))
+func (c NetworkSRIOVClass) GetConfigurationMode(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (SRIOVConfigurationMode, error) {
+	return callAndConvert(ctx, c.client, "network_sriov.get_configuration_mode", toString[SRIOVConfigurationMode], string(sessionID), string(self))
 }
 
 // GetRequiresReboot Get the requires_reboot field of the given network_sriov.
-func (c NetworkSriovClass) GetRequiresReboot(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (bool, error) {
+func (c NetworkSRIOVClass) GetRequiresReboot(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "network_sriov.get_requires_reboot", toValue[bool], string(sessionID), string(self))
 }
 
 // GetLogicalPIF Get the logical_PIF field of the given network_sriov.
-func (c NetworkSriovClass) GetLogicalPIF(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (PIFRef, error) {
+func (c NetworkSRIOVClass) GetLogicalPIF(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (PIFRef, error) {
 	return callAndConvert(ctx, c.client, "network_sriov.get_logical_PIF", toString[PIFRef], string(sessionID), string(self))
 }
 
 // GetPhysicalPIF Get the physical_PIF field of the given network_sriov.
-func (c NetworkSriovClass) GetPhysicalPIF(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (PIFRef, error) {
+func (c NetworkSRIOVClass) GetPhysicalPIF(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (PIFRef, error) {
 	return callAndConvert(ctx, c.client, "network_sriov.get_physical_PIF", toString[PIFRef], string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given network_sriov.
-func (c NetworkSriovClass) GetUUID(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (string, error) {
+func (c NetworkSRIOVClass) GetUUID(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (string, error) {
 	return callAndConvert(ctx, c.client, "network_sriov.get_uuid", toValue[string], string(sessionID), string(self))
 }
 
 // GetByUUID Get a reference to the network_sriov instance with the specified UUID.
-func (c NetworkSriovClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (NetworkSriovRef, error) {
-	return callAndConvert(ctx, c.client, "network_sriov.get_by_uuid", toString[NetworkSriovRef], string(sessionID), uuid)
+func (c NetworkSRIOVClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (NetworkSRIOVRef, error) {
+	return callAndConvert(ctx, c.client, "network_sriov.get_by_uuid", toString[NetworkSRIOVRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given network_sriov.
-func (c NetworkSriovClass) GetRecord(ctx context.Context, sessionID SessionRef, self NetworkSriovRef) (NetworkSriovRecord, error) {
-	return callAndConvert(ctx, c.client, "network_sriov.get_record", convertNetworkSriovRecordToGo, string(sessionID), string(self))
+func (c NetworkSRIOVClass) GetRecord(ctx context.Context, sessionID SessionRef, self NetworkSRIOVRef) (NetworkSRIOVRecord, error) {
+	return callAndConvert(ctx, c.client, "network_sriov.get_record", convertNetworkSRIOVRecordToGo, string(sessionID), string(self))
 }

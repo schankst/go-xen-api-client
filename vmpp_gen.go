@@ -7,48 +7,48 @@ import (
 	"time"
 )
 
-type VmppBackupType string
+type VMPPBackupType string
 
 const (
 	// The backup is a snapshot
-	VmppBackupTypeSnapshot VmppBackupType = "snapshot"
+	VMPPBackupTypeSnapshot VMPPBackupType = "snapshot"
 	// The backup is a checkpoint
-	VmppBackupTypeCheckpoint VmppBackupType = "checkpoint"
+	VMPPBackupTypeCheckpoint VMPPBackupType = "checkpoint"
 )
 
-type VmppBackupFrequency string
+type VMPPBackupFrequency string
 
 const (
 	// Hourly backups
-	VmppBackupFrequencyHourly VmppBackupFrequency = "hourly"
+	VMPPBackupFrequencyHourly VMPPBackupFrequency = "hourly"
 	// Daily backups
-	VmppBackupFrequencyDaily VmppBackupFrequency = "daily"
+	VMPPBackupFrequencyDaily VMPPBackupFrequency = "daily"
 	// Weekly backups
-	VmppBackupFrequencyWeekly VmppBackupFrequency = "weekly"
+	VMPPBackupFrequencyWeekly VMPPBackupFrequency = "weekly"
 )
 
-type VmppArchiveFrequency string
+type VMPPArchiveFrequency string
 
 const (
 	// Never archive
-	VmppArchiveFrequencyNever VmppArchiveFrequency = "never"
+	VMPPArchiveFrequencyNever VMPPArchiveFrequency = "never"
 	// Archive after backup
-	VmppArchiveFrequencyAlwaysAfterBackup VmppArchiveFrequency = "always_after_backup"
+	VMPPArchiveFrequencyAlwaysAfterBackup VMPPArchiveFrequency = "always_after_backup"
 	// Daily archives
-	VmppArchiveFrequencyDaily VmppArchiveFrequency = "daily"
+	VMPPArchiveFrequencyDaily VMPPArchiveFrequency = "daily"
 	// Weekly backups
-	VmppArchiveFrequencyWeekly VmppArchiveFrequency = "weekly"
+	VMPPArchiveFrequencyWeekly VMPPArchiveFrequency = "weekly"
 )
 
-type VmppArchiveTargetType string
+type VMPPArchiveTargetType string
 
 const (
 	// No target config
-	VmppArchiveTargetTypeNone VmppArchiveTargetType = "none"
+	VMPPArchiveTargetTypeNone VMPPArchiveTargetType = "none"
 	// CIFS target config
-	VmppArchiveTargetTypeCifs VmppArchiveTargetType = "cifs"
+	VMPPArchiveTargetTypeCIFS VMPPArchiveTargetType = "cifs"
 	// NFS target config
-	VmppArchiveTargetTypeNfs VmppArchiveTargetType = "nfs"
+	VMPPArchiveTargetTypeNFS VMPPArchiveTargetType = "nfs"
 )
 
 type VMPPRecord struct {
@@ -71,7 +71,7 @@ type VMPPRecord struct {
 	// type of the backup sub-policy
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-	BackupType VmppBackupType
+	BackupType VMPPBackupType
 	// maximum number of backups that should be stored at any time
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
@@ -79,7 +79,7 @@ type VMPPRecord struct {
 	// frequency of the backup schedule
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-	BackupFrequency VmppBackupFrequency
+	BackupFrequency VMPPBackupFrequency
 	// schedule of the backup containing 'hour', 'min', 'days'. Date/time-related information is in Local Timezone
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
@@ -95,7 +95,7 @@ type VMPPRecord struct {
 	// type of the archive target config
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-	ArchiveTargetType VmppArchiveTargetType
+	ArchiveTargetType VMPPArchiveTargetType
 	// configuration for the archive, including its 'location', 'username', 'password'
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
@@ -103,7 +103,7 @@ type VMPPRecord struct {
 	// frequency of the archive schedule
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-	ArchiveFrequency VmppArchiveFrequency
+	ArchiveFrequency VMPPArchiveFrequency
 	// schedule of the archive containing 'hour', 'min', 'days'. Date/time-related information is in Local Timezone
 	//
 	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
@@ -264,7 +264,7 @@ func (c VMPPClass) SetArchiveTargetConfig(ctx context.Context, sessionID Session
 // SetArchiveTargetType Set the value of the archive_target_config_type field
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) SetArchiveTargetType(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppArchiveTargetType) error {
+func (c VMPPClass) SetArchiveTargetType(ctx context.Context, sessionID SessionRef, self VMPPRef, value VMPPArchiveTargetType) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_archive_target_type", string(sessionID), string(self), string(value))
 	return err
 }
@@ -280,7 +280,7 @@ func (c VMPPClass) SetArchiveSchedule(ctx context.Context, sessionID SessionRef,
 // SetArchiveFrequency Set the value of the archive_frequency field
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) SetArchiveFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppArchiveFrequency) error {
+func (c VMPPClass) SetArchiveFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef, value VMPPArchiveFrequency) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_archive_frequency", string(sessionID), string(self), string(value))
 	return err
 }
@@ -296,7 +296,7 @@ func (c VMPPClass) SetBackupSchedule(ctx context.Context, sessionID SessionRef, 
 // SetBackupFrequency Set the value of the backup_frequency field
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) SetBackupFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppBackupFrequency) error {
+func (c VMPPClass) SetBackupFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef, value VMPPBackupFrequency) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_frequency", string(sessionID), string(self), string(value))
 	return err
 }
@@ -333,7 +333,7 @@ func (c VMPPClass) ProtectNow(ctx context.Context, sessionID SessionRef, vmpp VM
 // SetBackupType Set the backup_type field of the given VMPP.
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) SetBackupType(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppBackupType) error {
+func (c VMPPClass) SetBackupType(ctx context.Context, sessionID SessionRef, self VMPPRef, value VMPPBackupType) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_type", string(sessionID), string(self), string(value))
 	return err
 }
@@ -414,8 +414,8 @@ func (c VMPPClass) GetArchiveSchedule(ctx context.Context, sessionID SessionRef,
 // GetArchiveFrequency Get the archive_frequency field of the given VMPP.
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) GetArchiveFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppArchiveFrequency, error) {
-	return callAndConvert(ctx, c.client, "VMPP.get_archive_frequency", toString[VmppArchiveFrequency], string(sessionID), string(self))
+func (c VMPPClass) GetArchiveFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef) (VMPPArchiveFrequency, error) {
+	return callAndConvert(ctx, c.client, "VMPP.get_archive_frequency", toString[VMPPArchiveFrequency], string(sessionID), string(self))
 }
 
 // GetArchiveTargetConfig Get the archive_target_config field of the given VMPP.
@@ -428,8 +428,8 @@ func (c VMPPClass) GetArchiveTargetConfig(ctx context.Context, sessionID Session
 // GetArchiveTargetType Get the archive_target_type field of the given VMPP.
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) GetArchiveTargetType(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppArchiveTargetType, error) {
-	return callAndConvert(ctx, c.client, "VMPP.get_archive_target_type", toString[VmppArchiveTargetType], string(sessionID), string(self))
+func (c VMPPClass) GetArchiveTargetType(ctx context.Context, sessionID SessionRef, self VMPPRef) (VMPPArchiveTargetType, error) {
+	return callAndConvert(ctx, c.client, "VMPP.get_archive_target_type", toString[VMPPArchiveTargetType], string(sessionID), string(self))
 }
 
 // GetBackupLastRunTime Get the backup_last_run_time field of the given VMPP.
@@ -456,8 +456,8 @@ func (c VMPPClass) GetBackupSchedule(ctx context.Context, sessionID SessionRef, 
 // GetBackupFrequency Get the backup_frequency field of the given VMPP.
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) GetBackupFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppBackupFrequency, error) {
-	return callAndConvert(ctx, c.client, "VMPP.get_backup_frequency", toString[VmppBackupFrequency], string(sessionID), string(self))
+func (c VMPPClass) GetBackupFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef) (VMPPBackupFrequency, error) {
+	return callAndConvert(ctx, c.client, "VMPP.get_backup_frequency", toString[VMPPBackupFrequency], string(sessionID), string(self))
 }
 
 // GetBackupRetentionValue Get the backup_retention_value field of the given VMPP.
@@ -470,8 +470,8 @@ func (c VMPPClass) GetBackupRetentionValue(ctx context.Context, sessionID Sessio
 // GetBackupType Get the backup_type field of the given VMPP.
 //
 // Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
-func (c VMPPClass) GetBackupType(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppBackupType, error) {
-	return callAndConvert(ctx, c.client, "VMPP.get_backup_type", toString[VmppBackupType], string(sessionID), string(self))
+func (c VMPPClass) GetBackupType(ctx context.Context, sessionID SessionRef, self VMPPRef) (VMPPBackupType, error) {
+	return callAndConvert(ctx, c.client, "VMPP.get_backup_type", toString[VMPPBackupType], string(sessionID), string(self))
 }
 
 // GetIsPolicyEnabled Get the is_policy_enabled field of the given VMPP.

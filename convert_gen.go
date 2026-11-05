@@ -288,8 +288,8 @@ func convertNetworkRefToNetworkRecordMapToGo(input any) (map[NetworkRef]NetworkR
 	return toMap(input, toString[NetworkRef], convertNetworkRecordToGo)
 }
 
-func convertNetworkSriovRefToNetworkSriovRecordMapToGo(input any) (map[NetworkSriovRef]NetworkSriovRecord, error) {
-	return toMap(input, toString[NetworkSriovRef], convertNetworkSriovRecordToGo)
+func convertNetworkSRIOVRefToNetworkSRIOVRecordMapToGo(input any) (map[NetworkSRIOVRef]NetworkSRIOVRecord, error) {
+	return toMap(input, toString[NetworkSRIOVRef], convertNetworkSRIOVRecordToGo)
 }
 
 func convertPoolRefToPoolRecordMapToGo(input any) (map[PoolRef]PoolRecord, error) {
@@ -352,28 +352,28 @@ func convertStringToEnumTaskAllowedOperationsMapToGo(input any) (map[string]Task
 	return toMap(input, toValue[string], toString[TaskAllowedOperations])
 }
 
-func convertStringToEnumVbdOperationsMapToGo(input any) (map[string]VbdOperations, error) {
-	return toMap(input, toValue[string], toString[VbdOperations])
+func convertStringToEnumVBDOperationsMapToGo(input any) (map[string]VBDOperations, error) {
+	return toMap(input, toValue[string], toString[VBDOperations])
 }
 
-func convertStringToEnumVbdOperationsMapToXen(v map[string]VbdOperations) xmlrpc.Struct {
-	return fromMap(v, fromValue[string], fromString[VbdOperations])
+func convertStringToEnumVBDOperationsMapToXen(v map[string]VBDOperations) xmlrpc.Struct {
+	return fromMap(v, fromValue[string], fromString[VBDOperations])
 }
 
-func convertStringToEnumVdiOperationsMapToGo(input any) (map[string]VdiOperations, error) {
-	return toMap(input, toValue[string], toString[VdiOperations])
+func convertStringToEnumVDIOperationsMapToGo(input any) (map[string]VDIOperations, error) {
+	return toMap(input, toValue[string], toString[VDIOperations])
 }
 
-func convertStringToEnumVdiOperationsMapToXen(v map[string]VdiOperations) xmlrpc.Struct {
-	return fromMap(v, fromValue[string], fromString[VdiOperations])
+func convertStringToEnumVDIOperationsMapToXen(v map[string]VDIOperations) xmlrpc.Struct {
+	return fromMap(v, fromValue[string], fromString[VDIOperations])
 }
 
-func convertStringToEnumVifOperationsMapToGo(input any) (map[string]VifOperations, error) {
-	return toMap(input, toValue[string], toString[VifOperations])
+func convertStringToEnumVIFOperationsMapToGo(input any) (map[string]VIFOperations, error) {
+	return toMap(input, toValue[string], toString[VIFOperations])
 }
 
-func convertStringToEnumVifOperationsMapToXen(v map[string]VifOperations) xmlrpc.Struct {
-	return fromMap(v, fromValue[string], fromString[VifOperations])
+func convertStringToEnumVIFOperationsMapToXen(v map[string]VIFOperations) xmlrpc.Struct {
+	return fromMap(v, fromValue[string], fromString[VIFOperations])
 }
 
 func convertStringToEnumVMApplianceOperationMapToGo(input any) (map[string]VMApplianceOperation, error) {
@@ -392,12 +392,12 @@ func convertStringToEnumVMOperationsMapToXen(v map[string]VMOperations) xmlrpc.S
 	return fromMap(v, fromValue[string], fromString[VMOperations])
 }
 
-func convertStringToEnumVtpmOperationsMapToGo(input any) (map[string]VtpmOperations, error) {
-	return toMap(input, toValue[string], toString[VtpmOperations])
+func convertStringToEnumVTPMOperationsMapToGo(input any) (map[string]VTPMOperations, error) {
+	return toMap(input, toValue[string], toString[VTPMOperations])
 }
 
-func convertStringToEnumVusbOperationsMapToGo(input any) (map[string]VusbOperations, error) {
-	return toMap(input, toValue[string], toString[VusbOperations])
+func convertStringToEnumVUSBOperationsMapToGo(input any) (map[string]VUSBOperations, error) {
+	return toMap(input, toValue[string], toString[VUSBOperations])
 }
 
 func convertStringToIntMapToGo(input any) (map[string]int, error) {
@@ -439,7 +439,7 @@ func convertBondRecordToGo(input any) (BondRecord, error) {
 		field(s, "mode", &r.Mode, toString[BondMode]),
 		field(s, "properties", &r.Properties, convertStringToStringMapToGo),
 		field(s, "links_up", &r.LinksUp, toInt),
-		field(s, "auto_update_mac", &r.AutoUpdateMac, toValue[bool]),
+		field(s, "auto_update_mac", &r.AutoUpdateMAC, toValue[bool]),
 	)
 	return r, err
 }
@@ -505,7 +505,7 @@ func convertCertificateRecordToGo(input any) (CertificateRecord, error) {
 		field(s, "not_after", &r.NotAfter, toTime),
 		field(s, "fingerprint", &r.Fingerprint, toValue[string]),
 		field(s, "fingerprint_sha256", &r.FingerprintSha256, toValue[string]),
-		field(s, "fingerprint_sha1", &r.FingerprintSha1, toValue[string]),
+		field(s, "fingerprint_sha1", &r.FingerprintSHA1, toValue[string]),
 		field(s, "purpose", &r.Purpose, convertEnumCertificatePurposeSetToGo),
 	)
 	return r, err
@@ -779,7 +779,7 @@ func convertPCIRecordToGo(input any) (PCIRecord, error) {
 		field(s, "device_id", &r.DeviceID, toValue[string]),
 		field(s, "device_name", &r.DeviceName, toValue[string]),
 		field(s, "host", &r.Host, toString[HostRef]),
-		field(s, "pci_id", &r.PciID, toValue[string]),
+		field(s, "pci_id", &r.PCIID, toValue[string]),
 		field(s, "dependencies", &r.Dependencies, convertPCIRefSetToGo),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
 		field(s, "subsystem_vendor_id", &r.SubsystemVendorID, toValue[string]),
@@ -815,7 +815,7 @@ func convertPGPURecordToGo(input any) (PGPURecord, error) {
 		field(s, "enabled_VGPU_types", &r.EnabledVGPUTypes, convertVGPUTypeRefSetToGo),
 		field(s, "resident_VGPUs", &r.ResidentVGPUs, convertVGPURefSetToGo),
 		field(s, "supported_VGPU_max_capacities", &r.SupportedVGPUMaxCapacities, convertVGPUTypeRefToIntMapToGo),
-		field(s, "dom0_access", &r.Dom0Access, toString[PciDom0Access]),
+		field(s, "dom0_access", &r.Dom0Access, toString[PCIDom0Access]),
 		field(s, "is_system_display_device", &r.IsSystemDisplayDevice, toValue[bool]),
 		field(s, "compatibility_metadata", &r.CompatibilityMetadata, convertStringToStringMapToGo),
 	)
@@ -857,18 +857,18 @@ func convertPIFRecordToGo(input any) (PIFRecord, error) {
 		field(s, "disallow_unplug", &r.DisallowUnplug, toValue[bool]),
 		field(s, "tunnel_access_PIF_of", &r.TunnelAccessPIFOf, convertTunnelRefSetToGo),
 		field(s, "tunnel_transport_PIF_of", &r.TunnelTransportPIFOf, convertTunnelRefSetToGo),
-		field(s, "ipv6_configuration_mode", &r.Ipv6ConfigurationMode, toString[Ipv6ConfigurationMode]),
+		field(s, "ipv6_configuration_mode", &r.IPv6ConfigurationMode, toString[IPv6ConfigurationMode]),
 		field(s, "IPv6", &r.IPv6, convertStringSetToGo),
-		field(s, "ipv6_gateway", &r.Ipv6Gateway, toValue[string]),
+		field(s, "ipv6_gateway", &r.IPv6Gateway, toValue[string]),
 		field(s, "primary_address_type", &r.PrimaryAddressType, toString[PrimaryAddressType]),
 		field(s, "managed", &r.Managed, toValue[bool]),
 		field(s, "properties", &r.Properties, convertStringToStringMapToGo),
 		field(s, "capabilities", &r.Capabilities, convertStringSetToGo),
-		field(s, "igmp_snooping_status", &r.IgmpSnoopingStatus, toString[PifIgmpStatus]),
-		field(s, "sriov_physical_PIF_of", &r.SriovPhysicalPIFOf, convertNetworkSriovRefSetToGo),
-		field(s, "sriov_logical_PIF_of", &r.SriovLogicalPIFOf, convertNetworkSriovRefSetToGo),
+		field(s, "igmp_snooping_status", &r.IGMPSnoopingStatus, toString[PIFIGMPStatus]),
+		field(s, "sriov_physical_PIF_of", &r.SRIOVPhysicalPIFOf, convertNetworkSRIOVRefSetToGo),
+		field(s, "sriov_logical_PIF_of", &r.SRIOVLogicalPIFOf, convertNetworkSRIOVRefSetToGo),
 		field(s, "PCI", &r.PCI, toString[PCIRef]),
-		field(s, "lldp_mode", &r.LldpMode, toString[PifLldpMode]),
+		field(s, "lldp_mode", &r.LLDPMode, toString[PIFLLDPMode]),
 	)
 	return r, err
 }
@@ -889,8 +889,8 @@ func convertPIFMetricsRecordToGo(input any) (PIFMetricsRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "io_read_kbs", &r.IoReadKbs, toValue[float64]),
-		field(s, "io_write_kbs", &r.IoWriteKbs, toValue[float64]),
+		field(s, "io_read_kbs", &r.IOReadKbs, toValue[float64]),
+		field(s, "io_write_kbs", &r.IOWriteKbs, toValue[float64]),
 		field(s, "carrier", &r.Carrier, toValue[bool]),
 		field(s, "vendor_id", &r.VendorID, toValue[string]),
 		field(s, "vendor_name", &r.VendorName, toValue[string]),
@@ -898,10 +898,10 @@ func convertPIFMetricsRecordToGo(input any) (PIFMetricsRecord, error) {
 		field(s, "device_name", &r.DeviceName, toValue[string]),
 		field(s, "speed", &r.Speed, toInt),
 		field(s, "duplex", &r.Duplex, toValue[bool]),
-		field(s, "pci_bus_path", &r.PciBusPath, toValue[string]),
+		field(s, "pci_bus_path", &r.PCIBusPath, toValue[string]),
 		field(s, "last_updated", &r.LastUpdated, toTime),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
-		field(s, "lldp_neighbor", &r.LldpNeighbor, convertStringToStringMapToGo),
+		field(s, "lldp_neighbor", &r.LLDPNeighbor, convertStringToStringMapToGo),
 	)
 	return r, err
 }
@@ -982,7 +982,7 @@ func convertPVSProxyRecordToGo(input any) (PVSProxyRecord, error) {
 		field(s, "site", &r.Site, toString[PVSSiteRef]),
 		field(s, "VIF", &r.VIF, toString[VIFRef]),
 		field(s, "currently_attached", &r.CurrentlyAttached, toValue[bool]),
-		field(s, "status", &r.Status, toString[PvsProxyStatus]),
+		field(s, "status", &r.Status, toString[PVSProxyStatus]),
 	)
 	return r, err
 }
@@ -1103,7 +1103,7 @@ func convertSDNControllerRecordToGo(input any) (SDNControllerRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "protocol", &r.Protocol, toString[SdnControllerProtocol]),
+		field(s, "protocol", &r.Protocol, toString[SDNControllerProtocol]),
 		field(s, "address", &r.Address, toValue[string]),
 		field(s, "port", &r.Port, toInt),
 	)
@@ -1166,12 +1166,12 @@ func convertSRRecordToGo(input any) (SRRecord, error) {
 		field(s, "shared", &r.Shared, toValue[bool]),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
 		field(s, "tags", &r.Tags, convertStringSetToGo),
-		field(s, "sm_config", &r.SmConfig, convertStringToStringMapToGo),
+		field(s, "sm_config", &r.SMConfig, convertStringToStringMapToGo),
 		field(s, "blobs", &r.Blobs, convertStringToBlobRefMapToGo),
 		field(s, "local_cache_enabled", &r.LocalCacheEnabled, toValue[bool]),
 		field(s, "introduced_by", &r.IntroducedBy, toString[DRTaskRef]),
 		field(s, "clustered", &r.Clustered, toValue[bool]),
-		field(s, "is_tools_sr", &r.IsToolsSr, toValue[bool]),
+		field(s, "is_tools_sr", &r.IsToolsSR, toValue[bool]),
 	)
 	return r, err
 }
@@ -1213,15 +1213,15 @@ func convertVBDRecordToGo(input any) (VBDRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVbdOperationsSetToGo),
-		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVbdOperationsMapToGo),
+		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVBDOperationsSetToGo),
+		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVBDOperationsMapToGo),
 		field(s, "VM", &r.VM, toString[VMRef]),
 		field(s, "VDI", &r.VDI, toString[VDIRef]),
 		field(s, "device", &r.Device, toValue[string]),
 		field(s, "userdevice", &r.Userdevice, toValue[string]),
 		field(s, "bootable", &r.Bootable, toValue[bool]),
-		field(s, "mode", &r.Mode, toString[VbdMode]),
-		field(s, "type", &r.Type, toString[VbdType]),
+		field(s, "mode", &r.Mode, toString[VBDMode]),
+		field(s, "type", &r.Type, toString[VBDType]),
 		field(s, "unpluggable", &r.Unpluggable, toValue[bool]),
 		field(s, "storage_lock", &r.StorageLock, toValue[bool]),
 		field(s, "empty", &r.Empty, toValue[bool]),
@@ -1230,9 +1230,9 @@ func convertVBDRecordToGo(input any) (VBDRecord, error) {
 		field(s, "status_code", &r.StatusCode, toInt),
 		field(s, "status_detail", &r.StatusDetail, toValue[string]),
 		field(s, "runtime_properties", &r.RuntimeProperties, convertStringToStringMapToGo),
-		field(s, "qos_algorithm_type", &r.QosAlgorithmType, toValue[string]),
-		field(s, "qos_algorithm_params", &r.QosAlgorithmParams, convertStringToStringMapToGo),
-		field(s, "qos_supported_algorithms", &r.QosSupportedAlgorithms, convertStringSetToGo),
+		field(s, "qos_algorithm_type", &r.QoSAlgorithmType, toValue[string]),
+		field(s, "qos_algorithm_params", &r.QoSAlgorithmParams, convertStringToStringMapToGo),
+		field(s, "qos_supported_algorithms", &r.QoSSupportedAlgorithms, convertStringSetToGo),
 		field(s, "metrics", &r.Metrics, toString[VBDMetricsRef]),
 	)
 	return r, err
@@ -1241,8 +1241,8 @@ func convertVBDRecordToGo(input any) (VBDRecord, error) {
 func convertVBDRecordToXen(r VBDRecord) xmlrpc.Struct {
 	return xmlrpc.Struct{
 		"uuid":                     r.UUID,
-		"allowed_operations":       convertEnumVbdOperationsSetToXen(r.AllowedOperations),
-		"current_operations":       convertStringToEnumVbdOperationsMapToXen(r.CurrentOperations),
+		"allowed_operations":       convertEnumVBDOperationsSetToXen(r.AllowedOperations),
+		"current_operations":       convertStringToEnumVBDOperationsMapToXen(r.CurrentOperations),
 		"VM":                       string(r.VM),
 		"VDI":                      string(r.VDI),
 		"device":                   r.Device,
@@ -1258,9 +1258,9 @@ func convertVBDRecordToXen(r VBDRecord) xmlrpc.Struct {
 		"status_code":              fromInt(r.StatusCode),
 		"status_detail":            r.StatusDetail,
 		"runtime_properties":       convertStringToStringMapToXen(r.RuntimeProperties),
-		"qos_algorithm_type":       r.QosAlgorithmType,
-		"qos_algorithm_params":     convertStringToStringMapToXen(r.QosAlgorithmParams),
-		"qos_supported_algorithms": convertStringSetToXen(r.QosSupportedAlgorithms),
+		"qos_algorithm_type":       r.QoSAlgorithmType,
+		"qos_algorithm_params":     convertStringToStringMapToXen(r.QoSAlgorithmParams),
+		"qos_supported_algorithms": convertStringSetToXen(r.QoSSupportedAlgorithms),
 		"metrics":                  string(r.Metrics),
 	}
 }
@@ -1281,8 +1281,8 @@ func convertVBDMetricsRecordToGo(input any) (VBDMetricsRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "io_read_kbs", &r.IoReadKbs, toValue[float64]),
-		field(s, "io_write_kbs", &r.IoWriteKbs, toValue[float64]),
+		field(s, "io_read_kbs", &r.IOReadKbs, toValue[float64]),
+		field(s, "io_write_kbs", &r.IOWriteKbs, toValue[float64]),
 		field(s, "last_updated", &r.LastUpdated, toTime),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
 	)
@@ -1303,14 +1303,14 @@ func convertVDIRecordToGo(input any) (VDIRecord, error) {
 		field(s, "uuid", &r.UUID, toValue[string]),
 		field(s, "name_label", &r.NameLabel, toValue[string]),
 		field(s, "name_description", &r.NameDescription, toValue[string]),
-		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVdiOperationsSetToGo),
-		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVdiOperationsMapToGo),
+		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVDIOperationsSetToGo),
+		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVDIOperationsMapToGo),
 		field(s, "SR", &r.SR, toString[SRRef]),
 		field(s, "VBDs", &r.VBDs, convertVBDRefSetToGo),
 		field(s, "crash_dumps", &r.CrashDumps, convertCrashdumpRefSetToGo),
 		field(s, "virtual_size", &r.VirtualSize, toInt),
 		field(s, "physical_utilisation", &r.PhysicalUtilisation, toInt),
-		field(s, "type", &r.Type, toString[VdiType]),
+		field(s, "type", &r.Type, toString[VDIType]),
 		field(s, "sharable", &r.Sharable, toValue[bool]),
 		field(s, "read_only", &r.ReadOnly, toValue[bool]),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
@@ -1320,7 +1320,7 @@ func convertVDIRecordToGo(input any) (VDIRecord, error) {
 		field(s, "missing", &r.Missing, toValue[bool]),
 		field(s, "parent", &r.Parent, toString[VDIRef]),
 		field(s, "xenstore_data", &r.XenstoreData, convertStringToStringMapToGo),
-		field(s, "sm_config", &r.SmConfig, convertStringToStringMapToGo),
+		field(s, "sm_config", &r.SMConfig, convertStringToStringMapToGo),
 		field(s, "is_a_snapshot", &r.IsASnapshot, toValue[bool]),
 		field(s, "snapshot_of", &r.SnapshotOf, toString[VDIRef]),
 		field(s, "snapshots", &r.Snapshots, convertVDIRefSetToGo),
@@ -1330,8 +1330,8 @@ func convertVDIRecordToGo(input any) (VDIRecord, error) {
 		field(s, "on_boot", &r.OnBoot, toString[OnBoot]),
 		field(s, "metadata_of_pool", &r.MetadataOfPool, toString[PoolRef]),
 		field(s, "metadata_latest", &r.MetadataLatest, toValue[bool]),
-		field(s, "is_tools_iso", &r.IsToolsIso, toValue[bool]),
-		field(s, "cbt_enabled", &r.CbtEnabled, toValue[bool]),
+		field(s, "is_tools_iso", &r.IsToolsISO, toValue[bool]),
+		field(s, "cbt_enabled", &r.CBTEnabled, toValue[bool]),
 	)
 	return r, err
 }
@@ -1341,8 +1341,8 @@ func convertVDIRecordToXen(r VDIRecord) xmlrpc.Struct {
 		"uuid":                 r.UUID,
 		"name_label":           r.NameLabel,
 		"name_description":     r.NameDescription,
-		"allowed_operations":   convertEnumVdiOperationsSetToXen(r.AllowedOperations),
-		"current_operations":   convertStringToEnumVdiOperationsMapToXen(r.CurrentOperations),
+		"allowed_operations":   convertEnumVDIOperationsSetToXen(r.AllowedOperations),
+		"current_operations":   convertStringToEnumVDIOperationsMapToXen(r.CurrentOperations),
 		"SR":                   string(r.SR),
 		"VBDs":                 convertVBDRefSetToXen(r.VBDs),
 		"crash_dumps":          convertCrashdumpRefSetToXen(r.CrashDumps),
@@ -1358,7 +1358,7 @@ func convertVDIRecordToXen(r VDIRecord) xmlrpc.Struct {
 		"missing":              r.Missing,
 		"parent":               string(r.Parent),
 		"xenstore_data":        convertStringToStringMapToXen(r.XenstoreData),
-		"sm_config":            convertStringToStringMapToXen(r.SmConfig),
+		"sm_config":            convertStringToStringMapToXen(r.SMConfig),
 		"is_a_snapshot":        r.IsASnapshot,
 		"snapshot_of":          string(r.SnapshotOf),
 		"snapshots":            convertVDIRefSetToXen(r.Snapshots),
@@ -1368,8 +1368,8 @@ func convertVDIRecordToXen(r VDIRecord) xmlrpc.Struct {
 		"on_boot":              string(r.OnBoot),
 		"metadata_of_pool":     string(r.MetadataOfPool),
 		"metadata_latest":      r.MetadataLatest,
-		"is_tools_iso":         r.IsToolsIso,
-		"cbt_enabled":          r.CbtEnabled,
+		"is_tools_iso":         r.IsToolsISO,
+		"cbt_enabled":          r.CBTEnabled,
 	}
 }
 
@@ -1431,7 +1431,7 @@ func convertVGPUTypeRecordToGo(input any) (VGPUTypeRecord, error) {
 		field(s, "VGPUs", &r.VGPUs, convertVGPURefSetToGo),
 		field(s, "supported_on_GPU_groups", &r.SupportedOnGPUGroups, convertGPUGroupRefSetToGo),
 		field(s, "enabled_on_GPU_groups", &r.EnabledOnGPUGroups, convertGPUGroupRefSetToGo),
-		field(s, "implementation", &r.Implementation, toString[VgpuTypeImplementation]),
+		field(s, "implementation", &r.Implementation, toString[VGPUTypeImplementation]),
 		field(s, "identifier", &r.Identifier, toValue[string]),
 		field(s, "experimental", &r.Experimental, toValue[bool]),
 		field(s, "compatible_types_in_vm", &r.CompatibleTypesInVM, convertVGPUTypeRefSetToGo),
@@ -1455,8 +1455,8 @@ func convertVIFRecordToGo(input any) (VIFRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVifOperationsSetToGo),
-		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVifOperationsMapToGo),
+		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVIFOperationsSetToGo),
+		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVIFOperationsMapToGo),
 		field(s, "device", &r.Device, toValue[string]),
 		field(s, "network", &r.Network, toString[NetworkRef]),
 		field(s, "VM", &r.VM, toString[VMRef]),
@@ -1467,20 +1467,20 @@ func convertVIFRecordToGo(input any) (VIFRecord, error) {
 		field(s, "status_code", &r.StatusCode, toInt),
 		field(s, "status_detail", &r.StatusDetail, toValue[string]),
 		field(s, "runtime_properties", &r.RuntimeProperties, convertStringToStringMapToGo),
-		field(s, "qos_algorithm_type", &r.QosAlgorithmType, toValue[string]),
-		field(s, "qos_algorithm_params", &r.QosAlgorithmParams, convertStringToStringMapToGo),
-		field(s, "qos_supported_algorithms", &r.QosSupportedAlgorithms, convertStringSetToGo),
+		field(s, "qos_algorithm_type", &r.QoSAlgorithmType, toValue[string]),
+		field(s, "qos_algorithm_params", &r.QoSAlgorithmParams, convertStringToStringMapToGo),
+		field(s, "qos_supported_algorithms", &r.QoSSupportedAlgorithms, convertStringSetToGo),
 		field(s, "metrics", &r.Metrics, toString[VIFMetricsRef]),
 		field(s, "MAC_autogenerated", &r.MACAutogenerated, toValue[bool]),
-		field(s, "locking_mode", &r.LockingMode, toString[VifLockingMode]),
-		field(s, "ipv4_allowed", &r.Ipv4Allowed, convertStringSetToGo),
-		field(s, "ipv6_allowed", &r.Ipv6Allowed, convertStringSetToGo),
-		field(s, "ipv4_configuration_mode", &r.Ipv4ConfigurationMode, toString[VifIpv4ConfigurationMode]),
-		field(s, "ipv4_addresses", &r.Ipv4Addresses, convertStringSetToGo),
-		field(s, "ipv4_gateway", &r.Ipv4Gateway, toValue[string]),
-		field(s, "ipv6_configuration_mode", &r.Ipv6ConfigurationMode, toString[VifIpv6ConfigurationMode]),
-		field(s, "ipv6_addresses", &r.Ipv6Addresses, convertStringSetToGo),
-		field(s, "ipv6_gateway", &r.Ipv6Gateway, toValue[string]),
+		field(s, "locking_mode", &r.LockingMode, toString[VIFLockingMode]),
+		field(s, "ipv4_allowed", &r.IPv4Allowed, convertStringSetToGo),
+		field(s, "ipv6_allowed", &r.IPv6Allowed, convertStringSetToGo),
+		field(s, "ipv4_configuration_mode", &r.IPv4ConfigurationMode, toString[VIFIPv4ConfigurationMode]),
+		field(s, "ipv4_addresses", &r.IPv4Addresses, convertStringSetToGo),
+		field(s, "ipv4_gateway", &r.IPv4Gateway, toValue[string]),
+		field(s, "ipv6_configuration_mode", &r.IPv6ConfigurationMode, toString[VIFIPv6ConfigurationMode]),
+		field(s, "ipv6_addresses", &r.IPv6Addresses, convertStringSetToGo),
+		field(s, "ipv6_gateway", &r.IPv6Gateway, toValue[string]),
 		field(s, "trunks", &r.Trunks, convertIntSetToGo),
 	)
 	return r, err
@@ -1489,8 +1489,8 @@ func convertVIFRecordToGo(input any) (VIFRecord, error) {
 func convertVIFRecordToXen(r VIFRecord) xmlrpc.Struct {
 	return xmlrpc.Struct{
 		"uuid":                     r.UUID,
-		"allowed_operations":       convertEnumVifOperationsSetToXen(r.AllowedOperations),
-		"current_operations":       convertStringToEnumVifOperationsMapToXen(r.CurrentOperations),
+		"allowed_operations":       convertEnumVIFOperationsSetToXen(r.AllowedOperations),
+		"current_operations":       convertStringToEnumVIFOperationsMapToXen(r.CurrentOperations),
 		"device":                   r.Device,
 		"network":                  string(r.Network),
 		"VM":                       string(r.VM),
@@ -1501,20 +1501,20 @@ func convertVIFRecordToXen(r VIFRecord) xmlrpc.Struct {
 		"status_code":              fromInt(r.StatusCode),
 		"status_detail":            r.StatusDetail,
 		"runtime_properties":       convertStringToStringMapToXen(r.RuntimeProperties),
-		"qos_algorithm_type":       r.QosAlgorithmType,
-		"qos_algorithm_params":     convertStringToStringMapToXen(r.QosAlgorithmParams),
-		"qos_supported_algorithms": convertStringSetToXen(r.QosSupportedAlgorithms),
+		"qos_algorithm_type":       r.QoSAlgorithmType,
+		"qos_algorithm_params":     convertStringToStringMapToXen(r.QoSAlgorithmParams),
+		"qos_supported_algorithms": convertStringSetToXen(r.QoSSupportedAlgorithms),
 		"metrics":                  string(r.Metrics),
 		"MAC_autogenerated":        r.MACAutogenerated,
 		"locking_mode":             string(r.LockingMode),
-		"ipv4_allowed":             convertStringSetToXen(r.Ipv4Allowed),
-		"ipv6_allowed":             convertStringSetToXen(r.Ipv6Allowed),
-		"ipv4_configuration_mode":  string(r.Ipv4ConfigurationMode),
-		"ipv4_addresses":           convertStringSetToXen(r.Ipv4Addresses),
-		"ipv4_gateway":             r.Ipv4Gateway,
-		"ipv6_configuration_mode":  string(r.Ipv6ConfigurationMode),
-		"ipv6_addresses":           convertStringSetToXen(r.Ipv6Addresses),
-		"ipv6_gateway":             r.Ipv6Gateway,
+		"ipv4_allowed":             convertStringSetToXen(r.IPv4Allowed),
+		"ipv6_allowed":             convertStringSetToXen(r.IPv6Allowed),
+		"ipv4_configuration_mode":  string(r.IPv4ConfigurationMode),
+		"ipv4_addresses":           convertStringSetToXen(r.IPv4Addresses),
+		"ipv4_gateway":             r.IPv4Gateway,
+		"ipv6_configuration_mode":  string(r.IPv6ConfigurationMode),
+		"ipv6_addresses":           convertStringSetToXen(r.IPv6Addresses),
+		"ipv6_gateway":             r.IPv6Gateway,
 		"trunks":                   convertIntSetToXen(r.Trunks),
 	}
 }
@@ -1535,8 +1535,8 @@ func convertVIFMetricsRecordToGo(input any) (VIFMetricsRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "io_read_kbs", &r.IoReadKbs, toValue[float64]),
-		field(s, "io_write_kbs", &r.IoWriteKbs, toValue[float64]),
+		field(s, "io_read_kbs", &r.IOReadKbs, toValue[float64]),
+		field(s, "io_write_kbs", &r.IOWriteKbs, toValue[float64]),
 		field(s, "last_updated", &r.LastUpdated, toTime),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
 	)
@@ -1627,8 +1627,8 @@ func convertVMRecordToGo(input any) (VMRecord, error) {
 		field(s, "last_booted_record", &r.LastBootedRecord, toValue[string]),
 		field(s, "recommendations", &r.Recommendations, toValue[string]),
 		field(s, "xenstore_data", &r.XenstoreData, convertStringToStringMapToGo),
-		field(s, "ha_always_run", &r.HaAlwaysRun, toValue[bool]),
-		field(s, "ha_restart_priority", &r.HaRestartPriority, toValue[string]),
+		field(s, "ha_always_run", &r.HAAlwaysRun, toValue[bool]),
+		field(s, "ha_restart_priority", &r.HARestartPriority, toValue[string]),
 		field(s, "is_a_snapshot", &r.IsASnapshot, toValue[bool]),
 		field(s, "snapshot_of", &r.SnapshotOf, toString[VMRef]),
 		field(s, "snapshots", &r.Snapshots, convertVMRefSetToGo),
@@ -1641,11 +1641,11 @@ func convertVMRecordToGo(input any) (VMRecord, error) {
 		field(s, "snapshot_metadata", &r.SnapshotMetadata, toValue[string]),
 		field(s, "parent", &r.Parent, toString[VMRef]),
 		field(s, "children", &r.Children, convertVMRefSetToGo),
-		field(s, "bios_strings", &r.BiosStrings, convertStringToStringMapToGo),
+		field(s, "bios_strings", &r.BIOSStrings, convertStringToStringMapToGo),
 		field(s, "protection_policy", &r.ProtectionPolicy, toString[VMPPRef]),
-		field(s, "is_snapshot_from_vmpp", &r.IsSnapshotFromVmpp, toValue[bool]),
+		field(s, "is_snapshot_from_vmpp", &r.IsSnapshotFromVMPP, toValue[bool]),
 		field(s, "snapshot_schedule", &r.SnapshotSchedule, toString[VMSSRef]),
-		field(s, "is_vmss_snapshot", &r.IsVmssSnapshot, toValue[bool]),
+		field(s, "is_vmss_snapshot", &r.IsVMSSSnapshot, toValue[bool]),
 		field(s, "appliance", &r.Appliance, toString[VMApplianceRef]),
 		field(s, "start_delay", &r.StartDelay, toInt),
 		field(s, "shutdown_delay", &r.ShutdownDelay, toInt),
@@ -1725,8 +1725,8 @@ func convertVMRecordToXen(r VMRecord) xmlrpc.Struct {
 		"last_booted_record":            r.LastBootedRecord,
 		"recommendations":               r.Recommendations,
 		"xenstore_data":                 convertStringToStringMapToXen(r.XenstoreData),
-		"ha_always_run":                 r.HaAlwaysRun,
-		"ha_restart_priority":           r.HaRestartPriority,
+		"ha_always_run":                 r.HAAlwaysRun,
+		"ha_restart_priority":           r.HARestartPriority,
 		"is_a_snapshot":                 r.IsASnapshot,
 		"snapshot_of":                   string(r.SnapshotOf),
 		"snapshots":                     convertVMRefSetToXen(r.Snapshots),
@@ -1739,11 +1739,11 @@ func convertVMRecordToXen(r VMRecord) xmlrpc.Struct {
 		"snapshot_metadata":             r.SnapshotMetadata,
 		"parent":                        string(r.Parent),
 		"children":                      convertVMRefSetToXen(r.Children),
-		"bios_strings":                  convertStringToStringMapToXen(r.BiosStrings),
+		"bios_strings":                  convertStringToStringMapToXen(r.BIOSStrings),
 		"protection_policy":             string(r.ProtectionPolicy),
-		"is_snapshot_from_vmpp":         r.IsSnapshotFromVmpp,
+		"is_snapshot_from_vmpp":         r.IsSnapshotFromVMPP,
 		"snapshot_schedule":             string(r.SnapshotSchedule),
-		"is_vmss_snapshot":              r.IsVmssSnapshot,
+		"is_vmss_snapshot":              r.IsVMSSSnapshot,
 		"appliance":                     string(r.Appliance),
 		"start_delay":                   fromInt(r.StartDelay),
 		"shutdown_delay":                fromInt(r.ShutdownDelay),
@@ -1786,15 +1786,15 @@ func convertVMPPRecordToGo(input any) (VMPPRecord, error) {
 		field(s, "name_label", &r.NameLabel, toValue[string]),
 		field(s, "name_description", &r.NameDescription, toValue[string]),
 		field(s, "is_policy_enabled", &r.IsPolicyEnabled, toValue[bool]),
-		field(s, "backup_type", &r.BackupType, toString[VmppBackupType]),
+		field(s, "backup_type", &r.BackupType, toString[VMPPBackupType]),
 		field(s, "backup_retention_value", &r.BackupRetentionValue, toInt),
-		field(s, "backup_frequency", &r.BackupFrequency, toString[VmppBackupFrequency]),
+		field(s, "backup_frequency", &r.BackupFrequency, toString[VMPPBackupFrequency]),
 		field(s, "backup_schedule", &r.BackupSchedule, convertStringToStringMapToGo),
 		field(s, "is_backup_running", &r.IsBackupRunning, toValue[bool]),
 		field(s, "backup_last_run_time", &r.BackupLastRunTime, toTime),
-		field(s, "archive_target_type", &r.ArchiveTargetType, toString[VmppArchiveTargetType]),
+		field(s, "archive_target_type", &r.ArchiveTargetType, toString[VMPPArchiveTargetType]),
 		field(s, "archive_target_config", &r.ArchiveTargetConfig, convertStringToStringMapToGo),
-		field(s, "archive_frequency", &r.ArchiveFrequency, toString[VmppArchiveFrequency]),
+		field(s, "archive_frequency", &r.ArchiveFrequency, toString[VMPPArchiveFrequency]),
 		field(s, "archive_schedule", &r.ArchiveSchedule, convertStringToStringMapToGo),
 		field(s, "is_archive_running", &r.IsArchiveRunning, toValue[bool]),
 		field(s, "archive_last_run_time", &r.ArchiveLastRunTime, toTime),
@@ -1846,9 +1846,9 @@ func convertVMSSRecordToGo(input any) (VMSSRecord, error) {
 		field(s, "name_label", &r.NameLabel, toValue[string]),
 		field(s, "name_description", &r.NameDescription, toValue[string]),
 		field(s, "enabled", &r.Enabled, toValue[bool]),
-		field(s, "type", &r.Type, toString[VmssType]),
+		field(s, "type", &r.Type, toString[VMSSType]),
 		field(s, "retained_snapshots", &r.RetainedSnapshots, toInt),
-		field(s, "frequency", &r.Frequency, toString[VmssFrequency]),
+		field(s, "frequency", &r.Frequency, toString[VMSSFrequency]),
 		field(s, "schedule", &r.Schedule, convertStringToStringMapToGo),
 		field(s, "last_run_time", &r.LastRunTime, toTime),
 		field(s, "VMs", &r.VMs, convertVMRefSetToGo),
@@ -1960,8 +1960,8 @@ func convertVMGuestMetricsRecordToGo(input any) (VMGuestMetricsRecord, error) {
 		field(s, "last_updated", &r.LastUpdated, toTime),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
 		field(s, "live", &r.Live, toValue[bool]),
-		field(s, "can_use_hotplug_vbd", &r.CanUseHotplugVbd, toString[TristateType]),
-		field(s, "can_use_hotplug_vif", &r.CanUseHotplugVif, toString[TristateType]),
+		field(s, "can_use_hotplug_vbd", &r.CanUseHotplugVBD, toString[TristateType]),
+		field(s, "can_use_hotplug_vif", &r.CanUseHotplugVIF, toString[TristateType]),
 		field(s, "PV_drivers_detected", &r.PVDriversDetected, toValue[bool]),
 		field(s, "services", &r.Services, convertStringToStringMapToGo),
 	)
@@ -1991,13 +1991,13 @@ func convertVMMetricsRecordToGo(input any) (VMMetricsRecord, error) {
 		field(s, "install_time", &r.InstallTime, toTime),
 		field(s, "last_updated", &r.LastUpdated, toTime),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
-		field(s, "hvm", &r.Hvm, toValue[bool]),
+		field(s, "hvm", &r.HVM, toValue[bool]),
 		field(s, "nested_virt", &r.NestedVirt, toValue[bool]),
 		field(s, "nomigrate", &r.Nomigrate, toValue[bool]),
 		field(s, "current_domain_type", &r.CurrentDomainType, toString[DomainType]),
-		field(s, "numa_optimised", &r.NumaOptimised, toValue[bool]),
-		field(s, "numa_nodes", &r.NumaNodes, toInt),
-		field(s, "numa_node_memory", &r.NumaNodeMemory, convertIntToIntMapToGo),
+		field(s, "numa_optimised", &r.NUMAOptimised, toValue[bool]),
+		field(s, "numa_nodes", &r.NUMANodes, toInt),
+		field(s, "numa_node_memory", &r.NUMANodeMemory, convertIntToIntMapToGo),
 	)
 	return r, err
 }
@@ -2014,8 +2014,8 @@ func convertVTPMRecordToGo(input any) (VTPMRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVtpmOperationsSetToGo),
-		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVtpmOperationsMapToGo),
+		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVTPMOperationsSetToGo),
+		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVTPMOperationsMapToGo),
 		field(s, "VM", &r.VM, toString[VMRef]),
 		field(s, "backend", &r.Backend, toString[VMRef]),
 		field(s, "persistence_backend", &r.PersistenceBackend, toString[PersistenceBackend]),
@@ -2041,8 +2041,8 @@ func convertVUSBRecordToGo(input any) (VUSBRecord, error) {
 	}
 	err := cmp.Or(
 		field(s, "uuid", &r.UUID, toValue[string]),
-		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVusbOperationsSetToGo),
-		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVusbOperationsMapToGo),
+		field(s, "allowed_operations", &r.AllowedOperations, convertEnumVUSBOperationsSetToGo),
+		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumVUSBOperationsMapToGo),
 		field(s, "VM", &r.VM, toString[VMRef]),
 		field(s, "USB_group", &r.USBGroup, toString[USBGroupRef]),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
@@ -2229,28 +2229,28 @@ func convertEnumUpdateGuidancesSetToXen(v []UpdateGuidances) []any {
 	return fromSlice(v, fromString[UpdateGuidances])
 }
 
-func convertEnumVbdOperationsSetToGo(input any) ([]VbdOperations, error) {
-	return toSlice(input, toString[VbdOperations])
+func convertEnumVBDOperationsSetToGo(input any) ([]VBDOperations, error) {
+	return toSlice(input, toString[VBDOperations])
 }
 
-func convertEnumVbdOperationsSetToXen(v []VbdOperations) []any {
-	return fromSlice(v, fromString[VbdOperations])
+func convertEnumVBDOperationsSetToXen(v []VBDOperations) []any {
+	return fromSlice(v, fromString[VBDOperations])
 }
 
-func convertEnumVdiOperationsSetToGo(input any) ([]VdiOperations, error) {
-	return toSlice(input, toString[VdiOperations])
+func convertEnumVDIOperationsSetToGo(input any) ([]VDIOperations, error) {
+	return toSlice(input, toString[VDIOperations])
 }
 
-func convertEnumVdiOperationsSetToXen(v []VdiOperations) []any {
-	return fromSlice(v, fromString[VdiOperations])
+func convertEnumVDIOperationsSetToXen(v []VDIOperations) []any {
+	return fromSlice(v, fromString[VDIOperations])
 }
 
-func convertEnumVifOperationsSetToGo(input any) ([]VifOperations, error) {
-	return toSlice(input, toString[VifOperations])
+func convertEnumVIFOperationsSetToGo(input any) ([]VIFOperations, error) {
+	return toSlice(input, toString[VIFOperations])
 }
 
-func convertEnumVifOperationsSetToXen(v []VifOperations) []any {
-	return fromSlice(v, fromString[VifOperations])
+func convertEnumVIFOperationsSetToXen(v []VIFOperations) []any {
+	return fromSlice(v, fromString[VIFOperations])
 }
 
 func convertEnumVMApplianceOperationSetToGo(input any) ([]VMApplianceOperation, error) {
@@ -2269,12 +2269,12 @@ func convertEnumVMOperationsSetToXen(v []VMOperations) []any {
 	return fromSlice(v, fromString[VMOperations])
 }
 
-func convertEnumVtpmOperationsSetToGo(input any) ([]VtpmOperations, error) {
-	return toSlice(input, toString[VtpmOperations])
+func convertEnumVTPMOperationsSetToGo(input any) ([]VTPMOperations, error) {
+	return toSlice(input, toString[VTPMOperations])
 }
 
-func convertEnumVusbOperationsSetToGo(input any) ([]VusbOperations, error) {
-	return toSlice(input, toString[VusbOperations])
+func convertEnumVUSBOperationsSetToGo(input any) ([]VUSBOperations, error) {
+	return toSlice(input, toString[VUSBOperations])
 }
 
 func convertEventRecordSetToGo(input any) ([]EventRecord, error) {
@@ -2326,8 +2326,8 @@ func convertHostRecordToGo(input any) (HostRecord, error) {
 		field(s, "resident_VMs", &r.ResidentVMs, convertVMRefSetToGo),
 		field(s, "logging", &r.Logging, convertStringToStringMapToGo),
 		field(s, "PIFs", &r.PIFs, convertPIFRefSetToGo),
-		field(s, "suspend_image_sr", &r.SuspendImageSr, toString[SRRef]),
-		field(s, "crash_dump_sr", &r.CrashDumpSr, toString[SRRef]),
+		field(s, "suspend_image_sr", &r.SuspendImageSR, toString[SRRef]),
+		field(s, "crash_dump_sr", &r.CrashDumpSR, toString[SRRef]),
 		field(s, "crashdumps", &r.Crashdumps, convertHostCrashdumpRefSetToGo),
 		field(s, "patches", &r.Patches, convertHostPatchRefSetToGo),
 		field(s, "updates", &r.Updates, convertPoolUpdateRefSetToGo),
@@ -2338,8 +2338,8 @@ func convertHostRecordToGo(input any) (HostRecord, error) {
 		field(s, "address", &r.Address, toValue[string]),
 		field(s, "metrics", &r.Metrics, toString[HostMetricsRef]),
 		field(s, "license_params", &r.LicenseParams, convertStringToStringMapToGo),
-		field(s, "ha_statefiles", &r.HaStatefiles, convertStringSetToGo),
-		field(s, "ha_network_peers", &r.HaNetworkPeers, convertStringSetToGo),
+		field(s, "ha_statefiles", &r.HAStatefiles, convertStringSetToGo),
+		field(s, "ha_network_peers", &r.HANetworkPeers, convertStringSetToGo),
 		field(s, "blobs", &r.Blobs, convertStringToBlobRefMapToGo),
 		field(s, "tags", &r.Tags, convertStringSetToGo),
 		field(s, "external_auth_type", &r.ExternalAuthType, toValue[string]),
@@ -2347,24 +2347,24 @@ func convertHostRecordToGo(input any) (HostRecord, error) {
 		field(s, "external_auth_configuration", &r.ExternalAuthConfiguration, convertStringToStringMapToGo),
 		field(s, "edition", &r.Edition, toValue[string]),
 		field(s, "license_server", &r.LicenseServer, convertStringToStringMapToGo),
-		field(s, "bios_strings", &r.BiosStrings, convertStringToStringMapToGo),
+		field(s, "bios_strings", &r.BIOSStrings, convertStringToStringMapToGo),
 		field(s, "power_on_mode", &r.PowerOnMode, toValue[string]),
 		field(s, "power_on_config", &r.PowerOnConfig, convertStringToStringMapToGo),
-		field(s, "local_cache_sr", &r.LocalCacheSr, toString[SRRef]),
+		field(s, "local_cache_sr", &r.LocalCacheSR, toString[SRRef]),
 		field(s, "chipset_info", &r.ChipsetInfo, convertStringToStringMapToGo),
 		field(s, "PCIs", &r.PCIs, convertPCIRefSetToGo),
 		field(s, "PGPUs", &r.PGPUs, convertPGPURefSetToGo),
 		field(s, "PUSBs", &r.PUSBs, convertPUSBRefSetToGo),
-		field(s, "ssl_legacy", &r.SslLegacy, toValue[bool]),
+		field(s, "ssl_legacy", &r.SSLLegacy, toValue[bool]),
 		field(s, "guest_VCPUs_params", &r.GuestVCPUsParams, convertStringToStringMapToGo),
 		field(s, "display", &r.Display, toString[HostDisplay]),
 		field(s, "virtual_hardware_platform_versions", &r.VirtualHardwarePlatformVersions, convertIntSetToGo),
 		field(s, "control_domain", &r.ControlDomain, toString[VMRef]),
 		field(s, "updates_requiring_reboot", &r.UpdatesRequiringReboot, convertPoolUpdateRefSetToGo),
 		field(s, "features", &r.Features, convertFeatureRefSetToGo),
-		field(s, "iscsi_iqn", &r.IscsiIqn, toValue[string]),
+		field(s, "iscsi_iqn", &r.ISCSIIQN, toValue[string]),
 		field(s, "multipathing", &r.Multipathing, toValue[bool]),
-		field(s, "uefi_certificates", &r.UefiCertificates, toValue[string]),
+		field(s, "uefi_certificates", &r.UEFICertificates, toValue[string]),
 		field(s, "certificates", &r.Certificates, convertCertificateRefSetToGo),
 		field(s, "editions", &r.Editions, convertStringSetToGo),
 		field(s, "pending_guidances", &r.PendingGuidances, convertEnumUpdateGuidancesSetToGo),
@@ -2372,7 +2372,7 @@ func convertHostRecordToGo(input any) (HostRecord, error) {
 		field(s, "last_software_update", &r.LastSoftwareUpdate, toTime),
 		field(s, "https_only", &r.HTTPSOnly, toValue[bool]),
 		field(s, "latest_synced_updates_applied", &r.LatestSyncedUpdatesApplied, toString[LatestSyncedUpdatesAppliedState]),
-		field(s, "numa_affinity_policy", &r.NumaAffinityPolicy, toString[HostNumaAffinityPolicy]),
+		field(s, "numa_affinity_policy", &r.NUMAAffinityPolicy, toString[HostNUMAAffinityPolicy]),
 		field(s, "pending_guidances_recommended", &r.PendingGuidancesRecommended, convertEnumUpdateGuidancesSetToGo),
 		field(s, "pending_guidances_full", &r.PendingGuidancesFull, convertEnumUpdateGuidancesSetToGo),
 		field(s, "last_update_hash", &r.LastUpdateHash, toValue[string]),
@@ -2383,8 +2383,8 @@ func convertHostRecordToGo(input any) (HostRecord, error) {
 		field(s, "ssh_auto_mode", &r.SSHAutoMode, toValue[bool]),
 		field(s, "max_cstate", &r.MaxCstate, toValue[string]),
 		field(s, "secure_boot", &r.SecureBoot, toValue[bool]),
-		field(s, "ntp_mode", &r.NtpMode, toString[HostNtpMode]),
-		field(s, "ntp_custom_servers", &r.NtpCustomServers, convertStringSetToGo),
+		field(s, "ntp_mode", &r.NTPMode, toString[HostNTPMode]),
+		field(s, "ntp_custom_servers", &r.NTPCustomServers, convertStringSetToGo),
 		field(s, "timezone", &r.Timezone, toValue[string]),
 	)
 	return r, err
@@ -2547,7 +2547,7 @@ func convertNetworkRecordToGo(input any) (NetworkRecord, error) {
 		field(s, "blobs", &r.Blobs, convertStringToBlobRefMapToGo),
 		field(s, "tags", &r.Tags, convertStringSetToGo),
 		field(s, "default_locking_mode", &r.DefaultLockingMode, toString[NetworkDefaultLockingMode]),
-		field(s, "assigned_ips", &r.AssignedIps, convertVIFRefToStringMapToGo),
+		field(s, "assigned_ips", &r.AssignedIPs, convertVIFRefToStringMapToGo),
 		field(s, "purpose", &r.Purpose, convertEnumNetworkPurposeSetToGo),
 	)
 	return r, err
@@ -2569,7 +2569,7 @@ func convertNetworkRecordToXen(r NetworkRecord) xmlrpc.Struct {
 		"blobs":                convertStringToBlobRefMapToXen(r.Blobs),
 		"tags":                 convertStringSetToXen(r.Tags),
 		"default_locking_mode": string(r.DefaultLockingMode),
-		"assigned_ips":         convertVIFRefToStringMapToXen(r.AssignedIps),
+		"assigned_ips":         convertVIFRefToStringMapToXen(r.AssignedIPs),
 		"purpose":              convertEnumNetworkPurposeSetToXen(r.Purpose),
 	}
 }
@@ -2578,8 +2578,8 @@ func convertNetworkRefSetToGo(input any) ([]NetworkRef, error) {
 	return toSlice(input, toString[NetworkRef])
 }
 
-func convertNetworkSriovRecordToGo(input any) (NetworkSriovRecord, error) {
-	var r NetworkSriovRecord
+func convertNetworkSRIOVRecordToGo(input any) (NetworkSRIOVRecord, error) {
+	var r NetworkSRIOVRecord
 	s, ok := input.(xmlrpc.Struct)
 	if !ok {
 		return r, &conversionError{want: "struct", got: input}
@@ -2589,13 +2589,13 @@ func convertNetworkSriovRecordToGo(input any) (NetworkSriovRecord, error) {
 		field(s, "physical_PIF", &r.PhysicalPIF, toString[PIFRef]),
 		field(s, "logical_PIF", &r.LogicalPIF, toString[PIFRef]),
 		field(s, "requires_reboot", &r.RequiresReboot, toValue[bool]),
-		field(s, "configuration_mode", &r.ConfigurationMode, toString[SriovConfigurationMode]),
+		field(s, "configuration_mode", &r.ConfigurationMode, toString[SRIOVConfigurationMode]),
 	)
 	return r, err
 }
 
-func convertNetworkSriovRefSetToGo(input any) ([]NetworkSriovRef, error) {
-	return toSlice(input, toString[NetworkSriovRef])
+func convertNetworkSRIOVRefSetToGo(input any) ([]NetworkSRIOVRef, error) {
+	return toSlice(input, toString[NetworkSRIOVRef])
 }
 
 func convertPoolRecordToGo(input any) (PoolRecord, error) {
@@ -2613,37 +2613,37 @@ func convertPoolRecordToGo(input any) (PoolRecord, error) {
 		field(s, "suspend_image_SR", &r.SuspendImageSR, toString[SRRef]),
 		field(s, "crash_dump_SR", &r.CrashDumpSR, toString[SRRef]),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
-		field(s, "ha_enabled", &r.HaEnabled, toValue[bool]),
-		field(s, "ha_configuration", &r.HaConfiguration, convertStringToStringMapToGo),
-		field(s, "ha_statefiles", &r.HaStatefiles, convertStringSetToGo),
-		field(s, "ha_host_failures_to_tolerate", &r.HaHostFailuresToTolerate, toInt),
-		field(s, "ha_plan_exists_for", &r.HaPlanExistsFor, toInt),
-		field(s, "ha_allow_overcommit", &r.HaAllowOvercommit, toValue[bool]),
-		field(s, "ha_overcommitted", &r.HaOvercommitted, toValue[bool]),
+		field(s, "ha_enabled", &r.HAEnabled, toValue[bool]),
+		field(s, "ha_configuration", &r.HAConfiguration, convertStringToStringMapToGo),
+		field(s, "ha_statefiles", &r.HAStatefiles, convertStringSetToGo),
+		field(s, "ha_host_failures_to_tolerate", &r.HAHostFailuresToTolerate, toInt),
+		field(s, "ha_plan_exists_for", &r.HAPlanExistsFor, toInt),
+		field(s, "ha_allow_overcommit", &r.HAAllowOvercommit, toValue[bool]),
+		field(s, "ha_overcommitted", &r.HAOvercommitted, toValue[bool]),
 		field(s, "blobs", &r.Blobs, convertStringToBlobRefMapToGo),
 		field(s, "tags", &r.Tags, convertStringSetToGo),
-		field(s, "gui_config", &r.GuiConfig, convertStringToStringMapToGo),
+		field(s, "gui_config", &r.GUIConfig, convertStringToStringMapToGo),
 		field(s, "health_check_config", &r.HealthCheckConfig, convertStringToStringMapToGo),
-		field(s, "wlb_url", &r.WlbURL, toValue[string]),
-		field(s, "wlb_username", &r.WlbUsername, toValue[string]),
-		field(s, "wlb_enabled", &r.WlbEnabled, toValue[bool]),
-		field(s, "wlb_verify_cert", &r.WlbVerifyCert, toValue[bool]),
+		field(s, "wlb_url", &r.WLBURL, toValue[string]),
+		field(s, "wlb_username", &r.WLBUsername, toValue[string]),
+		field(s, "wlb_enabled", &r.WLBEnabled, toValue[bool]),
+		field(s, "wlb_verify_cert", &r.WLBVerifyCert, toValue[bool]),
 		field(s, "redo_log_enabled", &r.RedoLogEnabled, toValue[bool]),
-		field(s, "redo_log_vdi", &r.RedoLogVdi, toString[VDIRef]),
+		field(s, "redo_log_vdi", &r.RedoLogVDI, toString[VDIRef]),
 		field(s, "vswitch_controller", &r.VswitchController, toValue[string]),
 		field(s, "restrictions", &r.Restrictions, convertStringToStringMapToGo),
 		field(s, "metadata_VDIs", &r.MetadataVDIs, convertVDIRefSetToGo),
-		field(s, "ha_cluster_stack", &r.HaClusterStack, toValue[string]),
+		field(s, "ha_cluster_stack", &r.HAClusterStack, toValue[string]),
 		field(s, "allowed_operations", &r.AllowedOperations, convertEnumPoolAllowedOperationsSetToGo),
 		field(s, "current_operations", &r.CurrentOperations, convertStringToEnumPoolAllowedOperationsMapToGo),
 		field(s, "guest_agent_config", &r.GuestAgentConfig, convertStringToStringMapToGo),
 		field(s, "cpu_info", &r.CPUInfo, convertStringToStringMapToGo),
 		field(s, "policy_no_vendor_device", &r.PolicyNoVendorDevice, toValue[bool]),
 		field(s, "live_patching_disabled", &r.LivePatchingDisabled, toValue[bool]),
-		field(s, "igmp_snooping_enabled", &r.IgmpSnoopingEnabled, toValue[bool]),
-		field(s, "uefi_certificates", &r.UefiCertificates, toValue[string]),
-		field(s, "custom_uefi_certificates", &r.CustomUefiCertificates, toValue[string]),
-		field(s, "is_psr_pending", &r.IsPsrPending, toValue[bool]),
+		field(s, "igmp_snooping_enabled", &r.IGMPSnoopingEnabled, toValue[bool]),
+		field(s, "uefi_certificates", &r.UEFICertificates, toValue[string]),
+		field(s, "custom_uefi_certificates", &r.CustomUEFICertificates, toValue[string]),
+		field(s, "is_psr_pending", &r.IsPSRPending, toValue[bool]),
 		field(s, "tls_verification_enabled", &r.TLSVerificationEnabled, toValue[bool]),
 		field(s, "repositories", &r.Repositories, convertRepositoryRefSetToGo),
 		field(s, "client_certificate_auth_enabled", &r.ClientCertificateAuthEnabled, toValue[bool]),
@@ -2667,12 +2667,12 @@ func convertPoolRecordToGo(input any) (PoolRecord, error) {
 		field(s, "update_sync_enabled", &r.UpdateSyncEnabled, toValue[bool]),
 		field(s, "recommendations", &r.Recommendations, convertStringToStringMapToGo),
 		field(s, "license_server", &r.LicenseServer, convertStringToStringMapToGo),
-		field(s, "ha_reboot_vm_on_internal_shutdown", &r.HaRebootVMOnInternalShutdown, toValue[bool]),
+		field(s, "ha_reboot_vm_on_internal_shutdown", &r.HARebootVMOnInternalShutdown, toValue[bool]),
 		field(s, "limit_console_sessions", &r.LimitConsoleSessions, toValue[bool]),
 		field(s, "vm_console_idle_timeout", &r.VMConsoleIdleTimeout, toInt),
 		field(s, "auto_update_vm_secureboot_certificates", &r.AutoUpdateVMSecurebootCertificates, toValue[bool]),
-		field(s, "lldp_enabled", &r.LldpEnabled, toValue[bool]),
-		field(s, "lldp_multicast_address", &r.LldpMulticastAddress, toString[LldpMulticastAddress]),
+		field(s, "lldp_enabled", &r.LLDPEnabled, toValue[bool]),
+		field(s, "lldp_multicast_address", &r.LLDPMulticastAddress, toString[LLDPMulticastAddress]),
 	)
 	return r, err
 }
@@ -2720,7 +2720,7 @@ func convertPoolUpdateRecordToGo(input any) (PoolUpdateRecord, error) {
 		field(s, "installation_size", &r.InstallationSize, toInt),
 		field(s, "key", &r.Key, toValue[string]),
 		field(s, "after_apply_guidance", &r.AfterApplyGuidance, convertEnumUpdateAfterApplyGuidanceSetToGo),
-		field(s, "vdi", &r.Vdi, toString[VDIRef]),
+		field(s, "vdi", &r.VDI, toString[VDIRef]),
 		field(s, "hosts", &r.Hosts, convertHostRefSetToGo),
 		field(s, "other_config", &r.OtherConfig, convertStringToStringMapToGo),
 		field(s, "enforce_homogeneity", &r.EnforceHomogeneity, toValue[bool]),
@@ -2745,7 +2745,7 @@ func convertProbeResultRecordToGo(input any) (ProbeResultRecord, error) {
 	err := cmp.Or(
 		field(s, "configuration", &r.Configuration, convertStringToStringMapToGo),
 		field(s, "complete", &r.Complete, toValue[bool]),
-		field(s, "sr", &r.Sr, convertSrStatRecordOptionToGo),
+		field(s, "sr", &r.SR, convertSRStatRecordOptionToGo),
 		field(s, "extra_info", &r.ExtraInfo, convertStringToStringMapToGo),
 	)
 	return r, err
@@ -2817,9 +2817,9 @@ func convertSessionRecordToGo(input any) (SessionRecord, error) {
 		field(s, "is_local_superuser", &r.IsLocalSuperuser, toValue[bool]),
 		field(s, "subject", &r.Subject, toString[SubjectRef]),
 		field(s, "validation_time", &r.ValidationTime, toTime),
-		field(s, "auth_user_sid", &r.AuthUserSid, toValue[string]),
+		field(s, "auth_user_sid", &r.AuthUserSID, toValue[string]),
 		field(s, "auth_user_name", &r.AuthUserName, toValue[string]),
-		field(s, "rbac_permissions", &r.RbacPermissions, convertStringSetToGo),
+		field(s, "rbac_permissions", &r.RBACPermissions, convertStringSetToGo),
 		field(s, "tasks", &r.Tasks, convertTaskRefSetToGo),
 		field(s, "parent", &r.Parent, toString[SessionRef]),
 		field(s, "originator", &r.Originator, toValue[string]),
@@ -2828,12 +2828,12 @@ func convertSessionRecordToGo(input any) (SessionRecord, error) {
 	return r, err
 }
 
-func convertSrStatRecordOptionToGo(input any) (SrStatRecord, error) {
-	return toOption(input, convertSrStatRecordToGo)
+func convertSRStatRecordOptionToGo(input any) (SRStatRecord, error) {
+	return toOption(input, convertSRStatRecordToGo)
 }
 
-func convertSrStatRecordToGo(input any) (SrStatRecord, error) {
-	var r SrStatRecord
+func convertSRStatRecordToGo(input any) (SRStatRecord, error) {
+	var r SRStatRecord
 	s, ok := input.(xmlrpc.Struct)
 	if !ok {
 		return r, &conversionError{want: "struct", got: input}
@@ -2845,7 +2845,7 @@ func convertSrStatRecordToGo(input any) (SrStatRecord, error) {
 		field(s, "free_space", &r.FreeSpace, toInt),
 		field(s, "total_space", &r.TotalSpace, toInt),
 		field(s, "clustered", &r.Clustered, toValue[bool]),
-		field(s, "health", &r.Health, toString[SrHealth]),
+		field(s, "health", &r.Health, toString[SRHealth]),
 	)
 	return r, err
 }
@@ -2971,12 +2971,12 @@ func convertUserRecordToXen(r UserRecord) xmlrpc.Struct {
 	}
 }
 
-func convertVdiNbdServerInfoRecordSetToGo(input any) ([]VdiNbdServerInfoRecord, error) {
-	return toSlice(input, convertVdiNbdServerInfoRecordToGo)
+func convertVDINBDServerInfoRecordSetToGo(input any) ([]VDINBDServerInfoRecord, error) {
+	return toSlice(input, convertVDINBDServerInfoRecordToGo)
 }
 
-func convertVdiNbdServerInfoRecordToGo(input any) (VdiNbdServerInfoRecord, error) {
-	var r VdiNbdServerInfoRecord
+func convertVDINBDServerInfoRecordToGo(input any) (VDINBDServerInfoRecord, error) {
+	var r VDINBDServerInfoRecord
 	s, ok := input.(xmlrpc.Struct)
 	if !ok {
 		return r, &conversionError{want: "struct", got: input}

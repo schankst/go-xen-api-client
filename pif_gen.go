@@ -6,15 +6,15 @@ import (
 	"context"
 )
 
-type PifIgmpStatus string
+type PIFIGMPStatus string
 
 const (
 	// IGMP Snooping is enabled in the corresponding backend bridge.'
-	PifIgmpStatusEnabled PifIgmpStatus = "enabled"
+	PIFIGMPStatusEnabled PIFIGMPStatus = "enabled"
 	// IGMP Snooping is disabled in the corresponding backend bridge.'
-	PifIgmpStatusDisabled PifIgmpStatus = "disabled"
+	PIFIGMPStatusDisabled PIFIGMPStatus = "disabled"
 	// IGMP snooping status is unknown. If this is the untagged PIF of a VLAN, then please consult the underlying tagged PIF.
-	PifIgmpStatusUnknown PifIgmpStatus = "unknown"
+	PIFIGMPStatusUnknown PIFIGMPStatus = "unknown"
 )
 
 type IPConfigurationMode string
@@ -28,17 +28,17 @@ const (
 	IPConfigurationModeStatic IPConfigurationMode = "Static"
 )
 
-type Ipv6ConfigurationMode string
+type IPv6ConfigurationMode string
 
 const (
 	// Do not acquire an IPv6 address
-	Ipv6ConfigurationModeNone Ipv6ConfigurationMode = "None"
+	IPv6ConfigurationModeNone IPv6ConfigurationMode = "None"
 	// Acquire an IPv6 address by DHCP
-	Ipv6ConfigurationModeDHCP Ipv6ConfigurationMode = "DHCP"
+	IPv6ConfigurationModeDHCP IPv6ConfigurationMode = "DHCP"
 	// Static IPv6 address configuration
-	Ipv6ConfigurationModeStatic Ipv6ConfigurationMode = "Static"
+	IPv6ConfigurationModeStatic IPv6ConfigurationMode = "Static"
 	// Router assigned prefix delegation IPv6 allocation
-	Ipv6ConfigurationModeAutoconf Ipv6ConfigurationMode = "Autoconf"
+	IPv6ConfigurationModeAutoconf IPv6ConfigurationMode = "Autoconf"
 )
 
 type PrimaryAddressType string
@@ -50,15 +50,15 @@ const (
 	PrimaryAddressTypeIPv6 PrimaryAddressType = "IPv6"
 )
 
-type PifLldpMode string
+type PIFLLDPMode string
 
 const (
 	// LLDP is enabled or disabled based on pool.lldp_enabled.
-	PifLldpModeInherited PifLldpMode = "inherited"
+	PIFLLDPModeInherited PIFLLDPMode = "inherited"
 	// LLDP is enabled on the NIC of the managed physical PIF, overriding pool.lldp_enabled.
-	PifLldpModeEnabled PifLldpMode = "enabled"
+	PIFLLDPModeEnabled PIFLLDPMode = "enabled"
 	// LLDP is disabled on the NIC of the managed physical PIF, overriding pool.lldp_enabled.
-	PifLldpModeDisabled PifLldpMode = "disabled"
+	PIFLLDPModeDisabled PIFLLDPMode = "disabled"
 )
 
 type PIFRecord struct {
@@ -111,11 +111,11 @@ type PIFRecord struct {
 	// Indicates to which tunnel this PIF provides transport
 	TunnelTransportPIFOf []TunnelRef
 	// Sets if and how this interface gets an IPv6 address
-	Ipv6ConfigurationMode Ipv6ConfigurationMode
+	IPv6ConfigurationMode IPv6ConfigurationMode
 	// IPv6 address
 	IPv6 []string
 	// IPv6 gateway
-	Ipv6Gateway string
+	IPv6Gateway string
 	// Which protocol should define the primary address of this interface
 	PrimaryAddressType PrimaryAddressType
 	// Indicates whether the interface is managed by xapi. If it is not, then xapi will not configure the interface, the commands PIF.plug/unplug/reconfigure_ip(v6) cannot be used, nor can the interface be bonded or have VLANs based on top through xapi.
@@ -125,17 +125,17 @@ type PIFRecord struct {
 	// Additional capabilities on the interface.
 	Capabilities []string
 	// The IGMP snooping status of the corresponding network bridge
-	IgmpSnoopingStatus PifIgmpStatus
+	IGMPSnoopingStatus PIFIGMPStatus
 	// Indicates which network_sriov this interface is physical of
-	SriovPhysicalPIFOf []NetworkSriovRef
+	SRIOVPhysicalPIFOf []NetworkSRIOVRef
 	// Indicates which network_sriov this interface is logical of
-	SriovLogicalPIFOf []NetworkSriovRef
+	SRIOVLogicalPIFOf []NetworkSRIOVRef
 	// Link to underlying PCI device
 	PCI PCIRef
 	// The LLDP mode of the physical NIC for the PIF. This setting does not apply to other types of PIFs, such as non-managed PIFs, bond PIFs, VLAN PIFs, tunnel PIFs, or SR-IOV PIFs.
 	//
 	// Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-	LldpMode PifLldpMode
+	LLDPMode PIFLLDPMode
 }
 
 type PIFRef string
@@ -155,10 +155,10 @@ func (c PIFClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PIFRef, e
 	return callAndConvert(ctx, c.client, "PIF.get_all", convertPIFRefSetToGo, string(sessionID))
 }
 
-// SetLldpMode Set the LLDP mode of this PIF, then apply the change by re-plugging the PIF. Only valid for managed physical PIFs.
+// SetLLDPMode Set the LLDP mode of this PIF, then apply the change by re-plugging the PIF. Only valid for managed physical PIFs.
 //
 // Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-func (c PIFClass) SetLldpMode(ctx context.Context, sessionID SessionRef, self PIFRef, value PifLldpMode, force bool) error {
+func (c PIFClass) SetLLDPMode(ctx context.Context, sessionID SessionRef, self PIFRef, value PIFLLDPMode, force bool) error {
 	_, err := c.client.APICall(ctx, "PIF.set_lldp_mode", string(sessionID), string(self), string(value), force)
 	return err
 }
@@ -176,7 +176,7 @@ func (c PIFClass) DbForget(ctx context.Context, sessionID SessionRef, self PIFRe
 }
 
 // DbIntroduce Create a new PIF record in the database only
-func (c PIFClass) DbIntroduce(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, host HostRef, mac string, mtu int, vlan int, physical bool, ipConfigurationMode IPConfigurationMode, ip string, netmask string, gateway string, dns string, bondSlaveOf BondRef, vlanMasterOf VLANRef, management bool, otherConfig map[string]string, disallowUnplug bool, ipv6ConfigurationMode Ipv6ConfigurationMode, ipv6 []string, ipv6Gateway string, primaryAddressType PrimaryAddressType, managed bool, properties map[string]string) (PIFRef, error) {
+func (c PIFClass) DbIntroduce(ctx context.Context, sessionID SessionRef, device string, network NetworkRef, host HostRef, mac string, mtu int, vlan int, physical bool, ipConfigurationMode IPConfigurationMode, ip string, netmask string, gateway string, dns string, bondSlaveOf BondRef, vlanMasterOf VLANRef, management bool, otherConfig map[string]string, disallowUnplug bool, ipv6ConfigurationMode IPv6ConfigurationMode, ipv6 []string, ipv6Gateway string, primaryAddressType PrimaryAddressType, managed bool, properties map[string]string) (PIFRef, error) {
 	return callAndConvert(ctx, c.client, "PIF.db_introduce", toString[PIFRef], string(sessionID), device, string(network), string(host), mac, fromInt(mtu), fromInt(vlan), physical, string(ipConfigurationMode), ip, netmask, gateway, dns, string(bondSlaveOf), string(vlanMasterOf), management, convertStringToStringMapToXen(otherConfig), disallowUnplug, string(ipv6ConfigurationMode), convertStringSetToXen(ipv6), ipv6Gateway, string(primaryAddressType), managed, convertStringToStringMapToXen(properties))
 }
 
@@ -242,12 +242,12 @@ func (c PIFClass) SetPrimaryAddressType(ctx context.Context, sessionID SessionRe
 	return err
 }
 
-// ReconfigureIpv6 Reconfigure the IPv6 address settings for this interface
+// ReconfigureIPv6 Reconfigure the IPv6 address settings for this interface
 //
 // Errors:
 //
 //	CLUSTERING_ENABLED - An operation was attempted while clustering was enabled on the cluster_host.
-func (c PIFClass) ReconfigureIpv6(ctx context.Context, sessionID SessionRef, self PIFRef, mode Ipv6ConfigurationMode, ipv6 string, gateway string, dns string) error {
+func (c PIFClass) ReconfigureIPv6(ctx context.Context, sessionID SessionRef, self PIFRef, mode IPv6ConfigurationMode, ipv6 string, gateway string, dns string) error {
 	_, err := c.client.APICall(ctx, "PIF.reconfigure_ipv6", string(sessionID), string(self), string(mode), ipv6, gateway, dns)
 	return err
 }
@@ -303,11 +303,11 @@ func (c PIFClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self
 	return err
 }
 
-// GetLldpMode Get the lldp_mode field of the given PIF.
+// GetLLDPMode Get the lldp_mode field of the given PIF.
 //
 // Experimental: prototyped in XAPI release 26.21.1; it may change or be removed.
-func (c PIFClass) GetLldpMode(ctx context.Context, sessionID SessionRef, self PIFRef) (PifLldpMode, error) {
-	return callAndConvert(ctx, c.client, "PIF.get_lldp_mode", toString[PifLldpMode], string(sessionID), string(self))
+func (c PIFClass) GetLLDPMode(ctx context.Context, sessionID SessionRef, self PIFRef) (PIFLLDPMode, error) {
+	return callAndConvert(ctx, c.client, "PIF.get_lldp_mode", toString[PIFLLDPMode], string(sessionID), string(self))
 }
 
 // GetPCI Get the PCI field of the given PIF.
@@ -315,19 +315,19 @@ func (c PIFClass) GetPCI(ctx context.Context, sessionID SessionRef, self PIFRef)
 	return callAndConvert(ctx, c.client, "PIF.get_PCI", toString[PCIRef], string(sessionID), string(self))
 }
 
-// GetSriovLogicalPIFOf Get the sriov_logical_PIF_of field of the given PIF.
-func (c PIFClass) GetSriovLogicalPIFOf(ctx context.Context, sessionID SessionRef, self PIFRef) ([]NetworkSriovRef, error) {
-	return callAndConvert(ctx, c.client, "PIF.get_sriov_logical_PIF_of", convertNetworkSriovRefSetToGo, string(sessionID), string(self))
+// GetSRIOVLogicalPIFOf Get the sriov_logical_PIF_of field of the given PIF.
+func (c PIFClass) GetSRIOVLogicalPIFOf(ctx context.Context, sessionID SessionRef, self PIFRef) ([]NetworkSRIOVRef, error) {
+	return callAndConvert(ctx, c.client, "PIF.get_sriov_logical_PIF_of", convertNetworkSRIOVRefSetToGo, string(sessionID), string(self))
 }
 
-// GetSriovPhysicalPIFOf Get the sriov_physical_PIF_of field of the given PIF.
-func (c PIFClass) GetSriovPhysicalPIFOf(ctx context.Context, sessionID SessionRef, self PIFRef) ([]NetworkSriovRef, error) {
-	return callAndConvert(ctx, c.client, "PIF.get_sriov_physical_PIF_of", convertNetworkSriovRefSetToGo, string(sessionID), string(self))
+// GetSRIOVPhysicalPIFOf Get the sriov_physical_PIF_of field of the given PIF.
+func (c PIFClass) GetSRIOVPhysicalPIFOf(ctx context.Context, sessionID SessionRef, self PIFRef) ([]NetworkSRIOVRef, error) {
+	return callAndConvert(ctx, c.client, "PIF.get_sriov_physical_PIF_of", convertNetworkSRIOVRefSetToGo, string(sessionID), string(self))
 }
 
-// GetIgmpSnoopingStatus Get the igmp_snooping_status field of the given PIF.
-func (c PIFClass) GetIgmpSnoopingStatus(ctx context.Context, sessionID SessionRef, self PIFRef) (PifIgmpStatus, error) {
-	return callAndConvert(ctx, c.client, "PIF.get_igmp_snooping_status", toString[PifIgmpStatus], string(sessionID), string(self))
+// GetIGMPSnoopingStatus Get the igmp_snooping_status field of the given PIF.
+func (c PIFClass) GetIGMPSnoopingStatus(ctx context.Context, sessionID SessionRef, self PIFRef) (PIFIGMPStatus, error) {
+	return callAndConvert(ctx, c.client, "PIF.get_igmp_snooping_status", toString[PIFIGMPStatus], string(sessionID), string(self))
 }
 
 // GetCapabilities Get the capabilities field of the given PIF.
@@ -350,8 +350,8 @@ func (c PIFClass) GetPrimaryAddressType(ctx context.Context, sessionID SessionRe
 	return callAndConvert(ctx, c.client, "PIF.get_primary_address_type", toString[PrimaryAddressType], string(sessionID), string(self))
 }
 
-// GetIpv6Gateway Get the ipv6_gateway field of the given PIF.
-func (c PIFClass) GetIpv6Gateway(ctx context.Context, sessionID SessionRef, self PIFRef) (string, error) {
+// GetIPv6Gateway Get the ipv6_gateway field of the given PIF.
+func (c PIFClass) GetIPv6Gateway(ctx context.Context, sessionID SessionRef, self PIFRef) (string, error) {
 	return callAndConvert(ctx, c.client, "PIF.get_ipv6_gateway", toValue[string], string(sessionID), string(self))
 }
 
@@ -360,9 +360,9 @@ func (c PIFClass) GetIPv6(ctx context.Context, sessionID SessionRef, self PIFRef
 	return callAndConvert(ctx, c.client, "PIF.get_IPv6", convertStringSetToGo, string(sessionID), string(self))
 }
 
-// GetIpv6ConfigurationMode Get the ipv6_configuration_mode field of the given PIF.
-func (c PIFClass) GetIpv6ConfigurationMode(ctx context.Context, sessionID SessionRef, self PIFRef) (Ipv6ConfigurationMode, error) {
-	return callAndConvert(ctx, c.client, "PIF.get_ipv6_configuration_mode", toString[Ipv6ConfigurationMode], string(sessionID), string(self))
+// GetIPv6ConfigurationMode Get the ipv6_configuration_mode field of the given PIF.
+func (c PIFClass) GetIPv6ConfigurationMode(ctx context.Context, sessionID SessionRef, self PIFRef) (IPv6ConfigurationMode, error) {
+	return callAndConvert(ctx, c.client, "PIF.get_ipv6_configuration_mode", toString[IPv6ConfigurationMode], string(sessionID), string(self))
 }
 
 // GetTunnelTransportPIFOf Get the tunnel_transport_PIF_of field of the given PIF.
