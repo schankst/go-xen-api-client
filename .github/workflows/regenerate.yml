@@ -57,22 +57,16 @@ jobs:
       - name: Regenerate bindings
         if: steps.fetch.outputs.changed == 'true'
         run: |
-          # Pinned on purpose: unpinned `go get` resolves to whatever the
-          # proxy serves today, so a local run and CI could format the
-          # generated files with different snaker releases. This is the
-          # version MAINTAINING.md names; bump both together.
-          go get github.com/serenize/snaker@v0.0.0-20201027110005-a7ad2135616e
           rm -f *_gen.go
-          go run xenapi.go
-          go mod tidy
+          go generate ./...
 
       - name: Regenerate error.go from upstream error definitions
         if: steps.fetch.outputs.changed == 'true'
-        run: go run gen_errors.go
+        run: go run ./internal/cmd/generrors
 
       - name: Update SchemaXAPIRelease constant
         if: steps.fetch.outputs.changed == 'true'
-        run: go run update_schema_release.go
+        run: go run ./internal/cmd/schemarelease
 
       - name: Build, vet, and test
         if: steps.fetch.outputs.changed == 'true'
@@ -143,7 +137,7 @@ jobs:
                 'The scheduled bindings-regeneration workflow failed.',
                 '',
                 'Likely cause: xenapi.json introduced a new schema construct that ' +
-                'xenapi.go does not know how to map yet (the same kind of case ' +
+                'internal/cmd/genapi does not know how to map yet (the same kind of case ' +
                 'handled manually before for lifecycle/event-batch/option types) ' +
                 '- generation panics with a message naming the offending type ' +
                 'string, which needs a case added in goTypeForXenType, ' +

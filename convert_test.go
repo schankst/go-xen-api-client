@@ -40,7 +40,7 @@ func TestConvertEnumVMOperationsToGoKnownValue(t *testing.T) {
 // about (this happened for real with "sysprep", added by XCP-ng after
 // the upstream v0.0.2 snapshot) must be passed through as-is instead of
 // failing the whole record parse. Baked into the generator template
-// itself (convertEnumTypeToGoFuncTemplate in xenapi.go) since v0.2.1, so
+// itself (convertEnumTypeToGoFuncTemplate in internal/cmd/genapi) since v0.2.1, so
 // every regeneration gets it automatically with no separate patch step.
 func TestConvertEnumVMOperationsToGoUnknownValuePassesThrough(t *testing.T) {
 	value, err := convertEnumVMOperationsToGo("test", "some_future_operation_xcp_ng_added")

@@ -27,7 +27,7 @@ Almost all of this package (every *_gen.go file) is generated from XenAPI's
 own xenapi.json schema description, one Go method per XenAPI message and
 one Go type per XenAPI class/enum - see MAINTAINING.md for how and when
 that happens. error.go (XenAPI error code constants) is regenerated from a
-separate upstream source on the same schedule. client.go, xenapi.go (the
-generator itself), and the xmlrpc subpackage are hand-maintained.
+separate upstream source on the same schedule. client.go, the xmlrpc
+subpackage and the generators under internal/cmd are hand-maintained.
 */
 package xenapi

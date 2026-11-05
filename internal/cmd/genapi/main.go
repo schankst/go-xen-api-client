@@ -1,7 +1,5 @@
-//go:build ignore
-
-// xenapi.go is the code generator behind every *_gen.go file in this
-// package (run via `go generate` or `go run xenapi.go`). It reads
+// Command genapi is the code generator behind every *_gen.go file in the
+// xenapi package (run via `go generate` from the repo root). It reads
 // xenapi.json - a machine-readable description of the XenAPI, covering
 // every class, field, enum, and message (RPC method), plus each one's
 // doc string - and turns it into idiomatic Go: one Go type per XenAPI
@@ -42,8 +40,6 @@ import (
 	"slices"
 	"strings"
 	"text/template"
-
-	"github.com/serenize/snaker"
 )
 
 // These match XenAPI's compound type grammar, e.g. "VM ref", "VM record",
@@ -100,11 +96,11 @@ func goTypeForXenType(xenType string) (goType string, err error) {
 		}
 		goType = "[]" + goItemType
 	} else if match = reXenRefType.FindStringSubmatch(xenType); match != nil {
-		goType = snaker.SnakeToCamel(match[1]) + "Ref"
+		goType = snakeToCamel(match[1]) + "Ref"
 	} else if match = reXenRecordType.FindStringSubmatch(xenType); match != nil {
-		goType = snaker.SnakeToCamel(match[1]) + "Record"
+		goType = snakeToCamel(match[1]) + "Record"
 	} else if match = reXenEnumType.FindStringSubmatch(xenType); match != nil {
-		goType = snaker.SnakeToCamel(match[1])
+		goType = snakeToCamel(match[1])
 	} else if match = reXenMapType.FindStringSubmatch(xenType); match != nil {
 		var goKeyType string
 		goKeyType, err = goTypeForXenType(match[1])
@@ -163,11 +159,11 @@ func funcPartialForXenType(xenType string) (partial string, err error) {
 		}
 		partial = itemPartial + "Set"
 	} else if match = reXenRefType.FindStringSubmatch(xenType); match != nil {
-		partial = snaker.SnakeToCamel(match[1]) + "Ref"
+		partial = snakeToCamel(match[1]) + "Ref"
 	} else if match = reXenRecordType.FindStringSubmatch(xenType); match != nil {
-		partial = snaker.SnakeToCamel(match[1]) + "Record"
+		partial = snakeToCamel(match[1]) + "Record"
 	} else if match = reXenEnumType.FindStringSubmatch(xenType); match != nil {
-		partial = "Enum" + snaker.SnakeToCamel(match[1])
+		partial = "Enum" + snakeToCamel(match[1])
 	} else if match = reXenMapType.FindStringSubmatch(xenType); match != nil {
 		var keyPartial string
 		keyPartial, err = funcPartialForXenType(match[1])
@@ -226,12 +222,12 @@ func formatSingleLine(input string) string {
 // names, struct field names, method names.
 func exportedGoIdentifier(input string) string {
 	input = strings.ReplaceAll(input, "-", "_")
-	return snaker.SnakeToCamel(input)
+	return snakeToCamel(input)
 }
 
 // internalGoIdentifier converts an XenAPI snake_case identifier into an
 // unexported, camelCase Go identifier, e.g. "session_id" -> "sessionID"
-// courtesy of snaker's initialism handling. Used for local variable and
+// with initialisms kept in caps (see snakeToCamel). Used for local variable and
 // method-parameter names. A couple of XenAPI names collide with Go
 // keywords ("type", "interface") and get renamed outright.
 func internalGoIdentifier(input string) (ident string) {
@@ -242,7 +238,7 @@ func internalGoIdentifier(input string) (ident string) {
 	if _index == -1 {
 		ident = strings.ToLower(input)
 	} else {
-		ident = strings.ToLower(input[:_index]) + snaker.SnakeToCamel(input[_index+1:])
+		ident = strings.ToLower(input[:_index]) + snakeToCamel(input[_index+1:])
 	}
 
 	// Rename XenAPI identifiers that conflict with Go identifiers.
@@ -368,7 +364,7 @@ func (result *xapiResult) IsVoid() bool {
 
 // xapiError is one of the named errors a message can raise (documented in
 // XenAPI, but not represented as a distinct Go type - see error.go/
-// gen_errors.go instead, which cover the ERR_* constants generically).
+// internal/cmd/generrors instead, which cover the ERR_* constants generically).
 type xapiError struct {
 	Doc  string `json:"doc"`
 	Name string `json:"name"`
@@ -428,7 +424,7 @@ type xapiClass struct {
 const fileHeaderTemplate string = `//
 // This file is generated. To change the content of this file, please do not
 // apply the change to this file because it will get overwritten. Instead,
-// change xenapi.go and execute 'go generate'.
+// change internal/cmd/genapi and run 'go generate'.
 //
 
 package xenapi
@@ -1357,7 +1353,7 @@ func (generator *apiGenerator) run() (err error) {
 // main runs the generator against xenapi.json in the current directory,
 // writing *_gen.go/convert_gen.go/client_gen.go there too - run this via
 // `go generate` (see the //go:generate directive in client.go) or
-// `go run xenapi.go` from the repo root.
+// `go run ./internal/cmd/genapi` from the repo root.
 func main() {
 	generator := newAPIGenerator()
 	err := generator.run()
