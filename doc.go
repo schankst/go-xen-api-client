@@ -1,38 +1,14 @@
-/*
-Package xenapi is a Go client for the XenAPI protocol used by XCP-ng,
-XenServer, and Citrix Hypervisor.
-
-This is a fork of github.com/terra-farm/go-xen-api-client, regenerated
-against a current XenAPI schema (see SchemaXAPIRelease) instead of
-upstream's last release, which only covered XenAPI through XenServer 7.3.
-See the README for what else differs from upstream, and GitHub Releases
-(https://github.com/schankst/go-xen-api-client/releases) for what changed
-release to release.
-
-# Usage
-
-Create a Client with NewClient, log in via Client.Session.LoginWithPassword,
-then call methods through the per-class fields on Client (Client.VM,
-Client.Host, Client.SR, and so on - one field per XenAPI class). Every
-method takes a context.Context first; use it to cancel calls or bound
-them with a deadline:
-
-	client, err := xenapi.NewClient("https://10.0.0.10")
-	if err != nil {
-		return err
-	}
-	session, err := client.Session.LoginWithPassword(ctx, "root", "password", "", "")
-	if err != nil {
-		return err
-	}
-	vms, err := client.VM.GetAllRecords(ctx, session)
-	err = client.Session.Logout(ctx, session)
-
-Almost all of this package (every *_gen.go file) is generated from XenAPI's
-own xenapi.json schema description, one Go method per XenAPI message and
-one Go type per XenAPI class/enum - see MAINTAINING.md for how and when
-that happens. error.go (XenAPI error code constants) is regenerated from a
-separate upstream source on the same schedule. client.go, the xmlrpc
-subpackage and the generators under internal/cmd are hand-maintained.
-*/
+// Package xenapi is a client for the XenAPI of XCP-ng and XenServer.
+//
+// Create a Client with NewClient and log in with
+// Client.Session.LoginWithPassword. Each XenAPI class is a field of Client
+// (Client.VM, Client.Host, Client.SR, ...) with one method per XenAPI
+// message. Every method takes a context.Context and, except for login, the
+// session.
+//
+// Failures reported by XenAPI are *Error values; match them with
+// errors.Is against the ErrorCode constants.
+//
+// Everything in *_gen.go and error.go is generated from XenAPI's schema;
+// see SchemaXAPIRelease for the release it was generated from.
 package xenapi

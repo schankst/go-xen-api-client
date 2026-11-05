@@ -38,11 +38,7 @@ func TestConvertEnumVMOperationsToGoKnownValue(t *testing.T) {
 	}
 }
 
-// This is the fork's central behavior: a value the schema didn't know
-// about (this happened for real with "sysprep", added by XCP-ng after
-// the upstream v0.0.2 snapshot) must be passed through as-is instead of
-// failing the whole record parse. toString in convert.go converts every
-// enum, so this holds for all of them.
+// Enum values newer than the schema (e.g. "sysprep" once) pass through.
 func TestConvertEnumVMOperationsToGoUnknownValuePassesThrough(t *testing.T) {
 	value, err := toString[VMOperations]("some_future_operation_xcp_ng_added")
 	if err != nil {

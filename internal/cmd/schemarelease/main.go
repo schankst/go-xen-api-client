@@ -1,8 +1,5 @@
-// Command schemarelease scans xenapi.json for the newest XAPI release
-// version and rewrites the SchemaXAPIRelease constant in client.go to
-// match, after a regeneration.
-//
-// Run from the repo root: go run ./internal/cmd/schemarelease
+// Command schemarelease sets SchemaXAPIRelease in client.go to the newest
+// released version named in xenapi.json. Run it from the repo root.
 package main
 
 import (

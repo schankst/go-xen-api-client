@@ -125,9 +125,7 @@ func TestWriteValueNilErrors(t *testing.T) {
 	}
 }
 
-// Malformed/truncated responses must return an error, not hang - this is
-// exactly the class of bug fixed in the previous (vendored)
-// implementation's v0.1.3 release.
+// Malformed or truncated responses must return an error, not hang.
 func TestDecodeResponseMalformedDoesNotHang(t *testing.T) {
 	cases := []string{
 		`<methodResponse><params><param><value><struct><member><name>a</name><value><string>b</string>`,

@@ -9,13 +9,9 @@ import (
 	"time"
 )
 
-// decodeResponse parses a complete XML-RPC methodResponse document. On a
-// <fault> response, the returned error is a *Error and value is nil.
-//
-// Every token read here is checked for an error before use - a v0.1.x bug
-// in the previous (vendored) implementation of this package skipped that
-// check in several places, which could spin forever re-fetching the same
-// error on malformed or truncated input instead of returning it.
+// decodeResponse parses a methodResponse document; a <fault> is returned
+// as *Error. Every token read checks its error, so truncated input can't
+// make it loop.
 func decodeResponse(body []byte) (any, error) {
 	dec := xml.NewDecoder(bytes.NewReader(body))
 
@@ -82,10 +78,8 @@ func nextStart(dec *xml.Decoder) (xml.StartElement, error) {
 	}
 }
 
-// decodeValue decodes a <value> element's content. Call sites must have
-// already consumed the opening <value> StartElement (e.g. via
-// findStart/nextStart); decodeValue consumes through the matching
-// </value>.
+// decodeValue decodes the content of a <value> whose start tag was already
+// read, through its end tag.
 func decodeValue(dec *xml.Decoder) (any, error) {
 	tok, err := dec.Token()
 	if err != nil {
@@ -121,9 +115,8 @@ func decodeValue(dec *xml.Decoder) (any, error) {
 	}
 }
 
-// decodeTyped decodes the content of a typed value element whose opening
-// tag (name) was already consumed, and consumes through its own matching
-// end element.
+// decodeTyped decodes a typed element whose start tag was already read,
+// through its end tag.
 func decodeTyped(dec *xml.Decoder, name string) (any, error) {
 	switch name {
 	case "string":
@@ -216,9 +209,8 @@ func readText(dec *xml.Decoder, name string) (string, error) {
 	}
 }
 
-// expectEnd consumes tokens - tolerating only insignificant whitespace -
-// until the end element named name, erroring on anything else (including
-// a read error, so this can never spin).
+// expectEnd reads up to the end element name, allowing only whitespace in
+// between.
 func expectEnd(dec *xml.Decoder, name string) error {
 	for {
 		tok, err := dec.Token()

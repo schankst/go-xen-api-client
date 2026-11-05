@@ -11,17 +11,6 @@ import (
 	"testing"
 )
 
-// These exercise the hand-written core of this package - NewClient, APICall,
-// and Error's accessors - against recorded XenAPI response bodies. The
-// generated *_gen.go files are not covered here: they are mechanical
-// wrappers around APICall, regenerated wholesale every week, and testing
-// each of the ~70 per-class methods would pin the shape of generated code
-// rather than the behaviour of this package.
-//
-// APICall is the only place where the XML-RPC envelope's Status and
-// ErrorDescription fields are interpreted, so it is also the only place
-// where a host answering in an unexpected shape can take the caller down.
-
 // newTestClient returns a Client whose RPC calls are answered by body.
 func newTestClient(t *testing.T, body string) *Client {
 	t.Helper()

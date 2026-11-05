@@ -74,10 +74,7 @@ func writeValueBody(b *strings.Builder, value any) error {
 		b.WriteString(v.Format("20060102T15:04:05"))
 		b.WriteString(`</dateTime.iso8601>`)
 	case nil:
-		// XML-RPC has no standard nil/null value (that's a later,
-		// non-universally-supported extension); XenAPI never sends one as
-		// a param, so make the failure explicit rather than silently
-		// emitting an empty <value/>.
+		// XML-RPC has no nil; XenAPI never takes one.
 		return errors.New("xmlrpc: nil is not a supported XML-RPC value")
 	default:
 		rv := reflect.ValueOf(value)
