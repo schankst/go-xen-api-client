@@ -45,7 +45,8 @@ func NewClient(url string, transport *http.Transport) *Client {
 // Call issues an XML-RPC call for method with params and, on success,
 // stores the decoded result into *reply (reply must be a non-nil
 // pointer; pass nil to discard the result). On a genuine XML-RPC <fault>
-// response the returned error is a *Error.
+// response the returned error is a *Error; on a non-2xx HTTP status it is
+// an *HTTPError.
 //
 // The decoded value is stored as-is when its Go type is assignable to
 // reply's element type; it is never converted. An XML-RPC <int> always
@@ -89,6 +90,11 @@ func (c *Client) Call(method string, params []any, reply any) error {
 		c.cookies = resp.Cookies()
 	}
 	c.mu.Unlock()
+
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		excerpt, _ := io.ReadAll(io.LimitReader(resp.Body, maxErrorBody))
+		return &HTTPError{StatusCode: resp.StatusCode, Status: resp.Status, Body: string(excerpt)}
+	}
 
 	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {

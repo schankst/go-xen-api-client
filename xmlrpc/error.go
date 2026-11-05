@@ -29,3 +29,22 @@ func (e *Error) Code() string {
 func (e *Error) Message() string {
 	return e.message
 }
+
+// maxErrorBody caps how much of a non-2xx response body HTTPError keeps.
+const maxErrorBody = 512
+
+// HTTPError is returned when the server answers with a non-2xx HTTP status,
+// e.g. from an authenticating proxy or a failing load balancer. The body
+// is not decoded as XML-RPC.
+type HTTPError struct {
+	StatusCode int
+	Status     string // e.g. "502 Bad Gateway"
+	Body       string // first maxErrorBody bytes of the response body
+}
+
+func (e *HTTPError) Error() string {
+	if e.Body == "" {
+		return "xmlrpc: HTTP " + e.Status
+	}
+	return fmt.Sprintf("xmlrpc: HTTP %s: %q", e.Status, e.Body)
+}
