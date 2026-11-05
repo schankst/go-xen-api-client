@@ -11,8 +11,12 @@ type VIFMetricsRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// Read bandwidth (KiB/s)
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 	IoReadKbs float64
 	// Write bandwidth (KiB/s)
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 	IoWriteKbs float64
 	// Time at which this information was last updated
 	LastUpdated time.Time
@@ -23,16 +27,22 @@ type VIFMetricsRecord struct {
 type VIFMetricsRef string
 
 // The metrics associated with a virtual network device
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 type VIFMetricsClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of VIF_metrics references to VIF_metrics records for all VIF_metrics instances known to the system.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 func (c VIFMetricsClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[VIFMetricsRef]VIFMetricsRecord, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_all_records", convertVIFMetricsRefToVIFMetricsRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the VIF_metrics instances known to the system.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 func (c VIFMetricsClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VIFMetricsRef, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_all", convertVIFMetricsRefSetToGo, string(sessionID))
 }
@@ -66,11 +76,15 @@ func (c VIFMetricsClass) GetLastUpdated(ctx context.Context, sessionID SessionRe
 }
 
 // GetIoWriteKbs Get the io/write_kbs field of the given VIF_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 func (c VIFMetricsClass) GetIoWriteKbs(ctx context.Context, sessionID SessionRef, self VIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_io_write_kbs", toValue[float64], string(sessionID), string(self))
 }
 
 // GetIoReadKbs Get the io/read_kbs field of the given VIF_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 func (c VIFMetricsClass) GetIoReadKbs(ctx context.Context, sessionID SessionRef, self VIFMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_io_read_kbs", toValue[float64], string(sessionID), string(self))
 }
@@ -81,11 +95,15 @@ func (c VIFMetricsClass) GetUUID(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetByUUID Get a reference to the VIF_metrics instance with the specified UUID.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 func (c VIFMetricsClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (VIFMetricsRef, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_by_uuid", toString[VIFMetricsRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given VIF_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 func (c VIFMetricsClass) GetRecord(ctx context.Context, sessionID SessionRef, self VIFMetricsRef) (VIFMetricsRecord, error) {
 	return callAndConvert(ctx, c.client, "VIF_metrics.get_record", convertVIFMetricsRecordToGo, string(sessionID), string(self))
 }

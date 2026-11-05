@@ -9,158 +9,228 @@ import (
 
 type CallerRecord struct {
 	// Unique identifier/object reference
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	UUID string
 	// a human-readable name
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	NameLabel string
 	// a notes field containing human-readable description
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	NameDescription string
 	// User agent matching pattern. Empty string is a full wildcard; a trailing '*' makes the field a prefix pattern; otherwise the field is matched exactly.
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	UserAgent string
 	// Client IP matching pattern. Same wildcard semantics as user_agent.
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	ClientIP string
 	// Last time a call was received from this caller
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	LastAccess time.Time
 	// Groups to which this caller has been assigned
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	Groups []string
 	// Rate limiter attached to this caller, if any. Populated via Rate_limit.add_caller rather than set directly.
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	RateLimit RateLimitRef
 	// True if this caller was created automatically by the rate limiter rather than by an administrator. Auto-registered callers are subject to the max-auto-registered-callers cap.
+	//
+	// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 	AutoRegistered bool
 }
 
 type CallerRef string
 
 // XAPI caller description and rate limiting
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 type CallerClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of Caller references to Caller records for all Callers known to the system.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[CallerRef]CallerRecord, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_all_records", convertCallerRefToCallerRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the Callers known to the system.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetAll(ctx context.Context, sessionID SessionRef) ([]CallerRef, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_all", convertCallerRefSetToGo, string(sessionID))
 }
 
 // QueryAllUsage Return per-caller usage for every known caller, sorted by token use descending.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) QueryAllUsage(ctx context.Context, sessionID SessionRef) ([][]string, error) {
 	return callAndConvert(ctx, c.client, "Caller.query_all_usage", convertStringSetSetToGo, string(sessionID))
 }
 
 // QueryGroupCallCount Return number of calls made since Xapi startup by the callers in the named group.
+//
+// Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
 func (c CallerClass) QueryGroupCallCount(ctx context.Context, sessionID SessionRef, group string) (int, error) {
 	return callAndConvert(ctx, c.client, "Caller.query_group_call_count", toInt, string(sessionID), group)
 }
 
 // QueryGroupTokenUsage Return tokens used since Xapi startup by the callers in the named group.
+//
+// Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
 func (c CallerClass) QueryGroupTokenUsage(ctx context.Context, sessionID SessionRef, group string) (float64, error) {
 	return callAndConvert(ctx, c.client, "Caller.query_group_token_usage", toValue[float64], string(sessionID), group)
 }
 
 // QueryCallCount Return number of calls made by this caller since Xapi startup
+//
+// Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
 func (c CallerClass) QueryCallCount(ctx context.Context, sessionID SessionRef, self CallerRef) (int, error) {
 	return callAndConvert(ctx, c.client, "Caller.query_call_count", toInt, string(sessionID), string(self))
 }
 
 // QueryTokenUsage Return tokens used by this caller since Xapi startup
+//
+// Experimental: prototyped in XAPI release 26.15.0; it may change or be removed.
 func (c CallerClass) QueryTokenUsage(ctx context.Context, sessionID SessionRef, self CallerRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "Caller.query_token_usage", toValue[float64], string(sessionID), string(self))
 }
 
 // RemoveGroup Remove a caller from a group
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) RemoveGroup(ctx context.Context, sessionID SessionRef, self CallerRef, group string) error {
 	_, err := c.client.APICall(ctx, "Caller.remove_group", string(sessionID), string(self), group)
 	return err
 }
 
 // AddGroup Add a caller to a group
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) AddGroup(ctx context.Context, sessionID SessionRef, self CallerRef, group string) error {
 	_, err := c.client.APICall(ctx, "Caller.add_group", string(sessionID), string(self), group)
 	return err
 }
 
 // SetNameDescription Set the name/description field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self CallerRef, value string) error {
 	_, err := c.client.APICall(ctx, "Caller.set_name_description", string(sessionID), string(self), value)
 	return err
 }
 
 // SetNameLabel Set the name/label field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self CallerRef, value string) error {
 	_, err := c.client.APICall(ctx, "Caller.set_name_label", string(sessionID), string(self), value)
 	return err
 }
 
 // GetAutoRegistered Get the auto_registered field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetAutoRegistered(ctx context.Context, sessionID SessionRef, self CallerRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_auto_registered", toValue[bool], string(sessionID), string(self))
 }
 
 // GetRateLimit Get the rate_limit field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetRateLimit(ctx context.Context, sessionID SessionRef, self CallerRef) (RateLimitRef, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_rate_limit", toString[RateLimitRef], string(sessionID), string(self))
 }
 
 // GetGroups Get the groups field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetGroups(ctx context.Context, sessionID SessionRef, self CallerRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_groups", convertStringSetToGo, string(sessionID), string(self))
 }
 
 // GetLastAccess Get the last_access field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetLastAccess(ctx context.Context, sessionID SessionRef, self CallerRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_last_access", toTime, string(sessionID), string(self))
 }
 
 // GetClientIP Get the client_ip field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetClientIP(ctx context.Context, sessionID SessionRef, self CallerRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_client_ip", toValue[string], string(sessionID), string(self))
 }
 
 // GetUserAgent Get the user_agent field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetUserAgent(ctx context.Context, sessionID SessionRef, self CallerRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_user_agent", toValue[string], string(sessionID), string(self))
 }
 
 // GetNameDescription Get the name/description field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self CallerRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_name_description", toValue[string], string(sessionID), string(self))
 }
 
 // GetNameLabel Get the name/label field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self CallerRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_name_label", toValue[string], string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetUUID(ctx context.Context, sessionID SessionRef, self CallerRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_uuid", toValue[string], string(sessionID), string(self))
 }
 
 // GetByNameLabel Get all the Caller instances with the given label.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) ([]CallerRef, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_by_name_label", convertCallerRefSetToGo, string(sessionID), label)
 }
 
 // Destroy Destroy the specified Caller instance.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) Destroy(ctx context.Context, sessionID SessionRef, self CallerRef) error {
 	_, err := c.client.APICall(ctx, "Caller.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Create a new Caller instance, and return its handle. The constructor args are: name_label, name_description, user_agent, client_ip (* = non-optional).
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) Create(ctx context.Context, sessionID SessionRef, args CallerRecord) (CallerRef, error) {
 	return callAndConvert(ctx, c.client, "Caller.create", toString[CallerRef], string(sessionID), convertCallerRecordToXen(args))
 }
 
 // GetByUUID Get a reference to the Caller instance with the specified UUID.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (CallerRef, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_by_uuid", toString[CallerRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given Caller.
+//
+// Experimental: prototyped in XAPI release 26.17.0; it may change or be removed.
 func (c CallerClass) GetRecord(ctx context.Context, sessionID SessionRef, self CallerRef) (CallerRecord, error) {
 	return callAndConvert(ctx, c.client, "Caller.get_record", convertCallerRecordToGo, string(sessionID), string(self))
 }

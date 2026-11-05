@@ -53,339 +53,487 @@ const (
 
 type VMPPRecord struct {
 	// Unique identifier/object reference
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	UUID string
 	// a human-readable name
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	NameLabel string
 	// a notes field containing human-readable description
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	NameDescription string
 	// enable or disable this policy
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	IsPolicyEnabled bool
 	// type of the backup sub-policy
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	BackupType VmppBackupType
 	// maximum number of backups that should be stored at any time
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	BackupRetentionValue int
 	// frequency of the backup schedule
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	BackupFrequency VmppBackupFrequency
 	// schedule of the backup containing 'hour', 'min', 'days'. Date/time-related information is in Local Timezone
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	BackupSchedule map[string]string
 	// true if this protection policy's backup is running
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	IsBackupRunning bool
 	// time of the last backup
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	BackupLastRunTime time.Time
 	// type of the archive target config
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	ArchiveTargetType VmppArchiveTargetType
 	// configuration for the archive, including its 'location', 'username', 'password'
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	ArchiveTargetConfig map[string]string
 	// frequency of the archive schedule
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	ArchiveFrequency VmppArchiveFrequency
 	// schedule of the archive containing 'hour', 'min', 'days'. Date/time-related information is in Local Timezone
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	ArchiveSchedule map[string]string
 	// true if this protection policy's archive is running
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	IsArchiveRunning bool
 	// time of the last archive
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	ArchiveLastRunTime time.Time
 	// all VMs attached to this protection policy
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	VMs []VMRef
 	// true if alarm is enabled for this policy
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	IsAlarmEnabled bool
 	// configuration for the alarm
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	AlarmConfig map[string]string
 	// recent alerts
+	//
+	// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 	RecentAlerts []string
 }
 
 type VMPPRef string
 
 // VM Protection Policy
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 type VMPPClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of VMPP references to VMPP records for all VMPPs known to the system.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[VMPPRef]VMPPRecord, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_all_records", convertVMPPRefToVMPPRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the VMPPs known to the system.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VMPPRef, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_all", convertVMPPRefSetToGo, string(sessionID))
 }
 
 // SetArchiveLastRunTime
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetArchiveLastRunTime(ctx context.Context, sessionID SessionRef, self VMPPRef, value time.Time) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_archive_last_run_time", string(sessionID), string(self), value)
 	return err
 }
 
 // SetBackupLastRunTime
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetBackupLastRunTime(ctx context.Context, sessionID SessionRef, self VMPPRef, value time.Time) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_last_run_time", string(sessionID), string(self), value)
 	return err
 }
 
 // RemoveFromAlarmConfig
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) RemoveFromAlarmConfig(ctx context.Context, sessionID SessionRef, self VMPPRef, key string) error {
 	_, err := c.client.APICall(ctx, "VMPP.remove_from_alarm_config", string(sessionID), string(self), key)
 	return err
 }
 
 // RemoveFromArchiveSchedule
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) RemoveFromArchiveSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef, key string) error {
 	_, err := c.client.APICall(ctx, "VMPP.remove_from_archive_schedule", string(sessionID), string(self), key)
 	return err
 }
 
 // RemoveFromArchiveTargetConfig
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) RemoveFromArchiveTargetConfig(ctx context.Context, sessionID SessionRef, self VMPPRef, key string) error {
 	_, err := c.client.APICall(ctx, "VMPP.remove_from_archive_target_config", string(sessionID), string(self), key)
 	return err
 }
 
 // RemoveFromBackupSchedule
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) RemoveFromBackupSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef, key string) error {
 	_, err := c.client.APICall(ctx, "VMPP.remove_from_backup_schedule", string(sessionID), string(self), key)
 	return err
 }
 
 // AddToAlarmConfig
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) AddToAlarmConfig(ctx context.Context, sessionID SessionRef, self VMPPRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "VMPP.add_to_alarm_config", string(sessionID), string(self), key, value)
 	return err
 }
 
 // AddToArchiveSchedule
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) AddToArchiveSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "VMPP.add_to_archive_schedule", string(sessionID), string(self), key, value)
 	return err
 }
 
 // AddToArchiveTargetConfig
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) AddToArchiveTargetConfig(ctx context.Context, sessionID SessionRef, self VMPPRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "VMPP.add_to_archive_target_config", string(sessionID), string(self), key, value)
 	return err
 }
 
 // AddToBackupSchedule
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) AddToBackupSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "VMPP.add_to_backup_schedule", string(sessionID), string(self), key, value)
 	return err
 }
 
 // SetAlarmConfig
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetAlarmConfig(ctx context.Context, sessionID SessionRef, self VMPPRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_alarm_config", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
 // SetIsAlarmEnabled Set the value of the is_alarm_enabled field
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetIsAlarmEnabled(ctx context.Context, sessionID SessionRef, self VMPPRef, value bool) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_is_alarm_enabled", string(sessionID), string(self), value)
 	return err
 }
 
 // SetArchiveTargetConfig
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetArchiveTargetConfig(ctx context.Context, sessionID SessionRef, self VMPPRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_archive_target_config", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
 // SetArchiveTargetType Set the value of the archive_target_config_type field
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetArchiveTargetType(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppArchiveTargetType) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_archive_target_type", string(sessionID), string(self), string(value))
 	return err
 }
 
 // SetArchiveSchedule
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetArchiveSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_archive_schedule", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
 // SetArchiveFrequency Set the value of the archive_frequency field
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetArchiveFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppArchiveFrequency) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_archive_frequency", string(sessionID), string(self), string(value))
 	return err
 }
 
 // SetBackupSchedule
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetBackupSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_schedule", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
 // SetBackupFrequency Set the value of the backup_frequency field
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetBackupFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppBackupFrequency) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_frequency", string(sessionID), string(self), string(value))
 	return err
 }
 
 // SetBackupRetentionValue
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetBackupRetentionValue(ctx context.Context, sessionID SessionRef, self VMPPRef, value int) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_retention_value", string(sessionID), string(self), fromInt(value))
 	return err
 }
 
 // GetAlerts This call fetches a history of alerts for a given protection policy
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetAlerts(ctx context.Context, sessionID SessionRef, vmpp VMPPRef, hoursFromNow int) ([]string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_alerts", convertStringSetToGo, string(sessionID), string(vmpp), fromInt(hoursFromNow))
 }
 
 // ArchiveNow This call archives the snapshot provided as a parameter
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) ArchiveNow(ctx context.Context, sessionID SessionRef, snapshot VMRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.archive_now", toValue[string], string(sessionID), string(snapshot))
 }
 
 // ProtectNow This call executes the protection policy immediately
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) ProtectNow(ctx context.Context, sessionID SessionRef, vmpp VMPPRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.protect_now", toValue[string], string(sessionID), string(vmpp))
 }
 
 // SetBackupType Set the backup_type field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetBackupType(ctx context.Context, sessionID SessionRef, self VMPPRef, value VmppBackupType) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_backup_type", string(sessionID), string(self), string(value))
 	return err
 }
 
 // SetIsPolicyEnabled Set the is_policy_enabled field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetIsPolicyEnabled(ctx context.Context, sessionID SessionRef, self VMPPRef, value bool) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_is_policy_enabled", string(sessionID), string(self), value)
 	return err
 }
 
 // SetNameDescription Set the name/description field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetNameDescription(ctx context.Context, sessionID SessionRef, self VMPPRef, value string) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_name_description", string(sessionID), string(self), value)
 	return err
 }
 
 // SetNameLabel Set the name/label field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self VMPPRef, value string) error {
 	_, err := c.client.APICall(ctx, "VMPP.set_name_label", string(sessionID), string(self), value)
 	return err
 }
 
 // GetRecentAlerts Get the recent_alerts field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetRecentAlerts(ctx context.Context, sessionID SessionRef, self VMPPRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_recent_alerts", convertStringSetToGo, string(sessionID), string(self))
 }
 
 // GetAlarmConfig Get the alarm_config field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetAlarmConfig(ctx context.Context, sessionID SessionRef, self VMPPRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_alarm_config", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetIsAlarmEnabled Get the is_alarm_enabled field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetIsAlarmEnabled(ctx context.Context, sessionID SessionRef, self VMPPRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_is_alarm_enabled", toValue[bool], string(sessionID), string(self))
 }
 
 // GetVMs Get the VMs field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetVMs(ctx context.Context, sessionID SessionRef, self VMPPRef) ([]VMRef, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_VMs", convertVMRefSetToGo, string(sessionID), string(self))
 }
 
 // GetArchiveLastRunTime Get the archive_last_run_time field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetArchiveLastRunTime(ctx context.Context, sessionID SessionRef, self VMPPRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_archive_last_run_time", toTime, string(sessionID), string(self))
 }
 
 // GetIsArchiveRunning Get the is_archive_running field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetIsArchiveRunning(ctx context.Context, sessionID SessionRef, self VMPPRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_is_archive_running", toValue[bool], string(sessionID), string(self))
 }
 
 // GetArchiveSchedule Get the archive_schedule field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetArchiveSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_archive_schedule", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetArchiveFrequency Get the archive_frequency field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetArchiveFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppArchiveFrequency, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_archive_frequency", toString[VmppArchiveFrequency], string(sessionID), string(self))
 }
 
 // GetArchiveTargetConfig Get the archive_target_config field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetArchiveTargetConfig(ctx context.Context, sessionID SessionRef, self VMPPRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_archive_target_config", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetArchiveTargetType Get the archive_target_type field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetArchiveTargetType(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppArchiveTargetType, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_archive_target_type", toString[VmppArchiveTargetType], string(sessionID), string(self))
 }
 
 // GetBackupLastRunTime Get the backup_last_run_time field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetBackupLastRunTime(ctx context.Context, sessionID SessionRef, self VMPPRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_backup_last_run_time", toTime, string(sessionID), string(self))
 }
 
 // GetIsBackupRunning Get the is_backup_running field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetIsBackupRunning(ctx context.Context, sessionID SessionRef, self VMPPRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_is_backup_running", toValue[bool], string(sessionID), string(self))
 }
 
 // GetBackupSchedule Get the backup_schedule field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetBackupSchedule(ctx context.Context, sessionID SessionRef, self VMPPRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_backup_schedule", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetBackupFrequency Get the backup_frequency field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetBackupFrequency(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppBackupFrequency, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_backup_frequency", toString[VmppBackupFrequency], string(sessionID), string(self))
 }
 
 // GetBackupRetentionValue Get the backup_retention_value field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetBackupRetentionValue(ctx context.Context, sessionID SessionRef, self VMPPRef) (int, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_backup_retention_value", toInt, string(sessionID), string(self))
 }
 
 // GetBackupType Get the backup_type field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetBackupType(ctx context.Context, sessionID SessionRef, self VMPPRef) (VmppBackupType, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_backup_type", toString[VmppBackupType], string(sessionID), string(self))
 }
 
 // GetIsPolicyEnabled Get the is_policy_enabled field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetIsPolicyEnabled(ctx context.Context, sessionID SessionRef, self VMPPRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_is_policy_enabled", toValue[bool], string(sessionID), string(self))
 }
 
 // GetNameDescription Get the name/description field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetNameDescription(ctx context.Context, sessionID SessionRef, self VMPPRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_name_description", toValue[string], string(sessionID), string(self))
 }
 
 // GetNameLabel Get the name/label field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetNameLabel(ctx context.Context, sessionID SessionRef, self VMPPRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_name_label", toValue[string], string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetUUID(ctx context.Context, sessionID SessionRef, self VMPPRef) (string, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_uuid", toValue[string], string(sessionID), string(self))
 }
 
 // GetByNameLabel Get all the VMPP instances with the given label.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) ([]VMPPRef, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_by_name_label", convertVMPPRefSetToGo, string(sessionID), label)
 }
 
 // Destroy Destroy the specified VMPP instance.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) Destroy(ctx context.Context, sessionID SessionRef, self VMPPRef) error {
 	_, err := c.client.APICall(ctx, "VMPP.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Create a new VMPP instance, and return its handle. The constructor args are: name_label, name_description, is_policy_enabled, backup_type, backup_retention_value, backup_frequency, backup_schedule, archive_target_type, archive_target_config, archive_frequency, archive_schedule, is_alarm_enabled, alarm_config (* = non-optional).
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) Create(ctx context.Context, sessionID SessionRef, args VMPPRecord) (VMPPRef, error) {
 	return callAndConvert(ctx, c.client, "VMPP.create", toString[VMPPRef], string(sessionID), convertVMPPRecordToXen(args))
 }
 
 // GetByUUID Get a reference to the VMPP instance with the specified UUID.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (VMPPRef, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_by_uuid", toString[VMPPRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given VMPP.
+//
+// Deprecated: Removed in XAPI release clearwater. The VMPR feature was removed.
 func (c VMPPClass) GetRecord(ctx context.Context, sessionID SessionRef, self VMPPRef) (VMPPRecord, error) {
 	return callAndConvert(ctx, c.client, "VMPP.get_record", convertVMPPRecordToGo, string(sessionID), string(self))
 }

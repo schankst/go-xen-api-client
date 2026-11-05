@@ -390,7 +390,7 @@ XML-RPC:
 | Goal | Method |
 | --- | --- |
 | VM point-in-time snapshot (disk state; VM keeps running) | `VM.Snapshot(vm, newName, ignoreVdis)` |
-| application-consistent snapshot (needs guest tools; VSS on Windows) | `VM.SnapshotWithQuiesce(vm, newName)` |
+| application-consistent snapshot (only hosts before XAPI quebec; VSS support was removed) | `VM.SnapshotWithQuiesce(vm, newName)` |
 | snapshot including RAM (running VMs only) | `VM.Checkpoint(vm, newName)` |
 | roll back | `VM.Revert(snapshot)` |
 | list / inspect / delete snapshots | `VM.GetSnapshots`, `VM.GetIsASnapshot`, `VM.GetSnapshotOf`, `VM.Destroy(snap)` |
@@ -428,12 +428,9 @@ snapshot, delete the snapshot:
 ```go
 task, _ := xapi.Task.Create(ctx, session, "backup "+name, "")
 
-// 1. point-in-time, preferably quiesced
-snap, err := xapi.VM.SnapshotWithQuiesce(ctx, session, vm, "bkp-"+name+"-"+ts)
-if err != nil {
-    // guest tools missing / unsupported -> crash-consistent fallback
-    snap, err = xapi.VM.Snapshot(ctx, session, vm, "bkp-"+name+"-"+ts, nil)
-}
+// 1. point-in-time snapshot (crash-consistent; quiesce in the guest first
+//    if you need application consistency)
+snap, err := xapi.VM.Snapshot(ctx, session, vm, "bkp-"+name+"-"+ts, nil)
 
 // 2. stream GET /export?session_id=...&uuid=<snap>&task_id=<task>
 //    straight to the backup target (no host-side staging)
@@ -452,11 +449,10 @@ attach to.
 
 ### What "stable" requires
 
-- **Consistency level is a choice.** `VM.SnapshotWithQuiesce` is
-  application-consistent only with guest tools (VSS on Windows, the guest agent
-  on Linux). If it fails, fall back to a plain snapshot and record the run as
-  *crash-consistent*. For databases, quiesce in the guest first (flush/freeze,
-  `BACKUP DATABASE`, ...) and snapshot after.
+- **Consistency level is a choice.** `VM.Snapshot` is *crash-consistent*.
+  `VM.SnapshotWithQuiesce` was removed in XAPI release quebec (VSS support
+  was dropped) and only works on older hosts. For databases, quiesce in the
+  guest first (flush/freeze, `BACKUP DATABASE`, ...) and snapshot after.
 - **One run per VM (and roughly per SR).** Two concurrent exports of the same
   CoW chain break the SM's coalescing. Lock on the VM UUID, and avoid racing
   snapshots on one SR.

@@ -26,6 +26,8 @@ type EventRecord struct {
 	// An ID, monotonically increasing, and local to the current session
 	ID int
 	// The time at which the event occurred
+	//
+	// Deprecated: Deprecated in XAPI release boston.
 	Timestamp time.Time
 	// The name of the class of the object that changed
 	Class string
@@ -34,6 +36,8 @@ type EventRecord struct {
 	// A reference to the object that changed
 	Ref string
 	// The uuid of the object that changed
+	//
+	// Deprecated: Deprecated in XAPI release boston.
 	ObjUUID string
 }
 
@@ -71,17 +75,23 @@ func (c EventClass) From(ctx context.Context, sessionID SessionRef, classes []st
 //	SESSION_NOT_REGISTERED - This session is not registered to receive events. You must call event.register before event.next. The session handle you are using is echoed.
 //	EVENTS_LOST - Some events have been lost from the queue and cannot be retrieved.
 //	EVENT_SUBSCRIPTION_PARSE_FAILURE - The server failed to parse your event subscription. Valid values include: *, class-name, class-name/object-reference.
+//
+// Deprecated: Deprecated in XAPI release boston.
 func (c EventClass) Next(ctx context.Context, sessionID SessionRef) ([]EventRecord, error) {
 	return callAndConvert(ctx, c.client, "event.next", convertEventRecordSetToGo, string(sessionID))
 }
 
 // Unregister Removes this session's registration with the event system for a set of given classes. This method is only recommended for legacy use in conjunction with event.next.
+//
+// Deprecated: Deprecated in XAPI release boston.
 func (c EventClass) Unregister(ctx context.Context, sessionID SessionRef, classes []string) error {
 	_, err := c.client.APICall(ctx, "event.unregister", string(sessionID), convertStringSetToXen(classes))
 	return err
 }
 
 // Register Registers this session with the event system for a set of given classes. This method is only recommended for legacy use in conjunction with event.next.
+//
+// Deprecated: Deprecated in XAPI release boston.
 func (c EventClass) Register(ctx context.Context, sessionID SessionRef, classes []string) error {
 	_, err := c.client.APICall(ctx, "event.register", string(sessionID), convertStringSetToXen(classes))
 	return err

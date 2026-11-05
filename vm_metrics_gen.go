@@ -15,6 +15,8 @@ type VMMetricsRecord struct {
 	// Current number of VCPUs
 	VCPUsNumber int
 	// Utilisation for all of guest's current VCPUs
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 	VCPUsUtilisation map[int]float64
 	// VCPU to PCPU map
 	VCPUsCPU map[int]int
@@ -41,10 +43,16 @@ type VMMetricsRecord struct {
 	// The current domain type of the VM (for running,suspended, or paused VMs). The last-known domain type for halted VMs.
 	CurrentDomainType DomainType
 	// If the VM is optimised for NUMA
+	//
+	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
 	NumaOptimised bool
 	// number of NUMA nodes of the host the VM is using
+	//
+	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
 	NumaNodes int
 	// mapping a NUMA node (int) to an amount of memory (bytes) in that node.
+	//
+	// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
 	NumaNodeMemory map[int]int
 }
 
@@ -84,16 +92,22 @@ func (c VMMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRef
 }
 
 // GetNumaNodeMemory Get the numa_node_memory field of the given VM_metrics.
+//
+// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
 func (c VMMetricsClass) GetNumaNodeMemory(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int]int, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_node_memory", convertIntToIntMapToGo, string(sessionID), string(self))
 }
 
 // GetNumaNodes Get the numa_nodes field of the given VM_metrics.
+//
+// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
 func (c VMMetricsClass) GetNumaNodes(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (int, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_nodes", toInt, string(sessionID), string(self))
 }
 
 // GetNumaOptimised Get the numa_optimised field of the given VM_metrics.
+//
+// Experimental: prototyped in XAPI release 26.2.0; it may change or be removed.
 func (c VMMetricsClass) GetNumaOptimised(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_numa_optimised", toValue[bool], string(sessionID), string(self))
 }
@@ -159,6 +173,8 @@ func (c VMMetricsClass) GetVCPUsCPU(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetVCPUsUtilisation Get the VCPUs/utilisation field of the given VM_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 func (c VMMetricsClass) GetVCPUsUtilisation(ctx context.Context, sessionID SessionRef, self VMMetricsRef) (map[int]float64, error) {
 	return callAndConvert(ctx, c.client, "VM_metrics.get_VCPUs_utilisation", convertIntToFloatMapToGo, string(sessionID), string(self))
 }

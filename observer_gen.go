@@ -8,65 +8,93 @@ import (
 
 type ObserverRecord struct {
 	// Unique identifier/object reference
+	//
+	// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 	UUID string
 	// a human-readable name
 	NameLabel string
 	// a notes field containing human-readable description
 	NameDescription string
 	// The list of hosts the observer is active on. An empty list means all hosts
+	//
+	// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 	Hosts []HostRef
 	// Attributes that observer will add to the data they produce
+	//
+	// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 	Attributes map[string]string
 	// The list of endpoints where data is exported to. Each endpoint is a URL or the string 'bugtool' refering to the internal logs
+	//
+	// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 	Endpoints []string
 	// The list of xenserver components the observer will broadcast. An empty list means all components
+	//
+	// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 	Components []string
 	// This denotes if the observer is enabled. true if it is enabled and false if it is disabled
+	//
+	// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 	Enabled bool
 }
 
 type ObserverRef string
 
 // Describes an observer which will control observability activity in the Toolstack
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 type ObserverClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of Observer references to Observer records for all Observers known to the system.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[ObserverRef]ObserverRecord, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_all_records", convertObserverRefToObserverRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the Observers known to the system.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetAll(ctx context.Context, sessionID SessionRef) ([]ObserverRef, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_all", convertObserverRefSetToGo, string(sessionID))
 }
 
 // SetComponents Set the components on which the observer will broadcast to. i.e. xapi, xenopsd, networkd, etc.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) SetComponents(ctx context.Context, sessionID SessionRef, self ObserverRef, value []string) error {
 	_, err := c.client.APICall(ctx, "Observer.set_components", string(sessionID), string(self), convertStringSetToXen(value))
 	return err
 }
 
 // SetEndpoints Set the file/HTTP endpoints the observer sends data to
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) SetEndpoints(ctx context.Context, sessionID SessionRef, self ObserverRef, value []string) error {
 	_, err := c.client.APICall(ctx, "Observer.set_endpoints", string(sessionID), string(self), convertStringSetToXen(value))
 	return err
 }
 
 // SetAttributes Set the attributes of an observer. These are used to emit metadata by the observer
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) SetAttributes(ctx context.Context, sessionID SessionRef, self ObserverRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "Observer.set_attributes", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
 // SetEnabled Enable / disable this observer which will stop the observer from producing observability information
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) SetEnabled(ctx context.Context, sessionID SessionRef, self ObserverRef, value bool) error {
 	_, err := c.client.APICall(ctx, "Observer.set_enabled", string(sessionID), string(self), value)
 	return err
 }
 
 // SetHosts Sets the hosts that the observer is to be registered on
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) SetHosts(ctx context.Context, sessionID SessionRef, self ObserverRef, value []HostRef) error {
 	_, err := c.client.APICall(ctx, "Observer.set_hosts", string(sessionID), string(self), convertHostRefSetToXen(value))
 	return err
@@ -85,26 +113,36 @@ func (c ObserverClass) SetNameLabel(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetEnabled Get the enabled field of the given Observer.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetEnabled(ctx context.Context, sessionID SessionRef, self ObserverRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_enabled", toValue[bool], string(sessionID), string(self))
 }
 
 // GetComponents Get the components field of the given Observer.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetComponents(ctx context.Context, sessionID SessionRef, self ObserverRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_components", convertStringSetToGo, string(sessionID), string(self))
 }
 
 // GetEndpoints Get the endpoints field of the given Observer.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetEndpoints(ctx context.Context, sessionID SessionRef, self ObserverRef) ([]string, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_endpoints", convertStringSetToGo, string(sessionID), string(self))
 }
 
 // GetAttributes Get the attributes field of the given Observer.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetAttributes(ctx context.Context, sessionID SessionRef, self ObserverRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_attributes", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetHosts Get the hosts field of the given Observer.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetHosts(ctx context.Context, sessionID SessionRef, self ObserverRef) ([]HostRef, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_hosts", convertHostRefSetToGo, string(sessionID), string(self))
 }
@@ -120,32 +158,44 @@ func (c ObserverClass) GetNameLabel(ctx context.Context, sessionID SessionRef, s
 }
 
 // GetUUID Get the uuid field of the given Observer.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetUUID(ctx context.Context, sessionID SessionRef, self ObserverRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_uuid", toValue[string], string(sessionID), string(self))
 }
 
 // GetByNameLabel Get all the Observer instances with the given label.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) ([]ObserverRef, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_by_name_label", convertObserverRefSetToGo, string(sessionID), label)
 }
 
 // Destroy Destroy the specified Observer instance.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) Destroy(ctx context.Context, sessionID SessionRef, self ObserverRef) error {
 	_, err := c.client.APICall(ctx, "Observer.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Create a new Observer instance, and return its handle. The constructor args are: name_label, name_description, hosts, attributes, endpoints, components, enabled (* = non-optional).
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) Create(ctx context.Context, sessionID SessionRef, args ObserverRecord) (ObserverRef, error) {
 	return callAndConvert(ctx, c.client, "Observer.create", toString[ObserverRef], string(sessionID), convertObserverRecordToXen(args))
 }
 
 // GetByUUID Get a reference to the Observer instance with the specified UUID.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (ObserverRef, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_by_uuid", toString[ObserverRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given Observer.
+//
+// Experimental: prototyped in XAPI release 23.14.0; it may change or be removed.
 func (c ObserverClass) GetRecord(ctx context.Context, sessionID SessionRef, self ObserverRef) (ObserverRecord, error) {
 	return callAndConvert(ctx, c.client, "Observer.get_record", convertObserverRecordToGo, string(sessionID), string(self))
 }

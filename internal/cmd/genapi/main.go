@@ -299,6 +299,59 @@ type xapiLifecycleInfo struct {
 	Transitions []*xapiLifecycle `json:"transitions"`
 }
 
+// lifecycleNotes returns doc comment paragraphs for l: a Deprecated:
+// paragraph for removed and deprecated items, naming the XAPI release, and
+// a note for items that are only prototyped. Removed items stay in the
+// bindings because older hosts still support them.
+func lifecycleNotes(l *xapiLifecycleInfo) string {
+	if l == nil {
+		return ""
+	}
+	last := func(transition string) *xapiLifecycle {
+		for _, t := range slices.Backward(l.Transitions) {
+			if t.Transition == transition {
+				return t
+			}
+		}
+		return nil
+	}
+	note := func(text string, t *xapiLifecycle) string {
+		text = fmt.Sprintf(text, t.Release)
+		if d := strings.TrimSpace(formatSingleLine(t.Description)); d != "" {
+			text += " " + strings.ToUpper(d[:1]) + d[1:]
+			if !strings.HasSuffix(d, ".") {
+				text += "."
+			}
+		}
+		return "\n//\n// " + text
+	}
+	if t := last("removed"); t != nil {
+		return note("Deprecated: Removed in XAPI release %s.", t)
+	}
+	if t := last("deprecated"); t != nil {
+		return note("Deprecated: Deprecated in XAPI release %s.", t)
+	}
+	if t := last("prototyped"); t != nil && l.State == "Prototyped_s" {
+		return fmt.Sprintf("\n//\n// Experimental: prototyped in XAPI release %s; it may change or be removed.", t.Release)
+	}
+	return ""
+}
+
+// unreleased reports whether l was introduced only in an unreleased
+// "-next" version, i.e. no shipped host has it.
+func unreleased(l *xapiLifecycleInfo) bool {
+	introduced := false
+	for _, t := range l.Transitions {
+		if t.Transition == "published" || t.Transition == "prototyped" {
+			if !strings.HasSuffix(t.Release, "-next") {
+				return false
+			}
+			introduced = true
+		}
+	}
+	return introduced
+}
+
 // xapiEnumValue is one named value of an XenAPI enum, e.g. {Name: "Halted"}
 // for the vm_power_state enum.
 type xapiEnumValue struct {
@@ -442,7 +495,7 @@ const ({{ range .Values }}
 // (see generateClassAPI).
 const recordTypeTemplate string = `
 type {{ .Name|exported }}Record struct {{ "{" }}{{ range .Fields }}
-	{{ .Description|godoc }}
+	{{ .Description|godoc }}{{ lifecycle .Lifecycle }}
 	{{ .Name|exported }} {{ .GoType }}{{ end }}
 }
 `
@@ -452,7 +505,7 @@ type {{ .Name|exported }}Record struct {{ "{" }}{{ range .Fields }}
 // (see messageFuncTemplate). Holds a back-reference to the owning Client
 // so its methods can call client.APICall.
 const classTypeTemplate string = `
-{{ .Description|godoc }}
+{{ .Description|godoc }}{{ lifecycle .Lifecycle }}
 type {{ .Name|exported }}Class struct {
 	client *Client
 }
@@ -473,7 +526,7 @@ const messageFuncTemplate string = `
 {{ .Message.Name|exported|godoc }} {{ .Message.Description|singleLine }}{{ if .Message.Errors }}
 //
 // Errors:{{ range .Message.Errors }}
-//  {{ .Name }} - {{ .Doc }}{{ end }}{{ end }}
+//  {{ .Name }} - {{ .Doc }}{{ end }}{{ end }}{{ lifecycle .Message.Lifecycle }}
 func (c {{ .Class.Name|exported }}Class) {{ .Message.Name|exported }}(ctx context.Context{{ range .Message.Params }}, {{ .Name|internal }} {{ .GoType }}{{ end }}) {{ if .Message.Result.IsVoid }}error{{ else }}({{ .Message.Result.GoType }}, error){{ end }} {
 {{- if .Message.Result.IsVoid }}
 	_, err := c.client.APICall(ctx, "{{ .Class.Name }}.{{ .Message.Name }}"{{ range .Message.Params }}, {{ xenValue .Type (.Name|internal) }}{{ end }})
@@ -604,7 +657,23 @@ func (generator *apiGenerator) loadXenAPI(filename string) (err error) {
 		return
 	}
 
-	return json.Unmarshal(xenAPI, &generator.classes)
+	if err := json.Unmarshal(xenAPI, &generator.classes); err != nil {
+		return err
+	}
+
+	// Skip what only an unreleased version has; it would fail on every host.
+	generator.classes = slices.DeleteFunc(generator.classes, func(c *xapiClass) bool {
+		return c.Lifecycle != nil && unreleased(c.Lifecycle)
+	})
+	for _, c := range generator.classes {
+		c.Fields = slices.DeleteFunc(c.Fields, func(f *xapiField) bool {
+			return f.Lifecycle != nil && unreleased(f.Lifecycle)
+		})
+		c.Messages = slices.DeleteFunc(c.Messages, func(m *xapiMessage) bool {
+			return m.Lifecycle != nil && unreleased(m.Lifecycle)
+		})
+	}
+	return nil
 }
 
 // prepTemplates parses every template constant above into
@@ -633,7 +702,8 @@ func (generator *apiGenerator) prepTemplates() (err error) {
 			}
 			return converter.name, nil
 		},
-		"xenValue": generator.xenValue,
+		"xenValue":  generator.xenValue,
+		"lifecycle": lifecycleNotes,
 	})
 
 	templateLedger := map[string]string{

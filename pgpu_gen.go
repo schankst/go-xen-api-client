@@ -26,6 +26,8 @@ type PGPURecord struct {
 	// A map relating each VGPU type supported on this GPU to the maximum number of VGPUs of that type which can run simultaneously on this GPU
 	SupportedVGPUMaxCapacities map[VGPUTypeRef]int
 	// The accessibility of this device from dom0
+	//
+	// Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.get_dom0_access_status instead.
 	Dom0Access PciDom0Access
 	// Is this device the system display device
 	IsSystemDisplayDevice bool
@@ -51,11 +53,15 @@ func (c PGPUClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PGPURef,
 }
 
 // DisableDom0Access
+//
+// Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.disable_dom0_access instead.
 func (c PGPUClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PciDom0Access, error) {
 	return callAndConvert(ctx, c.client, "PGPU.disable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
 }
 
 // EnableDom0Access
+//
+// Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.enable_dom0_access instead.
 func (c PGPUClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PciDom0Access, error) {
 	return callAndConvert(ctx, c.client, "PGPU.enable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
 }
@@ -118,6 +124,8 @@ func (c PGPUClass) GetIsSystemDisplayDevice(ctx context.Context, sessionID Sessi
 }
 
 // GetDom0Access Get the dom0_access field of the given PGPU.
+//
+// Deprecated: Deprecated in XAPI release 24.14.0. Use PCI.get_dom0_access_status instead.
 func (c PGPUClass) GetDom0Access(ctx context.Context, sessionID SessionRef, self PGPURef) (PciDom0Access, error) {
 	return callAndConvert(ctx, c.client, "PGPU.get_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
 }

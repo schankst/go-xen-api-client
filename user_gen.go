@@ -20,6 +20,8 @@ type UserRecord struct {
 type UserRef string
 
 // A user of the system
+//
+// Deprecated: Deprecated in XAPI release george. Deprecated in favor of subject.
 type UserClass struct {
 	client *Client
 }
@@ -69,22 +71,30 @@ func (c UserClass) GetUUID(ctx context.Context, sessionID SessionRef, self UserR
 }
 
 // Destroy Destroy the specified user instance.
+//
+// Deprecated: Deprecated in XAPI release george. Deprecated in favor of subject.
 func (c UserClass) Destroy(ctx context.Context, sessionID SessionRef, self UserRef) error {
 	_, err := c.client.APICall(ctx, "user.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Create a new user instance, and return its handle. The constructor args are: short_name*, fullname*, other_config (* = non-optional).
+//
+// Deprecated: Deprecated in XAPI release george. Deprecated in favor of subject.
 func (c UserClass) Create(ctx context.Context, sessionID SessionRef, args UserRecord) (UserRef, error) {
 	return callAndConvert(ctx, c.client, "user.create", toString[UserRef], string(sessionID), convertUserRecordToXen(args))
 }
 
 // GetByUUID Get a reference to the user instance with the specified UUID.
+//
+// Deprecated: Deprecated in XAPI release george. Deprecated in favor of subject.
 func (c UserClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (UserRef, error) {
 	return callAndConvert(ctx, c.client, "user.get_by_uuid", toString[UserRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given user.
+//
+// Deprecated: Deprecated in XAPI release george. Deprecated in favor of subject.
 func (c UserClass) GetRecord(ctx context.Context, sessionID SessionRef, self UserRef) (UserRecord, error) {
 	return callAndConvert(ctx, c.client, "user.get_record", convertUserRecordToGo, string(sessionID), string(self))
 }

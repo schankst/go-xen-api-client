@@ -19,7 +19,6 @@ var (
 
 type version struct {
 	major, minor, patch int
-	next                bool
 	raw                 string
 }
 
@@ -30,23 +29,21 @@ func (v version) less(o version) bool {
 	if v.minor != o.minor {
 		return v.minor < o.minor
 	}
-	if v.patch != o.patch {
-		return v.patch < o.patch
-	}
-	// Same X.Y.Z: the "-next" pre-release represents the version being
-	// worked on after that patch shipped, so it's newer.
-	return !v.next && o.next
+	return v.patch < o.patch
 }
 
-// latestRelease returns the newest numeric release version named in schema.
+// latestRelease returns the newest released version named in schema.
+// "-next" versions are unreleased and ignored.
 func latestRelease(schema []byte) (string, bool) {
 	var latest version
 	for _, m := range reRelease.FindAllSubmatch(schema, -1) {
 		major, _ := strconv.Atoi(string(m[1]))
 		minor, _ := strconv.Atoi(string(m[2]))
 		patch, _ := strconv.Atoi(string(m[3]))
-		next := len(m[4]) > 0
-		v := version{major, minor, patch, next, fmt.Sprintf("%d.%d.%d%s", major, minor, patch, m[4])}
+		if len(m[4]) > 0 {
+			continue
+		}
+		v := version{major, minor, patch, fmt.Sprintf("%d.%d.%d", major, minor, patch)}
 		if latest.raw == "" || latest.less(v) {
 			latest = v
 		}

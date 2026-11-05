@@ -252,6 +252,8 @@ func (c SRClass) Destroy(ctx context.Context, sessionID SessionRef, sr SRRef) er
 }
 
 // Make Create a new Storage Repository on disk. This call is deprecated: use SR.create instead.
+//
+// Deprecated: Deprecated in XAPI release miami. Use SR.create instead.
 func (c SRClass) Make(ctx context.Context, sessionID SessionRef, host HostRef, deviceConfig map[string]string, physicalSize int, nameLabel string, nameDescription string, atype string, contentType string, smConfig map[string]string) (string, error) {
 	return callAndConvert(ctx, c.client, "SR.make", toValue[string], string(sessionID), string(host), convertStringToStringMapToXen(deviceConfig), fromInt(physicalSize), nameLabel, nameDescription, atype, contentType, convertStringToStringMapToXen(smConfig))
 }

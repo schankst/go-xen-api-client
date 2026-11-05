@@ -33,12 +33,20 @@ type RepositoryRecord struct {
 	// SHA256 checksum of latest updateinfo.xml.gz in this repository if its 'update' is true
 	Hash string
 	// True if all hosts in pool is up to date with this repository
+	//
+	// Deprecated: Removed in XAPI release 23.18.0. The up_to_date field of repository was removed.
 	UpToDate bool
 	// The file name of the GPG public key of this repository
+	//
+	// Experimental: prototyped in XAPI release 22.12.0; it may change or be removed.
 	GpgkeyPath string
 	// The origin of this repository. 'remote' if the origin of the repository is a remote one, 'bundle' if the origin of the repository is a local bundle file, 'remote_pool' if the origin of the repository is a remote pool
+	//
+	// Experimental: prototyped in XAPI release 24.23.0; it may change or be removed.
 	Origin Origin
 	// The certificate of the host which hosts this repository
+	//
+	// Experimental: prototyped in XAPI release 25.7.0; it may change or be removed.
 	Certificate string
 }
 
@@ -60,6 +68,8 @@ func (c RepositoryClass) GetAll(ctx context.Context, sessionID SessionRef) ([]Re
 }
 
 // SetGpgkeyPath Set the file name of the GPG public key of the repository
+//
+// Experimental: prototyped in XAPI release 22.12.0; it may change or be removed.
 func (c RepositoryClass) SetGpgkeyPath(ctx context.Context, sessionID SessionRef, self RepositoryRef, value string) error {
 	_, err := c.client.APICall(ctx, "Repository.set_gpgkey_path", string(sessionID), string(self), value)
 	return err
@@ -72,11 +82,15 @@ func (c RepositoryClass) Forget(ctx context.Context, sessionID SessionRef, self 
 }
 
 // IntroduceRemotePool Add the configuration for a new remote pool repository
+//
+// Experimental: prototyped in XAPI release 25.7.0; it may change or be removed.
 func (c RepositoryClass) IntroduceRemotePool(ctx context.Context, sessionID SessionRef, nameLabel string, nameDescription string, binaryURL string, certificate string) (RepositoryRef, error) {
 	return callAndConvert(ctx, c.client, "Repository.introduce_remote_pool", toString[RepositoryRef], string(sessionID), nameLabel, nameDescription, binaryURL, certificate)
 }
 
 // IntroduceBundle Add the configuration for a new bundle repository
+//
+// Experimental: prototyped in XAPI release 24.23.0; it may change or be removed.
 func (c RepositoryClass) IntroduceBundle(ctx context.Context, sessionID SessionRef, nameLabel string, nameDescription string) (RepositoryRef, error) {
 	return callAndConvert(ctx, c.client, "Repository.introduce_bundle", toString[RepositoryRef], string(sessionID), nameLabel, nameDescription)
 }
@@ -99,21 +113,29 @@ func (c RepositoryClass) SetNameLabel(ctx context.Context, sessionID SessionRef,
 }
 
 // GetCertificate Get the certificate field of the given Repository.
+//
+// Experimental: prototyped in XAPI release 25.7.0; it may change or be removed.
 func (c RepositoryClass) GetCertificate(ctx context.Context, sessionID SessionRef, self RepositoryRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Repository.get_certificate", toValue[string], string(sessionID), string(self))
 }
 
 // GetOrigin Get the origin field of the given Repository.
+//
+// Experimental: prototyped in XAPI release 24.23.0; it may change or be removed.
 func (c RepositoryClass) GetOrigin(ctx context.Context, sessionID SessionRef, self RepositoryRef) (Origin, error) {
 	return callAndConvert(ctx, c.client, "Repository.get_origin", toString[Origin], string(sessionID), string(self))
 }
 
 // GetGpgkeyPath Get the gpgkey_path field of the given Repository.
+//
+// Experimental: prototyped in XAPI release 22.12.0; it may change or be removed.
 func (c RepositoryClass) GetGpgkeyPath(ctx context.Context, sessionID SessionRef, self RepositoryRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Repository.get_gpgkey_path", toValue[string], string(sessionID), string(self))
 }
 
 // GetUpToDate Get the up_to_date field of the given Repository.
+//
+// Deprecated: Removed in XAPI release 23.18.0. The up_to_date field of repository was removed.
 func (c RepositoryClass) GetUpToDate(ctx context.Context, sessionID SessionRef, self RepositoryRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "Repository.get_up_to_date", toValue[bool], string(sessionID), string(self))
 }

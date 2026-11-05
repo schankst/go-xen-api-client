@@ -11,66 +11,94 @@ type VBDMetricsRecord struct {
 	// Unique identifier/object reference
 	UUID string
 	// Read bandwidth (KiB/s)
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 	IoReadKbs float64
 	// Write bandwidth (KiB/s)
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 	IoWriteKbs float64
 	// Time at which this information was last updated
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 	LastUpdated time.Time
 	// additional configuration
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 	OtherConfig map[string]string
 }
 
 type VBDMetricsRef string
 
 // The metrics associated with a virtual block device
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 type VBDMetricsClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of VBD_metrics references to VBD_metrics records for all VBD_metrics instances known to the system.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[VBDMetricsRef]VBDMetricsRecord, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_all_records", convertVBDMetricsRefToVBDMetricsRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the VBD_metrics instances known to the system.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VBDMetricsRef, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_all", convertVBDMetricsRefSetToGo, string(sessionID))
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given VBD_metrics.  If the key is not in that Map, then do nothing.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self VBDMetricsRef, key string) error {
 	_, err := c.client.APICall(ctx, "VBD_metrics.remove_from_other_config", string(sessionID), string(self), key)
 	return err
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given VBD_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self VBDMetricsRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "VBD_metrics.add_to_other_config", string(sessionID), string(self), key, value)
 	return err
 }
 
 // SetOtherConfig Set the other_config field of the given VBD_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self VBDMetricsRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "VBD_metrics.set_other_config", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
 // GetOtherConfig Get the other_config field of the given VBD_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) GetOtherConfig(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (map[string]string, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_other_config", convertStringToStringMapToGo, string(sessionID), string(self))
 }
 
 // GetLastUpdated Get the last_updated field of the given VBD_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) GetLastUpdated(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_last_updated", toTime, string(sessionID), string(self))
 }
 
 // GetIoWriteKbs Get the io/write_kbs field of the given VBD_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 func (c VBDMetricsClass) GetIoWriteKbs(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_io_write_kbs", toValue[float64], string(sessionID), string(self))
 }
 
 // GetIoReadKbs Get the io/read_kbs field of the given VBD_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled and replaced by RRDs.
 func (c VBDMetricsClass) GetIoReadKbs(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (float64, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_io_read_kbs", toValue[float64], string(sessionID), string(self))
 }
@@ -81,11 +109,15 @@ func (c VBDMetricsClass) GetUUID(ctx context.Context, sessionID SessionRef, self
 }
 
 // GetByUUID Get a reference to the VBD_metrics instance with the specified UUID.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (VBDMetricsRef, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_by_uuid", toString[VBDMetricsRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given VBD_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c VBDMetricsClass) GetRecord(ctx context.Context, sessionID SessionRef, self VBDMetricsRef) (VBDMetricsRecord, error) {
 	return callAndConvert(ctx, c.client, "VBD_metrics.get_record", convertVBDMetricsRecordToGo, string(sessionID), string(self))
 }

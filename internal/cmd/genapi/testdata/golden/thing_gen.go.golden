@@ -58,6 +58,10 @@ type ThingRecord struct {
 	Nickname string
 	// mode
 	Mode SharedMode
+	// legacy field
+	//
+	// Deprecated: Deprecated in XAPI release boston.
+	LegacyField string
 }
 
 type ThingRef string
@@ -107,4 +111,34 @@ func (c ThingClass) Snapshot(ctx context.Context, sessionID SessionRef, self Thi
 // CreatedAfter created after
 func (c ThingClass) CreatedAfter(ctx context.Context, sessionID SessionRef, since time.Time) ([]ThingRef, error) {
 	return callAndConvert(ctx, c.client, "thing.created_after", convertThingRefSetToGo, string(sessionID), since)
+}
+
+// OldCall old call
+//
+// Deprecated: Removed in XAPI release quebec. Use new_call instead.
+func (c ThingClass) OldCall(ctx context.Context, sessionID SessionRef) error {
+	_, err := c.client.APICall(ctx, "thing.old_call", string(sessionID))
+	return err
+}
+
+// LegacyCall legacy call
+//
+// Deprecated: Deprecated in XAPI release 24.0.0. Legacy SSL no longer supported.
+func (c ThingClass) LegacyCall(ctx context.Context, sessionID SessionRef) error {
+	_, err := c.client.APICall(ctx, "thing.legacy_call", string(sessionID))
+	return err
+}
+
+// ExperimentalCall experimental call
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
+func (c ThingClass) ExperimentalCall(ctx context.Context, sessionID SessionRef) error {
+	_, err := c.client.APICall(ctx, "thing.experimental_call", string(sessionID))
+	return err
+}
+
+// ReleasedAfterNext released after next
+func (c ThingClass) ReleasedAfterNext(ctx context.Context, sessionID SessionRef) error {
+	_, err := c.client.APICall(ctx, "thing.released_after_next", string(sessionID))
+	return err
 }

@@ -72,16 +72,22 @@ func (c PCIClass) GetAll(ctx context.Context, sessionID SessionRef) ([]PCIRef, e
 }
 
 // GetDom0AccessStatus Return a PCI device dom0 access status.
+//
+// Experimental: prototyped in XAPI release 24.14.0; it may change or be removed.
 func (c PCIClass) GetDom0AccessStatus(ctx context.Context, sessionID SessionRef, self PCIRef) (PciDom0Access, error) {
 	return callAndConvert(ctx, c.client, "PCI.get_dom0_access_status", toString[PciDom0Access], string(sessionID), string(self))
 }
 
 // EnableDom0Access Unhide a PCI device from the dom0 kernel. (Takes affect after next boot.)
+//
+// Experimental: prototyped in XAPI release 24.14.0; it may change or be removed.
 func (c PCIClass) EnableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (PciDom0Access, error) {
 	return callAndConvert(ctx, c.client, "PCI.enable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
 }
 
 // DisableDom0Access Hide a PCI device from the dom0 kernel. (Takes affect after next boot.)
+//
+// Experimental: prototyped in XAPI release 24.14.0; it may change or be removed.
 func (c PCIClass) DisableDom0Access(ctx context.Context, sessionID SessionRef, self PCIRef) (PciDom0Access, error) {
 	return callAndConvert(ctx, c.client, "PCI.disable_dom0_access", toString[PciDom0Access], string(sessionID), string(self))
 }

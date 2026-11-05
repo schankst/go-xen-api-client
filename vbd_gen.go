@@ -91,6 +91,8 @@ type VBDRecord struct {
 	// supported QoS algorithms for this VBD
 	QosSupportedAlgorithms []string
 	// metrics associated with this VBD
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 	Metrics VBDMetricsRef
 }
 
@@ -235,6 +237,8 @@ func (c VBDClass) SetUserdevice(ctx context.Context, sessionID SessionRef, self 
 }
 
 // GetMetrics Get the metrics field of the given VBD.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRDs.
 func (c VBDClass) GetMetrics(ctx context.Context, sessionID SessionRef, self VBDRef) (VBDMetricsRef, error) {
 	return callAndConvert(ctx, c.client, "VBD.get_metrics", toString[VBDMetricsRef], string(sessionID), string(self))
 }

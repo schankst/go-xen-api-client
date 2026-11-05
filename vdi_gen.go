@@ -124,6 +124,8 @@ type VDIRecord struct {
 	// true if SR scan operation reported this VDI as not present on disk
 	Missing bool
 	// This field is always null. Deprecated
+	//
+	// Deprecated: Deprecated in XAPI release ely. The field was never used.
 	Parent VDIRef
 	// data to be inserted into the xenstore tree (/local/domain/0/backend/vbd/<domid>/<device-id>/sm-data) after the VDI is attached. This is generally set by the SM backends on vdi_attach.
 	XenstoreData map[string]string
@@ -175,6 +177,8 @@ func (c VDIClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VDIRef, e
 // Errors:
 //
 //	UNIMPLEMENTED_IN_SM_BACKEND - You have attempted a function which is not implemented
+//
+// Experimental: prototyped in XAPI release 26.16.0; it may change or be removed.
 func (c VDIClass) Revert(ctx context.Context, sessionID SessionRef, snapshot VDIRef) error {
 	_, err := c.client.APICall(ctx, "VDI.revert", string(sessionID), string(snapshot))
 	return err
@@ -340,6 +344,8 @@ func (c VDIClass) Introduce(ctx context.Context, sessionID SessionRef, uuid stri
 }
 
 // ResizeOnline Resize the VDI which may or may not be attached to running guests.
+//
+// Deprecated: Removed in XAPI release inverness. Online VDI resize is not supported by any of the storage backends.
 func (c VDIClass) ResizeOnline(ctx context.Context, sessionID SessionRef, vdi VDIRef, size int) error {
 	_, err := c.client.APICall(ctx, "VDI.resize_online", string(sessionID), string(vdi), fromInt(size))
 	return err
@@ -499,6 +505,8 @@ func (c VDIClass) GetXenstoreData(ctx context.Context, sessionID SessionRef, sel
 }
 
 // GetParent Get the parent field of the given VDI.
+//
+// Deprecated: Deprecated in XAPI release ely. The field was never used.
 func (c VDIClass) GetParent(ctx context.Context, sessionID SessionRef, self VDIRef) (VDIRef, error) {
 	return callAndConvert(ctx, c.client, "VDI.get_parent", toString[VDIRef], string(sessionID), string(self))
 }

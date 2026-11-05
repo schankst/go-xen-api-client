@@ -32,52 +32,74 @@ type VTPMRecord struct {
 	// The domain where the backend is located (unused)
 	Backend VMRef
 	// The backend where the vTPM is persisted
+	//
+	// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 	PersistenceBackend PersistenceBackend
 	// Whether the contents are never copied, satisfying the TPM spec
+	//
+	// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 	IsUnique bool
 	// Whether the contents of the VTPM are secured according to the TPM spec
+	//
+	// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 	IsProtected bool
 }
 
 type VTPMRef string
 
 // A virtual TPM device
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 type VTPMClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of VTPM references to VTPM records for all VTPMs known to the system.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[VTPMRef]VTPMRecord, error) {
 	return callAndConvert(ctx, c.client, "VTPM.get_all_records", convertVTPMRefToVTPMRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the VTPMs known to the system.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VTPMRef, error) {
 	return callAndConvert(ctx, c.client, "VTPM.get_all", convertVTPMRefSetToGo, string(sessionID))
 }
 
 // Destroy Destroy the specified VTPM instance, along with its state.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) Destroy(ctx context.Context, sessionID SessionRef, self VTPMRef) error {
 	_, err := c.client.APICall(ctx, "VTPM.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Create a new VTPM instance, and return its handle.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) Create(ctx context.Context, sessionID SessionRef, vm VMRef, isUnique bool) (VTPMRef, error) {
 	return callAndConvert(ctx, c.client, "VTPM.create", toString[VTPMRef], string(sessionID), string(vm), isUnique)
 }
 
 // GetIsProtected Get the is_protected field of the given VTPM.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) GetIsProtected(ctx context.Context, sessionID SessionRef, self VTPMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VTPM.get_is_protected", toValue[bool], string(sessionID), string(self))
 }
 
 // GetIsUnique Get the is_unique field of the given VTPM.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) GetIsUnique(ctx context.Context, sessionID SessionRef, self VTPMRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "VTPM.get_is_unique", toValue[bool], string(sessionID), string(self))
 }
 
 // GetPersistenceBackend Get the persistence_backend field of the given VTPM.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) GetPersistenceBackend(ctx context.Context, sessionID SessionRef, self VTPMRef) (PersistenceBackend, error) {
 	return callAndConvert(ctx, c.client, "VTPM.get_persistence_backend", toString[PersistenceBackend], string(sessionID), string(self))
 }
@@ -108,11 +130,15 @@ func (c VTPMClass) GetUUID(ctx context.Context, sessionID SessionRef, self VTPMR
 }
 
 // GetByUUID Get a reference to the VTPM instance with the specified UUID.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (VTPMRef, error) {
 	return callAndConvert(ctx, c.client, "VTPM.get_by_uuid", toString[VTPMRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given VTPM.
+//
+// Experimental: prototyped in XAPI release 22.26.0; it may change or be removed.
 func (c VTPMClass) GetRecord(ctx context.Context, sessionID SessionRef, self VTPMRef) (VTPMRecord, error) {
 	return callAndConvert(ctx, c.client, "VTPM.get_record", convertVTPMRecordToGo, string(sessionID), string(self))
 }

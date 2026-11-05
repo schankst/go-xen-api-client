@@ -86,18 +86,24 @@ func (c TaskClass) GetAll(ctx context.Context, sessionID SessionRef) ([]TaskRef,
 }
 
 // SetOtherConfig Set the other_config field of the given task.
+//
+// Experimental: prototyped in XAPI release 25.8.0; it may change or be removed.
 func (c TaskClass) SetOtherConfig(ctx context.Context, sessionID SessionRef, self TaskRef, value map[string]string) error {
 	_, err := c.client.APICall(ctx, "task.set_other_config", string(sessionID), string(self), convertStringToStringMapToXen(value))
 	return err
 }
 
 // RemoveFromOtherConfig Remove the given key and its corresponding value from the other_config field of the given task. If the key is not in that Map, then do nothing.
+//
+// Experimental: prototyped in XAPI release 25.8.0; it may change or be removed.
 func (c TaskClass) RemoveFromOtherConfig(ctx context.Context, sessionID SessionRef, self TaskRef, key string) error {
 	_, err := c.client.APICall(ctx, "task.remove_from_other_config", string(sessionID), string(self), key)
 	return err
 }
 
 // AddToOtherConfig Add the given key-value pair to the other_config field of the given task.
+//
+// Experimental: prototyped in XAPI release 25.8.0; it may change or be removed.
 func (c TaskClass) AddToOtherConfig(ctx context.Context, sessionID SessionRef, self TaskRef, key string, value string) error {
 	_, err := c.client.APICall(ctx, "task.add_to_other_config", string(sessionID), string(self), key, value)
 	return err

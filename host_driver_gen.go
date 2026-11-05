@@ -8,118 +8,174 @@ import (
 
 type HostDriverRecord struct {
 	// Unique identifier/object reference
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	UUID string
 	// Host where this driver is installed
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Host HostRef
 	// Name identifying the driver uniquely
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Name string
 	// Descriptive name, not used for identification
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	FriendlyName string
 	// Variants of this driver available for selection
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Variants []DriverVariantRef
 	// Currently active variant of this driver, if any, or Null.
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	ActiveVariant DriverVariantRef
 	// Variant (if any) selected to become active after reboot. Or Null
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	SelectedVariant DriverVariantRef
 	// Device type this driver supports, like network or storage
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Type string
 	// Description of the driver
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Description string
 	// Information about the driver
+	//
+	// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 	Info string
 }
 
 type HostDriverRef string
 
 // UNSUPPORTED. A multi-version driver on a host
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 type HostDriverClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of Host_driver references to Host_driver records for all Host_drivers known to the system.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[HostDriverRef]HostDriverRecord, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_all_records", convertHostDriverRefToHostDriverRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the Host_drivers known to the system.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetAll(ctx context.Context, sessionID SessionRef) ([]HostDriverRef, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_all", convertHostDriverRefSetToGo, string(sessionID))
 }
 
 // Rescan UNSUPPORTED. Re-scan a host's drivers and update information about them. This is mostly  for trouble shooting.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) Rescan(ctx context.Context, sessionID SessionRef, host HostRef) error {
 	_, err := c.client.APICall(ctx, "Host_driver.rescan", string(sessionID), string(host))
 	return err
 }
 
 // Deselect UNSUPPORTED. Deselect the currently active variant of this driver after reboot. No action will be taken if no variant is currently active.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) Deselect(ctx context.Context, sessionID SessionRef, self HostDriverRef) error {
 	_, err := c.client.APICall(ctx, "Host_driver.deselect", string(sessionID), string(self))
 	return err
 }
 
 // Select UNSUPPORTED. Select a variant of the driver to become active after reboot or immediately if currently no version is active
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) Select(ctx context.Context, sessionID SessionRef, self HostDriverRef, variant DriverVariantRef) error {
 	_, err := c.client.APICall(ctx, "Host_driver.select", string(sessionID), string(self), string(variant))
 	return err
 }
 
 // GetInfo Get the info field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetInfo(ctx context.Context, sessionID SessionRef, self HostDriverRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_info", toValue[string], string(sessionID), string(self))
 }
 
 // GetDescription Get the description field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetDescription(ctx context.Context, sessionID SessionRef, self HostDriverRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_description", toValue[string], string(sessionID), string(self))
 }
 
 // GetType Get the type field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetType(ctx context.Context, sessionID SessionRef, self HostDriverRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_type", toValue[string], string(sessionID), string(self))
 }
 
 // GetSelectedVariant Get the selected_variant field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetSelectedVariant(ctx context.Context, sessionID SessionRef, self HostDriverRef) (DriverVariantRef, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_selected_variant", toString[DriverVariantRef], string(sessionID), string(self))
 }
 
 // GetActiveVariant Get the active_variant field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetActiveVariant(ctx context.Context, sessionID SessionRef, self HostDriverRef) (DriverVariantRef, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_active_variant", toString[DriverVariantRef], string(sessionID), string(self))
 }
 
 // GetVariants Get the variants field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetVariants(ctx context.Context, sessionID SessionRef, self HostDriverRef) ([]DriverVariantRef, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_variants", convertDriverVariantRefSetToGo, string(sessionID), string(self))
 }
 
 // GetFriendlyName Get the friendly_name field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetFriendlyName(ctx context.Context, sessionID SessionRef, self HostDriverRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_friendly_name", toValue[string], string(sessionID), string(self))
 }
 
 // GetName Get the name field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetName(ctx context.Context, sessionID SessionRef, self HostDriverRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_name", toValue[string], string(sessionID), string(self))
 }
 
 // GetHost Get the host field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetHost(ctx context.Context, sessionID SessionRef, self HostDriverRef) (HostRef, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_host", toString[HostRef], string(sessionID), string(self))
 }
 
 // GetUUID Get the uuid field of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetUUID(ctx context.Context, sessionID SessionRef, self HostDriverRef) (string, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_uuid", toValue[string], string(sessionID), string(self))
 }
 
 // GetByUUID Get a reference to the Host_driver instance with the specified UUID.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (HostDriverRef, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_by_uuid", toString[HostDriverRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given Host_driver.
+//
+// Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) GetRecord(ctx context.Context, sessionID SessionRef, self HostDriverRef) (HostDriverRecord, error) {
 	return callAndConvert(ctx, c.client, "Host_driver.get_record", convertHostDriverRecordToGo, string(sessionID), string(self))
 }

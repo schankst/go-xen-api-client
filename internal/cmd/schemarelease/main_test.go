@@ -11,8 +11,9 @@ func TestLatestRelease(t *testing.T) {
 		{"single", `{"release": "1.2.3"}`, "1.2.3", true},
 		{"numeric not lexical", `{"release": "9.0.0"} {"release": "10.0.0"}`, "10.0.0", true},
 		{"minor and patch", `{"release": "1.10.0"} {"release": "1.9.9"} {"release": "1.10.1"}`, "1.10.1", true},
-		{"next is newer than same version", `{"release": "2.0.0-next"} {"release": "2.0.0"}`, "2.0.0-next", true},
-		{"next is older than next patch", `{"release": "2.0.0-next"} {"release": "2.0.1"}`, "2.0.1", true},
+		{"next is ignored", `{"release": "2.0.0-next"} {"release": "2.0.0"}`, "2.0.0", true},
+		{"newer next is ignored", `{"release": "1.0.0"} {"release": "3.0.0-next"}`, "1.0.0", true},
+		{"only next", `{"release": "3.0.0-next"}`, "", false},
 		{"whitespace", `{"release" :  "3.1.4"}`, "3.1.4", true},
 	}
 	for _, tt := range tests {

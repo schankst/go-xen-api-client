@@ -23,24 +23,34 @@ type VMGroupRecord struct {
 	// a notes field containing human-readable description
 	NameDescription string
 	// The placement policy of the VM group
+	//
+	// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 	Placement PlacementPolicy
 	// The list of VMs associated with the group
+	//
+	// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 	VMs []VMRef
 }
 
 type VMGroupRef string
 
 // A VM group
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 type VMGroupClass struct {
 	client *Client
 }
 
 // GetAllRecords Return a map of VM_group references to VM_group records for all VM_groups known to the system.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) GetAllRecords(ctx context.Context, sessionID SessionRef) (map[VMGroupRef]VMGroupRecord, error) {
 	return callAndConvert(ctx, c.client, "VM_group.get_all_records", convertVMGroupRefToVMGroupRecordMapToGo, string(sessionID))
 }
 
 // GetAll Return a list of all the VM_groups known to the system.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) GetAll(ctx context.Context, sessionID SessionRef) ([]VMGroupRef, error) {
 	return callAndConvert(ctx, c.client, "VM_group.get_all", convertVMGroupRefSetToGo, string(sessionID))
 }
@@ -58,11 +68,15 @@ func (c VMGroupClass) SetNameLabel(ctx context.Context, sessionID SessionRef, se
 }
 
 // GetVMs Get the VMs field of the given VM_group.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) GetVMs(ctx context.Context, sessionID SessionRef, self VMGroupRef) ([]VMRef, error) {
 	return callAndConvert(ctx, c.client, "VM_group.get_VMs", convertVMRefSetToGo, string(sessionID), string(self))
 }
 
 // GetPlacement Get the placement field of the given VM_group.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) GetPlacement(ctx context.Context, sessionID SessionRef, self VMGroupRef) (PlacementPolicy, error) {
 	return callAndConvert(ctx, c.client, "VM_group.get_placement", toString[PlacementPolicy], string(sessionID), string(self))
 }
@@ -83,27 +97,37 @@ func (c VMGroupClass) GetUUID(ctx context.Context, sessionID SessionRef, self VM
 }
 
 // GetByNameLabel Get all the VM_group instances with the given label.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) GetByNameLabel(ctx context.Context, sessionID SessionRef, label string) ([]VMGroupRef, error) {
 	return callAndConvert(ctx, c.client, "VM_group.get_by_name_label", convertVMGroupRefSetToGo, string(sessionID), label)
 }
 
 // Destroy Destroy the specified VM_group instance.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) Destroy(ctx context.Context, sessionID SessionRef, self VMGroupRef) error {
 	_, err := c.client.APICall(ctx, "VM_group.destroy", string(sessionID), string(self))
 	return err
 }
 
 // Create Create a new VM_group instance, and return its handle. The constructor args are: name_label, name_description, placement (* = non-optional).
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) Create(ctx context.Context, sessionID SessionRef, args VMGroupRecord) (VMGroupRef, error) {
 	return callAndConvert(ctx, c.client, "VM_group.create", toString[VMGroupRef], string(sessionID), convertVMGroupRecordToXen(args))
 }
 
 // GetByUUID Get a reference to the VM_group instance with the specified UUID.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) GetByUUID(ctx context.Context, sessionID SessionRef, uuid string) (VMGroupRef, error) {
 	return callAndConvert(ctx, c.client, "VM_group.get_by_uuid", toString[VMGroupRef], string(sessionID), uuid)
 }
 
 // GetRecord Get a record containing the current state of the given VM_group.
+//
+// Experimental: prototyped in XAPI release 24.19.1; it may change or be removed.
 func (c VMGroupClass) GetRecord(ctx context.Context, sessionID SessionRef, self VMGroupRef) (VMGroupRecord, error) {
 	return callAndConvert(ctx, c.client, "VM_group.get_record", convertVMGroupRecordToGo, string(sessionID), string(self))
 }

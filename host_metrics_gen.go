@@ -13,6 +13,8 @@ type HostMetricsRecord struct {
 	// Total host memory (bytes)
 	MemoryTotal int
 	// Free host memory (bytes)
+	//
+	// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 	MemoryFree int
 	// Pool coordinator thinks this host is live
 	Live bool
@@ -73,6 +75,8 @@ func (c HostMetricsClass) GetLive(ctx context.Context, sessionID SessionRef, sel
 }
 
 // GetMemoryFree Get the memory/free field of the given host_metrics.
+//
+// Deprecated: Removed in XAPI release tampa. Disabled in favour of RRD.
 func (c HostMetricsClass) GetMemoryFree(ctx context.Context, sessionID SessionRef, self HostMetricsRef) (int, error) {
 	return callAndConvert(ctx, c.client, "host_metrics.get_memory_free", toInt, string(sessionID), string(self))
 }

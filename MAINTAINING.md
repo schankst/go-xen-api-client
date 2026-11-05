@@ -107,6 +107,15 @@ If XenAPI was updated, it is required to regenerate all of files with a new API 
   `funcPartialForXenType`, and `buildConverterFunc` (see
   `internal/cmd/genapi`'s package comment and the existing cases for examples).
 
+## Lifecycle
+
+`xenapi.json` records when each class, field and message was published,
+deprecated or removed. The generator keeps removed items, since older hosts
+still support them, and marks removed and deprecated ones with a
+`// Deprecated:` paragraph naming the XAPI release. Prototyped items get an
+`Experimental:` note. Items introduced only in an unreleased `-next` version
+are skipped, and `SchemaXAPIRelease` ignores `-next` versions.
+
 ## Generator tests
 
 `go test ./internal/cmd/genapi` covers the generator:

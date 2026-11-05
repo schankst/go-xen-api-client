@@ -32,8 +32,12 @@ type ClusterHostRecord struct {
 	// Whether the cluster host has joined the cluster. Contrary to enabled, a host that is not joined is not considered a member of the cluster, and hence enable and disable operations cannot be performed on this host.
 	Joined bool
 	// Whether the underlying cluster stack thinks we are live. This field is set automatically based on updates from the cluster stack and cannot be altered by the user.
+	//
+	// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 	Live bool
 	// Time when the live field was last updated based on information from the cluster stack
+	//
+	// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 	LastUpdateLive time.Time
 	// list of the operations allowed in this state. This list is advisory only and the server state may have changed by the time this field is read by a client.
 	AllowedOperations []ClusterHostOperation
@@ -129,11 +133,15 @@ func (c ClusterHostClass) GetAllowedOperations(ctx context.Context, sessionID Se
 }
 
 // GetLastUpdateLive Get the last_update_live field of the given Cluster_host.
+//
+// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 func (c ClusterHostClass) GetLastUpdateLive(ctx context.Context, sessionID SessionRef, self ClusterHostRef) (time.Time, error) {
 	return callAndConvert(ctx, c.client, "Cluster_host.get_last_update_live", toTime, string(sessionID), string(self))
 }
 
 // GetLive Get the live field of the given Cluster_host.
+//
+// Experimental: prototyped in XAPI release 24.3.0; it may change or be removed.
 func (c ClusterHostClass) GetLive(ctx context.Context, sessionID SessionRef, self ClusterHostRef) (bool, error) {
 	return callAndConvert(ctx, c.client, "Cluster_host.get_live", toValue[bool], string(sessionID), string(self))
 }
