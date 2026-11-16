@@ -64,7 +64,7 @@ func DecodeHostDriverRecord(s xmlrpc.Struct) (HostDriverRecord, error) {
 
 type HostDriverRef string
 
-// UNSUPPORTED. A multi-version driver on a host
+// A multi-version driver on a host
 //
 // Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 type HostDriverClass struct {
@@ -85,7 +85,7 @@ func (c HostDriverClass) GetAll(ctx context.Context, sessionID SessionRef) ([]Ho
 	return callAndConvert(ctx, c.client, "Host_driver.get_all", convertHostDriverRefSetToGo, string(sessionID))
 }
 
-// Rescan UNSUPPORTED. Re-scan a host's drivers and update information about them. This is mostly  for trouble shooting.
+// Rescan Re-scan a host's drivers and update information about them. This is mostly  for trouble shooting.
 //
 // Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) Rescan(ctx context.Context, sessionID SessionRef, host HostRef) error {
@@ -93,7 +93,7 @@ func (c HostDriverClass) Rescan(ctx context.Context, sessionID SessionRef, host 
 	return err
 }
 
-// Deselect UNSUPPORTED. Deselect the currently active variant of this driver after reboot. No action will be taken if no variant is currently active.
+// Deselect Deselect the currently active variant of this driver after reboot. No action will be taken if no variant is currently active.
 //
 // Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) Deselect(ctx context.Context, sessionID SessionRef, self HostDriverRef) error {
@@ -101,7 +101,7 @@ func (c HostDriverClass) Deselect(ctx context.Context, sessionID SessionRef, sel
 	return err
 }
 
-// Select UNSUPPORTED. Select a variant of the driver to become active after reboot or immediately if currently no version is active
+// Select Select a variant of the driver to become active after reboot or immediately if currently no version is active
 //
 // Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c HostDriverClass) Select(ctx context.Context, sessionID SessionRef, self HostDriverRef, variant DriverVariantRef) error {
