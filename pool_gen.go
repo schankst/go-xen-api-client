@@ -96,6 +96,8 @@ const (
 	CertificatePurposeLicensing CertificatePurpose = "licensing"
 	// Trusted certificates that are for LDAPS connections to external authentication services.
 	CertificatePurposeLDAPS CertificatePurpose = "ldaps"
+	// Trusted root CA certificates that are for authenticating XAPI clients by TLS client certificates.
+	CertificatePurposeClientAuth CertificatePurpose = "client_auth"
 )
 
 type PoolRecord struct {

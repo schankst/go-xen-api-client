@@ -660,6 +660,8 @@ const (
 	ErrTrustedCertificateExpired                          ErrorCode = "TRUSTED_CERTIFICATE_EXPIRED"
 	ErrTrustedCertificateNotValidYet                      ErrorCode = "TRUSTED_CERTIFICATE_NOT_VALID_YET"
 	ErrTrustedCertificateInvalid                          ErrorCode = "TRUSTED_CERTIFICATE_INVALID"
+	ErrTrustedCertificatePurposeNeedsCA                   ErrorCode = "TRUSTED_CERTIFICATE_PURPOSE_NEEDS_CA"
+	ErrTrustedCertificatePurposeHasNoCA                   ErrorCode = "TRUSTED_CERTIFICATE_PURPOSE_HAS_NO_CA"
 	ErrServerCertificateSignatureNotSupported             ErrorCode = "SERVER_CERTIFICATE_SIGNATURE_NOT_SUPPORTED"
 	ErrServerCertificateChainInvalid                      ErrorCode = "SERVER_CERTIFICATE_CHAIN_INVALID"
 	ErrVMPPHasVM                                          ErrorCode = "VMPP_HAS_VM"

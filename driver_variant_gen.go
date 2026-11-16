@@ -52,7 +52,7 @@ func DecodeDriverVariantRecord(s xmlrpc.Struct) (DriverVariantRecord, error) {
 
 type DriverVariantRef string
 
-// UNSUPPORTED. Variant of a host driver
+// Variant of a host driver
 //
 // Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 type DriverVariantClass struct {
@@ -73,7 +73,7 @@ func (c DriverVariantClass) GetAll(ctx context.Context, sessionID SessionRef) ([
 	return callAndConvert(ctx, c.client, "Driver_variant.get_all", convertDriverVariantRefSetToGo, string(sessionID))
 }
 
-// Select UNSUPPORTED Select this variant of a driver to become active after reboot or immediately if currently no version is active
+// Select Select this variant of a driver to become active after reboot or immediately if currently no version is active
 //
 // Experimental: prototyped in XAPI release 25.2.0; it may change or be removed.
 func (c DriverVariantClass) Select(ctx context.Context, sessionID SessionRef, self DriverVariantRef) error {
