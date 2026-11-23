@@ -1666,6 +1666,8 @@ func convertVMRecordToGo(input any) (VMRecord, error) {
 		field(s, "pending_guidances_full", &r.PendingGuidancesFull, convertEnumUpdateGuidancesSetToGo),
 		field(s, "groups", &r.Groups, convertVMGroupRefSetToGo),
 		field(s, "secureboot_certificates_state", &r.SecurebootCertificatesState, toString[VMSecurebootCertificatesState]),
+		field(s, "pxe_dhcp_ipv4_allowed", &r.PxeDHCPIPv4Allowed, toValue[bool]),
+		field(s, "pxe_dhcp_ipv6_allowed", &r.PxeDHCPIPv6Allowed, toValue[bool]),
 	)
 	return r, err
 }
@@ -1764,6 +1766,8 @@ func convertVMRecordToXen(r VMRecord) xmlrpc.Struct {
 		"pending_guidances_full":        convertEnumUpdateGuidancesSetToXen(r.PendingGuidancesFull),
 		"groups":                        convertVMGroupRefSetToXen(r.Groups),
 		"secureboot_certificates_state": string(r.SecurebootCertificatesState),
+		"pxe_dhcp_ipv4_allowed":         r.PxeDHCPIPv4Allowed,
+		"pxe_dhcp_ipv6_allowed":         r.PxeDHCPIPv6Allowed,
 	}
 }
 

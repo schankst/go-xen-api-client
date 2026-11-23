@@ -447,6 +447,10 @@ type VMRecord struct {
 	//
 	// Experimental: prototyped in XAPI release 26.14.0; it may change or be removed.
 	SecurebootCertificatesState VMSecurebootCertificatesState
+	// Whether PXE boot via DHCP IPv4 is allowed for this VM (UEFI VMs only)
+	PxeDHCPIPv4Allowed bool
+	// Whether PXE boot via DHCP IPv6 is allowed for this VM (UEFI VMs only)
+	PxeDHCPIPv6Allowed bool
 }
 
 // DecodeVMRecord converts a VM record in its wire form, such as
@@ -1295,6 +1299,18 @@ func (c VMClass) Snapshot(ctx context.Context, sessionID SessionRef, vm VMRef, n
 	return callAndConvert(ctx, c.client, "VM.snapshot", toString[VMRef], string(sessionID), string(vm), newName, convertVDIRefSetToXen(ignoreVDIs))
 }
 
+// SetPxeDHCPIPv6Allowed Set the pxe_dhcp_ipv6_allowed field of the given VM.
+func (c VMClass) SetPxeDHCPIPv6Allowed(ctx context.Context, sessionID SessionRef, self VMRef, value bool) error {
+	_, err := c.client.APICall(ctx, "VM.set_pxe_dhcp_ipv6_allowed", string(sessionID), string(self), value)
+	return err
+}
+
+// SetPxeDHCPIPv4Allowed Set the pxe_dhcp_ipv4_allowed field of the given VM.
+func (c VMClass) SetPxeDHCPIPv4Allowed(ctx context.Context, sessionID SessionRef, self VMRef, value bool) error {
+	_, err := c.client.APICall(ctx, "VM.set_pxe_dhcp_ipv4_allowed", string(sessionID), string(self), value)
+	return err
+}
+
 // SetHardwarePlatformVersion Set the hardware_platform_version field of the given VM.
 func (c VMClass) SetHardwarePlatformVersion(ctx context.Context, sessionID SessionRef, self VMRef, value int64) error {
 	_, err := c.client.APICall(ctx, "VM.set_hardware_platform_version", string(sessionID), string(self), fromInt(value))
@@ -1477,6 +1493,16 @@ func (c VMClass) SetNameDescription(ctx context.Context, sessionID SessionRef, s
 func (c VMClass) SetNameLabel(ctx context.Context, sessionID SessionRef, self VMRef, value string) error {
 	_, err := c.client.APICall(ctx, "VM.set_name_label", string(sessionID), string(self), value)
 	return err
+}
+
+// GetPxeDHCPIPv6Allowed Get the pxe_dhcp_ipv6_allowed field of the given VM.
+func (c VMClass) GetPxeDHCPIPv6Allowed(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
+	return callAndConvert(ctx, c.client, "VM.get_pxe_dhcp_ipv6_allowed", toValue[bool], string(sessionID), string(self))
+}
+
+// GetPxeDHCPIPv4Allowed Get the pxe_dhcp_ipv4_allowed field of the given VM.
+func (c VMClass) GetPxeDHCPIPv4Allowed(ctx context.Context, sessionID SessionRef, self VMRef) (bool, error) {
+	return callAndConvert(ctx, c.client, "VM.get_pxe_dhcp_ipv4_allowed", toValue[bool], string(sessionID), string(self))
 }
 
 // GetSecurebootCertificatesState Get the secureboot_certificates_state field of the given VM.
@@ -1972,7 +1998,7 @@ func (c VMClass) Destroy(ctx context.Context, sessionID SessionRef, self VMRef) 
 	return err
 }
 
-// Create NOT RECOMMENDED! VM.clone or VM.copy (or VM.import) is a better choice in almost all situations. The standard way to obtain a new VM is to call VM.clone on a template VM, then call VM.provision on the new clone. Caution: if VM.create is used and then the new VM is attached to a virtual disc that has an operating system already installed, then there is no guarantee that the operating system will boot and run. Any software that calls VM.create on a future version of this API may fail or give unexpected results. For example this could happen if an additional parameter were added to VM.create. VM.create is intended only for use in the automatic creation of the system VM templates. It creates a new VM instance, and returns its handle. The constructor args are: name_label, name_description, power_state, user_version*, is_a_template*, suspend_VDI, affinity*, memory_target, memory_static_max*, memory_dynamic_max*, memory_dynamic_min*, memory_static_min*, VCPUs_params*, VCPUs_max*, VCPUs_at_startup*, actions_after_softreboot, actions_after_shutdown*, actions_after_reboot*, actions_after_crash*, PV_bootloader*, PV_kernel*, PV_ramdisk*, PV_args*, PV_bootloader_args*, PV_legacy_args*, HVM_boot_policy*, HVM_boot_params*, HVM_shadow_multiplier, platform*, PCI_bus*, other_config*, last_boot_CPU_flags, last_booted_record, recommendations*, xenstore_data, ha_always_run, ha_restart_priority, tags, blocked_operations, protection_policy, is_snapshot_from_vmpp, snapshot_schedule, is_vmss_snapshot, appliance, start_delay, shutdown_delay, order, suspend_SR, version, generation_id, hardware_platform_version, has_vendor_device, reference_label, domain_type, NVRAM (* = non-optional).
+// Create NOT RECOMMENDED! VM.clone or VM.copy (or VM.import) is a better choice in almost all situations. The standard way to obtain a new VM is to call VM.clone on a template VM, then call VM.provision on the new clone. Caution: if VM.create is used and then the new VM is attached to a virtual disc that has an operating system already installed, then there is no guarantee that the operating system will boot and run. Any software that calls VM.create on a future version of this API may fail or give unexpected results. For example this could happen if an additional parameter were added to VM.create. VM.create is intended only for use in the automatic creation of the system VM templates. It creates a new VM instance, and returns its handle. The constructor args are: name_label, name_description, power_state, user_version*, is_a_template*, suspend_VDI, affinity*, memory_target, memory_static_max*, memory_dynamic_max*, memory_dynamic_min*, memory_static_min*, VCPUs_params*, VCPUs_max*, VCPUs_at_startup*, actions_after_softreboot, actions_after_shutdown*, actions_after_reboot*, actions_after_crash*, PV_bootloader*, PV_kernel*, PV_ramdisk*, PV_args*, PV_bootloader_args*, PV_legacy_args*, HVM_boot_policy*, HVM_boot_params*, HVM_shadow_multiplier, platform*, PCI_bus*, other_config*, last_boot_CPU_flags, last_booted_record, recommendations*, xenstore_data, ha_always_run, ha_restart_priority, tags, blocked_operations, protection_policy, is_snapshot_from_vmpp, snapshot_schedule, is_vmss_snapshot, appliance, start_delay, shutdown_delay, order, suspend_SR, version, generation_id, hardware_platform_version, has_vendor_device, reference_label, domain_type, NVRAM, pxe_dhcp_ipv4_allowed, pxe_dhcp_ipv6_allowed (* = non-optional).
 func (c VMClass) Create(ctx context.Context, sessionID SessionRef, args VMRecord) (VMRef, error) {
 	return callAndConvert(ctx, c.client, "VM.create", toString[VMRef], string(sessionID), convertVMRecordToXen(args))
 }
